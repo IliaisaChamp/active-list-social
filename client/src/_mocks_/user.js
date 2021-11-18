@@ -9,20 +9,21 @@ const users = [...Array(24)].map((_, index) => ({
   id: faker.datatype.uuid(),
   avatarUrl: mockImgAvatar(index + 1),
   name: faker.name.findName(),
-  company: faker.company.companyName(),
+  nickname: faker.company.companyName(),
+  // nickname: faker.username.userName(),
   isVerified: faker.datatype.boolean(),
-  status: sample(['active', 'banned']),
-  role: sample([
-    'Leader',
-    'Hr Manager',
-    'UI Designer',
-    'UX Designer',
-    'UI/UX Designer',
-    'Project Manager',
-    'Backend Developer',
-    'Full Stack Designer',
-    'Front End Developer',
-    'Full Stack Developer'
+  status: sample(['Online', 'Offline']),
+  rang: sample([
+    'Peon',
+    'Scout',
+    'Grunt',
+    'First Sergeant',
+    'Blood Guard',
+    'Legionnare',
+    'Centurion',
+    'Champion',
+    'General',
+    'High Warlord'
   ])
 }));
 

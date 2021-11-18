@@ -2,6 +2,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 
 // layouts
 import Layout from './components/Layout/Layout';
+import User from './components/NearestFolder/User';
 // import DashboardLayout from './layouts/dashboard';
 // import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
@@ -35,7 +36,7 @@ export default function Router() {
         { path: '/profile', element: <>Profile</> },
         { path: '/lenta', element: <>Lenta</> },
         { path: '/chats', element: <>chats</> },
-        { path: '/nearest', element: <>Nearest</> },
+        { path: '/nearest', element: <User/> },
         { path: '/top', element: <>Top</> },
         // { path: '*', element: <Navigate to="/404" /> }
       ],
