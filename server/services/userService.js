@@ -1,10 +1,23 @@
 const bcrypt = require('bcrypt');
-const {User} = require('../db/models/');
+const { User, Task, UserTask } = require('../db/models/');
 
 class UserService {
-  static async createUser(regData) {
+  static async getUserTasks(userId) {
+    // return await User.findAll({
+    //   raw: true,
+    //   where: { id: userId },
+    //   include: Task,
+    // });
+    return await UserTask.findAll({
+      where: {
+        user_id: userId,
+      },
+      include: Task,
+    });
+  }
 
-    const {password} = regData;
+  static async createUser(regData) {
+    const { password } = regData;
     try {
       const hashPassword = await bcrypt.hash(password, Number(process.env.SALT_ROUND));
 

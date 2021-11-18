@@ -2,7 +2,26 @@ const { validationResult } = require('express-validator');
 const UserService = require('../services/userService');
 
 class UserController {
-
+  static async getUserTasks(req, res) {
+    try {
+      if (req.session.user) {
+        const userId = req.params.id;
+        const entries = await UserService.getUserTasks(userId);
+        const tasks = entries.map((entry) => ({
+          id: entry.task_id,
+          title: entry.Task.title,
+          img: entry.Task.img,
+          isDone: entry.isDone,
+        }));
+        res.json(tasks);
+      } else {
+        res.sendStatus(401);
+      }
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(400);
+    }
+  }
 
   static async getUser(req, res) {
     const { id } = req.params;
@@ -74,13 +93,12 @@ class UserController {
         const followings = await Promise.all(
           user.followings.map((friendId) => {
             return User.findById(friendId);
-          })
+          }),
         );
-
 
         res.json(followings);
       } else {
-        res.status(404).json({message: 'У вас нет подписок'})
+        res.status(404).json({ message: 'У вас нет подписок' });
       }
     } catch (error) {
       console.log(error);
