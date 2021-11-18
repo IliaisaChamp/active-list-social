@@ -27,12 +27,13 @@ app.use(sessionParser);
 
 const usersRouter = require('./routes/usersRouter');
 const authRouter = require('./routes/authRouter');
+const taskRouter = require('./routes/taskRouter');
 
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/tasks', taskRouter);
 
 app.use((req, res, next) => next(createError(404)));
-
 
 const server = http.createServer(app);
 
