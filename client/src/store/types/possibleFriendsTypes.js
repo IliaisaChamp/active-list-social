@@ -1,0 +1,4 @@
+export const ALL_POSSIBLE_FRIENDS = "ALL_POSSIBLE_FRIENDS";
+
+
+
