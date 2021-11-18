@@ -6,10 +6,12 @@ const AuthController = require('../controllers/authController');
 router.route('/registration').post(
   [
     check('email', 'email не соответствует формату').normalizeEmail().isEmail(),
-    check('first_name', 'поле Имя не может быть пустым').notEmpty(),
-    check('last_name', 'поле Фамилия не может быть пустым').notEmpty(),
     check('password', 'Пароль должен быть от 6 до 20 символов').isLength({
       min: 6,
+      max: 20,
+    }),
+    check('nickname', 'Никнейм должен быть от 3 до 20 символов').isLength({
+      min: 3,
       max: 20,
     }),
   ],

@@ -3,18 +3,15 @@ const {User} = require('../db/models/');
 
 class UserService {
   static async createUser(regData) {
-    const { email, first_name, password, last_name } = regData;
+
+    const {password} = regData;
     try {
       const hashPassword = await bcrypt.hash(password, Number(process.env.SALT_ROUND));
 
-      const user = new User({
-        first_name,
-        last_name,
-        email,
+      const user = User.create({
         password: hashPassword,
+        ...regData,
       });
-
-      await user.save();
 
       return user;
     } catch (error) {
@@ -24,7 +21,11 @@ class UserService {
 
   static async findByEmail(email) {
     try {
-      const candidate = await User.findOne({ email });
+      const candidate = await User.findOne({
+        where: {
+          email,
+        },
+      });
 
       if (candidate) {
         return candidate;
@@ -91,7 +92,6 @@ class UserService {
 
       const { password, updatedAt, ...other } = user._doc;
       return other;
-
     } catch (error) {
       throw error;
     }
