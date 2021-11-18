@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -11,16 +11,9 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert(
-      "Tasks",
-      [
-        {
-          name: "John Doe",
-          isBetaMember: false,
-        },
-      ],
-      {}
-    );
+    const taskTitles = require('../../fixtures/startTasks');
+    const tasks = taskTitles.map((title) => ({ title, img: 'img.png' }));
+    await queryInterface.bulkInsert('Tasks', tasks, {});
   },
 
   down: async (queryInterface, Sequelize) => {

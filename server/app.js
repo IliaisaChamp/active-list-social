@@ -10,10 +10,6 @@ const helmet = require('helmet');
 
 const sessionParser = require('./session');
 
-// mongoose.connect(process.env.DB_CONNECT_URL,
-//    () => console.log('Connect to MongoDB')
-//  );
-
 const app = express();
 
 app.use(logger('dev'));
@@ -22,6 +18,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(process.env.PWD, 'public')));
 
 app.use(sessionParser);
 
