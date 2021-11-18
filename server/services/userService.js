@@ -2,6 +2,19 @@ const bcrypt = require('bcrypt');
 const { User } = require('../db/models/');
 
 class UserService {
+  static async subscribe(userId, taskId) {
+    return await UserTask.create({ user_id: userId, task_id: taskId });
+  }
+
+  static async getUserTasks(userId) {
+    return await UserTask.findAll({
+      where: {
+        user_id: userId,
+      },
+      include: Task,
+    });
+  }
+
   static async createUser(regData) {
     const { password } = regData;
     try {
@@ -13,7 +26,6 @@ class UserService {
         ...regData,
       });
       return user.get({ plain: true });
-
     } catch (error) {
       throw error;
     }
