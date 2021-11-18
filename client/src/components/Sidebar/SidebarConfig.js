@@ -13,40 +13,45 @@ const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 
 const sidebarConfig = [
   {
-    title: 'dashboard',
-    path: '/dashboard/app',
-    icon: getIcon(pieChart2Fill)
+    title: 'Profile',
+    path: '/profile',
+    icon: getIcon(peopleFill),
   },
   {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: getIcon(peopleFill)
+    title: 'Nearest',
+    path: '/nearest',
+    icon: getIcon(pieChart2Fill),
   },
   {
-    title: 'product',
-    path: '/dashboard/products',
-    icon: getIcon(shoppingBagFill)
+    title: 'Lenta',
+    path: '/lenta',
+    icon: getIcon(shoppingBagFill),
   },
   {
-    title: 'blog',
-    path: '/dashboard/blog',
-    icon: getIcon(fileTextFill)
+    title: 'Chats',
+    path: '/chats',
+    icon: getIcon(fileTextFill),
+  },
+  {
+    title: 'Top',
+    path: '/top',
+    icon: getIcon(fileTextFill),
   },
   {
     title: 'login',
     path: '/login',
-    icon: getIcon(lockFill)
+    icon: getIcon(lockFill),
   },
   {
     title: 'register',
     path: '/register',
-    icon: getIcon(personAddFill)
+    icon: getIcon(personAddFill),
   },
   {
     title: 'Not found',
     path: '/404',
-    icon: getIcon(alertTriangleFill)
-  }
+    icon: getIcon(alertTriangleFill),
+  },
 ];
 
 export default sidebarConfig;

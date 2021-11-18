@@ -32,10 +32,11 @@ export default function Router() {
       path: '/',
       element: <Layout />,
       children: [
-        // { path: 'login', element: <Login /> },
-        // { path: 'register', element: <Register /> },
-        // { path: '404', element: <NotFound /> },
-        // { path: '/', element: <Navigate to="/dashboard" /> },
+        { path: '/profile', element: <>Profile</> },
+        { path: '/lenta', element: <>Lenta</> },
+        { path: '/chats', element: <>chats</> },
+        { path: '/nearest', element: <>Nearest</> },
+        { path: '/top', element: <>Top</> },
         // { path: '*', element: <Navigate to="/404" /> }
       ],
     },

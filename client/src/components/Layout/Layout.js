@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 //
 import Sidebar from '../Sidebar/Sidebar';
+import MobileSidebar from '../MobileSidebar/MobileSidebar';
 
 // ----------------------------------------------------------------------
 
@@ -36,6 +37,7 @@ export default function Layout() {
 
   return (
     <RootStyle>
+      <MobileSidebar onOpenSidebar={() => setOpen(true)} />
       <Sidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
       <MainStyle>
         <Outlet />
