@@ -37,7 +37,7 @@ export const registrationUser = (data, navigate) => async (dispatch) => {
     .then((res) => {
       localStorage.setItem('user', JSON.stringify(res.data.user));
       dispatch(setUser(res.data.user));
-      navigate(`/`);
+      navigate(`/profile`);
     })
     .catch((e) => console.log({ e }));
 };
@@ -47,7 +47,7 @@ export const logoutUser = (navigate) => async (dispatch) => {
     .then((res) => {
       localStorage.removeItem('user');
       dispatch(deleteUser());
-      navigate('/');
+      navigate('/profile');
     })
     .catch((e) => console.log(e));
 };
