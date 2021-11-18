@@ -5,8 +5,5 @@ router
     .route("/")
     .get(TaskController.showAll);
 
-router
-    .route('/:id')
-    .post(TaskController.userSubscribe)
 
 module.exports = router;
