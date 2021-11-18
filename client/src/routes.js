@@ -5,8 +5,8 @@ import Layout from './components/Layout/Layout';
 // import DashboardLayout from './layouts/dashboard';
 // import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
-// import Login from './pages/Login';
-// import Register from './pages/Register';
+import Login from './pages/Login';
+import Register from './pages/Register';
 // import DashboardApp from './pages/DashboardApp';
 // import Products from './pages/Products';
 // import Blog from './pages/Blog';
@@ -32,13 +32,13 @@ export default function Router() {
       path: '/',
       element: <Layout />,
       children: [
-        // { path: 'login', element: <Login /> },
-        // { path: 'register', element: <Register /> },
         // { path: '404', element: <NotFound /> },
         // { path: '/', element: <Navigate to="/dashboard" /> },
         // { path: '*', element: <Navigate to="/404" /> }
       ],
     },
+    { path: 'login', element: <Login /> },
+    { path: 'register', element: <Register /> },
     // { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }

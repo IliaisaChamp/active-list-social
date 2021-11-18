@@ -3,7 +3,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const AuthController = require('../controllers/authController');
 
-router.route('/registr').post(
+router.route('/registration').post(
   [
     check('email', 'email не соответствует формату').normalizeEmail().isEmail(),
     check('password', 'Пароль должен быть от 6 до 20 символов').isLength({
