@@ -1,19 +1,19 @@
 const bcrypt = require('bcrypt');
-const {User} = require('../db/models/');
+const { User } = require('../db/models/');
 
 class UserService {
   static async createUser(regData) {
-
-    const {password} = regData;
+    const { password } = regData;
     try {
       const hashPassword = await bcrypt.hash(password, Number(process.env.SALT_ROUND));
 
-      const user = User.create({
-        password: hashPassword,
+      regData.password = hashPassword;
+
+      const user = await User.create({
         ...regData,
       });
+      return user.get({ plain: true });
 
-      return user;
     } catch (error) {
       throw error;
     }
@@ -40,10 +40,10 @@ class UserService {
   static async findAndCheck(data) {
     const { email, password } = data;
     try {
-      const candidate = await User.findOne({ email });
+      const candidate = await User.findOne({ where: { email } });
 
       if (!candidate) {
-        return new Error('Пользователь не найден');
+        return new Error('Пользователь c таким email не найден');
       }
       const validPassword = await bcrypt.compare(password, candidate.password);
 
@@ -51,7 +51,7 @@ class UserService {
         return new Error('Пароль не совпадает');
       }
 
-      return candidate;
+      return candidate.get({ plain: true });
     } catch (error) {
       throw error;
     }

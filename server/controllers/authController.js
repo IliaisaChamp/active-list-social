@@ -23,6 +23,7 @@ class CheckController {
 
         if (createdUser) {
           const { password, ...other } = createdUser;
+
           req.session.user = {
             ...other,
           };
@@ -42,27 +43,25 @@ class CheckController {
 
   static async login(req, res) {
     try {
-      const { email, password } = req.body;
-      if (email && password) {
+      const { email, password, nickname } = req.body;
+      if (email && password && nickname) {
         const currentUser = await UserService.findAndCheck({ email, password });
 
         if (currentUser) {
+          const { password, ...other } = currentUser;
+
           req.session.user = {
-            id: currentUser.id,
-            first_name: currentUser.first_name,
-            last_name: currentUser.last_name,
+            ...other,
           };
 
           return res.json({ user: req.session.user });
         } else {
-          console.log(currentUser);
-          return res.status(404).json({ message: `User '${email}' not found or Wrong password` });
+          return res.status(404).json({ message: `Пользователь '${nickname}' не найден` });
         }
       } else {
         return res.status(401).json({ message: 'Данные не заполнены' });
       }
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ message: error.message });
     }
   }
