@@ -43,8 +43,8 @@ class CheckController {
 
   static async login(req, res) {
     try {
-      const { email, password, nickname } = req.body;
-      if (email && password && nickname) {
+      const { email, password } = req.body;
+      if (email && password) {
         const currentUser = await UserService.findAndCheck({ email, password });
 
         if (currentUser) {

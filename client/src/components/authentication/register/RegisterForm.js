@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux';
 import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -11,12 +11,15 @@ import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { registrationUser } from '../../../store/ac/authAC';
 
+import { useTranslation } from 'react-i18next';
+
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   const RegisterSchema = Yup.object().shape({
     email: Yup.string()
@@ -61,7 +64,7 @@ export default function RegisterForm() {
             fullWidth
             autoComplete="nickname"
             type="text"
-            label="Никнейм"
+            label={t('form.nickname')}
             {...getFieldProps('nickname')}
             error={Boolean(touched.nickname && errors.nickname)}
             helperText={touched.nickname && errors.nickname}
@@ -70,7 +73,7 @@ export default function RegisterForm() {
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
-              label="Имя"
+              label={t('form.first_name')}
               {...getFieldProps('first_name')}
               error={Boolean(touched.first_name && errors.first_name)}
               helperText={touched.first_name && errors.first_name}
@@ -78,7 +81,7 @@ export default function RegisterForm() {
 
             <TextField
               fullWidth
-              label="Фамилия"
+              label={t('form.last_name')}
               {...getFieldProps('last_name')}
               error={Boolean(touched.last_name && errors.last_name)}
               helperText={touched.last_name && errors.last_name}
@@ -89,7 +92,7 @@ export default function RegisterForm() {
             fullWidth
             autoComplete="username"
             type="email"
-            label="Электронная почта"
+            label={t('form.email')}
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
@@ -99,7 +102,7 @@ export default function RegisterForm() {
             <TextField
               fullWidth
               type={showPassword ? 'text' : 'password'}
-              label="Пароль"
+              label={t('form.password')}
               {...getFieldProps('password')}
               InputProps={{
                 endAdornment: (
@@ -117,7 +120,7 @@ export default function RegisterForm() {
             <TextField
               fullWidth
               type={showPassword ? 'text' : 'password'}
-              label="Повторите пароль"
+              label={t('form.password_confirm')}
               {...getFieldProps('password_confirm')}
               InputProps={{
                 endAdornment: (
@@ -140,7 +143,7 @@ export default function RegisterForm() {
             variant="contained"
             loading={isSubmitting}
           >
-            Register
+            {t('form.register_submit')}
           </LoadingButton>
         </Stack>
       </Form>

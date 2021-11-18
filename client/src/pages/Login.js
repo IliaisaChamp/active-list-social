@@ -10,6 +10,8 @@ import { MHidden } from '../components/@material-extend';
 import { LoginForm } from '../components/authentication/login';
 import AuthSocial from '../components/authentication/AuthSocial';
 
+import { useTranslation } from 'react-i18next';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -20,7 +22,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  maxWidth: 464,
+  maxWidth: 524,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -40,31 +42,40 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
+  const { t } = useTranslation();
+
   return (
     <RootStyle title="Login | Minimal-UI">
       <AuthLayout>
-        Don’t have an account? &nbsp;
+        Нет учетной записи? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
+          Создать
         </Link>
       </AuthLayout>
 
       <MHidden width="mdDown">
         <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+          {/* <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Hi, Welcome Back
-          </Typography>
-          <img src="/static/illustrations/illustration_login.png" alt="login" />
+          </Typography> */}
+          <img
+            src="/static/illustrations/pexels-elianne-dipp-4666751.jpg"
+            alt="login"
+            style={{ objectFit: 'cover', height: '100%' }}
+          />
         </SectionStyle>
       </MHidden>
 
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
-            <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+            <Typography variant="h3" sx={{ px: 5, mb: 5 }}>
+              Привет, с возвращением!
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+            <Typography variant="h4" gutterBottom>
+              Войти
+            </Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Введите свои данные ниже.</Typography>
           </Stack>
           <AuthSocial />
 
@@ -72,9 +83,9 @@ export default function Login() {
 
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
+              Нет учетной записи? &nbsp;
               <Link variant="subtitle2" component={RouterLink} to="register">
-                Get started
+                Создать
               </Link>
             </Typography>
           </MHidden>

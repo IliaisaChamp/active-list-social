@@ -43,8 +43,10 @@ export default function Router() {
         // { path: '*', element: <Navigate to="/404" /> }
       ],
     },
-    { path: 'login', element: !user ? <Navigate to={'/profile/' + user.id} /> : <Login /> },
-    { path: 'register', element: !user ? <Navigate to={'/profile/' + user.id} /> : <Register /> },
+    { path: '/login', element: <Login /> },
+    // { path: '/login', element: user ? <Navigate to={'/profile/' + user.id} /> : <Login /> },
+    { path: '/register', element: <Register /> },
+    // { path: '/register', element: user ? <Navigate to={'/profile/' + user.id} /> : <Register /> },
     // { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }

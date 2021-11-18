@@ -17,15 +17,23 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { loginUser } from '../../../store/ac/authAC';
+
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    email: Yup.string()
+      .email('Электронная почта должна быть валидным адресом')
+      .required('Электронная почта обязательна'),
+    password: Yup.string().required('Пароль обязательный'),
   });
 
   const formik = useFormik({
@@ -35,8 +43,8 @@ export default function LoginForm() {
       remember: true
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: (data) => {
+      dispatch(loginUser(data, navigate));
     }
   });
 
@@ -54,7 +62,7 @@ export default function LoginForm() {
             fullWidth
             autoComplete="username"
             type="email"
-            label="Email address"
+            label={t('form.email')}
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
@@ -64,7 +72,7 @@ export default function LoginForm() {
             fullWidth
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
-            label="Password"
+            label={t('form.password')}
             {...getFieldProps('password')}
             InputProps={{
               endAdornment: (
@@ -73,7 +81,7 @@ export default function LoginForm() {
                     <Icon icon={showPassword ? eyeFill : eyeOffFill} />
                   </IconButton>
                 </InputAdornment>
-              )
+              ),
             }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
@@ -87,7 +95,7 @@ export default function LoginForm() {
           />
 
           <Link component={RouterLink} variant="subtitle2" to="#">
-            Forgot password?
+            {t('form.forgot_password')}
           </Link>
         </Stack>
 
@@ -98,7 +106,7 @@ export default function LoginForm() {
           variant="contained"
           loading={isSubmitting}
         >
-          Login
+          {t('form.login_submit')}
         </LoadingButton>
       </Form>
     </FormikProvider>

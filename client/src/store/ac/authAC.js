@@ -21,23 +21,17 @@ const deleteUser = () => {
 };
 
 export const loginUser = (data, navigate) => async (dispatch) => {
-  const userData = {
-    email: data.get('email'),
-    password: data.get('password'),
-  };
   axios
-    .post('/api/auth/login', userData)
+    .post('/api/auth/login', data)
     .then((res) => {
       localStorage.setItem('user', JSON.stringify(res.data.user));
-      console.log(res.data.user.id);
       dispatch(setUserAfterLogin(res.data.user));
-      // navigate(`/profile/${res.data.user.id}`);
+      navigate(`/`);
     })
     .catch((e) => console.log(e));
 };
 
 export const registrationUser = (data, navigate) => async (dispatch) => {
-  console.log(data);
   axios
     .post('/api/auth/registration', data)
     .then((res) => {
