@@ -1,55 +1,50 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Reports', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      task_id: {
         type: Sequelize.INTEGER,
-      },
-      nickname: {
-        type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        references: {
+          key: 'id',
+          model: 'Tasks'
+        }
       },
-      password: {
-        type: Sequelize.STRING,
+      user_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          key: 'id',
+          model: 'Users'
+        }
       },
-      first_name: {
-        type: Sequelize.STRING,
+      images: {
+        type: Sequelize.JSON,
       },
-      last_name: {
-        type: Sequelize.STRING,
-      },
-      email: {
-        type: Sequelize.STRING,
+      desc: {
         allowNull: false,
-        unique: true,
-      },
-      isAdmin: {
-        type: Sequelize.BOOLEAN,
-      },
-      decs: {
         type: Sequelize.TEXT,
-      },
-      avatar: {
-        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      },
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Reports');
   }
 };
