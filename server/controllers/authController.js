@@ -3,13 +3,13 @@ const UserService = require('../services/userService');
 
 class CheckController {
   static async register(req, res) {
+    console.log(req.body);
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         console.log(errors);
         return res.status(400).json({ message: 'Ошибка при регистрации', errors });
       }
-
       const { nickname, email, password } = req.body;
 
       if (nickname && email && password) {
@@ -70,7 +70,7 @@ class CheckController {
     if (req.session.user) {
       return res.json({ user: req.session.user });
     } else {
-      return res.sendStatus(401);
+      return res.status(401).json({message: 'Сессия истекла'});
     }
   }
 }

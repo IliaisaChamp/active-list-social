@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
+import {useDispatch} from 'react-redux'
 import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -8,11 +9,13 @@ import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { registrationUser } from '../../../store/ac/authAC';
 
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
@@ -43,9 +46,8 @@ export default function RegisterForm() {
       password_confirm: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: (e) => {
-      console.log(e);
-      // navigate('/', { replace: true });
+    onSubmit: (data) => {
+      dispatch(registrationUser(data, navigate));
     },
   });
 

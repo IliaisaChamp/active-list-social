@@ -10,14 +10,10 @@ const helmet = require('helmet');
 
 const sessionParser = require('./session');
 
-// mongoose.connect(process.env.DB_CONNECT_URL,
-//    () => console.log('Connect to MongoDB')
-//  );
-
 const app = express();
 
 app.use(logger('dev'));
-app.use(cors({ credentials: true, origin: process.env.CORS_ORIGIN }));
+app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }));
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

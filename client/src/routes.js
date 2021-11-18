@@ -1,3 +1,4 @@
+import {useSelector} from 'react-redux'
 import { Navigate, useRoutes } from 'react-router-dom';
 
 // layouts
@@ -16,6 +17,8 @@ import Register from './pages/Register';
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const user = useSelector((state) => state.user);
+
   return useRoutes([
     // {
     //   path: '/dashboard',
@@ -40,8 +43,8 @@ export default function Router() {
         // { path: '*', element: <Navigate to="/404" /> }
       ],
     },
-    { path: 'login', element: <Login /> },
-    { path: 'register', element: <Register /> },
+    { path: 'login', element: !user ? <Navigate to={'/profile/' + user.id} /> : <Login /> },
+    { path: 'register', element: !user ? <Navigate to={'/profile/' + user.id} /> : <Register /> },
     // { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }
