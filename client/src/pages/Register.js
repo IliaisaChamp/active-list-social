@@ -43,9 +43,9 @@ export default function Register() {
   return (
     <RootStyle title="Register | Minimal-UI">
       <AuthLayout>
-        Already have an account? &nbsp;
+        Уже есть аккаунт? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
-          Login
+          Войти
         </Link>
       </AuthLayout>
 
@@ -62,10 +62,10 @@ export default function Register() {
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Get started absolutely free.
+              Начни абсолютно бесплатно.
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              Free forever. No credit card needed.
+              Бесплатно навсегда. Кредитная карта не требуется.
             </Typography>
           </Box>
 
@@ -74,22 +74,22 @@ export default function Register() {
           <RegisterForm />
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
+            Регистрируясь, я принимаю&nbsp;
+            {/* <Link underline="always" sx={{ color: 'text.primary' }}>
               Terms of Service
             </Link>
-            &nbsp;and&nbsp;
+            &nbsp;and&nbsp; */}
             <Link underline="always" sx={{ color: 'text.primary' }}>
-              Privacy Policy
+              Политику конфиденциальности
             </Link>
             .
           </Typography>
 
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              Already have an account?&nbsp;
+              Уже есть аккаунт? &nbsp;
               <Link to="/login" component={RouterLink}>
-                Login
+                Войти
               </Link>
             </Typography>
           </MHidden>

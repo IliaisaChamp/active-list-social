@@ -16,29 +16,37 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    first_name: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+    email: Yup.string()
+      .email('Электронная почта должна быть валидным адресом')
+      .required('Электронная почта обязательна'),
     nickname: Yup.string()
       .min(2, 'Слишком короткий ник')
       .max(50, 'Слишком длинный ник')
-      .required('Email is required'),
-    password: Yup.string().min(6, 'Слишком короткий пароль')
-      .max(20, 'Слишком длинный пароль').required('Пароль обязательный'),
+      .required('Никнейм обязательный'),
+    password: Yup.string()
+      .min(6, 'Слишком короткий пароль')
+      .max(20, 'Слишком длинный пароль')
+      .required('Пароль обязательный'),
+    password_confirm: Yup.string().when('password', {
+      is: (val) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf([Yup.ref('password')], 'Пароли должны совпадать'),
+    }),
   });
 
   const formik = useFormik({
     initialValues: {
+      nickname: '',
       first_name: '',
       last_name: '',
       email: '',
-      password: ''
+      password: '',
+      password_confirm: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate('/', { replace: true });
-    }
+    onSubmit: (e) => {
+      console.log(e);
+      // navigate('/', { replace: true });
+    },
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
@@ -47,21 +55,20 @@ export default function RegisterForm() {
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
-           <TextField
-              fullWidth
-              autoComplete="Никнейм"
-              type="text"
-              label="Ваш никнейм"
-              {...getFieldProps('email')}
-              error={Boolean(touched.email && errors.email)}
-              helperText={touched.email && errors.email}
+          <TextField
+            fullWidth
+            autoComplete="nickname"
+            type="text"
+            label="Никнейм"
+            {...getFieldProps('nickname')}
+            error={Boolean(touched.nickname && errors.nickname)}
+            helperText={touched.nickname && errors.nickname}
           />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-
             <TextField
               fullWidth
-              label="First name"
+              label="Имя"
               {...getFieldProps('first_name')}
               error={Boolean(touched.first_name && errors.first_name)}
               helperText={touched.first_name && errors.first_name}
@@ -69,7 +76,7 @@ export default function RegisterForm() {
 
             <TextField
               fullWidth
-              label="Last name"
+              label="Фамилия"
               {...getFieldProps('last_name')}
               error={Boolean(touched.last_name && errors.last_name)}
               helperText={touched.last_name && errors.last_name}
@@ -80,30 +87,49 @@ export default function RegisterForm() {
             fullWidth
             autoComplete="username"
             type="email"
-            label="Email address"
+            label="Электронная почта"
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
 
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Password"
-            {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
-          />
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+            <TextField
+              fullWidth
+              type={showPassword ? 'text' : 'password'}
+              label="Пароль"
+              {...getFieldProps('password')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                      <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              error={Boolean(touched.password && errors.password)}
+              helperText={touched.password && errors.password}
+            />
+
+            <TextField
+              fullWidth
+              type={showPassword ? 'text' : 'password'}
+              label="Повторите пароль"
+              {...getFieldProps('password_confirm')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                      <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              error={Boolean(touched.password_confirm && errors.password_confirm)}
+              helperText={touched.password_confirm && errors.password_confirm}
+            />
+          </Stack>
 
           <LoadingButton
             fullWidth
