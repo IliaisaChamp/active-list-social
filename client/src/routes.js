@@ -5,6 +5,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Profile from './pages/Profile';
 import User from './components/NearestFolder/User';
+import Blog from './components/BlogFolder/Blog';
 // import DashboardLayout from './layouts/dashboard';
 // import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
@@ -38,7 +39,7 @@ export default function Router() {
       element: <Layout />,
       children: [
         { path: '/profile', element: <Profile /> },
-        { path: '/lenta', element: <>Lenta</> },
+        { path: '/lenta', element: <><Blog/></> },
         { path: '/chats', element: <>chats</> },
         { path: '/nearest', element: <User/> },
         { path: '/top', element: <>Top</> },
