@@ -63,6 +63,7 @@ export const checkUser = () => async (dispatch) => {
   axios('/api/auth/check')
     .then((res) => {
       localStorage.setItem('user', JSON.stringify(res.data.user));
+      console.log(res.data.user)
       dispatch(setUser(res.data.user));
     })
     .catch((e) => {
