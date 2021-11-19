@@ -14,6 +14,7 @@ class UserController {
       }));
       res.json({ tasks });
     } catch (e) {
+      console.log(e)
       res.sendStatus(400);
     }
   }
