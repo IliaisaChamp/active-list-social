@@ -22,6 +22,7 @@ export default function Tasks() {
   useEffect(() => {
     dispatch(getAllTasks());
   }, []);
+
   return (
     <Page title="Tasks">
       <Container>

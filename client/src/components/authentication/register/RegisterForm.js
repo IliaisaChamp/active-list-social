@@ -49,8 +49,9 @@ export default function RegisterForm() {
       password_confirm: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: (data) => {
+    onSubmit: (data, {setSubmitting}) => {
       dispatch(registrationUser(data, navigate));
+      setTimeout(() => setSubmitting(false), 2000)
     },
   });
 

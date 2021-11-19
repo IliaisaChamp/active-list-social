@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 // mui
 import { Container, Grid } from '@mui/material';
@@ -12,13 +14,22 @@ import AppCurrentVisits from '../components/ProfileStats/AppCurrentVisits';
 import AppWebsiteVisits from '../components/ProfileStats/AppWebsiteVisits';
 import AppConversionRates from '../components/ProfileStats/AppConversionRates';
 import AppCurrentSubject from '../components/ProfileStats/AppCurrentSubject';
-import AppNewsUpdate from '../components/ProfileStats/AppNewsUpdate';
-import AppOrderTimeline from '../components/ProfileStats/AppOrderTimeline';
-import AppTrafficBySite from '../components/ProfileStats/AppTrafficBySite';
-import AppTasks from '../components/ProfileStats/AppTasks';
+// import AppNewsUpdate from '../components/ProfileStats/AppNewsUpdate';
+// import AppOrderTimeline from '../components/ProfileStats/AppOrderTimeline';
+// import AppTrafficBySite from '../components/ProfileStats/AppTrafficBySite';
+// import AppTasks from '../components/ProfileStats/AppTasks';
 import UserProfile from '../components/UserProfile/UserProfile';
+import TasksList from '../components/TasksList/TasksList';
+import { getAllTasks, getUsersTasks } from '../store/ac/tasksAC';
 
 const Profile = () => {
+  const tasks = useSelector((state) => state.tasks);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUsersTasks(user.id));
+  }, []);
   return (
     <Page title="Profile">
       <Container maxWidth="xl">
@@ -37,37 +48,9 @@ const Profile = () => {
             <AppBugReports />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits />
+          <Grid item xs={12} md={6} lg={12}>
+            <TasksList tasks={tasks} />
           </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject />
-          </Grid>
-
-          {/* <Grid item xs={12} md={6} lg={8}>
-            <AppNewsUpdate />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppOrderTimeline />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={6} lg={4}>
-            <AppTrafficBySite />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks />
-          </Grid> */}
         </Grid>
       </Container>
     </Page>

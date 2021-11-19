@@ -2,19 +2,6 @@ const bcrypt = require('bcrypt');
 const { User } = require('../db/models/');
 
 class UserService {
-  static async subscribe(userId, taskId) {
-    return await UserTask.create({ user_id: userId, task_id: taskId });
-  }
-
-  static async getUserTasks(userId) {
-    return await UserTask.findAll({
-      where: {
-        user_id: userId,
-      },
-      include: Task,
-    });
-  }
-
   static async createUser(regData) {
     const { password } = regData;
     try {
@@ -30,7 +17,18 @@ class UserService {
       throw error;
     }
   }
-
+  static async findByNickname(nickname) {
+    try {
+      const candidate = await User.findOne({
+        where: {
+          nickname,
+        },
+      });
+      return !!candidate;
+    } catch (error) {
+      throw error;
+    }
+  }
   static async findByEmail(email) {
     try {
       const candidate = await User.findOne({
@@ -38,12 +36,7 @@ class UserService {
           email,
         },
       });
-
-      if (candidate) {
-        return candidate;
-      } else {
-        return null;
-      }
+      return !!candidate;
     } catch (error) {
       throw error;
     }

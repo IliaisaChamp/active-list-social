@@ -13,7 +13,7 @@ export const getAllTasks = () => async (dispacth) => {
 };
 
 export const getUsersTasks = (userId) => async (dispacth) => {
-  const response = await axios(`${BASE_URL}/user/${userId}/tasks`);
+  const response = await axios(`${BASE_URL}/users/${userId}/tasks`);
   const { tasks } = response.data;
   dispacth({
     type: SET_TASKS,
