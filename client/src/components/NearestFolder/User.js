@@ -136,7 +136,7 @@ export default function User() {
   return (
     <Page title="User | Minimal-UI">
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        {/* <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             User
           </Typography>
@@ -148,7 +148,7 @@ export default function User() {
           >
             New User
           </Button>
-        </Stack>
+        </Stack> */}
 
         <Card>
           <UserListToolbar

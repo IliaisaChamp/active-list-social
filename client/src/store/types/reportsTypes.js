@@ -1,3 +1,2 @@
-export const ALL_REPORTS = "ALL_REPORTS";
-
+export const SET_REPORTS = "SET_REPORTS";
 
