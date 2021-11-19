@@ -1,6 +1,6 @@
-import { ERROR_SET_ERROR, ERROR_DELETE_ERROR, } from '../types/errorTypes';
+import { ERROR_SET_ERROR, ERROR_DELETE_ERROR } from '../types/errorTypes';
 
-const authReducer = (state = '', action) => {
+const errorMessageReducer = (state = '', action) => {
   const { type, payload } = action;
   switch (type) {
     case ERROR_SET_ERROR:
@@ -12,4 +12,4 @@ const authReducer = (state = '', action) => {
   }
 };
 
-export default authReducer;
+export default errorMessageReducer;

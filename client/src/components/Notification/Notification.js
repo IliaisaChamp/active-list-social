@@ -1,47 +1,46 @@
 import React, { useEffect, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import Slide from '@mui/material/Slide';
 import MuiAlert from '@mui/material/Alert';
-import { clearErrorMessage } from '../../store/ac/errorAC';
+import { Link } from '@mui/material';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function ErrorMessage() {
-  const [errorState, setErrorState] = useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'center',
+export default function Notification() {
+  const [notificationState, setNotificationState] = useState({
+    open: true,
+    vertical: 'bottom',
+    horizontal: 'right',
     Transition: Slide,
   });
 
-  const { vertical, horizontal, open } = errorState;
+  const { vertical, horizontal, open } = notificationState;
 
-  const error = useSelector((state) => state.error);
+  const notification = useSelector((state) => state.notification);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (error) {
-      setErrorState({
-        ...errorState,
+    if (notification) {
+      setNotificationState({
+        ...notificationState,
         open: true,
-        vertical: 'top',
-        horizontal: 'center',
       });
     }
-  }, [error]);
+  }, [notification]);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-    setErrorState({ ...errorState, open: false });
-    setTimeout(() => {
-      dispatch(clearErrorMessage());
-    }, 300);
+    setNotificationState({ ...notificationState, open: false });
+    // setTimeout(() => {
+    //   dispatch();
+    // }, 300);
   };
 
   return (
@@ -51,10 +50,12 @@ export default function ErrorMessage() {
         autoHideDuration={4000}
         onClose={handleClose}
         anchorOrigin={{ vertical, horizontal }}
-        TransitionComponent={errorState.Transition}
+        TransitionComponent={notification.Transition}
       >
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          <Link variant="subtitle2" component={RouterLink} to={notification.url}>
+            {notification.message}
+          </Link>
         </Alert>
       </Snackbar>
     </Stack>
