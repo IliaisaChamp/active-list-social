@@ -24,14 +24,16 @@ const ProductImgStyle = styled('img')({
 TaskCard.propTypes = {
   product: PropTypes.object,
 };
+const BASE_URL = 'http://localhost:3001/img';
 
 export default function TaskCard({ task }) {
-  const { name, cover, status } = task;
+  // const { name, cover, status } = task;
+  const { title, img, id } = task;
 
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
+        {/* {status && (
           <Label
             variant="filled"
             color={(status === 'sale' && 'error') || 'info'}
@@ -44,14 +46,14 @@ export default function TaskCard({ task }) {
             }}>
             {status}
           </Label>
-        )}
-        <ProductImgStyle alt={name} src={cover} />
+        )} */}
+        <ProductImgStyle alt={title} src={`${BASE_URL}/${img}`} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link to="#" color="inherit" underline="hover" component={RouterLink}>
           <Typography variant="subtitle2" noWrap>
-            {name}
+            {title}
           </Typography>
         </Link>
 

@@ -4,6 +4,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import Layout from './components/Layout/Layout';
 import Profile from './pages/Profile';
+import User from './components/NearestFolder/User';
 // import DashboardLayout from './layouts/dashboard';
 // import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
@@ -19,6 +20,8 @@ import Tasks from './pages/Tasks';
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const user = useSelector((state) => state.user);
+
   return useRoutes([
     // {
     //   path: '/dashboard',
@@ -39,11 +42,15 @@ export default function Router() {
         { path: '/tasks', element: <Tasks /> },
         { path: '/lenta', element: <>Lenta</> },
         { path: '/chats', element: <>chats</> },
-        // { path: '/nearest', element: < /> },
+        { path: '/nearest', element: <User /> },
         { path: '/top', element: <>Top</> },
         // { path: '*', element: <Navigate to="/404" /> }
       ],
     },
+    { path: '/login', element: <Login /> },
+    // { path: '/login', element: user ? <Navigate to={'/profile/' + user.id} /> : <Login /> },
+    { path: '/register', element: <Register /> },
+    // { path: '/register', element: user ? <Navigate to={'/profile/' + user.id} /> : <Register /> },
     // { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }

@@ -2,15 +2,26 @@
 import { Container, Stack, Typography } from '@mui/material';
 // components
 import Page from '../components/Page/Page';
+
+import { useDispatch, useSelector } from 'react-redux';
 //
-import TASKS from '../_mocks_/products';
+// import TASKS from '../_mocks_/products';
 
 import TaskSort from '../components/TaskSort/TaskSort';
 import TaskList from '../components/TasksList/TasksList';
+import { useEffect } from 'react';
+import { getAllTasks } from '../store/ac/tasksAC';
 
 // ----------------------------------------------------------------------
 
 export default function Tasks() {
+  const tasks = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+  // console.log(tasks);
+
+  useEffect(() => {
+    dispatch(getAllTasks());
+  }, []);
   return (
     <Page title="Tasks">
       <Container>
@@ -24,7 +35,7 @@ export default function Tasks() {
           </Stack>
         </Stack>
 
-        <TaskList tasks={TASKS} />
+        <TaskList tasks={tasks} />
       </Container>
     </Page>
   );

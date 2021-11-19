@@ -5,11 +5,11 @@ import TaskCard from '../TaskCard/TaskCard';
 
 // ----------------------------------------------------------------------
 
-TaskList.propTypes = {
-  products: PropTypes.array.isRequired,
+TasksList.propTypes = {
+  tasks: PropTypes.array.isRequired,
 };
 
-export default function TaskList({ tasks, ...other }) {
+export default function TasksList({ tasks, ...other }) {
   return (
     <Grid container spacing={3} {...other}>
       {tasks.map((task) => (

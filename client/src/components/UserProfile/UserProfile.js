@@ -1,8 +1,10 @@
 import React from 'react';
-import { Avatar, Button, Container, Grid, Typography } from '@mui/material';
+import { Avatar, Button, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
+
+import { useSelector } from 'react-redux';
 
 const wrapperStyle = {
   display: 'flex',
@@ -36,20 +38,21 @@ const bgBox = {
 };
 
 const UserProfile = () => {
+  const user = useSelector((state) => state.user);
   return (
     <>
       <Box sx={wrapperStyle}>
         <Avatar
           alt="USER PHOTO"
-          src="/static/mock-images/avatars/avatar_7.jpg"
+          src={user.avatar ? user.avatar : null}
           sx={{ width: 250, height: 250, mr: 6, zIndex: 2 }}
         />
         <Box sx={descWrapper}>
           <Typography gutterBottom variant="h3" sx={{ zIndex: 2 }}>
-            FirstName last`name
+            {user.first_name} {user.last_name}
           </Typography>
           <Typography gutterBottom sx={{ zIndex: 2 }}>
-            Email@email.ru
+            {user.email}
           </Typography>
           <Typography gutterBottom sx={{ zIndex: 2 }}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis unde velit error perspiciatis?
