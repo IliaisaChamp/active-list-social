@@ -14,7 +14,7 @@ const sessionParser = require('./session');
 const app = express();
 
 app.use(logger('dev'));
-app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }));
+app.use(cors({ credentials: true, origin: [process.env.CORS_ORIGIN] }));
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

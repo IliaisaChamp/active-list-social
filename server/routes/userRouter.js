@@ -7,7 +7,6 @@ router.route('/:id');
 
 router.route('/:id/tasks').get(UsersController.getUserTasks);
 
-router.route('/:id').post(UsersController.userSubscribe);
 
 router.route('/:id/follow').post(UsersController.follow);
 router.route('/:id/unfollow').post(UsersController.unfollow);

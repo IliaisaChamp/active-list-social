@@ -1,4 +1,4 @@
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux';
 import { Navigate, useRoutes } from 'react-router-dom';
 
 // layouts
@@ -11,6 +11,7 @@ import Blog from './components/BlogFolder/Blog';
 //
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Tasks from './pages/Tasks';
 // import DashboardApp from './pages/DashboardApp';
 // import Products from './pages/Products';
 // import Blog from './pages/Blog';
@@ -39,9 +40,10 @@ export default function Router() {
       element: <Layout />,
       children: [
         { path: '/profile', element: <Profile /> },
-        { path: '/lenta', element: <><Blog/></> },
+        { path: '/tasks', element: <Tasks /> },
+        { path: '/lenta', element: <>Lenta</> },
         { path: '/chats', element: <>chats</> },
-        { path: '/nearest', element: <User/> },
+        { path: '/nearest', element: <User /> },
         { path: '/top', element: <>Top</> },
         // { path: '*', element: <Navigate to="/404" /> }
       ],

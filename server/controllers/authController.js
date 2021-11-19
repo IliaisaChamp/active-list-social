@@ -3,7 +3,7 @@ const UserService = require('../services/userService');
 
 class CheckController {
   static async register(req, res) {
-    console.log(req.body);
+    console.log(req.body)
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -13,10 +13,14 @@ class CheckController {
       const { nickname, email, password } = req.body;
 
       if (nickname && email && password) {
-        const candidate = await UserService.findByEmail(email);
-
-        if (candidate) {
+        const emailCheck = await UserService.findByEmail(email);
+        const nickNameCheck = await UserService.findByNickname(nickname)
+        if (emailCheck) {
           return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
+        }
+
+        if (nickNameCheck) {
+          return res.status(400).json({ message: 'Пользователь с таким nickname уже существует' });
         }
 
         const createdUser = await UserService.createUser(req.body);

@@ -18,6 +18,11 @@ const sidebarConfig = [
     icon: getIcon(peopleFill),
   },
   {
+    title: 'Tasks',
+    path: '/tasks',
+    icon: getIcon(peopleFill),
+  },
+  {
     title: 'Nearest',
     path: '/nearest',
     icon: getIcon(pieChart2Fill),
