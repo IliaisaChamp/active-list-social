@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const UserService = require('../services/userService');
+const { Following, Follower } = require('../db/models');
 
 class UserController {
   static async userSubscribe(req, res) {
@@ -48,49 +49,72 @@ class UserController {
 
   static async follow(req, res) {
     const { id } = req.params;
-    const { userId } = req.body;
-    if (userId !== req.params.id) {
-      try {
-        const user = await User.findById(id);
-        const currentUser = await User.findById(userId);
+    if (req.session.user) {
+      if (req.session.user.id !== id) {
+        try {
+          const isSubscribed = await Following.findOne({
+            where: {
+              user_id: req.session.user.id,
+              following_id: id,
+            },
+          });
 
-        if (!user.followers.includes(userId)) {
-          await user.updateOne({ $push: { followers: userId } });
-          await currentUser.updateOne({ $push: { followings: id } });
-          res.json('Вы подписались');
-        } else {
-          res.status(403).json('Вы уже подписаны на этого пользователя');
+          if (!isSubscribed) {
+            const F = await Following.create({
+              user_id: req.session.user.id,
+              following_id: id,
+            });
+            const Fr = await Follower.create({
+              user_id: id,
+              follower_id: req.session.user.id,
+            });
+
+            res.json('Вы подписались');
+          } else {
+            res.status(403).json('Вы уже подписаны на этого пользователя');
+          }
+        } catch (error) {
+          console.log(error);
+          return res.status(500).json(error);
         }
-      } catch (error) {
-        console.log(error);
-        return res.status(500).json(error);
+      } else {
+        return res.status(403).json('В не можете подписаться на самого себя');
       }
     } else {
-      return res.status(403).json('В не можете подписаться на самого себя');
+      res.status(401).json({ message: 'Не авторизован' });
     }
   }
 
   static async unfollow(req, res) {
     const { id } = req.params;
-    const { userId } = req.body;
-    if (userId !== req.params.id) {
-      try {
-        const user = await User.findById(id);
-        const currentUser = await User.findById(userId);
+    if (req.session.user) {
+      if (req.session.user !== id) {
+        const isSubscribed = await Follower.findOne({
+          where: {
+            user_id: id,
+            follower_id: req.session.user.id,
+          },
+        });
+        try {
+          if (isSubscribed) {
+            const currentUserFollowing = await Following.create({
+              user_id: req.session.user.id,
+              following_id: id,
+            });
+            await isSubscribed.destroy();
+            await currentUserFollowing.destroy();
 
-        if (user.followers.includes(userId)) {
-          await user.updateOne({ $pull: { followers: userId } });
-          await currentUser.updateOne({ $pull: { followings: id } });
-          res.json('Вы отписались');
-        } else {
-          res.status(403).json('Вы уже отписались на этого пользователя');
+            res.json('Вы отписались');
+          } else {
+            res.status(403).json('Вы уже отписались на этого пользователя');
+          }
+        } catch (error) {
+          console.log(error);
+          return res.status(500).json(error);
         }
-      } catch (error) {
-        console.log(error);
-        return res.status(500).json(error);
+      } else {
+        return res.status(403).json('В не можете подписаться от самого себя');
       }
-    } else {
-      return res.status(403).json('В не можете подписаться от самого себя');
     }
   }
 

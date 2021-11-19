@@ -40,12 +40,12 @@ export default function LoginForm() {
     initialValues: {
       email: '',
       password: '',
-      remember: true
+      remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: (data) => {
-      dispatch(loginUser(data, navigate));
-    }
+    onSubmit: (data, { setSubmitting }) => {
+      dispatch(loginUser(data, navigate, setSubmitting));
+    },
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;

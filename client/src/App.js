@@ -13,6 +13,7 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 // delete
 import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 
 function App() {
   const dispatch = useDispatch()
@@ -26,6 +27,7 @@ function App() {
       <ScrollToTop />
       <GlobalStyles />
       <BaseOptionChartStyle />
+      <ErrorMessage/>
       <Router />
     </ThemeConfig>
   );

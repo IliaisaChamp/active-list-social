@@ -53,14 +53,10 @@ class UserService {
     const { email, password } = data;
     try {
       const candidate = await User.findOne({ where: { email } });
-
-      if (!candidate) {
-        return new Error('Пользователь c таким email не найден');
-      }
       const validPassword = await bcrypt.compare(password, candidate.password);
 
-      if (!validPassword) {
-        return new Error('Пароль не совпадает');
+      if (!candidate || !validPassword) {
+        return null
       }
 
       return candidate.get({ plain: true });

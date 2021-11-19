@@ -56,7 +56,7 @@ class CheckController {
 
           return res.json({ user: req.session.user });
         } else {
-          return res.status(404).json({ message: `Пользователь '${nickname}' не найден` });
+          return res.status(404).json({ message: 'Пользователь c таким email не найден или неверный пароль' });
         }
       } else {
         return res.status(401).json({ message: 'Данные не заполнены' });
