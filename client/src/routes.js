@@ -41,7 +41,7 @@ export default function Router() {
       children: [
         { path: '/profile', element: <Profile /> },
         { path: '/tasks', element: <Tasks /> },
-        { path: '/lenta', element: <>Lenta</> },
+        { path: '/lenta', element: <Blog/> },
         { path: '/chats', element: <>chats</> },
         { path: '/nearest', element: <User /> },
         { path: '/top', element: <>Top</> },
