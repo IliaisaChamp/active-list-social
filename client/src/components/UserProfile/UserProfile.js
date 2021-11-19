@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, Button, Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import plusFill from "@iconify/icons-eva/plus-fill";
@@ -8,6 +8,8 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { useFormik, Form, FormikProvider } from "formik";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const wrapperStyle = {
   display: "flex",
@@ -45,20 +47,20 @@ const UserProfile = () => {
     display: "none",
   });
 
+  const user = useSelector((state) => state.user);
 
-
-  const formik = useFormik({
-    initialValues: {
-      avatar: "",
-    },
-    onSubmit: (data) => {
-      console.dir(data);
-    },
-  });
-  const changeAvatar = () => {
-    formik.handleChange
+  const handleFileinputChange = async (e) => {
+    console.dir(e.target);
+    const formData = new FormData();
+    console.log(user);
+    formData.append("avatar", e.target.files[0]);
+    await axios.put(`api/users/${user.id}`, formData, {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
+    });
+    // setFileInput(e.target.files[0])
   };
-
   return (
     <Box sx={wrapperStyle}>
       <Box sx={{ position: "relative", mr: 6 }}>
@@ -84,8 +86,8 @@ const UserProfile = () => {
               id="icon-button-file"
               type="file"
               name="avatar"
-              onChange={changeAvatar}
-              value={formik.values.avatar}
+              onChange={handleFileinputChange}
+              // value={fileInput}
             />
             <IconButton
               color="primary"
@@ -97,7 +99,6 @@ const UserProfile = () => {
             </IconButton>
           </label>
         </Stack>
-        {/*<AddCircleOutlineTwoToneIcon/>*/}
       </Box>
       <Box sx={descWrapper}>
         <Typography gutterBottom variant="h3" sx={{ zIndex: 2 }}>

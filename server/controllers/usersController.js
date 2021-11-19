@@ -1,7 +1,27 @@
 const { validationResult } = require('express-validator');
 const UserService = require('../services/userService');
+const { User } = require('../db/models');
+const fsp = require('fs/promises');
+const path = require('path');
 
 class UserController {
+  static async edit(req, res) {
+    try {
+      console.log(req.file);
+      const id = req.session.user.id;
+      const user = await User.findOne({ where: { id } });
+      const prevAvatar = user.avatar;
+      if (prevAvatar) {
+        await fsp.unlink(path.join(process.env.PWD, 'public/img', prevAvatar));
+      }
+      user.avatar = req.file.filename;
+      await user.save();
+      res.sendStatus(200);
+    } catch(e) {
+        res.sendStatus(400);
+    }
+  }
+
   static async getUserTasks(req, res) {
     try {
       const userId = req.params.id;
@@ -14,7 +34,6 @@ class UserController {
       }));
       res.json({ tasks });
     } catch (e) {
-      console.log(e)
       res.sendStatus(400);
     }
   }
