@@ -12,6 +12,7 @@ import Blog from './components/BlogFolder/Blog';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Tasks from './pages/Tasks';
+import Report from './pages/Report';
 // import DashboardApp from './pages/DashboardApp';
 // import Products from './pages/Products';
 // import Blog from './pages/Blog';
@@ -42,6 +43,7 @@ export default function Router() {
         { path: '/profile', element: <Profile /> },
         { path: '/tasks', element: <Tasks /> },
         { path: '/lenta', element: <Blog/> },
+        { path: '/report', element: <Report/> },
         { path: '/chats', element: <>chats</> },
         { path: '/nearest', element: <User /> },
         { path: '/top', element: <>Top</> },
