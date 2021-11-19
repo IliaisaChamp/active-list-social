@@ -20,11 +20,13 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  maxWidth: 524,
+  maxWidth: 660,
+  height: '100vh',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2)
+  // borderRadius: 0,
+  // margin: theme.spacing(0, 0, 2, 2)
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -51,11 +53,13 @@ export default function Register() {
 
       <MHidden width="mdDown">
         <SectionStyle>
-          <img
-            alt="register"
-            src="/static/illustrations/pexels-elianne-dipp-4666751.jpg"
-            style={{ objectFit: 'cover', height: '100%' }}
-          />
+          {/* <Box sx={{ borderRadius: '10px' }}> */}
+            <img
+              alt="register"
+              src="/static/illustrations/6619759.jpg"
+              style={{ objectFit: 'contain', height: '80%' }}
+            />
+          {/* </Box> */}
         </SectionStyle>
       </MHidden>
 

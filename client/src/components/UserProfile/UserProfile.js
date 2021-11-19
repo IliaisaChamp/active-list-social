@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Avatar, Button, Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import plusFill from "@iconify/icons-eva/plus-fill";
@@ -10,6 +10,7 @@ import { styled } from "@mui/material/styles";
 import { useFormik, Form, FormikProvider } from "formik";
 import axios from "axios";
 import { useSelector } from "react-redux";
+const BASE_URL = "http://localhost:3001/img";
 
 const wrapperStyle = {
   display: "flex",
@@ -59,14 +60,13 @@ const UserProfile = () => {
         "Content-type": "multipart/form-data",
       },
     });
-    // setFileInput(e.target.files[0])
   };
   return (
     <Box sx={wrapperStyle}>
       <Box sx={{ position: "relative", mr: 6 }}>
         <Avatar
           alt="USER PHOTO"
-          src="/static/mock-images/avatars/avatar_7.jpg"
+          src={user.avatar && `${BASE_URL}/${user.avatar}`}
           sx={{ width: 250, height: 250, zIndex: 2 }}
         />
         <Stack
@@ -87,7 +87,6 @@ const UserProfile = () => {
               type="file"
               name="avatar"
               onChange={handleFileinputChange}
-              // value={fileInput}
             />
             <IconButton
               color="primary"

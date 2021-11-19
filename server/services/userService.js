@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../db/models/');
-const {UserTask, Task} = require("../db/models");
+const { UserTask, Task } = require('../db/models');
 
 class UserService {
   static async getUserTasks(userId) {
@@ -56,14 +56,10 @@ class UserService {
     const { email, password } = data;
     try {
       const candidate = await User.findOne({ where: { email } });
-
-      if (!candidate) {
-        return new Error('Пользователь c таким email не найден');
-      }
       const validPassword = await bcrypt.compare(password, candidate.password);
 
-      if (!validPassword) {
-        return new Error('Пароль не совпадает');
+      if (!candidate || !validPassword) {
+        return null;
       }
 
       return candidate.get({ plain: true });
@@ -103,10 +99,8 @@ class UserService {
 
   static async getUser(id) {
     try {
-      const user = await User.findById(id);
+      return await User.findOne({ where: { id }, raw: true });
 
-      const { password, updatedAt, ...other } = user._doc;
-      return other;
     } catch (error) {
       throw error;
     }

@@ -7,6 +7,7 @@ const logger = require('morgan');
 const http = require('http');
 const cors = require('cors');
 const helmet = require('helmet');
+const { upgrade, connection, wss } = require('./sockets');
 
 const sessionParser = require('./session');
 
@@ -35,5 +36,9 @@ app.use('/api/reports', reportRouter);
 app.use((req, res, next) => next(createError(404)));
 
 const server = http.createServer(app);
+
+//Client authentication
+server.on('upgrade', upgrade);
+wss.on('connection', connection);
 
 module.exports = server;

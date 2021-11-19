@@ -22,11 +22,12 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  maxWidth: 524,
+  maxWidth: 660,
+  height: '100vh',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2)
+  // margin: theme.spacing(2, 0, 2, 2)
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -59,9 +60,9 @@ export default function Login() {
             Hi, Welcome Back
           </Typography> */}
           <img
-            src="/static/illustrations/pexels-elianne-dipp-4666751.jpg"
+            src="/static/illustrations/6619759.jpg"
             alt="login"
-            style={{ objectFit: 'cover', height: '100%' }}
+            style={{ objectFit: 'contain', height: '80%' }}
           />
         </SectionStyle>
       </MHidden>
@@ -69,11 +70,8 @@ export default function Login() {
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
-            <Typography variant="h3" sx={{ px: 5, mb: 5 }}>
+            <Typography variant="h3" sx={{ mb: 5 }}>
               Привет, с возвращением!
-            </Typography>
-            <Typography variant="h4" gutterBottom>
-              Войти
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Введите свои данные ниже.</Typography>
           </Stack>

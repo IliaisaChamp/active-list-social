@@ -40,12 +40,12 @@ export default function LoginForm() {
     initialValues: {
       email: '',
       password: '',
-      remember: true
+      remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: (data) => {
-      dispatch(loginUser(data, navigate));
-    }
+    onSubmit: (data, { setSubmitting }) => {
+      dispatch(loginUser(data, navigate, setSubmitting));
+    },
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
@@ -53,6 +53,13 @@ export default function LoginForm() {
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
+
+   const styles = {
+     helper: {
+       position: 'absolute',
+       bottom: '-17px',
+     },
+   };
 
   return (
     <FormikProvider value={formik}>
@@ -66,6 +73,7 @@ export default function LoginForm() {
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
+            FormHelperTextProps={{ style: styles.helper }}
           />
 
           <TextField
@@ -85,6 +93,7 @@ export default function LoginForm() {
             }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
+            FormHelperTextProps={{ style: styles.helper }}
           />
         </Stack>
 
