@@ -49,12 +49,19 @@ export default function RegisterForm() {
       password_confirm: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: (data, {setSubmitting}) => {
+    onSubmit: (data, { setSubmitting }) => {
       dispatch(registrationUser(data, navigate, setSubmitting));
     },
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+
+  const styles = {
+    helper: {
+      position: 'absolute',
+      bottom: '-17px',
+    },
+  };
 
   return (
     <FormikProvider value={formik}>
@@ -68,6 +75,7 @@ export default function RegisterForm() {
             {...getFieldProps('nickname')}
             error={Boolean(touched.nickname && errors.nickname)}
             helperText={touched.nickname && errors.nickname}
+            FormHelperTextProps={{ style: styles.helper }}
           />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -77,6 +85,7 @@ export default function RegisterForm() {
               {...getFieldProps('first_name')}
               error={Boolean(touched.first_name && errors.first_name)}
               helperText={touched.first_name && errors.first_name}
+              FormHelperTextProps={{ style: styles.helper }}
             />
 
             <TextField
@@ -85,6 +94,7 @@ export default function RegisterForm() {
               {...getFieldProps('last_name')}
               error={Boolean(touched.last_name && errors.last_name)}
               helperText={touched.last_name && errors.last_name}
+              FormHelperTextProps={{ style: styles.helper }}
             />
           </Stack>
 
@@ -96,6 +106,7 @@ export default function RegisterForm() {
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
+            FormHelperTextProps={{ style: styles.helper }}
           />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
@@ -115,6 +126,7 @@ export default function RegisterForm() {
               }}
               error={Boolean(touched.password && errors.password)}
               helperText={touched.password && errors.password}
+              FormHelperTextProps={{ style: styles.helper }}
             />
 
             <TextField
@@ -133,6 +145,7 @@ export default function RegisterForm() {
               }}
               error={Boolean(touched.password_confirm && errors.password_confirm)}
               helperText={touched.password_confirm && errors.password_confirm}
+              FormHelperTextProps={{ style: styles.helper }}
             />
           </Stack>
 

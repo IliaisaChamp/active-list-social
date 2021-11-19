@@ -54,6 +54,13 @@ export default function LoginForm() {
     setShowPassword((show) => !show);
   };
 
+   const styles = {
+     helper: {
+       position: 'absolute',
+       bottom: '-17px',
+     },
+   };
+
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -66,6 +73,7 @@ export default function LoginForm() {
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
+            FormHelperTextProps={{ style: styles.helper }}
           />
 
           <TextField
@@ -85,6 +93,7 @@ export default function LoginForm() {
             }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
+            FormHelperTextProps={{ style: styles.helper }}
           />
         </Stack>
 
