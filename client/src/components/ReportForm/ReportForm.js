@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
@@ -15,7 +14,8 @@ import {
   InputAdornment,
   FormControlLabel,
   Input,
-  Button,
+  Chip,
+  ListItem,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
@@ -30,63 +30,82 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 export default function ReportForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
 
-  // const LoginSchema = Yup.object().shape({
-  //   email: Yup.string()
-  //     .email('Электронная почта должна быть валидным адресом')
-  //     .required('Электронная почта обязательна'),
-  //   password: Yup.string().required('Пароль обязательный'),
-  // });
+  const [chipData, setChipData] = useState([]);
+  const [files, setFiles] = useState([]);
 
-  const formik = useFormik({
-    initialValues: {
-      desc: '',
-      password: '',
-      remember: true,
-    },
-    // validationSchema: LoginSchema,
-    onSubmit: (data, { setSubmitting }) => {},
-  });
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  };
 
-  const { isSubmitting, handleSubmit, getFieldProps } = formik;
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.target);
 
+    files.forEach(el => formData.append(`photos`, el))
+    // dispatch
+  };
 
   const Input = styled('input')({
     display: 'none',
   });
 
+  const fileUploadHandler = (e) => {
+    setFiles((prev) => [...prev, ...e.target.files]);
+
+    for (const el of e.target.files) {
+      setChipData((prev) => [...prev, { label: el.name, key: el.name }]);
+    }
+  };
+
   return (
-    <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack direction="row" alignItems="center" spacing={3}>
+    <>
+      <form onSubmit={handleSubmit}>
+        <Stack direction="row" alignItems="center" justifyContent="center" spacing={3}>
           <label htmlFor="icon-button-file">
-            <Input accept="image/*" id="icon-button-file" type="file" />
+            <Input
+              accept="image/*"
+              id="icon-button-file"
+              type="file"
+              name="files"
+              onChange={fileUploadHandler}
+              multiple="multiple"
+            />
             <IconButton color="primary" aria-label="upload picture" component="span" size="large">
               <PhotoCamera sx={{ width: '50%', height: '50%' }} />
             </IconButton>
           </label>
         </Stack>
 
-        <Stack spacing={3}>
+        <Stack direction="row" justifyContent="center" spacing={3}>
+          {chipData.map((data) => {
+            return (
+              <ListItem key={data.key} sx={{ width: 'auto', padding: '0 0 15px 0' }}>
+                <Chip
+                  // icon={icon}
+                  label={data.label}
+                  onDelete={handleDelete(data)}
+                />
+              </ListItem>
+            );
+          })}
+        </Stack>
+
+        <Stack>
           <TextField
             id="outlined-multiline-static"
             label={t('report.textarea')}
             multiline
             rows={5}
-            {...getFieldProps('desc')}
+            name="desc"
           />
         </Stack>
 
         <Stack
-          spacing={3}
-          direction="row
-         "
-          alignItems="left
-      "
-          justifyContent="space-between
-"
+          direction="row"
+          alignItems="left"
+          justifyContent="space-between"
           sx={{ my: 2, width: '30%' }}
         >
           <LoadingButton
@@ -94,12 +113,13 @@ export default function ReportForm() {
             size="large"
             type="submit"
             variant="contained"
-            loading={isSubmitting}
+            // onClick={hendleClick}
+            // loading={isSubmitting}
           >
             {t('report.form_button')}
           </LoadingButton>
         </Stack>
-      </Form>
-    </FormikProvider>
+      </form>
+    </>
   );
 }
