@@ -55,9 +55,9 @@ const UserProfile = () => {
       console.dir(data);
     },
   });
-  const changeAvatar = () => {
-    formik.handleChange
-  };
+  // const changeAvatar = () => {
+  //   formik.handleChange
+  // };
 
   return (
     <Box sx={wrapperStyle}>
@@ -84,7 +84,7 @@ const UserProfile = () => {
               id="icon-button-file"
               type="file"
               name="avatar"
-              onChange={changeAvatar}
+              // onChange={changeAvatar}
               value={formik.values.avatar}
             />
             <IconButton

@@ -10,6 +10,7 @@ import User from './components/NearestFolder/User';
 //
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Chat from './components/ChatFolder/Chat/Chat';
 // import DashboardApp from './pages/DashboardApp';
 // import Products from './pages/Products';
 // import Blog from './pages/Blog';
@@ -39,7 +40,7 @@ export default function Router() {
       children: [
         { path: '/profile', element: <Profile /> },
         { path: '/lenta', element: <>Lenta</> },
-        { path: '/chats', element: <>chats</> },
+        { path: '/chats', element: <Chat/> },
         { path: '/nearest', element: <User/> },
         { path: '/top', element: <>Top</> },
         // { path: '*', element: <Navigate to="/404" /> }
