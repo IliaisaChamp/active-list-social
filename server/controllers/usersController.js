@@ -2,21 +2,6 @@ const { validationResult } = require('express-validator');
 const UserService = require('../services/userService');
 
 class UserController {
-  static async userSubscribe(req, res) {
-    try {
-      if (req.session.user.id === req.params.id) {
-        const userId = req.session.user.id;
-        const taskId = req.body.taskId;
-        await UserService.subscribe(userId, taskId);
-        res.sendStatus(200);
-      } else {
-        res.sendStatus(401);
-      }
-    } catch (e) {
-      res.sendStatus(400);
-    }
-  }
-
   static async getUserTasks(req, res) {
     try {
       const userId = req.params.id;

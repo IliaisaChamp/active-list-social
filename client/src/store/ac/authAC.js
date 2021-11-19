@@ -39,7 +39,7 @@ export const registrationUser = (data, navigate) => async (dispatch) => {
       dispatch(setUser(res.data.user));
       navigate(`/profile`);
     })
-    .catch((e) => console.log({ e }));
+    .catch((e) => console.dir({ e }));
 };
 
 export const logoutUser = (navigate) => async (dispatch) => {
