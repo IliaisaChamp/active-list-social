@@ -18,15 +18,6 @@ class TaskService {
     return await UserTask.create({ user_id: userId, task_id: taskId });
   }
 
-  static async getUserTasks(userId) {
-    return await UserTask.findAll({
-      where: {
-        user_id: userId,
-      },
-      include: Task,
-    });
-  }
-
   static async getTasks(filter) {
     return filter
       ? await Task.findAll({

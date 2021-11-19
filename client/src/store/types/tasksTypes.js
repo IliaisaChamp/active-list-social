@@ -1,2 +1,5 @@
 export const SET_TASKS = 'SET_TASKS';
-export const GET_TASKS = 'GET_TASKS';
+export const SUBSCRIBE_ON_TASK = 'SUBSCRIBE_ON_TASK';
+export const UNSUBSCRIBE_ON_TASK = 'UNSUBSCRIBE_ON_TASK';
+
+export const GET_TASKS_SAGA = 'GET_TASKS_SAGA';

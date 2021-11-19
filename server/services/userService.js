@@ -1,7 +1,17 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../db/models/');
+const {UserTask, Task} = require("../db/models");
 
 class UserService {
+  static async getUserTasks(userId) {
+    return await UserTask.findAll({
+      where: {
+        user_id: userId,
+      },
+      include: Task,
+    });
+  }
+
   static async createUser(regData) {
     const { password } = regData;
     try {

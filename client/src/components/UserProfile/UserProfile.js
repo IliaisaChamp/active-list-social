@@ -1,10 +1,17 @@
 import React from 'react';
-import { Avatar, Button, Typography } from '@mui/material';
+import { Avatar, Button, Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import { useFormik, Form, FormikProvider } from 'formik';
 
 import { useSelector } from 'react-redux';
+
+const BASE_URL = 'http://localhost:3001/img';
 
 const wrapperStyle = {
   display: 'flex',
@@ -39,39 +46,79 @@ const bgBox = {
 
 const UserProfile = () => {
   const user = useSelector((state) => state.user);
+  const InputFile = styled('input')({
+    display: 'none',
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      avatar: '',
+    },
+    onSubmit: (data) => {
+      console.dir(data);
+    },
+  });
+  // const changeAvatar = () => {
+  //   formik.handleChange;
+  // };
+
   return (
-    <>
-      <Box sx={wrapperStyle}>
+    <Box sx={wrapperStyle}>
+      <Box sx={{ position: 'relative', mr: 6 }}>
         <Avatar
           alt="USER PHOTO"
-          src={user.avatar ? user.avatar : null}
-          sx={{ width: 250, height: 250, mr: 6, zIndex: 2 }}
+          src={user.avatar && `${BASE_URL}/${user.avatar}`}
+          sx={{ width: 250, height: 250, zIndex: 2 }}
         />
-        <Box sx={descWrapper}>
-          <Typography gutterBottom variant="h3" sx={{ zIndex: 2 }}>
-            {user.first_name} {user.last_name}
-          </Typography>
-          <Typography gutterBottom sx={{ zIndex: 2 }}>
-            {user.email}
-          </Typography>
-          <Typography gutterBottom sx={{ zIndex: 2 }}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis unde velit error perspiciatis?
-            Voluptatem eum magnam velit eius natus aliquam sunt adipisci totam numquam deleniti dolor, at sed voluptates
-            nemo?
-          </Typography>
-        </Box>
-        <Button
-          variant="contained"
-          sx={{ zIndex: 2 }}
-          // component={RouterLink}
-          size="large"
-          to="#"
-          startIcon={<Icon icon={plusFill} />}>
-          Add task
-        </Button>
-        <Box sx={bgBox} />
+        <Stack
+          sx={{
+            left: '70%',
+            bottom: '5%',
+            position: 'absolute',
+            zIndex: 4,
+          }}
+          direction="row"
+          alignItems="center"
+          spacing={2}>
+          <label htmlFor="icon-button-file">
+            <InputFile
+              accept="image/*"
+              id="icon-button-file"
+              type="file"
+              name="avatar"
+              // onChange={changeAvatar}
+              value={formik.values.avatar}
+            />
+            <IconButton color="primary" aria-label="upload picture" component="span" size="large">
+              <PhotoCamera sx={{ width: '100%', height: '100%' }} />
+            </IconButton>
+          </label>
+        </Stack>
+        {/*<AddCircleOutlineTwoToneIcon/>*/}
       </Box>
-    </>
+      <Box sx={descWrapper}>
+        <Typography gutterBottom variant="h3" sx={{ zIndex: 2 }}>
+          {user.first_name} {user.last_name}
+        </Typography>
+        <Typography gutterBottom sx={{ zIndex: 2 }}>
+          {user.email}
+        </Typography>
+        <Typography gutterBottom sx={{ zIndex: 2 }}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis unde velit error perspiciatis? Voluptatem
+          eum magnam velit eius natus aliquam sunt adipisci totam numquam deleniti dolor, at sed voluptates nemo?
+        </Typography>
+      </Box>
+      <Button
+        variant="contained"
+        sx={{ zIndex: 2 }}
+        // component={RouterLink}
+        size="large"
+        to="#"
+        startIcon={<Icon icon={plusFill} />}>
+        Add task
+      </Button>
+      <Box sx={bgBox} />
+    </Box>
   );
 };
 

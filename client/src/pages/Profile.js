@@ -30,6 +30,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getUsersTasks(user.id));
   }, []);
+
   return (
     <Page title="Profile">
       <Container maxWidth="xl">
