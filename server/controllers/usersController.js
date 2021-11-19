@@ -7,7 +7,6 @@ const path = require('path');
 class UserController {
   static async edit(req, res) {
     try {
-      console.log(req.file);
       const id = req.session.user.id;
       const user = await User.findOne({ where: { id } });
       const prevAvatar = user.avatar;
