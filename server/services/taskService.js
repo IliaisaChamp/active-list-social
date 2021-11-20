@@ -24,7 +24,7 @@ class TaskService {
           order: [['title', 'ASC']],
           where: {
             title: {
-              [Sequelize.Op.like]: `%${filter}%`,
+              [Sequelize.Op.iLike]: `%${filter}%`,
             },
           },
         })
