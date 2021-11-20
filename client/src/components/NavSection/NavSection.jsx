@@ -135,7 +135,7 @@ function NavItem({ item, active }) {
   return (
     <ListItemStyle
       component={RouterLink}
-      to={path === '/profile/:id' ? `/profile/${user.id}` : path}
+      to={path === '/profile/:id' ? `/profile/${user?.id}` : path}
       sx={{
         ...(isActiveRoot && activeRootStyle),
       }}>
