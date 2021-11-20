@@ -7,9 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import { useFormik, Form, FormikProvider } from "formik";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeAvatar } from "../../store/ac/usersAC";
 const BASE_URL = "http://localhost:3001/img";
 
 const wrapperStyle = {
@@ -49,17 +48,11 @@ const UserProfile = () => {
   });
 
   const user = useSelector((state) => state.user);
-
-  const handleFileinputChange = async (e) => {
-    console.dir(e.target);
+  const dispatch = useDispatch();
+  const handleFileInputChange = async (e) => {
     const formData = new FormData();
-    console.log(user);
     formData.append("avatar", e.target.files[0]);
-    await axios.put(`api/users/${user.id}`, formData, {
-      headers: {
-        "Content-type": "multipart/form-data",
-      },
-    });
+    dispatch(changeAvatar(user.id, formData));
   };
   return (
     <Box sx={wrapperStyle}>
@@ -86,7 +79,7 @@ const UserProfile = () => {
               id="icon-button-file"
               type="file"
               name="avatar"
-              onChange={handleFileinputChange}
+              onChange={handleFileInputChange}
             />
             <IconButton
               color="primary"
