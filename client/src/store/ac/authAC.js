@@ -27,7 +27,7 @@ export const loginUser = (data, navigate, setSubmitting) => async (dispatch) => 
     .then((res) => {
       localStorage.setItem('user', JSON.stringify(res.data.user));
       dispatch(setUserAfterLogin(res.data.user));
-      navigate(`/`);
+      navigate(`/profile/${res.data.user.id}`);
     })
     .catch(({ response }) => {
       dispatch(
@@ -46,7 +46,7 @@ export const registrationUser = (data, navigate, setSubmitting) => async (dispat
     .then((res) => {
       localStorage.setItem('user', JSON.stringify(res.data.user));
       dispatch(setUser(res.data.user));
-      navigate(`/`);
+      navigate(`/profile/${res.data.user.id}`);
     })
     .catch(({ response }) => {
       dispatch(

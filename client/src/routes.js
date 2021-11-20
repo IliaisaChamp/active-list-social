@@ -40,7 +40,10 @@ export default function Router() {
       path: '/',
       element: <Layout />,
       children: [
-        { path: '/profile/:id', element: <Profile /> },
+        {
+          path: '/profile/:id',
+          element: !user ? <Navigate to="/" /> : <Profile />,
+        },
         // { path: '/tasks', element: <Tasks /> },
         { path: '/tasks', element: <Tasks /> },
         { path: '/lenta', element: <Blog /> },
