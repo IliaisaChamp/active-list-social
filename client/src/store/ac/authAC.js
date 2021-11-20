@@ -30,7 +30,12 @@ export const loginUser = (data, navigate, setSubmitting) => async (dispatch) => 
       navigate(`/`);
     })
     .catch(({ response }) => {
-      dispatch(setErrorMessage(response.data.message, 'error'));
+      dispatch(
+        setErrorMessage({
+          type: 'error',
+          message: response.data.message,
+        }),
+      );
       setSubmitting(false);
     });
 };
@@ -44,8 +49,13 @@ export const registrationUser = (data, navigate, setSubmitting) => async (dispat
       navigate(`/profile`);
     })
     .catch(({ response }) => {
-      dispatch(setErrorMessage(response.data.message, 'error'));
-      setSubmitting(false)
+      dispatch(
+        setErrorMessage({
+          type: 'error',
+          message: response.data.message,
+        }),
+      );
+      setSubmitting(false);
     });
 };
 

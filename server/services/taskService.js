@@ -21,13 +21,16 @@ class TaskService {
   static async getTasks(filter) {
     return filter
       ? await Task.findAll({
+          order: [['title', 'ASC']],
           where: {
             title: {
               [Sequelize.Op.like]: `%${filter}%`,
             },
           },
         })
-      : await Task.findAll();
+      : await Task.findAll({
+          order: [['title', 'ASC']],
+        });
   }
 }
 

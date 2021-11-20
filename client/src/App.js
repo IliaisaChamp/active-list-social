@@ -36,6 +36,8 @@ function App() {
     dispatch(checkUser());
   }, [dispatch]);
 
+
+
   return (
     <ThemeConfig>
       <ScrollToTop />
