@@ -1,0 +1,3 @@
+export const FLASH_SET_ERROR = 'ERROR_SET_ERROR';
+export const FLASH_SET_SUCCESS = 'FLASH_SET_SUCCESS';
+export const FLASH_CLEAR = 'FLASH_CLEAR';

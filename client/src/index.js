@@ -15,9 +15,6 @@ import 'simplebar/src/simplebar.css';
 
 import App from './App';
 
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:3001';
-
 ReactDOM.render(
   <HelmetProvider>
     <BrowserRouter>

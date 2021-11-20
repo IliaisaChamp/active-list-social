@@ -29,7 +29,9 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUsersTasks(user.id));
+    if (user) {
+      dispatch(getUsersTasks(user.id));
+    }
   }, []);
 
   const unscubscribeHandler = (taskId) => {

@@ -1,2 +1,0 @@
-export const ERROR_SET_ERROR = 'ERROR_SET_ERROR';
-export const ERROR_DELETE_ERROR = 'ERROR_DELETE_ERROR';

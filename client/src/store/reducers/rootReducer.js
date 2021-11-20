@@ -5,14 +5,14 @@ import isLoadingReducer from "./isLoadingReducer"
 import reportsReducer from "./reportsReducer"
 import currentReportsReducer from "./currentReportsReducer"
 import authReducer from "./authReducer";
-import errorMessageReducer from './errorReducer';
+import flashReducer from './flashReducer';
 import notificationReducer from './notificationReducer';
 
 
 
 const rootReducer = combineReducers({
   user: authReducer,
-  error: errorMessageReducer,
+  flash: flashReducer,
   notification: notificationReducer,
   tasks: tasksReducer,
   possibleFriends: possibleFriendsReducer,

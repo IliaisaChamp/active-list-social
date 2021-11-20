@@ -3,7 +3,7 @@ const UserService = require('../services/userService');
 
 class CheckController {
   static async register(req, res) {
-    console.log(req.body)
+    console.log(req.body);
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -14,7 +14,7 @@ class CheckController {
 
       if (nickname && email && password) {
         const emailCheck = await UserService.findByEmail(email);
-        const nickNameCheck = await UserService.findByNickname(nickname)
+        const nickNameCheck = await UserService.findByNickname(nickname);
         if (emailCheck) {
           return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
         }
@@ -70,11 +70,14 @@ class CheckController {
     }
   }
 
-  static check(req, res) {
+  static async check(req, res) {
+    console.log(req.session.user)
     if (req.session.user) {
-      return res.json({ user: req.session.user });
+      const id = req.session.user.id;
+      const { password, ...user } = await UserService.getUser(id);
+      return res.json({ user });
     } else {
-      return res.status(401).json({message: 'Сессия истекла'});
+      return res.status(401).json({ message: 'Сессия истекла' });
     }
   }
 }

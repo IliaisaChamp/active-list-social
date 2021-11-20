@@ -25,10 +25,10 @@ const resources = {
         password_confirm: 'Подтвердите пароль',
         forgot_password: 'Забыли пароль?',
       },
-      modal: {
-        title: 'Добавить канал',
-        title_delete: 'Удалить канал',
-        text_delete: 'Переименовать канал',
+      report: {
+        textarea: 'Подробное описание',
+        title: 'Создать отчет о выполнении цели',
+        form_button: 'Создать отчет',
         title_rename: 'Переименовать канал',
       },
     },

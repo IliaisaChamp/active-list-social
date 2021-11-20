@@ -1,15 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator');
 const UsersController = require('../controllers/usersController');
-
-router.route('/:id');
+const checkAuth = require('../middleware/checkAuth');
+const uploadAvatar = require('../middleware/uploadAvatar')
 
 router.route('/:id/tasks').get(UsersController.getUserTasks);
-
-
-router.route('/:id/follow').post(UsersController.follow);
-router.route('/:id/unfollow').post(UsersController.unfollow);
+router.route('/:id/follow').post(checkAuth, UsersController.follow);
+router.route('/:id/unfollow').post(checkAuth, UsersController.unfollow);
 router.route('/:id/followings').get(UsersController.getFollowings);
+router.route('/:id').put(checkAuth, uploadAvatar, UsersController.edit);
 
 module.exports = router;
