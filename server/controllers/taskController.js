@@ -9,11 +9,11 @@ class TaskController {
         await TaskService.unSubscribe(userId, taskId);
         res.sendStatus(200);
       } else {
-        res.sendStatus(401)
+        res.sendStatus(401);
       }
-    } catch(e) {
-     res.sendStatus(400)
-    }git
+    } catch (e) {
+      res.sendStatus(400);
+    }
   }
   static async userSubscribe(req, res) {
     try {
@@ -31,7 +31,7 @@ class TaskController {
   }
   static async showAll(req, res) {
     try {
-      const filter = req.query._filter;
+      const filter = decodeURIComponent(req.query._filter);
       const tasks = await TaskService.getTasks(filter);
       res.json({ tasks });
     } catch (e) {

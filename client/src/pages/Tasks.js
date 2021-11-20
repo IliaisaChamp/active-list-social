@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 //
 // import TASKS from '../_mocks_/products';
 
-import TaskSort from '../components/TaskSort/TaskSort';
-import TaskList from '../components/TasksList/TasksList';
+// import TaskSort from '../components/TaskSort/TaskSort';
+// import TaskList from '../components/TasksList/TasksList';
+import TasksList from '../components/Tasks';
 import { useEffect } from 'react';
-import { getAllTasks } from '../store/ac/tasksAC';
+import { getAllTasks, subscribeOnTask } from '../store/ac/tasksAC';
 
 // ----------------------------------------------------------------------
 
@@ -18,6 +19,9 @@ export default function Tasks() {
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   // console.log(tasks);
+  const subscribeHandler = (taskId) => {
+    dispatch(subscribeOnTask(taskId));
+  };
 
   useEffect(() => {
     dispatch(getAllTasks());
@@ -26,17 +30,11 @@ export default function Tasks() {
   return (
     <Page title="Tasks">
       <Container>
-        <Typography variant="h4" sx={{ mb: 5 }}>
+        <Typography align="center" variant="h4" sx={{ mb: 5 }}>
           Tasks
         </Typography>
 
-        <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <TaskSort />
-          </Stack>
-        </Stack>
-
-        <TaskList tasks={tasks} />
+        <TasksList tasks={tasks} subscribeHandler={subscribeHandler} buttonName={'Добавить'} />
       </Container>
     </Page>
   );
