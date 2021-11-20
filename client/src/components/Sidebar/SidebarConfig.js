@@ -6,6 +6,7 @@ import fileTextFill from '@iconify/icons-eva/file-text-fill';
 import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
+import logInFill from '@iconify/icons-eva/log-in-fill'
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +24,7 @@ const sidebarConfig = [
     icon: getIcon(peopleFill),
   },
   {
-    title: 'Nearest',
+    title: 'Подписки',
     path: '/nearest',
     icon: getIcon(pieChart2Fill),
   },
@@ -45,7 +46,7 @@ const sidebarConfig = [
   {
     title: 'login',
     path: '/login',
-    icon: getIcon(lockFill),
+    icon: getIcon(logInFill),
   },
   {
     title: 'register',

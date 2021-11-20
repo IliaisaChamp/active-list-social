@@ -1489,7 +1489,7 @@
   "resolved" "https://registry.npmjs.org/@iconify/icons-ic/-/icons-ic-1.1.15.tgz"
   "version" "1.1.15"
 
-"@iconify/react@^3.0.1":
+"@iconify/react@^3.1.0":
   "integrity" "sha512-RBmYRPgjBukT7/qdUBnj0ZFEEP4plKs8f/ANYrPvnMID+T0VXRc1zKzKWWV9tjR5hw/QpsKSw1fmxfKjSihKHg=="
   "resolved" "https://registry.npmjs.org/@iconify/react/-/react-3.1.0.tgz"
   "version" "3.1.0"
