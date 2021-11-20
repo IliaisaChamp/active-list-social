@@ -2,9 +2,10 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/img/reports');
+    cb(null, 'public/img/reports/');
   },
   filename: function (req, file, cb) {
+    console.log(file);
     const ext = file.mimetype.split('/')[1];
     cb(null, file.fieldname + Date.now() + `.${ext}`);
   },
@@ -19,7 +20,7 @@ const upload = multer({
       cb(new Error('Неправильный тип файла'));
     }
   },
-}).any('files');
+}).array('photos');
 
 function uploadReportsPhotos(req, res, next) {
   upload(req, res, (err) => {

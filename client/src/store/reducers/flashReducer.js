@@ -6,6 +6,7 @@ import {
 
 const flashMessageReducer = (state = {}, action) => {
   const { type, payload } = action;
+
   switch (type) {
     case FLASH_SET_ERROR:
       return { ...state, type: payload.type, message: payload.message };

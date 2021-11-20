@@ -11,9 +11,10 @@ export const setErrorMessage = (value) => {
   };
 };
 
-export const clearFlashMessage = () => {
+export const clearFlashMessage = (value) => {
   return {
     type: FLASH_CLEAR,
+    payload: value,
   };
 };
 

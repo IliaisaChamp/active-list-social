@@ -9,8 +9,9 @@ import { MHidden } from '../@material-extend';
 //
 // import Searchbar from './Searchbar';
 // import AccountPopover from './AccountPopover';
-// import LanguagePopover from './LanguagePopover';
-// import NotificationsPopover from './NotificationsPopover';
+import LanguagePopover from './LanguagePopover';
+import NotificationsPopover from './NotificationsPopover';
+import Logout from './Logout';
 
 // ----------------------------------------------------------------------
 
@@ -38,11 +39,11 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-MobileSidebar.propTypes = {
+Header.propTypes = {
   onOpenSidebar: PropTypes.func,
 };
 
-export default function MobileSidebar({ onOpenSidebar }) {
+export default function Header({ onOpenSidebar }) {
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -56,9 +57,10 @@ export default function MobileSidebar({ onOpenSidebar }) {
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          {/* <LanguagePopover />
+          <LanguagePopover />
           <NotificationsPopover />
-          <AccountPopover /> */}
+          <Logout />
+          {/* <AccountPopover /> */}
         </Stack>
       </ToolbarStyle>
     </RootStyle>
