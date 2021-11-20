@@ -7,18 +7,24 @@ const path = require('path');
 class UserController {
   static async edit(req, res) {
     try {
+      console.log('EDIT LAUNCHED')
       const id = req.session.user.id;
       const user = await User.findOne({ where: { id } });
       const prevAvatar = user.avatar;
-      if (prevAvatar) {
-        await fsp.unlink(path.join(process.env.PWD, 'public/img', prevAvatar));
+      const pathToAvatar = path.join(process.env.PWD, 'public/img', prevAvatar);
+      const isFileExist = await fsp
+        .access(pathToAvatar)
+        .then(() => true)
+        .catch(() => false);
+      if (isFileExist) {
+        await fsp.unlink(pathToAvatar);
       }
       user.avatar = req.file.filename;
       await user.save();
-      console.log(user);
       res.sendStatus(200);
-    } catch(e) {
-        res.sendStatus(400);
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(400);
     }
   }
 
@@ -34,7 +40,7 @@ class UserController {
       }));
       res.json({ tasks });
     } catch (e) {
-      console.log(e)
+      console.log(e);
       res.sendStatus(400);
     }
   }

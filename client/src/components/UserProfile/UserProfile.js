@@ -53,11 +53,6 @@ const UserProfile = () => {
     const formData = new FormData();
     formData.append("avatar", e.target.files[0]);
     dispatch(changeAvatar(user.id, formData));
-    // await axios.put(`api/users/${user.id}`, formData, {
-    //   headers: {
-    //     "Content-type": "multipart/form-data",
-    //   },
-    // });
   };
   return (
     <Box sx={wrapperStyle}>
