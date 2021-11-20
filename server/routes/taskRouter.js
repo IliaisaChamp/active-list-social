@@ -10,7 +10,7 @@ router
 
 router.route('/:id/subscribe')
     .post(TaskController.userSubscribe)
-  .delete(TaskController.userUnsubscribe)
+    .delete(TaskController.userUnsubscribe)
 
 router.route('/:id/report').post(checkAuth, uploadReportsPhotos, ReportController.create);
 

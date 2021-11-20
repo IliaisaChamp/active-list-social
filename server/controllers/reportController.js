@@ -1,5 +1,6 @@
 const { Report } = require('../db/models');
 const UserService = require('../services/userService');
+const {Op} = require('sequelize')
 
 class ReportController {
   static async showAll(req, res) {
@@ -13,7 +14,9 @@ class ReportController {
 
   static async create(req, res) {
     const { id } = req.params;
-    const photoNames = req.files.map((el) => el.filename);
+
+      const photoNames = req.files?.map((el) => el.filename);
+
     try {
       const newReport = await Report.create({
         user_id: req.session.user.id,
@@ -33,12 +36,24 @@ class ReportController {
   static async getReportsForUser(req, res) {
     try {
       const userTasks = await UserService.getUserTasks(req.session.user.id);
+      const userTasksArr = userTasks?.map(el => el.task_id)
 
-      console.log(userTasks);
-      // const reports = await Report.findAll({
-      //   where:
-      // })
-    } catch (error) {}
+      const reports = await Report.findAll({
+        where: {
+          task_id: {
+            [Op.in]: userTasksArr,
+          },
+        },
+      });
+
+      if (reports) {
+        return res.json(reports.get({plain: true}));
+      } else {
+        return res.status(400).json({message: 'Отчетов нет'})
+      }
+    } catch (error) {
+      return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
+    }
   }
 }
 
