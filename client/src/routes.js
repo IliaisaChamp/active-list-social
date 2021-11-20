@@ -12,6 +12,7 @@ import Blog from './components/BlogFolder/Blog';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Tasks from './pages/Tasks';
+// import Tasks from './components/Tasks';
 // import DashboardApp from './pages/DashboardApp';
 // import Products from './pages/Products';
 // import Blog from './pages/Blog';
@@ -39,7 +40,8 @@ export default function Router() {
       path: '/',
       element: <Layout />,
       children: [
-        { path: '/profile', element: <Profile /> },
+        { path: '/profile/:id', element: <Profile /> },
+        // { path: '/tasks', element: <Tasks /> },
         { path: '/tasks', element: <Tasks /> },
         { path: '/lenta', element: <>Lenta</> },
         { path: '/chats', element: <>chats</> },

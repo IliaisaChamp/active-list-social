@@ -14,7 +14,7 @@ const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 const sidebarConfig = [
   {
     title: 'Profile',
-    path: '/profile',
+    path: '/profile/:id',
     icon: getIcon(peopleFill),
   },
   {

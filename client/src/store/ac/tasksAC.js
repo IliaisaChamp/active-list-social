@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_TASKS } from '../types/tasksTypes';
+import { GET_TASKS_SAGA, REMOVE_TASK, SET_TASKS } from '../types/tasksTypes';
 
 const BASE_URL = 'http://localhost:3001/api';
 
@@ -21,11 +21,25 @@ export const getUsersTasks = (userId) => async (dispacth) => {
   });
 };
 
-export const subscribeOnTask = (taskId) => async (dispacth) => {
-  const response = await axios.post(`${BASE_URL}/tasks/${taskId}`);
-  const { tasks } = response.data;
+export const getFilteredTasks = (filter) => {
+  return { type: GET_TASKS_SAGA, payload: filter };
+};
+
+export const subscribeOnTask = (taskId) => async (dispatch) => {
+  const response = await axios.post(`${BASE_URL}/tasks/${taskId}/subscribe`);
+  if (response.status < 400) {
+    dispatch({
+      type: REMOVE_TASK,
+      payload: taskId,
+    });
+  }
+};
+
+export const unsubscribeOnTask = (taskId) => async (dispacth) => {
+  const response = await axios.delete(`${BASE_URL}/tasks/${taskId}/subscribe`);
+  console.log(response);
   dispacth({
-    type: SET_TASKS,
-    payload: tasks,
+    type: REMOVE_TASK,
+    payload: taskId,
   });
 };

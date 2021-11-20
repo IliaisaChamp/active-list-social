@@ -19,8 +19,9 @@ import AppCurrentSubject from '../components/ProfileStats/AppCurrentSubject';
 // import AppTrafficBySite from '../components/ProfileStats/AppTrafficBySite';
 // import AppTasks from '../components/ProfileStats/AppTasks';
 import UserProfile from '../components/UserProfile/UserProfile';
-import TasksList from '../components/TasksList/TasksList';
-import { getAllTasks, getUsersTasks } from '../store/ac/tasksAC';
+import TasksList from '../components/Tasks';
+
+import { getUsersTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
 
 const Profile = () => {
   const tasks = useSelector((state) => state.tasks);
@@ -30,6 +31,11 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getUsersTasks(user.id));
   }, []);
+
+  const unscubscribeHandler = (taskId) => {
+    console.log('afasdf');
+    dispatch(unsubscribeOnTask(taskId));
+  };
 
   return (
     <Page title="Profile">
@@ -50,7 +56,7 @@ const Profile = () => {
           </Grid>
 
           <Grid item xs={12} md={6} lg={12}>
-            <TasksList tasks={tasks} />
+            <TasksList tasks={tasks} subscribeHandler={unscubscribeHandler} buttonName={'Удалить'} />
           </Grid>
         </Grid>
       </Container>
