@@ -31,6 +31,17 @@ const resources = {
         form_button: 'Создать отчет',
         title_rename: 'Переименовать канал',
       },
+      sideBar: {
+        notFound: 'cтраница не найдена',
+        registration: 'Регистрация',
+        login: 'Вход',
+        top: 'Топ',
+        chat: 'Чат',
+        lenta: 'Лента',
+        subscribe: 'Подписка',
+        tasks: 'Цели',
+        profile: 'Профиль',
+      }
     },
   },
 };

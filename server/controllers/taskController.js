@@ -9,11 +9,11 @@ class TaskController {
         await TaskService.unSubscribe(userId, taskId);
         res.sendStatus(200);
       } else {
-        res.sendStatus(401)
+        res.sendStatus(401);
       }
-    } catch(e) {
-     res.sendStatus(400)
-    }git
+    } catch (e) {
+      res.sendStatus(400);
+    }
   }
   static async userSubscribe(req, res) {
     try {

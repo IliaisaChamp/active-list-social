@@ -43,7 +43,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
-  const { t } = useTranslation();
 
   return (
     <RootStyle title="Login | Minimal-UI">
