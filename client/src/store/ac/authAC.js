@@ -34,7 +34,7 @@ export const loginUser = (data, navigate, setSubmitting) => async (dispatch) => 
         setErrorMessage({
           type: 'error',
           message: response.data.message,
-        }),
+        })
       );
       setSubmitting(false);
     });
@@ -46,14 +46,14 @@ export const registrationUser = (data, navigate, setSubmitting) => async (dispat
     .then((res) => {
       localStorage.setItem('user', JSON.stringify(res.data.user));
       dispatch(setUser(res.data.user));
-      navigate(`/profile`);
+      navigate(`/`);
     })
     .catch(({ response }) => {
       dispatch(
         setErrorMessage({
           type: 'error',
           message: response.data.message,
-        }),
+        })
       );
       setSubmitting(false);
     });
@@ -64,9 +64,9 @@ export const logoutUser = (navigate) => async (dispatch) => {
     .then((res) => {
       localStorage.removeItem('user');
       dispatch(deleteUser());
-      navigate('/profile');
+      navigate('/');
     })
-    .catch(({ response }) => console.log(response.data.message));
+    .catch((err) => console.log(err));
 };
 
 export const checkUser = () => async (dispatch) => {
