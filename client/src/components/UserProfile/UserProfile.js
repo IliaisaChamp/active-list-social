@@ -49,24 +49,25 @@ const UserProfile = () => {
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
   const handleFileInputChange = async (e) => {
     const formData = new FormData();
     formData.append("avatar", e.target.files[0]);
-    dispatch(changeAvatar(user.id, formData));
+    dispatch(changeAvatar(user?.id, formData));
   };
   return (
     <Box sx={wrapperStyle}>
-      <Box sx={{ position: "relative", mr: 6 }}>
+      <Box sx={{ position: 'relative', mr: 6 }}>
         <Avatar
           alt="USER PHOTO"
-          src={user.avatar && `${BASE_URL}/${user.avatar}`}
+          src={user?.avatar && `${BASE_URL}/${user.avatar}`}
           sx={{ width: 250, height: 250, zIndex: 2 }}
         />
         <Stack
           sx={{
-            left: "70%",
-            bottom: "5%",
-            position: "absolute",
+            left: '70%',
+            bottom: '5%',
+            position: 'absolute',
             zIndex: 4,
           }}
           direction="row"
@@ -81,29 +82,23 @@ const UserProfile = () => {
               name="avatar"
               onChange={handleFileInputChange}
             />
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
-              size="large"
-            >
-              <PhotoCamera sx={{ width: "100%", height: "100%" }} />
+            <IconButton color="primary" aria-label="upload picture" component="span" size="large">
+              <PhotoCamera sx={{ width: '100%', height: '100%' }} />
             </IconButton>
           </label>
         </Stack>
       </Box>
       <Box sx={descWrapper}>
         <Typography gutterBottom variant="h3" sx={{ zIndex: 2 }}>
-          FirstName last`name
+          {user.first_name} {user.last_name}
         </Typography>
         <Typography gutterBottom sx={{ zIndex: 2 }}>
-          Email@email.ru
+          {user.email}
         </Typography>
         <Typography gutterBottom sx={{ zIndex: 2 }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis
-          unde velit error perspiciatis? Voluptatem eum magnam velit eius natus
-          aliquam sunt adipisci totam numquam deleniti dolor, at sed voluptates
-          nemo?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis unde velit error
+          perspiciatis? Voluptatem eum magnam velit eius natus aliquam sunt adipisci totam numquam
+          deleniti dolor, at sed voluptates nemo?
         </Typography>
       </Box>
       <Button

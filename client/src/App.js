@@ -13,7 +13,7 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 // delete
 import { BaseOptionChartStyle } from "./components/charts/BaseOptionChart";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import FlashMessage from './components/FlashMessage/FlashMessage';
 import Notification from "./components/Notification/Notification";
 import axios from "axios";
 
@@ -42,7 +42,7 @@ function App() {
       <GlobalStyles />
       <BaseOptionChartStyle />
       <Notification />
-      <ErrorMessage />
+      <FlashMessage />
       <Router />
     </ThemeConfig>
   );

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AUTH_USER_REGISTRATION, AUTH_USER_LOGOUT, AUTH_USER_LOGIN } from '../types/authTypes';
-import { setErrorMessage } from './errorAC';
+import { setErrorMessage } from './flashAC';
 
 const setUser = (value) => {
   return {
@@ -30,7 +30,7 @@ export const loginUser = (data, navigate, setSubmitting) => async (dispatch) => 
       navigate(`/`);
     })
     .catch(({ response }) => {
-      dispatch(setErrorMessage(response.data.message));
+      dispatch(setErrorMessage(response.data.message, 'error'));
       setSubmitting(false);
     });
 };
@@ -44,7 +44,7 @@ export const registrationUser = (data, navigate, setSubmitting) => async (dispat
       navigate(`/profile`);
     })
     .catch(({ response }) => {
-      dispatch(setErrorMessage(response.data.message));
+      dispatch(setErrorMessage(response.data.message, 'error'));
       setSubmitting(false)
     });
 };

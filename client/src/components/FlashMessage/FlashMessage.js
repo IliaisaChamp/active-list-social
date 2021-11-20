@@ -4,43 +4,46 @@ import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import Slide from '@mui/material/Slide';
 import MuiAlert from '@mui/material/Alert';
-import { clearErrorMessage } from '../../store/ac/errorAC';
+import { clearFlashMessage } from '../../store/ac/flashAC';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function ErrorMessage() {
-  const [errorState, setErrorState] = useState({
+export default function FlashMessage() {
+  const [flash, setFlashState] = useState({
     open: false,
     vertical: 'top',
     horizontal: 'center',
     Transition: Slide,
   });
 
-  const { vertical, horizontal, open } = errorState;
+  const { vertical, horizontal, open } = flash;
 
-  const error = useSelector((state) => state.error);
+  const {type, message} = useSelector((state) => state.flash);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (error) {
-      setErrorState({
-        ...errorState,
+    if (message) {
+      setFlashState({
+        ...flash,
         open: true,
         vertical: 'top',
         horizontal: 'center',
       });
     }
-  }, [error]);
+  }, [message]);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-    setErrorState({ ...errorState, open: false });
+    setFlashState({ ...flash, open: false });
     setTimeout(() => {
-      dispatch(clearErrorMessage());
+      dispatch(clearFlashMessage({
+        type: '',
+        message: ''
+      }));
     }, 300);
   };
 
@@ -51,10 +54,10 @@ export default function ErrorMessage() {
         autoHideDuration={4000}
         onClose={handleClose}
         anchorOrigin={{ vertical, horizontal }}
-        TransitionComponent={errorState.Transition}
+        TransitionComponent={flash.Transition}
       >
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
+        <Alert onClose={handleClose} severity={ type} sx={{ width: '100%' }}>
+          {message}
         </Alert>
       </Snackbar>
     </Stack>

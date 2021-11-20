@@ -11,21 +11,12 @@ class ReportController {
   }
 
   static async create(req, res) {
-    try {
-      if (req.session.user) {
-        const userId = req.session.user.id;
-        const {images, desc } = req.body;
-          console.log(req.body);
-          console.log(desc);
+    console.log(req.body);
+    // try {
 
-        return res.status(200)
-      } else {
-        console.log('session not');
-        res.sendStatus(401);
-      }
-    } catch(e) {
-     res.sendStatus(400)
-    }
+    // } catch(e) {
+    //  return res.sendStatus(400)
+    // }
   }
 }
 

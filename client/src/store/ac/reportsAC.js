@@ -1,5 +1,6 @@
 import { SET_REPORTS } from '../types/reportsTypes';
 import axios from 'axios';
+import { setErrorMessage, setSuccessMessage } from './flashAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
@@ -17,6 +18,26 @@ export const setNewReport = (data, navigate) => async (dispatch) => {
     images: data.getAll('photos'),
     desc: data.get('desc'),
   };
-  const response = await axios.post(`${BASE_URL}/reports`, reportData);
-  console.log(response);
+  await axios
+    .post(`${BASE_URL}/reports`, reportData, {
+      headers: {
+        'Content-type': 'multipart/form-data',
+      },
+    })
+    .then((res) =>
+      dispatch(
+        setSuccessMessage({
+          message: 'Отчет успешно добавлен',
+          type: 'success',
+        }),
+      ),
+    )
+    .catch(({ response }) =>
+      dispatch(
+        setErrorMessage({
+          message: response.data.message,
+          type: 'error',
+        }),
+      ),
+    );
 };
