@@ -59,7 +59,7 @@ const UserProfile = () => {
       <Box sx={{ position: "relative", mr: 6 }}>
         <Avatar
           alt="USER PHOTO"
-          src={user.avatar && `${BASE_URL}/${user.avatar}`}
+          src={user?.avatar && `${BASE_URL}/${user.avatar}`}
           sx={{ width: 250, height: 250, zIndex: 2 }}
         />
         <Stack

@@ -71,6 +71,7 @@ class CheckController {
   }
 
   static async check(req, res) {
+    console.log(req.session.user)
     if (req.session.user) {
       const id = req.session.user.id;
       const { password, ...user } = await UserService.getUser(id);

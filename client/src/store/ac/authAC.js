@@ -44,6 +44,7 @@ export const registrationUser = (data, navigate, setSubmitting) => async (dispat
       navigate(`/profile`);
     })
     .catch(({ response }) => {
+        console.log(response)
       dispatch(setErrorMessage(response.data.message));
       setSubmitting(false)
     });
