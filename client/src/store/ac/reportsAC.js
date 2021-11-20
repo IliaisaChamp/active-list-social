@@ -14,12 +14,8 @@ export const setReports = () => async (dispatch) => {
 };
 
 export const setNewReport = (data, navigate) => async (dispatch) => {
-  const reportData = {
-    images: data.getAll('photos'),
-    desc: data.get('desc'),
-  };
   await axios
-    .post(`${BASE_URL}/reports`, reportData, {
+    .post(`${BASE_URL}/tasks/4/report`, data, {
       headers: {
         'Content-type': 'multipart/form-data',
       },
@@ -35,7 +31,7 @@ export const setNewReport = (data, navigate) => async (dispatch) => {
     .catch(({ response }) =>
       dispatch(
         setErrorMessage({
-          message: response.data.message,
+          message: response?.data?.message,
           type: 'error',
         }),
       ),

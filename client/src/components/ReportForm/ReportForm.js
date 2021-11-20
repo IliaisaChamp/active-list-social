@@ -27,8 +27,7 @@ export default function ReportForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-
-    chipData.forEach((el) => formData.append(`photos`, el.file));
+    chipData.forEach((el, id) => formData.append(`photos`, el.files[id]));
     dispatch(setNewReport(formData));
   };
 
@@ -42,7 +41,7 @@ export default function ReportForm() {
 
     for (const el of e.target.files) {
       if (el.type === 'image/png' || el.type === 'image/jpeg' || el.type === 'image/jpg') {
-        setChipData((prev) => [...prev, { label: el.name, key: el.name, img: src, file: el }]);
+        setChipData((prev) => [...prev, { label: el.name, key: el.name, img: src, files: e.target.files }]);
       }
     }
   };
@@ -56,7 +55,7 @@ export default function ReportForm() {
               accept="image/*"
               id="icon-button-file"
               type="file"
-              name="files"
+              name="images"
               onChange={fileUploadHandler}
               multiple="multiple"
             />

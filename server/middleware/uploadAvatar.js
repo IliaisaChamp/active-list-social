@@ -5,6 +5,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/img');
   },
   filename: function (req, file, cb) {
+    console.log(file);
     const ext = file.mimetype.split('/')[1];
     cb(null, file.fieldname + Date.now() + `.${ext}`);
   },
@@ -23,6 +24,7 @@ const upload = multer({
 
 function uploadAvatar (req, res, next) {
   upload(req, res, (err) => {
+    console.log(req);
     if (err) {
     res.status(415).json({message: err?.message ?? 'Что-то пошло не так......'})
     } else {
