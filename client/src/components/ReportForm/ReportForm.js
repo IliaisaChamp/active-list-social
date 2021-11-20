@@ -1,29 +1,15 @@
-import * as Yup from 'yup';
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { Icon } from '@iconify/react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
-import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
-import {
-  Link,
-  Stack,
-  Checkbox,
-  TextField,
-  IconButton,
-  InputAdornment,
-  FormControlLabel,
-  Input,
-  Chip,
-  ListItem,
-} from '@mui/material';
+import { Stack, TextField, IconButton, Chip, ListItem } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
 
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-// import { loginUser } from '../../../store/ac/authAC';
+import ReportPreviousImages from '../ReportPreviousImages/ReportPreviousImages';
+import { setNewReport } from '../../store/ac/reportsAC';
 
 // ----------------------------------------------------------------------
 
@@ -33,18 +19,17 @@ export default function ReportForm() {
   const { t } = useTranslation();
 
   const [chipData, setChipData] = useState([]);
-  const [files, setFiles] = useState([]);
 
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const formData = new FormData(e.target);
 
-    files.forEach(el => formData.append(`photos`, el))
-    // dispatch
+    chipData.forEach((el) => formData.append(`photos`, el.file));
+    dispatch(setNewReport(formData));
   };
 
   const Input = styled('input')({
@@ -52,10 +37,13 @@ export default function ReportForm() {
   });
 
   const fileUploadHandler = (e) => {
-    setFiles((prev) => [...prev, ...e.target.files]);
+    const [file] = e.target.files;
+    const src = URL.createObjectURL(file);
 
     for (const el of e.target.files) {
-      setChipData((prev) => [...prev, { label: el.name, key: el.name }]);
+      if (el.type === 'image/png' || el.type === 'image/jpeg' || el.type === 'image/jpg') {
+        setChipData((prev) => [...prev, { label: el.name, key: el.name, img: src, file: el }]);
+      }
     }
   };
 
@@ -76,9 +64,9 @@ export default function ReportForm() {
               <PhotoCamera sx={{ width: '50%', height: '50%' }} />
             </IconButton>
           </label>
+          <ReportPreviousImages itemData={chipData} />
         </Stack>
-
-        <Stack direction="row" justifyContent="center" spacing={3}>
+        <Stack direction="row" justifyContent="center" sx={{ padding: '15px 0 15px 0' }}>
           {chipData.map((data) => {
             return (
               <ListItem key={data.key} sx={{ width: 'auto', padding: '0 0 15px 0' }}>
@@ -113,7 +101,6 @@ export default function ReportForm() {
             size="large"
             type="submit"
             variant="contained"
-            // onClick={hendleClick}
             // loading={isSubmitting}
           >
             {t('report.form_button')}

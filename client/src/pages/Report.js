@@ -1,9 +1,9 @@
 // material
-import { Container, Stack, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 // components
 import Page from '../components/Page/Page';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { useEffect } from 'react';
 import { getAllTasks } from '../store/ac/tasksAC';

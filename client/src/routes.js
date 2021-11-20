@@ -43,7 +43,7 @@ export default function Router() {
         { path: '/profile', element: <Profile /> },
         { path: '/tasks', element: <Tasks /> },
         { path: '/lenta', element: <Blog/> },
-        { path: '/report', element: <Report/> },
+        { path: '/reports', element: <Report/> },
         { path: '/chats', element: <>chats</> },
         { path: '/nearest', element: <User /> },
         { path: '/top', element: <>Top</> },

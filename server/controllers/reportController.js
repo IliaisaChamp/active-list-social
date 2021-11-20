@@ -14,9 +14,13 @@ class ReportController {
     try {
       if (req.session.user) {
         const userId = req.session.user.id;
-        const {taskId, desc } = req.body;
-        const images = '';
+        const {images, desc } = req.body;
+          console.log(req.body);
+          console.log(desc);
+
+        return res.status(200)
       } else {
+        console.log('session not');
         res.sendStatus(401);
       }
     } catch(e) {
