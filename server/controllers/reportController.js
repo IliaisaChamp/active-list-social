@@ -1,6 +1,6 @@
-const { Report } = require('../db/models');
+const { Report, Follower } = require('../db/models');
 const UserService = require('../services/userService');
-const {Op} = require('sequelize')
+const { Op } = require('sequelize');
 
 class ReportController {
   static async showAll(req, res) {
@@ -15,7 +15,7 @@ class ReportController {
   static async create(req, res) {
     const { id } = req.params;
 
-      const photoNames = req.files?.map((el) => el.filename);
+    const photoNames = req.files?.map((el) => el.filename);
 
     try {
       const newReport = await Report.create({
@@ -36,20 +36,37 @@ class ReportController {
   static async getReportsForUser(req, res) {
     try {
       const userTasks = await UserService.getUserTasks(req.session.user.id);
-      const userTasksArr = userTasks?.map(el => el.task_id)
+
+      const userFollowings = await Follower.findAll({
+        plain: true,
+        where: {
+          follower_id: req.session.user.id,
+        },
+      });
+
+      const followingsTasks = await Promise.all(
+        userFollowings.map(user => {
+          return UserService.getUserTasks(user.id)
+        })
+        )
+
+      const userTasksIds = userTasks?.map((el) => el.task_id);
+      const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
+
+      const tasksIdSet = [...new Set(...userTasksIds, ...followingsTasksIds)];
 
       const reports = await Report.findAll({
         where: {
           task_id: {
-            [Op.in]: userTasksArr,
+            [Op.in]: tasksIdSet,
           },
         },
       });
 
       if (reports) {
-        return res.json(reports.get({plain: true}));
+        return res.json(reports.get({ plain: true }));
       } else {
-        return res.status(400).json({message: 'Отчетов нет'})
+        return res.status(400).json({ message: 'Отчетов нет' });
       }
     } catch (error) {
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });

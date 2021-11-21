@@ -5,13 +5,21 @@ import ImageListItem from '@mui/material/ImageListItem';
 export default function ReportPreviousImages({ itemData }) {
   return (
     <ImageList
-      cols={3}
-      rowHeight={250}
-      sx={{ maxWidth: 500}}
+      // cols={3}
+      // rowHeight={250}
+      sx={{ maxHeight: 600, border: '1px dashed green', width: '100%', height: '200px' }}
+      cols={4}
+      rowHeight={220}
     >
       {itemData.map((item) => (
-        <ImageListItem key={item.img}
-          sx={{ maxWidth: 250, maxHeight: 250, height: '100%', border: '1px solid orange' }}
+        <ImageListItem
+          key={item.img}
+          sx={{
+            maxWidth: 199,
+            maxHeight: 199,
+            height: '100%',
+            width: '100%',
+          }}
         >
           <img
             src={item.img}

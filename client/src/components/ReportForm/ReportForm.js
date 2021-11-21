@@ -10,11 +10,13 @@ import { useTranslation } from 'react-i18next';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import ReportPreviousImages from '../ReportPreviousImages/ReportPreviousImages';
 import { setNewReport } from '../../store/ac/reportsAC';
+import useInput from '../../hooks/useInput'
 
 // ----------------------------------------------------------------------
 
 export default function ReportForm() {
   const navigate = useNavigate();
+  const { value, onChangeInput } = useInput();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -49,7 +51,14 @@ export default function ReportForm() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <Stack direction="row" alignItems="center" justifyContent="center" spacing={3}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="left"
+          // flexWrap="wrap"
+          spacing={3}
+          // sx={{ height: 200 }}
+        >
           <label htmlFor="icon-button-file">
             <Input
               accept="image/*"
@@ -60,15 +69,15 @@ export default function ReportForm() {
               multiple="multiple"
             />
             <IconButton color="primary" aria-label="upload picture" component="span" size="large">
-              <PhotoCamera sx={{ width: '50%', height: '50%' }} />
+              <PhotoCamera sx={{ width: '100px', height: '100px' }} />
             </IconButton>
           </label>
           <ReportPreviousImages itemData={chipData} />
         </Stack>
-        <Stack direction="row" justifyContent="center" sx={{ padding: '15px 0 15px 0' }}>
+        <Stack direction="row" justifyContent="center" sx={{ margin: '10px 0 10px 0', height: 50 }}>
           {chipData.map((data) => {
             return (
-              <ListItem key={data.key} sx={{ width: 'auto', padding: '0 0 15px 0' }}>
+              <ListItem key={data.key} sx={{ width: 'auto' }}>
                 <Chip
                   // icon={icon}
                   label={data.label}
@@ -86,6 +95,8 @@ export default function ReportForm() {
             multiline
             rows={5}
             name="desc"
+            value={value.desc}
+            onChange={onChangeInput}
           />
         </Stack>
 
