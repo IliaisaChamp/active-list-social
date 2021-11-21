@@ -13,11 +13,7 @@ import NavSection from "../NavSection/NavSection";
 import { MHidden } from "../../components/@material-extend";
 
 // //sidebar icons
-import account from "../../_mocks_/account";
 import peopleFill from "@iconify/icons-eva/people-fill";
-import pieChart2Fill from "@iconify/icons-eva/pie-chart-2-fill";
-import shoppingBagFill from "@iconify/icons-eva/shopping-bag-fill";
-import fileTextFill from "@iconify/icons-eva/file-text-fill";
 import logInFill from "@iconify/icons-eva/log-in-fill";
 import personAddFill from "@iconify/icons-eva/person-add-fill";
 import alertTriangleFill from "@iconify/icons-eva/alert-triangle-fill";
