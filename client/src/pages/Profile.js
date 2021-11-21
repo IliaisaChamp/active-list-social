@@ -22,6 +22,7 @@ import UserProfile from '../components/UserProfile/UserProfile';
 import TasksList from '../components/Tasks';
 
 import { getUsersTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
+import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
 
 const Profile = () => {
   const tasks = useSelector((state) => state.tasks);
@@ -57,8 +58,9 @@ const Profile = () => {
             <AppBugReports />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={12}>
-            <TasksList tasks={tasks} subscribeHandler={unscubscribeHandler} buttonName={'Удалить'} />
+          <Grid item xs={12} xl={12} lg={12}>
+            {/* <TasksList tasks={tasks} subscribeHandler={unscubscribeHandler} buttonName={'Удалить'} /> */}
+            <ProfileTabs tasks={tasks} subscribeHandler={unscubscribeHandler} buttonName={'Удалить'} />
           </Grid>
         </Grid>
       </Container>

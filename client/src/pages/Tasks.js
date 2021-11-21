@@ -9,13 +9,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // import TaskSort from '../components/TaskSort/TaskSort';
 // import TaskList from '../components/TasksList/TasksList';
-import TasksList from '../components/Tasks';
-import { useEffect } from 'react';
+// import Tasks2 from '../components/Tasks';
+
+import { useEffect, useState } from 'react';
 import { getAllTasks, subscribeOnTask } from '../store/ac/tasksAC';
+import TasksList from '../components/TasksList/TasksList';
+import SearchBar from '../components/SearchBar/SearchBar';
 
 // ----------------------------------------------------------------------
 
 export default function Tasks() {
+  const [filterName, setFilterName] = useState('');
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   // console.log(tasks);
@@ -27,13 +31,19 @@ export default function Tasks() {
     dispatch(getAllTasks());
   }, []);
 
+  const filterHandler = (event) => {
+    setFilterName(event.target.value);
+  };
+
   return (
     <Page title="Tasks">
       <Container>
         <Typography align="center" variant="h4" sx={{ mb: 5 }}>
-          Tasks
+          Список целей
         </Typography>
+        <SearchBar filterName={filterName} onFilterName={filterHandler} />
 
+        {/* <Tasks2 tasks={tasks} subscribeHandler={subscribeHandler} buttonName={'Добавить'} /> */}
         <TasksList tasks={tasks} subscribeHandler={subscribeHandler} buttonName={'Добавить'} />
       </Container>
     </Page>
