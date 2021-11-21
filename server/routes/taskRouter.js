@@ -6,11 +6,11 @@ const checkAuth = require('../middleware/checkAuth');
 
 router
     .route("/")
-    .get(TaskController.showAll);
+    .get(checkAuth, TaskController.showAll);
 
 router.route('/:id/subscribe')
-    .post(TaskController.userSubscribe)
-    .delete(TaskController.userUnsubscribe)
+    .post(TaskController.subscribeUser)
+    .delete(TaskController.unsubscribeUser)
 
 router.route('/:id/report').post(checkAuth, uploadReportsPhotos, ReportController.create);
 router.route('/:id/completed').post(checkAuth, TaskController.completeTask);

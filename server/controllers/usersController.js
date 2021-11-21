@@ -141,7 +141,9 @@ class UserController {
           follower_id,
         },
       });
-      await follower.destroy();
+      if (follower) {
+        await follower.destroy();
+      }
       res.sendStatus(200);
     } catch (e) {
       console.log(e);
