@@ -153,7 +153,6 @@ NavSection.propTypes = {
 export default function NavSection({ navConfig, ...other }) {
   const { pathname } = useLocation();
   const { id } = useParams();
-  console.log(id);
   const match = (path) => (path ? !!matchPath({ path, end: false }, pathname) : false);
 
   return (

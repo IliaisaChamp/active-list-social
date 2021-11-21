@@ -5,6 +5,9 @@ const BASE_URL = 'http://localhost:3001/api';
 
 export const getAllTasks = () => async (dispacth) => {
   const response = await axios(`${BASE_URL}/tasks`);
+  console.log('assadfs');
+  console.log({ response });
+
   const { tasks } = response.data;
   dispacth({
     type: SET_TASKS,

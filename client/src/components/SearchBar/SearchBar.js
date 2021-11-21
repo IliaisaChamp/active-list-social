@@ -10,7 +10,8 @@ const RootStyle = styled(Toolbar)(({ theme }) => ({
   height: 96,
   display: 'flex',
   justifyContent: 'space-between',
-  padding: theme.spacing(0, 1, 0, 3),
+  paddingLeft: 0,
+  // padding: theme.spacing(0, 0, 0, 0),
 }));
 
 const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
@@ -28,13 +29,13 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function TasksListToolbar({ filterName, onFilterName }) {
+export default function SearchBar({ filterName, onFilterName }) {
   return (
     <RootStyle>
       <SearchStyle
         value={filterName}
         onChange={onFilterName}
-        placeholder="Search Task"
+        placeholder="Поиск цели"
         startAdornment={
           <InputAdornment position="start">
             <Box component={Icon} icon={searchFill} sx={{ color: 'text.disabled' }} />

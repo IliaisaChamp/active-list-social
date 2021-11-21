@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 // mui
 import { Container, Grid } from '@mui/material';
@@ -22,16 +22,18 @@ import UserProfile from '../components/UserProfile/UserProfile';
 import TasksList from '../components/Tasks';
 
 import { getUsersTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
+import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
 
 const Profile = () => {
   const tasks = useSelector((state) => state.tasks);
-  const user = useSelector((state) => state.user);
+  const { id } = useParams();
+  // const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user) {
-      dispatch(getUsersTasks(user.id));
-    }
+    // if (user) {
+    dispatch(getUsersTasks(id));
+    // }
   }, []);
 
   const unscubscribeHandler = (taskId) => {
@@ -57,8 +59,8 @@ const Profile = () => {
             <AppBugReports />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={12}>
-            <TasksList tasks={tasks} subscribeHandler={unscubscribeHandler} buttonName={'Удалить'} />
+          <Grid item xs={12} xl={12} lg={12}>
+            <ProfileTabs tasks={tasks} subscribeHandler={unscubscribeHandler} buttonName={'Удалить'} />
           </Grid>
         </Grid>
       </Container>
