@@ -3,6 +3,8 @@ const { User } = require('../db/models/');
 const { UserTask, Task } = require('../db/models');
 
 class UserService {
+
+
   static async getUserTasks(userId) {
     return await UserTask.findAll({
       where: {
