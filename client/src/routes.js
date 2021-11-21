@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Tasks from './pages/Tasks';
 import Report from './pages/Report';
+import Chat from './components/ChatFolder/Chat/Chat';
 // import DashboardApp from './pages/DashboardApp';
 // import Products from './pages/Products';
 // import Blog from './pages/Blog';
@@ -48,7 +49,7 @@ export default function Router() {
         { path: '/tasks', element: <Tasks /> },
         { path: '/lenta', element: <Blog /> },
         { path: '/reports', element: <Report /> },
-        { path: '/chats', element: <>chats</> },
+        { path: '/chats', element: <Chat/> },
         { path: '/nearest', element: <User /> },
         { path: '/top', element: <>Top</> },
         // { path: '*', element: <Navigate to="/404" /> }

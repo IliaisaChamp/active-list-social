@@ -3,9 +3,10 @@ const UserService = require('../services/userService');
 
 class CheckController {
   static async register(req, res) {
-    console.log(req.body);
+    console.log("register",req.body);
     try {
       const errors = validationResult(req);
+      console.log(errors);
       if (!errors.isEmpty()) {
         console.log(errors);
         return res.status(400).json({ message: 'Ошибка при регистрации', errors });
