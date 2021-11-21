@@ -31,7 +31,7 @@ class TaskController {
   }
   static async showAll(req, res) {
     try {
-      const filter = decodeURIComponent(req.query._filter);
+      const filter = req.query._filter ? decodeURIComponent(req.query._filter) : false;
       const tasks = await TaskService.getTasks(filter);
       res.json({ tasks });
     } catch (e) {

@@ -38,7 +38,7 @@ const resources = {
         top: 'Топ',
         chat: 'Чат',
         lenta: 'Лента',
-        subscribe: 'Подписка',
+        subscribe: 'Рекомендации',
         tasks: 'Цели',
         profile: 'Профиль',
       }
