@@ -1,118 +1,113 @@
-import React from "react";
-import { Avatar, Button, Container, Grid, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import plusFill from "@iconify/icons-eva/plus-fill";
-import { Icon } from "@iconify/react";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { changeAvatar } from "../../store/ac/usersAC";
-const BASE_URL = "http://localhost:3001/img";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const wrapperStyle = {
-  display: "flex",
-  alignItems: "center",
-  position: "relative",
-  zIndex: 2,
-  mb: 3,
-  width: "100%",
-};
+// mui
+import { makeStyles } from '@mui/styles';
+import { Button, Typography } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
 
-const descWrapper = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "space-between",
-  flexDirection: "column",
-  mr: 3,
-  maxWidth: "60%",
-};
-const bgBox = {
-  position: "absolute",
-  width: "100%",
-  height: "100%",
-  backgroundImage:
-    "url(https://images.unsplash.com/photo-1604737771065-7ce2dc4ba3e8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1954&q=80)",
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "left 117px top 64%",
-  backgroundSize: "100%",
-  opacity: 0.5,
-  zIndex: 1,
-  borderRadius: 4,
-};
+// icons
+import AddIcon from '@mui/icons-material/Add';
+import MessageIcon from '@mui/icons-material/Message';
+import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
+
+// mufunc
+
+const useStyles = makeStyles((theme) => ({
+  headerContainer: {
+    position: 'relative',
+    height: '100px',
+    marginBottom: 10,
+  },
+  header: {
+    display: 'flex',
+    position: 'absolute',
+    width: 'calc(100%)',
+    top: '-70px',
+    alignItems: 'flex-end',
+    '& > *': {
+      margin: `${theme.spacing(3)}px ${theme.spacing(1)}px`,
+    },
+  },
+  spacer: {
+    flexGrow: '1',
+  },
+  avatar: {
+    border: `3px solid white`,
+    width: theme.spacing(20),
+    height: theme.spacing(20),
+    boxShadow: theme.shadows[3],
+  },
+  actionGroup: {
+    display: 'flex',
+    // width: '330px',
+    justifyContent: 'flex-end',
+    marginRight: 0,
+  },
+  button: {
+    marginRight: 10,
+    '&:last-child': {
+      margin: 0,
+    },
+  },
+}));
+
+const img =
+  'https://images.unsplash.com/photo-1604737771065-7ce2dc4ba3e8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1954&q=80';
 
 const UserProfile = () => {
-  const InputFile = styled("input")({
-    display: "none",
-  });
-
+  const navigate = useNavigate();
+  const { id } = useParams();
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
+  const isSelfPage = +id === +user.id;
 
-  const handleFileInputChange = async (e) => {
-    const formData = new FormData();
-    formData.append("avatar", e.target.files[0]);
-    dispatch(changeAvatar(user?.id, formData));
-  };
+  const classes = useStyles();
   return (
-    <Box sx={wrapperStyle}>
-      <Box sx={{ position: 'relative', mr: 6 }}>
-        <Avatar
-          alt="USER PHOTO"
-          src={user?.avatar && `${BASE_URL}/${user.avatar}`}
-          sx={{ width: 250, height: 250, zIndex: 2 }}
-        />
-        <Stack
-          sx={{
-            left: '70%',
-            bottom: '5%',
-            position: 'absolute',
-            zIndex: 4,
-          }}
-          direction="row"
-          alignItems="center"
-          spacing={2}
-        >
-          <label htmlFor="icon-button-file">
-            <InputFile
-              accept="image/*"
-              id="icon-button-file"
-              type="file"
-              name="avatar"
-              onChange={handleFileInputChange}
-            />
-            <IconButton color="primary" aria-label="upload picture" component="span" size="large">
-              <PhotoCamera sx={{ width: '100%', height: '100%' }} />
-            </IconButton>
-          </label>
-        </Stack>
-      </Box>
-      <Box sx={descWrapper}>
-        <Typography gutterBottom variant="h3" sx={{ zIndex: 2 }}>
-          {user.first_name} {user.last_name}
-        </Typography>
-        <Typography gutterBottom sx={{ zIndex: 2 }}>
-          {user.email}
-        </Typography>
-        <Typography gutterBottom sx={{ zIndex: 2 }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis unde velit error
-          perspiciatis? Voluptatem eum magnam velit eius natus aliquam sunt adipisci totam numquam
-          deleniti dolor, at sed voluptates nemo?
-        </Typography>
-      </Box>
-      <Button
-        variant="contained"
-        sx={{ zIndex: 2 }}
-        // component={RouterLink}
-        size="large"
-        to="#"
-        startIcon={<Icon icon={plusFill} />}
-      >
-        Add task
-      </Button>
-      <Box sx={bgBox} />
-    </Box>
+    <div>
+      <div
+        style={{
+          height: '200px',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          filter: 'contrast(75%)',
+          backgroundImage: `url(${img})`,
+        }}
+      />
+      <div className={classes.headerContainer}>
+        <div className={classes.header}>
+          <Avatar
+            alt={user.first_name}
+            src={'http://localhost:3001/img/' + user.avatar}
+            classes={{ root: classes.avatar, circle: classes.circle }}
+          />
+          <Typography variant={'h5'}>{user.first_name}</Typography>
+          &nbsp;
+          <Typography variant={'h5'}>{user.last_name}</Typography>
+          <div className={classes.spacer} />
+          <div className={classes.actionGroup}>
+            {isSelfPage ? (
+              <Button
+                className={classes.button}
+                onClick={() => navigate('/tasks')}
+                variant="outlined"
+                startIcon={<AddIcon />}>
+                Добавить
+              </Button>
+            ) : (
+              <>
+                <Button className={classes.button} variant="outlined" startIcon={<SubscriptionsIcon />}>
+                  Подписаться
+                </Button>
+                <Button className={classes.button} variant="outlined" startIcon={<MessageIcon />}>
+                  Сообщение
+                </Button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

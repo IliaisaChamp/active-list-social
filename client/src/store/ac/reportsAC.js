@@ -1,4 +1,4 @@
-import { SET_REPORTS } from '../types/reportsTypes';
+import { SET_REPORT, SET_REPORTS } from '../types/reportsTypes';
 import axios from 'axios';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 
@@ -36,4 +36,14 @@ export const setNewReport = (data, navigate) => async (dispatch) => {
         }),
       ),
     );
+};
+
+const setReportAction = (value) => ({
+  type: SET_REPORT,
+  payload: value,
+});
+
+export const getReportById = (id) => async (dispatch) => {
+  const response = await axios(`${BASE_URL}/reports/${id}`);
+  dispatch(setReportAction(response.data));
 };

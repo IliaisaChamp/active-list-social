@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, Chip, ListItem } from '@mui/material';
+import { Stack, TextField, IconButton, Chip, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
 
@@ -10,11 +10,13 @@ import { useTranslation } from 'react-i18next';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import ReportPreviousImages from '../ReportPreviousImages/ReportPreviousImages';
 import { setNewReport } from '../../store/ac/reportsAC';
+import useInput from '../../hooks/useInput';
 
 // ----------------------------------------------------------------------
 
 export default function ReportForm() {
   const navigate = useNavigate();
+  const { value, onChangeInput } = useInput();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -27,8 +29,10 @@ export default function ReportForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    chipData.forEach((el, id) => formData.append(`photos`, el.files[id]));
-    dispatch(setNewReport(formData));
+    chipData.forEach((el, id) => formData.append(`photos`, ...el.files));
+    console.log(chipData);
+    console.log(formData.get('photos'));
+    dispatch(setNewReport(formData, navigate));
   };
 
   const Input = styled('input')({
@@ -41,15 +45,28 @@ export default function ReportForm() {
 
     for (const el of e.target.files) {
       if (el.type === 'image/png' || el.type === 'image/jpeg' || el.type === 'image/jpg') {
-        setChipData((prev) => [...prev, { label: el.name, key: el.name, img: src, files: e.target.files }]);
+        setChipData((prev) => [
+          ...prev,
+          { label: el.name, key: el.name, img: src, files: e.target.files },
+        ]);
       }
     }
   };
 
   return (
     <>
+      <Typography variant="h4" sx={{ mb: 5 }}>
+        {t('report.title')}
+      </Typography>
+
       <form onSubmit={handleSubmit}>
-        <Stack direction="row" alignItems="center" justifyContent="center" spacing={3}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="left"
+          flexWrap="wrap"
+          spacing={3}
+        >
           <label htmlFor="icon-button-file">
             <Input
               accept="image/*"
@@ -60,17 +77,21 @@ export default function ReportForm() {
               multiple="multiple"
             />
             <IconButton color="primary" aria-label="upload picture" component="span" size="large">
-              <PhotoCamera sx={{ width: '50%', height: '50%' }} />
+              <PhotoCamera sx={{ width: '100px', height: '100px' }} />
             </IconButton>
           </label>
           <ReportPreviousImages itemData={chipData} />
         </Stack>
-        <Stack direction="row" justifyContent="center" sx={{ padding: '15px 0 15px 0' }}>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          flexWrap="wrap"
+          sx={{ margin: '10px 0 10px 0', height: 50 }}
+        >
           {chipData.map((data) => {
             return (
-              <ListItem key={data.key} sx={{ width: 'auto', padding: '0 0 15px 0' }}>
+              <ListItem key={data.key} sx={{ width: 'auto' }}>
                 <Chip
-                  // icon={icon}
                   label={data.label}
                   onDelete={handleDelete(data)}
                 />
@@ -86,6 +107,8 @@ export default function ReportForm() {
             multiline
             rows={5}
             name="desc"
+            value={value.desc}
+            onChange={onChangeInput}
           />
         </Stack>
 
@@ -100,7 +123,6 @@ export default function ReportForm() {
             size="large"
             type="submit"
             variant="contained"
-            // loading={isSubmitting}
           >
             {t('report.form_button')}
           </LoadingButton>

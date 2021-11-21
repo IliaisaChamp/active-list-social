@@ -1,27 +1,33 @@
 import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import { Box } from '@mui/system';
 
 export default function ReportPreviousImages({ itemData }) {
   return (
-    <ImageList
-      cols={3}
-      rowHeight={250}
-      sx={{ maxWidth: 500}}
-    >
-      {itemData.map((item) => (
-        <ImageListItem key={item.img}
-          sx={{ maxWidth: 250, maxHeight: 250, height: '100%', border: '1px solid orange' }}
-        >
-          <img
-            src={item.img}
-            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
-            loading="lazy"
-            style={{ objectFit: 'cover', height: '100%' }}
-          />
-        </ImageListItem>
-      ))}
+    <ImageList sx={{ maxHeight: 600 }} cols={1}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+        {itemData.map((item) => (
+          <ImageListItem
+            key={item.img}
+            sx={{
+              maxWidth: 199,
+              maxHeight: 199,
+              height: '100%',
+              width: '100%',
+              border: '1px dashed green',
+            }}
+          >
+            <img
+              src={item.img}
+              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              alt={item.title}
+              loading="lazy"
+              style={{ objectFit: 'cover', height: '100%' }}
+            />
+          </ImageListItem>
+        ))}
+      </Box>
     </ImageList>
   );
 }
