@@ -5,7 +5,8 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Profile from './pages/Profile';
 import User from './components/NearestFolder/User';
-import Blog from './components/BlogFolder/Blog';
+import Top from './components/TopFolder/Top';
+import Lenta from './components/LentaFolder/Lenta';
 // import DashboardLayout from './layouts/dashboard';
 // import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
@@ -47,11 +48,11 @@ export default function Router() {
         },
         // { path: '/tasks', element: <Tasks /> },
         { path: '/tasks', element: <Tasks /> },
-        { path: '/lenta', element: <Blog /> },
+        { path: '/lenta', element: <Lenta/> },
         { path: '/reports', element: <Report /> },
         { path: '/chats', element: <Chat/> },
         { path: '/nearest', element: <User /> },
-        { path: '/top', element: <>Top</> },
+        { path: '/top', element: <Top /> },
         // { path: '*', element: <Navigate to="/404" /> }
       ],
     },
