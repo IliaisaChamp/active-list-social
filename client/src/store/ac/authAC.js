@@ -33,7 +33,7 @@ export const loginUser = (data, navigate, setSubmitting) => async (dispatch) => 
       dispatch(
         setErrorMessage({
           type: 'error',
-          message: response.data.message,
+          message: response?.data?.message ? response.data.message : 'Непредвиденная ошибка' ,
         })
       );
       setSubmitting(false);
@@ -52,7 +52,7 @@ export const registrationUser = (data, navigate, setSubmitting) => async (dispat
       dispatch(
         setErrorMessage({
           type: 'error',
-          message: response.data.message,
+            message: response?.data?.message ? response.data.message : 'Непредвиденная ошибка'
         })
       );
       setSubmitting(false);
