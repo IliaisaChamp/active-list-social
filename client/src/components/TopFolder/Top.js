@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
 import Page from '../Page/Page';
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../BlogFolder';
+import { TopPostCard, TopPostsSort, TopPostsSearch } from '.';
 //
 import POSTS from '../../_mocks_/blog';
 
@@ -19,9 +19,9 @@ const SORT_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function Blog() {
+export default function Top() {
   return (
-    <Page title="Dashboard: Blog | Minimal-UI">
+    <Page title="Топ">
       <Container>
         {/* <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -38,13 +38,13 @@ export default function Blog() {
         </Stack> */}
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <BlogPostsSearch posts={POSTS} />
-          <BlogPostsSort options={SORT_OPTIONS} />
+          <TopPostsSearch posts={POSTS} />
+          <TopPostsSort options={SORT_OPTIONS} />
         </Stack>
 
         <Grid container spacing={3}>
           {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
+            <TopPostCard key={post.id} post={post} index={index} />
           ))}
         </Grid>
       </Container>

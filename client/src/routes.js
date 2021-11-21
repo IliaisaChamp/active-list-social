@@ -5,10 +5,8 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Profile from './pages/Profile';
 import User from './components/NearestFolder/User';
-import Blog from './components/BlogFolder/Blog';
-// import DashboardLayout from './layouts/dashboard';
-// import LogoOnlyLayout from './layouts/LogoOnlyLayout';
-//
+import Top from './components/TopFolder/Top';
+import Lenta from './components/LentaFolder/Lenta';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Tasks from './pages/Tasks';
@@ -16,10 +14,6 @@ import Report from './pages/Report';
 import Chat from './components/ChatFolder/Chat/Chat';
 import ReportForm from './components/ReportForm/ReportForm';
 import DetailReport from './components/DetailReport/DetailReport';
-// import DashboardApp from './pages/DashboardApp';
-// import Products from './pages/Products';
-// import Blog from './pages/Blog';
-// import User from './pages/User';
 // import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -28,17 +22,6 @@ export default function Router() {
   const user = useSelector((state) => state.user);
 
   return useRoutes([
-    // {
-    //   path: '/dashboard',
-    //   element: <DashboardLayout />,
-    //   children: [
-    //     { element: <Navigate to="/dashboard/app" replace /> },
-    //     { path: 'app', element: <DashboardApp /> },
-    //     { path: 'user', element: <User /> },
-    //     { path: 'products', element: <Products /> },
-    //     { path: 'blog', element: <Blog /> }
-    //   ]
-    // },
     {
       path: '/',
       element: <Layout />,
@@ -47,9 +30,8 @@ export default function Router() {
           path: '/profile/:id',
           element: !user ? <Navigate to="/" /> : <Profile />,
         },
-        // { path: '/tasks', element: <Tasks /> },
         { path: '/tasks', element: <Tasks /> },
-        { path: '/lenta', element: <Blog /> },
+        { path: '/lenta', element: <Lenta /> },
         {
           path: '/reports',
           element: <Report />,
@@ -57,7 +39,6 @@ export default function Router() {
             {
               path: '',
               element: <ReportForm />,
-
             },
             {
               path: ':id',
@@ -67,14 +48,11 @@ export default function Router() {
         },
         { path: '/chats', element: <Chat /> },
         { path: '/nearest', element: <User /> },
-        { path: '/top', element: <>Top</> },
-        // { path: '*', element: <Navigate to="/404" /> }
+        { path: '/top', element: <Top /> },
       ],
     },
-    { path: '/login', element: <Login /> },
-    // { path: '/login', element: user ? <Navigate to={'/profile/' + user.id} /> : <Login /> },
-    { path: '/register', element: <Register /> },
-    // { path: '/register', element: user ? <Navigate to={'/profile/' + user.id} /> : <Register /> },
-    // { path: '*', element: <Navigate to="/404" replace /> },
+    { path: '/login', element: user ? <Navigate to={'/profile/' + user.id} /> : <Login /> },
+    { path: '/register', element: user ? <Navigate to={'/profile/' + user.id} /> : <Register /> },
+    // { path: '*', element: <NotFound /> },
   ]);
 }

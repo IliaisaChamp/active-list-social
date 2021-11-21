@@ -33,7 +33,7 @@ export const loginUser = (data, navigate, setSubmitting) => async (dispatch) => 
       dispatch(
         setErrorMessage({
           type: 'error',
-          message: response.data.message,
+          message: response?.data?.message ? response.data.message : 'Непредвиденная ошибка' ,
         })
       );
       setSubmitting(false);
@@ -48,11 +48,11 @@ export const registrationUser = (data, navigate, setSubmitting) => async (dispat
       dispatch(setUser(res.data.user));
       navigate(`/profile/${res.data.user.id}`);
     })
-    .catch(({ response }) => {
+    .catch(({response}) => {
       dispatch(
         setErrorMessage({
           type: 'error',
-          message: response.data.message,
+            message: response?.data?.message ? response.data.message : 'Непредвиденная ошибка'
         })
       );
       setSubmitting(false);
