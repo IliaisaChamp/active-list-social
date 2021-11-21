@@ -1,6 +1,10 @@
 const TaskService = require('../services/taskService');
 
 class TaskController {
+  static async completeTask() {
+
+  }
+
   static async userUnsubscribe(req, res) {
     try {
       const userId = req.session.user.id;

@@ -13,6 +13,7 @@ router.route('/:id/subscribe')
     .delete(TaskController.userUnsubscribe)
 
 router.route('/:id/report').post(checkAuth, uploadReportsPhotos, ReportController.create);
+router.route('/:id/completed').post(checkAuth, TaskController);
 
 
 module.exports = router;

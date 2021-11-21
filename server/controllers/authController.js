@@ -66,6 +66,7 @@ class CheckController {
         return res.status(401).json({ message: 'Данные не заполнены' });
       }
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ message: error.message });
     }
   }

@@ -43,6 +43,7 @@ class UserService {
   }
   static async findByEmail(email) {
     try {
+      console.log(email)
       const candidate = await User.findOne({
         where: {
           email,
@@ -55,15 +56,17 @@ class UserService {
   }
 
   static async findAndCheck(data) {
+    console.log(data)
     const { email, password } = data;
     try {
       const candidate = await User.findOne({ where: { email } });
+      if (!candidate) {
+        return null
+      }
       const validPassword = await bcrypt.compare(password, candidate.password);
-
-      if (!candidate || !validPassword) {
+      if (!validPassword) {
         return null;
       }
-
       return candidate.get({ plain: true });
     } catch (error) {
       throw error;
