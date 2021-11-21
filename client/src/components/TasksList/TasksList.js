@@ -10,7 +10,7 @@ const TasksList = ({ tasks, subscribeHandler, buttonName }) => {
   return (
     <>
       {tasks.length > 0 ? (
-        <Box sx={{ flexGrow: 1, boxShadow: 3, borderRadius: 3 }}>
+        <Box sx={{ flexGrow: 1, boxShadow: 3, borderRadius: 3, overflow: 'hidden' }}>
           <List dense={true}>
             {tasks.map((task) => (
               <TasksItem key={task.id} task={task} subscribeHandler={subscribeHandler} />
@@ -24,4 +24,4 @@ const TasksList = ({ tasks, subscribeHandler, buttonName }) => {
   );
 };
 
-export default TasksList;
+export default React.memo(TasksList);

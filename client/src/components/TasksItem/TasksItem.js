@@ -1,4 +1,6 @@
 import React from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // mui
 import ListItem from '@mui/material/ListItem';
@@ -13,26 +15,38 @@ import TaskIcon from '@mui/icons-material/Task';
 import AddIcon from '@mui/icons-material/Add';
 
 const TasksItem = ({ task, subscribeHandler }) => {
+  const user = useSelector((state) => state.user);
+  const location = useLocation();
+  const { id } = useParams();
+  console.log(id);
+  const isPageTask = location.pathname.includes('tasks');
+  const isSelfPage = +id === +user.id;
+
   return (
-    <ListItem>
-      <ListItemAvatar>
+    <ListItem divider={true} sx={{ padding: '10px 10px' }}>
+      {/* <ListItemAvatar>
         <Avatar>
           <ListIcon />
         </Avatar>
-      </ListItemAvatar>
-      <ListItemText primary={task.title} />
-      <IconButton edge="end" aria-label="delete">
-        <CheckCircleIcon />
-      </IconButton>
-      <IconButton edge="end" aria-label="delete">
-        <TaskIcon />
-      </IconButton>
-      <IconButton onClick={() => subscribeHandler(task.id)} edge="end" aria-label="delete">
-        <DeleteIcon />
-      </IconButton>
-      <IconButton onClick={() => subscribeHandler(task.id)} edge="end" aria-label="delete">
-        <AddIcon />
-      </IconButton>
+      </ListItemAvatar> */}
+      <ListItemText primary={task.title} primaryTypographyProps={{ variant: 'subtitle2' }} />
+      {isPageTask ? (
+        <IconButton onClick={() => subscribeHandler(task.id)} edge="end" aria-label="delete">
+          <AddIcon />
+        </IconButton>
+      ) : isSelfPage ? (
+        <>
+          <IconButton edge="end" aria-label="complete-task">
+            <CheckCircleIcon />
+          </IconButton>
+          <IconButton edge="end" aria-label="add-report">
+            <TaskIcon />
+          </IconButton>
+          <IconButton onClick={() => subscribeHandler(task.id)} edge="end" aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ) : null}
     </ListItem>
   );
 };

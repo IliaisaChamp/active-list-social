@@ -1,15 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // mui
 import { makeStyles } from '@mui/styles';
+import { Button, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+
+// icons
 import AddIcon from '@mui/icons-material/Add';
 import MessageIcon from '@mui/icons-material/Message';
-import { Button, Typography } from '@mui/material';
-
-// my components
+import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 
 // mufunc
 
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   actionGroup: {
     display: 'flex',
-    width: '330px',
+    // width: '330px',
     justifyContent: 'flex-end',
     marginRight: 0,
   },
@@ -57,7 +58,10 @@ const img =
 
 const UserProfile = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const user = useSelector((state) => state.user);
+  const isSelfPage = +id === +user.id;
+
   const classes = useStyles();
   return (
     <div>
@@ -80,19 +84,26 @@ const UserProfile = () => {
           <Typography variant={'h5'}>{user.first_name}</Typography>
           &nbsp;
           <Typography variant={'h5'}>{user.last_name}</Typography>
-          {/* <Button>adsfsadf</Button> */}
           <div className={classes.spacer} />
           <div className={classes.actionGroup}>
-            <Button className={classes.button} variant="outlined" startIcon={<MessageIcon />}>
-              Сообщение
-            </Button>
-            <Button
-              className={classes.button}
-              onClick={() => navigate('/tasks')}
-              variant="outlined"
-              startIcon={<AddIcon />}>
-              Добавить
-            </Button>
+            {isSelfPage ? (
+              <Button
+                className={classes.button}
+                onClick={() => navigate('/tasks')}
+                variant="outlined"
+                startIcon={<AddIcon />}>
+                Добавить
+              </Button>
+            ) : (
+              <>
+                <Button className={classes.button} variant="outlined" startIcon={<SubscriptionsIcon />}>
+                  Подписаться
+                </Button>
+                <Button className={classes.button} variant="outlined" startIcon={<MessageIcon />}>
+                  Сообщение
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
