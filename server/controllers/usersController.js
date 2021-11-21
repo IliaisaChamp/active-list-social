@@ -65,7 +65,7 @@ class UserController {
   static async follow(req, res) {
     try {
       const user_id = req.params.id;
-      const follower_id = req.session.user;
+      const follower_id = req.session.user.id;
       await Follower.create({ user_id, follower_id });
       res.sendStatus(200);
     } catch (e) {
@@ -76,7 +76,7 @@ class UserController {
   static async unfollow(req, res) {
     try {
       const user_id = req.params.id;
-      const follower_id = req.session.user;
+      const follower_id = req.session.user.id;
       const follower = await Follower.findOne({
         where: {
           user_id,

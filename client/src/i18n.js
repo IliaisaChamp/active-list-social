@@ -28,7 +28,7 @@ const resources = {
       report: {
         textarea: 'Подробное описание',
         title: 'Создать отчет о выполнении цели',
-        form_button: 'Создать отчет',
+        form_button: 'Отправить',
         title_rename: 'Переименовать канал',
       },
       sideBar: {

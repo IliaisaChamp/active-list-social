@@ -1,4 +1,4 @@
-const { Report, Follower } = require('../db/models');
+const { Report, Follower, User, Task } = require('../db/models');
 const UserService = require('../services/userService');
 const { Op } = require('sequelize');
 
@@ -12,9 +12,26 @@ class ReportController {
     }
   }
 
+  static async getReportById(req, res) {
+    const { id } = req.params;
+    try {
+      const report = await Report.findOne({
+        include: [
+          { model: User, attributes: ['nickname'] },
+          { model: Task, attributes: ['title'] },
+        ],
+        where: {
+          id,
+        },
+      });
+      return res.json(report.get({ plain: true }));
+    } catch (e) {
+      return res.status(400).json({ message: 'Отчет не найден' });
+    }
+  }
+
   static async create(req, res) {
     const { id } = req.params;
-
     const photoNames = req.files?.map((el) => el.filename);
 
     try {
@@ -22,7 +39,7 @@ class ReportController {
         user_id: req.session.user.id,
         desc: req.body.desc,
         task_id: id,
-        images: JSON.stringify(photoNames),
+        images: photoNames,
       });
 
       if (newReport) {
@@ -37,38 +54,40 @@ class ReportController {
     try {
       const userTasks = await UserService.getUserTasks(req.session.user.id);
 
-      const userFollowings = await Follower.findAll({
-        plain: true,
-        where: {
-          follower_id: req.session.user.id,
-        },
-      });
+      // const userFollowings = await Follower.findAll({
+      //   plain: true,
+      //   where: {
+      //     follower_id: req.session.user.id,
+      //   },
+      // });
 
-      const followingsTasks = await Promise.all(
-        userFollowings.map(user => {
-          return UserService.getUserTasks(user.id)
-        })
-        )
+      // const followingsTasks = await Promise.all(
+      //   userFollowings.map((user) => {
+      //     return UserService.getUserTasks(user.id);
+      //   }),
+      // );
 
       const userTasksIds = userTasks?.map((el) => el.task_id);
-      const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
+      // const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
 
-      const tasksIdSet = [...new Set(...userTasksIds, ...followingsTasksIds)];
+      // const tasksIdSet = [...new Set(...userTasksIds, ...followingsTasksIds)];
 
       const reports = await Report.findAll({
+        plain: true,
         where: {
           task_id: {
-            [Op.in]: tasksIdSet,
+            [Op.in]: userTasksIds,
           },
         },
       });
 
       if (reports) {
-        return res.json(reports.get({ plain: true }));
+        return res.json(reports);
       } else {
         return res.status(400).json({ message: 'Отчетов нет' });
       }
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
     }
   }

@@ -14,6 +14,8 @@ import Register from './pages/Register';
 import Tasks from './pages/Tasks';
 import Report from './pages/Report';
 import Chat from './components/ChatFolder/Chat/Chat';
+import ReportForm from './components/ReportForm/ReportForm';
+import DetailReport from './components/DetailReport/DetailReport';
 // import DashboardApp from './pages/DashboardApp';
 // import Products from './pages/Products';
 // import Blog from './pages/Blog';
@@ -48,8 +50,22 @@ export default function Router() {
         // { path: '/tasks', element: <Tasks /> },
         { path: '/tasks', element: <Tasks /> },
         { path: '/lenta', element: <Blog /> },
-        { path: '/reports', element: <Report /> },
-        { path: '/chats', element: <Chat/> },
+        {
+          path: '/reports',
+          element: <Report />,
+          children: [
+            {
+              path: '',
+              element: <ReportForm />,
+
+            },
+            {
+              path: ':id',
+              element: <DetailReport />,
+            },
+          ],
+        },
+        { path: '/chats', element: <Chat /> },
         { path: '/nearest', element: <User /> },
         { path: '/top', element: <>Top</> },
         // { path: '*', element: <Navigate to="/404" /> }

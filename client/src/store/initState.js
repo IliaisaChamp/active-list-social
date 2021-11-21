@@ -6,6 +6,6 @@ const initState = {
   possibleFriends: [],
   isLoading: 0,
   reports: [],
-  currentReports: {},
+  currentReport: {},
 };
 export default initState;
