@@ -9,7 +9,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
 // my components
-import Tasks from '../Tasks';
+// import Tasks from '../Tasks';
 
 import { unsubscribeOnTask } from '../../store/ac/tasksAC';
 import TasksList from '../TasksList/TasksList';

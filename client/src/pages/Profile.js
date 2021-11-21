@@ -19,7 +19,7 @@ import AppCurrentSubject from '../components/ProfileStats/AppCurrentSubject';
 // import AppTrafficBySite from '../components/ProfileStats/AppTrafficBySite';
 // import AppTasks from '../components/ProfileStats/AppTasks';
 import UserProfile from '../components/UserProfile/UserProfile';
-import TasksList from '../components/Tasks';
+// import TasksList from '../components/Tasks';
 
 import { getUsersTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
 import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
