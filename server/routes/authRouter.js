@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const AuthController = require('../controllers/authController');
+const blockAuthed = require('../middleware/blockAuthed')
 
 router.route('/registration').post(
+    blockAuthed,
   [
     check('email', 'email не соответствует формату').normalizeEmail().isEmail(),
     check('password', 'Пароль должен быть от 6 до 20 символов').isLength({
@@ -18,7 +20,7 @@ router.route('/registration').post(
   AuthController.register,
 );
 
-router.route('/login').post(AuthController.login);
+router.route('/login').post(blockAuthed, AuthController.login);
 router.route('/check').get(AuthController.check);
 
 router.route('/logout').get((req, res, next) => {
