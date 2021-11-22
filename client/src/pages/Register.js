@@ -10,7 +10,7 @@ import { MHidden } from '../components/@material-extend';
 import { RegisterForm } from '../components/authentication/register';
 import AuthSocial from '../components/authentication/AuthSocial';
 import LanguagePopover from '../components/Header/LanguagePopover';
-
+import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -43,15 +43,17 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Register() {
+  const { t } = useTranslation();
+
   return (
     <RootStyle title="Register | Minimal-UI">
       <AuthLayout>
         <Box display="flex" justifyContent="right" spacing={{ xs: 0.5, sm: 1.5 }}>
           <LanguagePopover />
         </Box>
-        Уже есть аккаунт? &nbsp;
+        {t('pages.reg.q')} &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
-          Войти
+          {t('pages.reg.login')}
         </Link>
       </AuthLayout>
 
@@ -71,11 +73,9 @@ export default function Register() {
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Начни абсолютно бесплатно.
+              {t('pages.reg.title')}
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Бесплатно навсегда. Кредитная карта не требуется.
-            </Typography>
+            <Typography sx={{ color: 'text.secondary' }}>{t('pages.reg.sub')}</Typography>
           </Box>
 
           <AuthSocial />
@@ -83,22 +83,22 @@ export default function Register() {
           <RegisterForm />
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            Регистрируясь, я принимаю&nbsp;
+            {t('pages.reg.warning')}&nbsp;
             {/* <Link underline="always" sx={{ color: 'text.primary' }}>
               Terms of Service
             </Link>
             &nbsp;and&nbsp; */}
             <Link underline="always" sx={{ color: 'text.primary' }}>
-              Политику конфиденциальности
+              {t('pages.reg.politic')}
             </Link>
             .
           </Typography>
 
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              Уже есть аккаунт? &nbsp;
+              {t('pages.reg.q')} &nbsp;
               <Link to="/login" component={RouterLink}>
-                Войти
+                {t('pages.reg.login')}
               </Link>
             </Typography>
           </MHidden>

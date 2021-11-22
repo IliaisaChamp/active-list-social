@@ -75,21 +75,21 @@ export default function Login() {
 
       <Container maxWidth="sm">
         <ContentStyle>
-          <Stack sx={{ mb: 5 }}>
-            <Typography variant="h3" sx={{ mb: 5 }}>
-              Привет, с возвращением!
+          <Box sx={{ mb: 5 }}>
+            <Typography variant="h4">
+              {t('pages.auth.title')}
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Введите свои данные ниже.</Typography>
-          </Stack>
+            <Typography sx={{ color: 'text.secondary' }}>{t('pages.auth.sub')}</Typography>
+          </Box>
           <AuthSocial />
 
           <LoginForm />
 
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Нет учетной записи? &nbsp;
+              {t('pages.auth.q')} &nbsp;
               <Link variant="subtitle2" component={RouterLink} to="register">
-                Создать
+                {t('pages.auth.create')}
               </Link>
             </Typography>
           </MHidden>

@@ -10,12 +10,16 @@ const resources = {
           sub: 'Введите свои данные ниже.',
           create: 'Создать',
           q: 'Нет учетной записи?',
+          remember: 'Запомнить меня',
+          or: 'ИЛИ'
         },
         reg: {
-          title: 'Привет, с возвращением!',
-          sub: 'Введите свои данные ниже.',
-          create: 'Создать',
-          q: 'Нет учетной записи?',
+          title: 'Начни абсолютно бесплатно.',
+          sub: 'Бесплатно навсегда. Кредитная карта не требуется.',
+          login: 'Войти',
+          q: 'Уже есть аккаунт?',
+          warning: 'Регистрируясь, я принимаю',
+          politic: 'Политику конфиденциальности',
         },
       },
       form: {
@@ -55,6 +59,16 @@ const resources = {
           sub: 'Enter your info below.',
           create: 'Create',
           q: "Don't have an account?",
+          remember: 'Remember me',
+          or: 'OR'
+        },
+        reg: {
+          title: 'Get started absolutely free.',
+          sub: 'Free forever. No credit card required.',
+          login: 'Log in',
+          q: 'Have an account?',
+          warning: 'By registering I accept',
+          politic: 'Privacy policy',
         },
       },
       form: {
