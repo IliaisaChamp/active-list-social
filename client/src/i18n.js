@@ -4,6 +4,20 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   ru: {
     translation: {
+      pages: {
+        auth: {
+          title: 'Привет, с возвращением!',
+          sub: 'Введите свои данные ниже.',
+          create: 'Создать',
+          q: 'Нет учетной записи?',
+        },
+        reg: {
+          title: 'Привет, с возвращением!',
+          sub: 'Введите свои данные ниже.',
+          create: 'Создать',
+          q: 'Нет учетной записи?',
+        },
+      },
       form: {
         login_submit: 'Войти',
         register_submit: 'Зарегистрироваться',
@@ -35,6 +49,14 @@ const resources = {
   },
   en: {
     translation: {
+      pages: {
+        auth: {
+          title: 'Hello, welcome back!',
+          sub: 'Enter your info below.',
+          create: 'Create',
+          q: "Don't have an account?",
+        },
+      },
       form: {
         login_submit: 'Log in',
         register_submit: 'Register now',

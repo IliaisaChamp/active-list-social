@@ -9,6 +9,7 @@ import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { RegisterForm } from '../components/authentication/register';
 import AuthSocial from '../components/authentication/AuthSocial';
+import LanguagePopover from '../components/Header/LanguagePopover';
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +46,9 @@ export default function Register() {
   return (
     <RootStyle title="Register | Minimal-UI">
       <AuthLayout>
+        <Box display="flex" justifyContent="right" spacing={{ xs: 0.5, sm: 1.5 }}>
+          <LanguagePopover />
+        </Box>
         Уже есть аккаунт? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
           Войти
@@ -54,11 +58,11 @@ export default function Register() {
       <MHidden width="mdDown">
         <SectionStyle>
           {/* <Box sx={{ borderRadius: '10px' }}> */}
-            <img
-              alt="register"
-              src="/static/illustrations/6619759.jpg"
-              style={{ objectFit: 'contain', height: '80%' }}
-            />
+          <img
+            alt="register"
+            src="/static/illustrations/6619759.jpg"
+            style={{ objectFit: 'contain', height: '80%' }}
+          />
           {/* </Box> */}
         </SectionStyle>
       </MHidden>
