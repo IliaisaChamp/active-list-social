@@ -19,16 +19,16 @@ import AppCurrentSubject from '../components/ProfileStats/AppCurrentSubject';
 // import AppTrafficBySite from '../components/ProfileStats/AppTrafficBySite';
 // import AppTasks from '../components/ProfileStats/AppTasks';
 import UserProfile from '../components/UserProfile/UserProfile';
-// import TasksList from '../components/Tasks';
 
-import { getUsersTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
+import { completeTask, getUsersTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
 import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
 
 const Profile = () => {
   const tasks = useSelector((state) => state.tasks);
   const { id } = useParams();
-  // const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const isSelfPage = +id === +user.id;
 
   useEffect(() => {
     // if (user) {
@@ -37,14 +37,17 @@ const Profile = () => {
   }, []);
 
   const unscubscribeHandler = (taskId) => {
-    console.log('afasdf');
     dispatch(unsubscribeOnTask(taskId));
+  };
+
+  const completeTaskHandler = (taskId) => {
+    dispatch(completeTask(taskId));
   };
 
   return (
     <Page title="Profile">
       <Container maxWidth="xl">
-        <UserProfile />
+        <UserProfile isSelfPage={isSelfPage} />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
@@ -60,7 +63,13 @@ const Profile = () => {
           </Grid>
 
           <Grid item xs={12} xl={12} lg={12}>
-            <ProfileTabs tasks={tasks} subscribeHandler={unscubscribeHandler} buttonName={'Удалить'} />
+            <ProfileTabs
+              isSelfPage={isSelfPage}
+              tasks={tasks}
+              subscribeHandler={unscubscribeHandler}
+              completeTaskHandler={completeTaskHandler}
+              buttonName={'Удалить'}
+            />
           </Grid>
         </Grid>
       </Container>

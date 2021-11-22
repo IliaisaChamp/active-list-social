@@ -2,5 +2,6 @@ export const SET_TASKS = 'SET_TASKS';
 export const REMOVE_TASK = 'REMOVE_TASK';
 export const SUBSCRIBE_ON_TASK = 'SUBSCRIBE_ON_TASK';
 export const UNSUBSCRIBE_ON_TASK = 'UNSUBSCRIBE_ON_TASK';
+export const COMPLETE_TASK = 'COMPLETE_TASK';
 
 export const GET_TASKS_SAGA = 'GET_TASKS_SAGA';

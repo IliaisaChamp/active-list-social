@@ -66,12 +66,10 @@ const InputFile = styled('input')({
 const img =
   'https://images.unsplash.com/photo-1604737771065-7ce2dc4ba3e8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1954&q=80';
 
-const UserProfile = () => {
+const UserProfile = ({ isSelfPage }) => {
   const navigate = useNavigate();
-  const { id } = useParams();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const isSelfPage = +id === +user.id;
 
   const handleFileInputChange = async (e) => {
     const formData = new FormData();
@@ -99,29 +97,31 @@ const UserProfile = () => {
               src={user?.avatar && `${BASE_URL}/${user.avatar}`}
               classes={{ root: classes.avatar, circle: classes.circle }}
             />
-            <Stack
-              sx={{
-                left: '70%',
-                bottom: '5%',
-                position: 'absolute',
-                zIndex: 4,
-              }}
-              direction="row"
-              alignItems="center"
-              spacing={2}>
-              <label htmlFor="icon-button-file">
-                <InputFile
-                  accept="image/*"
-                  id="icon-button-file"
-                  type="file"
-                  name="avatar"
-                  onChange={handleFileInputChange}
-                />
-                <IconButton color="primary" aria-label="upload picture" component="span" size="large">
-                  <PhotoCamera sx={{ width: '100%', height: '100%' }} />
-                </IconButton>
-              </label>
-            </Stack>
+            {isSelfPage && (
+              <Stack
+                sx={{
+                  left: '70%',
+                  bottom: '5%',
+                  position: 'absolute',
+                  zIndex: 4,
+                }}
+                direction="row"
+                alignItems="center"
+                spacing={2}>
+                <label htmlFor="icon-button-file">
+                  <InputFile
+                    accept="image/*"
+                    id="icon-button-file"
+                    type="file"
+                    name="avatar"
+                    onChange={handleFileInputChange}
+                  />
+                  <IconButton color="primary" aria-label="upload picture" component="span" size="large">
+                    <PhotoCamera sx={{ width: '100%', height: '100%' }} />
+                  </IconButton>
+                </label>
+              </Stack>
+            )}
           </Box>
           <Typography variant={'h5'}>{user.first_name}</Typography>
           &nbsp;

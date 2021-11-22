@@ -7,28 +7,22 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import { Container, Grid } from '@mui/material';
 
 // my components
-// import Tasks from '../Tasks';
-
-import { unsubscribeOnTask } from '../../store/ac/tasksAC';
 import TasksList from '../TasksList/TasksList';
+import { LentaPostCard } from '../LentaFolder';
+import POSTS from '../../_mocks_/blog';
 
 const tabPanelStyle = {
   padding: '24px 0',
 };
 
-const ProfileTabs = ({ tasks, subscribeHandler, buttonName }) => {
-  const dispatch = useDispatch();
+const ProfileTabs = ({ tasks, subscribeHandler, isSelfPage, completeTaskHandler }) => {
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-  };
-
-  const unscubscribeHandler = (taskId) => {
-    console.log('afasdf');
-    dispatch(unsubscribeOnTask(taskId));
   };
 
   return (
@@ -36,15 +30,28 @@ const ProfileTabs = ({ tasks, subscribeHandler, buttonName }) => {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Мои таски" value="1" />
-            <Tab label="Мои отчеты" value="2" />
-            <Tab label="Мои подписки" value="3" />
+            <Tab label={isSelfPage ? 'Мои таски' : 'Таски'} value="1" />
+            <Tab label={isSelfPage ? 'Мои отчеты' : 'Отчеты'} value="2" />
+            <Tab label={isSelfPage ? 'Мои подписки' : 'Подписки'} value="3" />
           </TabList>
         </Box>
         <TabPanel sx={tabPanelStyle} value="1">
-          <TasksList tasks={tasks} subscribeHandler={unscubscribeHandler} buttonName={'Удалить'} />
+          <TasksList
+            tasks={tasks}
+            subscribeHandler={subscribeHandler}
+            completeTaskHandler={completeTaskHandler}
+            isSelfPage={isSelfPage}
+          />
         </TabPanel>
-        <TabPanel sx={tabPanelStyle} value="2"></TabPanel>
+        <TabPanel sx={tabPanelStyle} value="2">
+          <Container sx={{ display: 'flex' }}>
+            <Grid container>
+              {POSTS.map((post, index) => (
+                <LentaPostCard key={post.id} post={post} index={index} />
+              ))}
+            </Grid>
+          </Container>
+        </TabPanel>
         <TabPanel value="3">Мои подписки</TabPanel>
       </TabContext>
     </Box>

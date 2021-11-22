@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { GET_TASKS_SAGA, REMOVE_TASK, SET_TASKS } from '../types/tasksTypes';
+import { COMPLETE_TASK, GET_TASKS_SAGA, REMOVE_TASK, SET_TASKS } from '../types/tasksTypes';
+import { setErrorMessage, setSuccessMessage } from './flashAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
@@ -38,11 +39,37 @@ export const subscribeOnTask = (taskId) => async (dispatch) => {
   }
 };
 
-export const unsubscribeOnTask = (taskId) => async (dispacth) => {
+export const unsubscribeOnTask = (taskId) => async (dispatch) => {
   const response = await axios.delete(`${BASE_URL}/tasks/${taskId}/subscribe`);
-  console.log(response);
-  dispacth({
-    type: REMOVE_TASK,
-    payload: taskId,
-  });
+  if (response.status < 400) {
+    dispatch({
+      type: REMOVE_TASK,
+      payload: taskId,
+    });
+  }
+};
+
+export const completeTask = (taskId) => async (dispatch) => {
+  axios
+    .post(`${BASE_URL}/tasks/${taskId}/completed`)
+    .then((response) => {
+      dispatch(
+        setSuccessMessage({
+          type: 'success',
+          message: response?.data?.message ? response.data.message : 'Задача выполнена! Поздравляю!',
+        })
+      );
+      dispatch({
+        type: COMPLETE_TASK,
+        payload: taskId,
+      });
+    })
+    .catch(({ response }) => {
+      dispatch(
+        setErrorMessage({
+          type: 'error',
+          message: response?.data?.message ? response.data.message : 'Непредвиденная ошибка',
+        })
+      );
+    });
 };
