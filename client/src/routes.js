@@ -14,6 +14,7 @@ import Report from './pages/Report';
 import Chat from './components/ChatFolder/Chat/Chat';
 import ReportForm from './components/ReportForm/ReportForm';
 import DetailReport from './components/DetailReport/DetailReport';
+import Recommendations from './pages/Recommendations';
 // import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -47,7 +48,7 @@ export default function Router() {
           ],
         },
         { path: '/chats', element: <Chat /> },
-        { path: '/nearest', element: <User /> },
+        { path: '/recommendations', element: <Recommendations /> },
         { path: '/top', element: <Top /> },
       ],
     },
