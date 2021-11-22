@@ -58,48 +58,57 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const sidebarConfig = [
     {
       title: t('sideBar.profile'),
-      path: "/profile/:id",
+      path: '/profile/:id',
       icon: getIcon(peopleFill),
+      isAuth: true,
     },
     {
       title: t('sideBar.tasks'),
-      path: "/tasks",
+      path: '/tasks',
       icon: getIcon(checkMarkCircle2Fill),
+      isAuth: true,
     },
     {
       title: t('sideBar.subscribe'),
-      path: "/nearest",
+      path: '/nearest',
       icon: getIcon(starFill),
+      isAuth: true,
     },
     {
       title: t('sideBar.lenta'),
-      path: "/timeline",
+      path: '/timeline',
       icon: getIcon(rewindRightFill),
+      isAuth: true,
     },
     {
       title: t('sideBar.chat'),
-      path: "/chats",
+      path: '/chats',
       icon: getIcon(messageSquareFill),
+      isAuth: true,
     },
     {
       title: t('sideBar.top'),
-      path: "/top",
+      path: '/top',
       icon: getIcon(flashOutLine),
+      isAuth: true,
     },
     {
       title: t('sideBar.login'),
-      path: "/login",
+      path: '/login',
       icon: getIcon(logInFill),
+      isAuth: false,
     },
     {
       title: t('sideBar.registration'),
-      path: "/register",
+      path: '/register',
       icon: getIcon(personAddFill),
+      isAuth: false,
     },
     {
       title: t('sideBar.notFound'),
-      path: "/404",
+      path: '/404',
       icon: getIcon(alertTriangleFill),
+      isAuth: true,
     },
   ];
 
