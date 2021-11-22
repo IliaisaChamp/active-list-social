@@ -11,7 +11,7 @@ const resources = {
           create: 'Создать',
           q: 'Нет учетной записи?',
           remember: 'Запомнить меня',
-          or: 'ИЛИ'
+          or: 'ИЛИ',
         },
         reg: {
           title: 'Начни абсолютно бесплатно.',
@@ -60,7 +60,7 @@ const resources = {
           create: 'Create',
           q: "Don't have an account?",
           remember: 'Remember me',
-          or: 'OR'
+          or: 'OR',
         },
         reg: {
           title: 'Get started absolutely free.',
@@ -102,6 +102,24 @@ const resources = {
   },
   fr: {
     translation: {
+      pages: {
+        auth: {
+          title: 'Bonjour, bon retour !',
+          sub: 'Entrez vos informations ci-dessous.',
+          create: 'Créer',
+          q: "Vous n'avez pas de compte ?",
+          remember: 'Souviens-toi de moi',
+          or: 'OU',
+        },
+        reg: {
+          title: 'Commencez tout à fait gratuitement.',
+          sub: 'Libre pour toujours. Pas de carte de crédit nécessaire.',
+          login: 'Connexion',
+          q: 'Avoir un compte?',
+          warning: "En m'inscrivant j'accepte",
+          politic: 'Politique de confidentialité',
+        },
+      },
       form: {
         login_submit: 'Connexion',
         register_submit: "S'inscrire",
