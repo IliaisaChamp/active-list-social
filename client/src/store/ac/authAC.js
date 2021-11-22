@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { AUTH_USER_REGISTRATION, AUTH_USER_LOGOUT, AUTH_USER_LOGIN } from '../types/authTypes';
+import { IS_LOADING, STOP_LOADING } from "../types/isLoadingTypes";
 import { setErrorMessage } from './flashAC';
+import { stopLoading } from './isLoadingAC';
 
 const setUser = (value) => {
   return {
@@ -78,5 +80,8 @@ export const checkUser = () => async (dispatch) => {
     .catch((e) => {
       console.log(e);
       dispatch(deleteUser());
-    });
+    })
+    .finally(() => {
+    dispatch(stopLoading())
+  })
 };
