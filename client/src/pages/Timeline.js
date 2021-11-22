@@ -18,7 +18,7 @@ export default function Timeline() {
   return (
     <Page title="Лента">
       <Container sx={{ display: 'flex', position: 'relative' }}>
-        <Grid container spacing={3}>
+        <Grid container spacing={4} >
           {reports?.map((report, index) => (
             <LentaPostCard key={report.id} report={report} index={index} />
           ))}

@@ -8,7 +8,7 @@ class ReportController {
     try {
       const report = await Report.findOne({
         include: [
-          { model: User, attributes: ['nickname'] },
+          { model: User, attributes: ['nickname', 'id'] },
           { model: Task, attributes: ['title'] },
         ],
         where: {
@@ -72,7 +72,11 @@ class ReportController {
             [Op.in]: [...tasksIdSet],
           },
         },
-        include: { model: User, attributes: ['nickname', 'avatar'] },
+        include: [
+          { model: User, attributes: ['nickname', 'avatar', 'id'] },
+          { model: Task, attributes: ['title'] },
+        ],
+        order: [['updatedAt', 'DESC']],
       });
 
       if (reports) {

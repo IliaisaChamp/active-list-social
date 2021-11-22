@@ -4,10 +4,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 // import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 // import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
 import { Carousel } from 'react-responsive-carousel';
 import { CardContent, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getReportById } from '../../store/ac/reportsAC';
 
@@ -25,7 +24,7 @@ export default function DetailReport() {
   return (
     <>
       <Typography variant="h4" sx={{ mb: 5 }}>
-       {currentReport.Task?.title}
+        {currentReport.Task?.title}
       </Typography>
 
       <Carousel
@@ -46,7 +45,13 @@ export default function DetailReport() {
       </Carousel>
 
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography
+          gutterBottom
+          variant="h5"
+          component={RouterLink}
+          to={`/profile/${currentReport.User?.id}`}
+          sx={{ textDecoration: 'none', color: 'inherit' }}
+        >
           @{currentReport.User?.nickname}
         </Typography>
         <Typography variant="body2" color="text.secondary">
