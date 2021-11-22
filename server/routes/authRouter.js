@@ -20,7 +20,7 @@ router.route('/registration').post(
   AuthController.register,
 );
 
-router.route('/login').post(blockAuthed, AuthController.login);
+router.route('/login').post(blockAuthed,check('email').normalizeEmail(), AuthController.login);
 router.route('/check').get(AuthController.check);
 
 router.route('/logout').get((req, res, next) => {

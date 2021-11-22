@@ -88,8 +88,8 @@ export default function LentaPostCard({ post, index }) {
       <Card sx={{ position: 'relative' }}>
         <CardMediaStyle>
           <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
-          <AvatarStyle alt={User.nickname} src={`${BASE_URL}${User.avatar}`} />
-          <CoverImgStyle alt={User.nickname} src={BASE_URL_REPORT_IMAGES + images[0]} />
+          <AvatarStyle alt={User?.nickname} src={`${BASE_URL}${User?.avatar}`} />
+          <CoverImgStyle alt={User?.nickname} src={BASE_URL_REPORT_IMAGES + images[0]} />
         </CardMediaStyle>
 
         <CardContent>

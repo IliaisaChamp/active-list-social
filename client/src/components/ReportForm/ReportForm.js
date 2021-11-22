@@ -20,7 +20,7 @@ export default function ReportForm() {
   const { t } = useTranslation();
   const { value, onChangeInput } = useInput();
   const [chipData, setChipData] = useState([]);
-  const [task, setTask] = useState([]);
+  const [task, setTask] = useState({});
 
   const { id } = useParams();
   const { tasks, user } = useSelector((state) => state);
@@ -31,8 +31,9 @@ export default function ReportForm() {
 
   useEffect(() => {
     const task = memoizedCallback();
+    console.log(task);
     setTask(task);
-  }, [memoizedCallback]);
+  }, [memoizedCallback, tasks, id]);
 
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));

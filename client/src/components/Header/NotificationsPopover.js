@@ -253,7 +253,7 @@ export default function NotificationsPopover() {
         <Divider />
 
         <Box sx={{ p: 1 }}>
-          <Button fullWidth disableRipple component={RouterLink} to="#">
+          <Button fullWidth component={RouterLink} to="#">
             View All
           </Button>
         </Box>

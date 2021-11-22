@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Task, UserTask, Follower ,Report}) {
       this.hasMany(Report, { foreignKey: 'user_id' });
-      this.hasMany(UserTask, { foreignKey: 'user_id' });
       this.belongsToMany(User, { through: 'Followers', foreignKey: 'follower_id', as: 'followings' });
       this.belongsToMany(User, { through: 'Followers', foreignKey: 'user_id', as: 'followers' });
+      this.belongsToMany(Task, { through: 'UserTasks', foreignKey: 'user_id'});
     }
   }
   User.init(

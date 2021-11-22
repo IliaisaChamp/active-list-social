@@ -1,13 +1,35 @@
 const TaskService = require('../services/taskService');
+const { UserTask, Report, Task, User } = require('../db/models');
 
 class TaskController {
-  static async userUnsubscribe(req, res) {
+  static async completeTask(req, res) {
+    try {
+      const user_id = req.session.user.id;
+      const task_id = req.params.id;
+      const task = await UserTask.findOne({ where: { user_id, task_id } });
+      const report = await Report.findOne({ where: { user_id, task_id } });
+      if (!report) {
+        return res.status(400).json({ message: 'Вы должны иметь хотя бы один завершенный отчет по задаче.....' });
+      }
+      if (task) {
+        task.isDone = true;
+        await task.save();
+        res.status(200).json({ message: 'Задача выполнена! Поздравляю!' });
+      } else {
+        res.status(400).json({ message: 'Вы не подписаны на данную задачу...' });
+      }
+    } catch (e) {
+      res.status(400).json({ message: 'Неправильный запрос...' });
+    }
+  }
+
+  static async unsubscribeUser(req, res) {
     try {
       const userId = req.session.user.id;
       const taskId = req.params.id;
       if (userId && taskId) {
         await TaskService.unSubscribe(userId, taskId);
-        res.sendStatus(200);
+        res.status(200).json({ message: 'Подписка удалена' });
       } else {
         res.sendStatus(401);
       }
@@ -15,24 +37,35 @@ class TaskController {
       res.sendStatus(400);
     }
   }
-  static async userSubscribe(req, res) {
+  static async subscribeUser(req, res) {
     try {
       const userId = req.session.user.id;
       const taskId = req.params.id;
-      if (userId && taskId) {
+      const task = await Task.findOne({ where: { id: taskId } });
+      if (userId && task) {
         await TaskService.subscribe(userId, taskId);
-        res.sendStatus(200);
+        res.status(200).json({ message: 'Подписка создана' });
       } else {
-        res.sendStatus(401);
+        res.status(400).json({ message: 'Неправильные данные' });
       }
     } catch (e) {
+      console.log(e);
       res.sendStatus(400);
     }
   }
   static async showAll(req, res) {
     try {
+      const userId = req.session.user.id;
+      const query = await User.findOne({
+        where: {
+          id: userId,
+        },
+        include: [{ model: Task }],
+      });
+      const userTasks = query.Tasks.map((task) => task.id);
       const filter = req.query._filter ? decodeURIComponent(req.query._filter) : false;
-      const tasks = await TaskService.getTasks(filter);
+      const allTasks = await TaskService.getTasks(filter);
+      const tasks = allTasks.filter((task) => !userTasks.includes(task.id))
       res.json({ tasks });
     } catch (e) {
       res.sendStatus(500);

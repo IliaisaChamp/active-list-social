@@ -10,6 +10,8 @@ router.route('/:id/followings').get(UsersController.getFollowings);
 router.route('/:id/followers').get(UsersController.getFollowers);
 router.route('/:id/follow').post(checkAuth, UsersController.follow);
 router.route('/:id/unfollow').post(checkAuth, UsersController.unfollow);
-router.route('/:id').put(checkAuth, uploadAvatar, UsersController.edit);
+router.route('/:id')
+    .get(UsersController.getUser)
+    .put(checkAuth, uploadAvatar, UsersController.edit);
 
 module.exports = router;
