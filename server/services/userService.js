@@ -1,9 +1,16 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../db/models/');
-const { UserTask, Task } = require('../db/models');
+const { UserTask, Task, Report} = require('../db/models');
 const { Op } = require('sequelize');
 
 class UserService {
+  static async getReports(user_id) {
+    return await Report.findAll({
+      where: { user_id },
+      include: { model: User, attributes: ['nickname', 'avatar'] },
+    });
+  }
+
   static async getRecommendedUsers(id) {
     const user = await User.findOne({ where: { id }, include: Task });
     const userTasks = user.Tasks.map((task) => task.id);
@@ -25,12 +32,13 @@ class UserService {
         },
       },
     });
-      return recommendedUsersWithTasks.map((user) => {
+      return await Promise.all(recommendedUsersWithTasks.map(async (user) => {
       const { Tasks: tasks, ...rest } = user.get({ plain: true });
       const commonTasksCount = tasks.filter((task) => userTasks.includes(task.id)).length;
-      const percentCommonTasks = Math.floor(commonTasksCount / userTasks.length * 100)
-      return { ...rest, common: percentCommonTasks };
-    });
+      const percentCommonTasks = Math.floor(commonTasksCount / userTasks.length * 100);
+      const reports = await UserService.getReports(user.id);
+      return { ...rest, percentCommonTasks, reportsCount: reports.length };
+    }));
   }
 
   static async getUserTasks(userId) {

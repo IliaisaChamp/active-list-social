@@ -79,12 +79,7 @@ class UserController {
   static async getUserReports(req, res) {
     try {
       const user_id = req.params.id;
-      const reports = await Report.findAll({
-        where: { user_id },
-        include: { model: User, attributes: ['nickname', 'avatar'] },
-      });
-
-      console.log(reports);
+      const reports = await UserService.getReports(user_id)
       if (reports) {
         return res.status(200).json({ reports });
       } else {
