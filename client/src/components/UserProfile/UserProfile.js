@@ -1,18 +1,24 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 // mui
 import { makeStyles } from '@mui/styles';
-import { Button, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
+import { Button, Typography, Stack, IconButton } from '@mui/material';
 
 // icons
 import AddIcon from '@mui/icons-material/Add';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import MessageIcon from '@mui/icons-material/Message';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 
 // mufunc
+import { changeAvatar } from '../../store/ac/usersAC';
+import { Box } from '@mui/system';
+
+const BASE_URL = 'http://localhost:3001/img';
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -53,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const InputFile = styled('input')({
+  display: 'none',
+});
+
 const img =
   'https://images.unsplash.com/photo-1604737771065-7ce2dc4ba3e8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1954&q=80';
 
@@ -60,7 +70,14 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const isSelfPage = +id === +user.id;
+
+  const handleFileInputChange = async (e) => {
+    const formData = new FormData();
+    formData.append('avatar', e.target.files[0]);
+    dispatch(changeAvatar(user?.id, formData));
+  };
 
   const classes = useStyles();
   return (
@@ -76,11 +93,36 @@ const UserProfile = () => {
       />
       <div className={classes.headerContainer}>
         <div className={classes.header}>
-          <Avatar
-            alt={user.first_name}
-            src={'http://localhost:3001/img/' + user.avatar}
-            classes={{ root: classes.avatar, circle: classes.circle }}
-          />
+          <Box sx={{ position: 'relative', mr: 6 }}>
+            <Avatar
+              alt={user.first_name}
+              src={user?.avatar && `${BASE_URL}/${user.avatar}`}
+              classes={{ root: classes.avatar, circle: classes.circle }}
+            />
+            <Stack
+              sx={{
+                left: '70%',
+                bottom: '5%',
+                position: 'absolute',
+                zIndex: 4,
+              }}
+              direction="row"
+              alignItems="center"
+              spacing={2}>
+              <label htmlFor="icon-button-file">
+                <InputFile
+                  accept="image/*"
+                  id="icon-button-file"
+                  type="file"
+                  name="avatar"
+                  onChange={handleFileInputChange}
+                />
+                <IconButton color="primary" aria-label="upload picture" component="span" size="large">
+                  <PhotoCamera sx={{ width: '100%', height: '100%' }} />
+                </IconButton>
+              </label>
+            </Stack>
+          </Box>
           <Typography variant={'h5'}>{user.first_name}</Typography>
           &nbsp;
           <Typography variant={'h5'}>{user.last_name}</Typography>
