@@ -6,7 +6,7 @@ import Layout from './components/Layout/Layout';
 import Profile from './pages/Profile';
 import User from './components/NearestFolder/User';
 import Top from './components/TopFolder/Top';
-import Lenta from './components/LentaFolder/Lenta';
+import Timeline from './pages/Timeline';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Tasks from './pages/Tasks';
@@ -34,7 +34,7 @@ export default function Router() {
           path: '/tasks',
           element: <Tasks />,
         },
-        { path: '/lenta', element: <Lenta /> },
+        { path: '/timeline', element: <Timeline /> },
         {
           path: '/reports',
           element: <Report />,

@@ -12,13 +12,13 @@ import { Container, Grid } from '@mui/material';
 // my components
 import TasksList from '../TasksList/TasksList';
 import { LentaPostCard } from '../LentaFolder';
-import POSTS from '../../_mocks_/blog';
+// import POSTS from '../../_mocks_/blog';
 
 const tabPanelStyle = {
   padding: '24px 0',
 };
 
-const ProfileTabs = ({ tasks, subscribeHandler, isSelfPage, completeTaskHandler }) => {
+const ProfileTabs = ({ tasks, subscribeHandler, isSelfPage, completeTaskHandler, reports }) => {
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {
@@ -44,10 +44,10 @@ const ProfileTabs = ({ tasks, subscribeHandler, isSelfPage, completeTaskHandler 
           />
         </TabPanel>
         <TabPanel sx={tabPanelStyle} value="2">
-          <Container sx={{ display: 'flex' }}>
-            <Grid container>
-              {POSTS.map((post, index) => (
-                <LentaPostCard key={post.id} post={post} index={index} />
+          <Container sx={{ display: 'flex', position: 'relative' }}>
+            <Grid container spacing={3}>
+              {reports.map((report, index) => (
+                <LentaPostCard key={report.id} report={report} index={index} />
               ))}
             </Grid>
           </Container>

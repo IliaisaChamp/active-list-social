@@ -22,18 +22,19 @@ import UserProfile from '../components/UserProfile/UserProfile';
 
 import { completeTask, getUsersTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
 import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
+import { getUserReports, setReports } from '../store/ac/reportsAC';
 
 const Profile = () => {
   const tasks = useSelector((state) => state.tasks);
   const { id } = useParams();
-  const user = useSelector((state) => state.user);
+  const {user, reports} = useSelector((state) => state);
   const dispatch = useDispatch();
   const isSelfPage = +id === +user.id;
 
   useEffect(() => {
     // if (user) {
     dispatch(getUsersTasks(id));
-    // }
+    dispatch(getUserReports(id));
   }, [id]);
 
   const unscubscribeHandler = (taskId) => {
@@ -66,6 +67,7 @@ const Profile = () => {
             <ProfileTabs
               isSelfPage={isSelfPage}
               tasks={tasks}
+              reports={reports}
               subscribeHandler={unscubscribeHandler}
               completeTaskHandler={completeTaskHandler}
               buttonName={'Удалить'}

@@ -3,15 +3,6 @@ const UserService = require('../services/userService');
 const { Op } = require('sequelize');
 
 class ReportController {
-  static async showAll(req, res) {
-    try {
-      const reports = await Report.findAll();
-      res.json({ reports });
-    } catch (e) {
-      res.sendStatus(400);
-    }
-  }
-
   static async getReportById(req, res) {
     const { id } = req.params;
     try {
@@ -67,13 +58,15 @@ class ReportController {
         }),
       );
 
-      console.log(followingsTasks);
-      const userTasksIds = userTasks?.map((el) => el.task_id);
-      const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
-      const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
+      let tasksIdSet;
+      if (followingsTasks) {
+        const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
+        tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
+      }
+
+      tasksIdSet = userTasks?.map((el) => el.task_id);
 
       const reports = await Report.findAll({
-        // raw: true,
         where: {
           task_id: {
             [Op.in]: [...tasksIdSet],

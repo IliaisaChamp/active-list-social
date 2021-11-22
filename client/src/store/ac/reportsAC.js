@@ -48,3 +48,13 @@ export const getReportById = (id) => async (dispatch) => {
   const response = await axios(`${BASE_URL}/reports/${id}`);
   dispatch(setReportAction(response.data));
 };
+
+export const getUserReports = (id) => async (dispatch) => {
+  const response = await axios(`${BASE_URL}/users/${id}/reports`);
+  const { reports } = response.data;
+
+  dispatch({
+    type: SET_REPORTS,
+    payload: reports,
+  });
+};

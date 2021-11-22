@@ -14,7 +14,7 @@ class UserController {
       });
       res.json({ user });
     } catch (e) {
-      console.log(e)
+      console.log(e);
       res.status(400).json('Неправильный ввод данных...');
     }
   }
@@ -67,11 +67,19 @@ class UserController {
   static async getUserReports(req, res) {
     try {
       const user_id = req.params.id;
-      const reports = await Report.findAll({ where: { user_id } });
-      res.status(200).json({ reports });
+      const reports = await Report.findAll({
+        where: { user_id },
+        include: { model: User, attributes: ['nickname', 'avatar'] },
+      });
+
+      console.log(reports);
+      if (reports) {
+        return res.status(200).json({ reports });
+      } else {
+        return res.status(400).json({message: 'У вас еще нет отчетов'})
+      }
     } catch (e) {
-      console.log(e);
-      res.status(400).json({ message: 'Неправильный запрос' });
+      return res.status(400).json({ message: 'Неправильный запрос' });
     }
   }
 

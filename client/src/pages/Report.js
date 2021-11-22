@@ -10,18 +10,11 @@ import { Outlet } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
 export default function Report() {
-  // const tasks = useSelector((state) => state.tasks);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllTasks());
-  }, [dispatch]);
 
   return (
     <Page title="Report">
       <Container>
         <Outlet />
-
       </Container>
     </Page>
   );

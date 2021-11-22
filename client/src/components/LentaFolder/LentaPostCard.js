@@ -66,7 +66,7 @@ const CoverImgStyle = styled('img')({
 // ----------------------------------------------------------------------
 
 LentaPostCard.propTypes = {
-  post: PropTypes.object.isRequired,
+  report: PropTypes.object.isRequired,
   index: PropTypes.number,
 };
 
@@ -74,8 +74,8 @@ LentaPostCard.propTypes = {
 const BASE_URL = 'http://localhost:3001/img/';
 const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
 
-export default function LentaPostCard({ post, index }) {
-  const { images, desc, User, task_id, createdAt, id } = post;
+export default function LentaPostCard({ report, index }) {
+  const { images, desc, User, task_id, createdAt, id } = report;
 
   const POST_INFO = [
     { number: 100, icon: messageCircleFill },
