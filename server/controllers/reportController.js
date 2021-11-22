@@ -58,14 +58,14 @@ class ReportController {
         }),
       );
 
-      let tasksIdSet;
-      if (followingsTasks) {
-        const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
-        tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
+      if (!userTasks && !userFollowings) {
+        return res.status(400).json({ message: 'Отчетов нет' });
       }
 
-      tasksIdSet = userTasks?.map((el) => el.task_id);
+      const userTasksIds = userTasks?.map((el) => el.task_id);
+      const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
 
+      const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
       const reports = await Report.findAll({
         where: {
           task_id: {
@@ -76,7 +76,7 @@ class ReportController {
       });
 
       if (reports) {
-        return res.json({reports});
+        return res.json({ reports });
       } else {
         return res.status(400).json({ message: 'Отчетов нет' });
       }
