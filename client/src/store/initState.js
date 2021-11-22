@@ -1,6 +1,7 @@
 const initState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
-  flash: {message: '', type: ''},
+  currentUser: null,
+  flash: { message: '', type: '' },
   notification: { message: '', url: '' },
   tasks: [],
   possibleFriends: [],

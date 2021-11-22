@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 // mufunc
 import { changeAvatar } from '../../store/ac/usersAC';
 import { Box } from '@mui/system';
+import { getCurrentUser } from '../../store/ac/currentUserAC';
 
 const BASE_URL = 'http://localhost:3001/img';
 
@@ -69,13 +70,20 @@ const img =
 const UserProfile = ({ isSelfPage }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const currentUser = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   const handleFileInputChange = async (e) => {
     const formData = new FormData();
     formData.append('avatar', e.target.files[0]);
     dispatch(changeAvatar(user?.id, formData));
   };
+  useEffect(() => {
+    if (!isSelfPage) {
+      dispatch(getCurrentUser(id));
+    }
+  }, []);
 
   const classes = useStyles();
   return (
@@ -93,8 +101,13 @@ const UserProfile = ({ isSelfPage }) => {
         <div className={classes.header}>
           <Box sx={{ position: 'relative', mr: 6 }}>
             <Avatar
-              alt={user.first_name}
-              src={user?.avatar && `${BASE_URL}/${user.avatar}`}
+              alt={isSelfPage ? user.first_name : currentUser?.first_name}
+              // src={user?.avatar && `${BASE_URL}/${user.avatar}`}
+              src={
+                isSelfPage
+                  ? user?.avatar && `${BASE_URL}/${user.avatar}`
+                  : currentUser?.avatar && `${BASE_URL}/${currentUser.avatar}`
+              }
               classes={{ root: classes.avatar, circle: classes.circle }}
             />
             {isSelfPage && (
@@ -123,9 +136,9 @@ const UserProfile = ({ isSelfPage }) => {
               </Stack>
             )}
           </Box>
-          <Typography variant={'h5'}>{user.first_name}</Typography>
+          <Typography variant={'h5'}>{isSelfPage ? user?.first_name : currentUser?.first_name}</Typography>
           &nbsp;
-          <Typography variant={'h5'}>{user.last_name}</Typography>
+          <Typography variant={'h5'}>{isSelfPage ? user?.last_name : currentUser?.last_name}</Typography>
           <div className={classes.spacer} />
           <div className={classes.actionGroup}>
             {isSelfPage ? (
