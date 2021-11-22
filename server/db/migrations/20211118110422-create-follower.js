@@ -6,34 +6,36 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       user_id: {
         type: Sequelize.INTEGER,
+        unique: 'action_unique',
         allowNull: false,
         references: {
           key: 'id',
-          model: 'Users'
-        }
+          model: 'Users',
+        },
       },
       follower_id: {
         type: Sequelize.INTEGER,
+        unique: 'action_unique',
         allowNull: false,
         references: {
           key: 'id',
-          model: 'Users'
-        }
+          model: 'Users',
+        },
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
