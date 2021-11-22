@@ -5,6 +5,19 @@ const fsp = require('fs/promises');
 const path = require('path');
 
 class UserController {
+  static async getUser(req, res) {
+    const { id } = req.params;
+    try {
+      const user = await User.findOne({
+        where: { id },
+        attributes: ['nickname', 'first_name', 'last_name', 'email', 'isAdmin', 'avatar'],
+      });
+      res.json({ user });
+    } catch (e) {
+      console.log(e)
+      res.status(400).json('Неправильный ввод данных...');
+    }
+  }
   static async getFollowers(req, res) {
     const id = req.params.id;
     try {
@@ -103,19 +116,6 @@ class UserController {
     } catch (e) {
       console.log(e);
       res.sendStatus(400);
-    }
-  }
-
-  static async getUser(req, res) {
-    const { id } = req.params;
-    try {
-      const currentUser = await UserService.getUser(id);
-
-      if (currentUser) {
-        return res.json(currentUser);
-      }
-    } catch (error) {
-      return res.status(500).json(error);
     }
   }
 
