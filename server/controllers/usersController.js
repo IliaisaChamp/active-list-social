@@ -121,8 +121,6 @@ class UserController {
     try {
       const userId = req.params.id;
       const entries = await UserService.getUserTasks(userId);
-      console.log(entries);
-
       const tasks = entries.map((entry) => ({
         id: entry.task_id,
         title: entry['Task.title'],

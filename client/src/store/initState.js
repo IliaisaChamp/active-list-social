@@ -5,8 +5,9 @@ const initState = {
   notification: { message: '', url: '' },
   tasks: [],
   possibleFriends: [],
-  isLoading: 1,
+  isLoading: 0,
   reports: [],
   currentReport: {},
+  online: [],
 };
 export default initState;

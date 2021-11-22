@@ -8,6 +8,7 @@ import authReducer from './authReducer';
 import flashReducer from './flashReducer';
 import notificationReducer from './notificationReducer';
 import currentUserReducer from './currentUserReducer';
+import onlineReducer from "./onlineReducer";
 
 const rootReducer = combineReducers({
   user: authReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   isLoading: isLoadingReducer,
   reports: reportsReducer,
   currentReport: currentReportReducer,
+  online: onlineReducer,
 });
 
 export default rootReducer;
