@@ -14,19 +14,23 @@ import Report from './pages/Report';
 import Chat from './components/ChatFolder/Chat/Chat';
 import ReportForm from './components/ReportForm/ReportForm';
 import DetailReport from './components/DetailReport/DetailReport';
+import Loader from './components/Loader/Loader'
 // import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   const user = useSelector((state) => state.user);
+  const isLoading = useSelector((state) => state.isLoading)
 
   return useRoutes([
     {
       path: '/',
       element: <Layout />,
-      children: [
-        {
+      children:
+        
+        
+        [{
           path: '/profile/:id',
           element: !user ? <Navigate to="/" /> : <Profile />,
         },

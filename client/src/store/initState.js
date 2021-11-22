@@ -4,7 +4,7 @@ const initState = {
   notification: { message: '', url: '' },
   tasks: [],
   possibleFriends: [],
-  isLoading: 0,
+  isLoading: 1,
   reports: [],
   currentReport: {},
 };

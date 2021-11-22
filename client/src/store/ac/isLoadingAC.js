@@ -1,6 +1,9 @@
-import { IS_LOADING } from "../types/isLoadingTypes";
+import { IS_LOADING, STOP_LOADING } from "../types/isLoadingTypes";
 
-export const allRooms = (isLoading) => ({
+export const isLoading = () => ({
   type: IS_LOADING,
-  payload: isLoading,
+});
+
+export const stopLoading = () => ({
+  type: STOP_LOADING,
 });
