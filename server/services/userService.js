@@ -7,6 +7,7 @@ class UserService {
 
   static async getUserTasks(userId) {
     return await UserTask.findAll({
+      raw: true,
       where: {
         user_id: userId,
       },

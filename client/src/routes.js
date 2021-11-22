@@ -30,14 +30,17 @@ export default function Router() {
           path: '/profile/:id',
           element: !user ? <Navigate to="/" /> : <Profile />,
         },
-        { path: '/tasks', element: <Tasks /> },
+        {
+          path: '/tasks',
+          element: <Tasks />,
+        },
         { path: '/lenta', element: <Lenta /> },
         {
           path: '/reports',
           element: <Report />,
           children: [
             {
-              path: '',
+              path: 'task/:id',
               element: <ReportForm />,
             },
             {

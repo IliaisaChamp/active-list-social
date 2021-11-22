@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // mui
@@ -18,7 +18,7 @@ const TasksItem = ({ task, subscribeHandler }) => {
   const user = useSelector((state) => state.user);
   const location = useLocation();
   const { id } = useParams();
-  console.log(id);
+
   const isPageTask = location.pathname.includes('tasks');
   const isSelfPage = +id === +user.id;
 
@@ -35,17 +35,17 @@ const TasksItem = ({ task, subscribeHandler }) => {
           <AddIcon />
         </IconButton>
       ) : isSelfPage ? (
-        <>
+          <div style={{ display: 'flex', alignItems: 'baseline' }} >
           <IconButton edge="end" aria-label="complete-task">
             <CheckCircleIcon />
           </IconButton>
-          <IconButton edge="end" aria-label="add-report">
+            <IconButton edge="end" as={Link} to={`/reports/task/${task.id}/`} aria-label="add-report">
             <TaskIcon />
           </IconButton>
           <IconButton onClick={() => subscribeHandler(task.id)} edge="end" aria-label="delete">
             <DeleteIcon />
           </IconButton>
-        </>
+        </div>
       ) : null}
     </ListItem>
   );

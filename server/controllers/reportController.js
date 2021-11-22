@@ -54,31 +54,32 @@ class ReportController {
     try {
       const userTasks = await UserService.getUserTasks(req.session.user.id);
 
-      // const userFollowings = await Follower.findAll({
-      //   plain: true,
-      //   where: {
-      //     follower_id: req.session.user.id,
-      //   },
-      // });
+      const userFollowings = await Follower.findAll({
+        raw: true,
+        where: {
+          follower_id: req.session.user.id,
+        },
+      });
 
-      // const followingsTasks = await Promise.all(
-      //   userFollowings.map((user) => {
-      //     return UserService.getUserTasks(user.id);
-      //   }),
-      // );
+      const [followingsTasks] = await Promise.all(
+        userFollowings.map((user) => {
+          return UserService.getUserTasks(user.user_id);
+        }),
+      );
 
       const userTasksIds = userTasks?.map((el) => el.task_id);
-      // const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
+      const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
 
-      // const tasksIdSet = [...new Set(...userTasksIds, ...followingsTasksIds)];
+      const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
 
       const reports = await Report.findAll({
-        plain: true,
+        raw: true,
         where: {
           task_id: {
-            [Op.in]: userTasksIds,
+            [Op.in]: [...tasksIdSet],
           },
         },
+        include: { model: User, attributes: ['nickname', 'avatar'] },
       });
 
       if (reports) {

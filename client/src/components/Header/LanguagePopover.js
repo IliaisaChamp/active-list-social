@@ -5,7 +5,7 @@ import { Box, MenuItem, ListItemIcon, ListItemText, IconButton } from '@mui/mate
 // components
 import MenuPopover from '../MenuPopover/MenuPopover';
 import { changeLanguage } from 'i18next';
-import useLocalStorage from '../../hooks/useLocalStorage'
+import useLocalStorage from '../../hooks/useLocalStorage';
 // ----------------------------------------------------------------------
 
 const LANGS = [
@@ -31,8 +31,8 @@ const LANGS = [
 export default function LanguagePopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [icon, setIcon] = useState(0)
-  const [storedValue, setValue] = useLocalStorage('lg', {lang: 'ru', id: 1});
+  const [icon, setIcon] = useState(0);
+  const [storedValue, setValue] = useLocalStorage('lg', { lang: 'ru', id: 1 });
 
   const handleOpen = () => {
     setOpen(true);
@@ -48,12 +48,11 @@ export default function LanguagePopover() {
 
   const handleChangeLanguage = (lang, id) => {
     changeLanguage(lang);
-    setValue('ru')
-    setIcon(id)
-    setValue({lang, id});
-    handleClose()
-  }
-
+    setValue('ru');
+    setIcon(id);
+    setValue({ lang, id });
+    handleClose();
+  };
 
   return (
     <>

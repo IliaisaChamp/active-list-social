@@ -13,21 +13,22 @@ export const setReports = () => async (dispatch) => {
   });
 };
 
-export const setNewReport = (data, navigate) => async (dispatch) => {
+export const setNewReport = (data, taskID, userID, navigate) => async (dispatch) => {
   await axios
-    .post(`${BASE_URL}/tasks/4/report`, data, {
+    .post(`${BASE_URL}/tasks/${taskID}/report`, data, {
       headers: {
         'Content-type': 'multipart/form-data',
       },
     })
-    .then((res) =>
+    .then((res) => {
       dispatch(
         setSuccessMessage({
           message: 'Отчет успешно добавлен',
           type: 'success',
         }),
-      ),
-    )
+      );
+      navigate(`/profile/${userID}`);
+    })
     .catch(({ response }) =>
       dispatch(
         setErrorMessage({
