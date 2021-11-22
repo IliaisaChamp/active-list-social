@@ -13,21 +13,22 @@ export const setReports = () => async (dispatch) => {
   });
 };
 
-export const setNewReport = (data, navigate) => async (dispatch) => {
+export const setNewReport = (data, taskID, userID, navigate) => async (dispatch) => {
   await axios
-    .post(`${BASE_URL}/tasks/4/report`, data, {
+    .post(`${BASE_URL}/tasks/${taskID}/report`, data, {
       headers: {
         'Content-type': 'multipart/form-data',
       },
     })
-    .then((res) =>
+    .then((res) => {
       dispatch(
         setSuccessMessage({
           message: 'Отчет успешно добавлен',
           type: 'success',
         }),
-      ),
-    )
+      );
+      navigate(`/profile/${userID}`);
+    })
     .catch(({ response }) =>
       dispatch(
         setErrorMessage({
@@ -46,4 +47,14 @@ const setReportAction = (value) => ({
 export const getReportById = (id) => async (dispatch) => {
   const response = await axios(`${BASE_URL}/reports/${id}`);
   dispatch(setReportAction(response.data));
+};
+
+export const getUserReports = (id) => async (dispatch) => {
+  const response = await axios(`${BASE_URL}/users/${id}/reports`);
+  const { reports } = response.data;
+
+  dispatch({
+    type: SET_REPORTS,
+    payload: reports,
+  });
 };

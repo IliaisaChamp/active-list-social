@@ -6,7 +6,7 @@ import Layout from './components/Layout/Layout';
 import Profile from './pages/Profile';
 import User from './components/NearestFolder/User';
 import Top from './components/TopFolder/Top';
-import Lenta from './components/LentaFolder/Lenta';
+import Timeline from './pages/Timeline';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Tasks from './pages/Tasks';
@@ -15,12 +15,14 @@ import Chat from './components/ChatFolder/Chat/Chat';
 import ReportForm from './components/ReportForm/ReportForm';
 import DetailReport from './components/DetailReport/DetailReport';
 import Recommendations from './pages/Recommendations';
+import Loader from './components/Loader/Loader';
 // import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   const user = useSelector((state) => state.user);
+  const isLoading = useSelector((state) => state.isLoading);
 
   return useRoutes([
     {
@@ -31,14 +33,17 @@ export default function Router() {
           path: '/profile/:id',
           element: !user ? <Navigate to="/" /> : <Profile />,
         },
-        { path: '/tasks', element: <Tasks /> },
-        { path: '/lenta', element: <Lenta /> },
+        {
+          path: '/tasks',
+          element: <Tasks />,
+        },
+        { path: '/timeline', element: <Timeline /> },
         {
           path: '/reports',
           element: <Report />,
           children: [
             {
-              path: '',
+              path: 'task/:id',
               element: <ReportForm />,
             },
             {

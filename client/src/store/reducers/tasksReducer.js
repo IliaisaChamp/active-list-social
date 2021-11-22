@@ -1,4 +1,4 @@
-import { REMOVE_TASK, SET_TASKS } from '../types/tasksTypes';
+import { COMPLETE_TASK, REMOVE_TASK, SET_TASKS } from '../types/tasksTypes';
 
 export const tasksReducer = (state = [], action) => {
   const { type, payload } = action;
@@ -8,12 +8,19 @@ export const tasksReducer = (state = [], action) => {
       return payload;
 
     case REMOVE_TASK:
-      console.log(payload);
       return state.filter((task) => {
         if (task.id === payload) {
           return false;
         }
         return true;
+      });
+
+    case COMPLETE_TASK:
+      return state.map((task) => {
+        if (task.id === payload) {
+          return { ...task, isDone: true };
+        }
+        return task;
       });
 
     default:

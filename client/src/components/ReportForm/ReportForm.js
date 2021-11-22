@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, Chip, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import ReportPreviousImages from '../ReportPreviousImages/ReportPreviousImages';
@@ -16,11 +16,24 @@ import useInput from '../../hooks/useInput';
 
 export default function ReportForm() {
   const navigate = useNavigate();
-  const { value, onChangeInput } = useInput();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
+  const { value, onChangeInput } = useInput();
   const [chipData, setChipData] = useState([]);
+  const [task, setTask] = useState({});
+
+  const { id } = useParams();
+  const { tasks, user } = useSelector((state) => state);
+
+  const memoizedCallback = useCallback(() => {
+    return tasks?.find((el) => el.id === Number(id));
+  }, [tasks, id]);
+
+  useEffect(() => {
+    const task = memoizedCallback();
+    console.log(task);
+    setTask(task);
+  }, [memoizedCallback, tasks, id]);
 
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
@@ -30,9 +43,8 @@ export default function ReportForm() {
     e.preventDefault();
     const formData = new FormData(e.target);
     chipData.forEach((el, id) => formData.append(`photos`, ...el.files));
-    console.log(chipData);
-    console.log(formData.get('photos'));
-    dispatch(setNewReport(formData, navigate));
+
+    dispatch(setNewReport(formData, task.id, user.id, navigate));
   };
 
   const Input = styled('input')({
@@ -56,7 +68,8 @@ export default function ReportForm() {
   return (
     <>
       <Typography variant="h4" sx={{ mb: 5 }}>
-        {t('report.title')}
+        {/* {t('report.title')} */}
+        {task?.title}
       </Typography>
 
       <form onSubmit={handleSubmit}>
@@ -91,10 +104,7 @@ export default function ReportForm() {
           {chipData.map((data) => {
             return (
               <ListItem key={data.key} sx={{ width: 'auto' }}>
-                <Chip
-                  label={data.label}
-                  onDelete={handleDelete(data)}
-                />
+                <Chip label={data.label} onDelete={handleDelete(data)} />
               </ListItem>
             );
           })}
@@ -118,12 +128,7 @@ export default function ReportForm() {
           justifyContent="space-between"
           sx={{ my: 2, width: '30%' }}
         >
-          <LoadingButton
-            fullWidth
-            size="large"
-            type="submit"
-            variant="contained"
-          >
+          <LoadingButton fullWidth size="large" type="submit" variant="contained">
             {t('report.form_button')}
           </LoadingButton>
         </Stack>

@@ -1,12 +1,41 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../db/models/');
 const { UserTask, Task } = require('../db/models');
+const { Op } = require('sequelize');
 
 class UserService {
-
+  static async getRecommendedUsers(id) {
+    const user = await User.findOne({ where: { id }, include: Task });
+    const userTasks = user.Tasks.map((task) => task.id);
+    const recommendedUsers = await User.findAll({
+      where: {
+        '$Tasks.id$': {
+          [Op.in]: userTasks,
+        },
+      },
+      include: Task,
+    });
+    const idRecommendedUsers = recommendedUsers.map((user) => user.id);
+    const recommendedUsersWithTasks = await User.findAll({
+      attributes: ['id', 'nickname', 'first_name', 'last_name', 'email', 'isAdmin', 'avatar'],
+      include: Task,
+      where: {
+        id: {
+          [Op.in]: idRecommendedUsers,
+        },
+      },
+    });
+      return recommendedUsersWithTasks.map((user) => {
+      const { Tasks: tasks, ...rest } = user.get({ plain: true });
+      const commonTasksCount = tasks.filter((task) => userTasks.includes(task.id)).length;
+      const percentCommonTasks = Math.floor(commonTasksCount / userTasks.length * 100)
+      return { ...rest, common: percentCommonTasks };
+    });
+  }
 
   static async getUserTasks(userId) {
     return await UserTask.findAll({
+      raw: true,
       where: {
         user_id: userId,
       },
@@ -43,7 +72,7 @@ class UserService {
   }
   static async findByEmail(email) {
     try {
-      console.log(email)
+      console.log(email);
       const candidate = await User.findOne({
         where: {
           email,
@@ -56,12 +85,12 @@ class UserService {
   }
 
   static async findAndCheck(data) {
-    console.log(data)
+    console.log(data);
     const { email, password } = data;
     try {
       const candidate = await User.findOne({ where: { email } });
       if (!candidate) {
-        return null
+        return null;
       }
       const validPassword = await bcrypt.compare(password, candidate.password);
       if (!validPassword) {
@@ -105,7 +134,6 @@ class UserService {
   static async getUser(id) {
     try {
       return await User.findOne({ where: { id }, raw: true });
-
     } catch (error) {
       throw error;
     }

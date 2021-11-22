@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 // mufunc
 import { changeAvatar } from '../../store/ac/usersAC';
 import { Box } from '@mui/system';
+import { getCurrentUser } from '../../store/ac/currentUserAC';
 
 const BASE_URL = 'http://localhost:3001/img';
 
@@ -66,18 +67,23 @@ const InputFile = styled('input')({
 const img =
   'https://images.unsplash.com/photo-1604737771065-7ce2dc4ba3e8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1954&q=80';
 
-const UserProfile = () => {
+const UserProfile = ({ isSelfPage }) => {
   const navigate = useNavigate();
-  const { id } = useParams();
   const user = useSelector((state) => state.user);
+  const currentUser = useSelector((state) => state.currentUser);
   const dispatch = useDispatch();
-  const isSelfPage = +id === +user.id;
+  const { id } = useParams();
 
   const handleFileInputChange = async (e) => {
     const formData = new FormData();
     formData.append('avatar', e.target.files[0]);
     dispatch(changeAvatar(user?.id, formData));
   };
+  useEffect(() => {
+    if (!isSelfPage) {
+      dispatch(getCurrentUser(id));
+    }
+  }, []);
 
   const classes = useStyles();
   return (
@@ -95,37 +101,44 @@ const UserProfile = () => {
         <div className={classes.header}>
           <Box sx={{ position: 'relative', mr: 6 }}>
             <Avatar
-              alt={user.first_name}
-              src={user?.avatar && `${BASE_URL}/${user.avatar}`}
+              alt={isSelfPage ? user.first_name : currentUser?.first_name}
+              // src={user?.avatar && `${BASE_URL}/${user.avatar}`}
+              src={
+                isSelfPage
+                  ? user?.avatar && `${BASE_URL}/${user.avatar}`
+                  : currentUser?.avatar && `${BASE_URL}/${currentUser.avatar}`
+              }
               classes={{ root: classes.avatar, circle: classes.circle }}
             />
-            <Stack
-              sx={{
-                left: '70%',
-                bottom: '5%',
-                position: 'absolute',
-                zIndex: 4,
-              }}
-              direction="row"
-              alignItems="center"
-              spacing={2}>
-              <label htmlFor="icon-button-file">
-                <InputFile
-                  accept="image/*"
-                  id="icon-button-file"
-                  type="file"
-                  name="avatar"
-                  onChange={handleFileInputChange}
-                />
-                <IconButton color="primary" aria-label="upload picture" component="span" size="large">
-                  <PhotoCamera sx={{ width: '100%', height: '100%' }} />
-                </IconButton>
-              </label>
-            </Stack>
+            {isSelfPage && (
+              <Stack
+                sx={{
+                  left: '70%',
+                  bottom: '5%',
+                  position: 'absolute',
+                  zIndex: 4,
+                }}
+                direction="row"
+                alignItems="center"
+                spacing={2}>
+                <label htmlFor="icon-button-file">
+                  <InputFile
+                    accept="image/*"
+                    id="icon-button-file"
+                    type="file"
+                    name="avatar"
+                    onChange={handleFileInputChange}
+                  />
+                  <IconButton color="primary" aria-label="upload picture" component="span" size="large">
+                    <PhotoCamera sx={{ width: '100%', height: '100%' }} />
+                  </IconButton>
+                </label>
+              </Stack>
+            )}
           </Box>
-          <Typography variant={'h5'}>{user.first_name}</Typography>
+          <Typography variant={'h5'}>{isSelfPage ? user?.first_name : currentUser?.first_name}</Typography>
           &nbsp;
-          <Typography variant={'h5'}>{user.last_name}</Typography>
+          <Typography variant={'h5'}>{isSelfPage ? user?.last_name : currentUser?.last_name}</Typography>
           <div className={classes.spacer} />
           <div className={classes.actionGroup}>
             {isSelfPage ? (

@@ -1,10 +1,35 @@
 const { validationResult } = require('express-validator');
 const UserService = require('../services/userService');
-const { User, Follower, Report } = require('../db/models');
+const { User, Follower, Report, Task } = require('../db/models');
+const { Op } = require('sequelize');
 const fsp = require('fs/promises');
 const path = require('path');
 
 class UserController {
+  static async getRecommendation(req, res) {
+    try {
+      const { id } = req.session.user;
+      const recommendedUsers = await UserService.getRecommendedUsers(id)
+      res.json({users: recommendedUsers});
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: 'Неправильный ввод данных...' });
+    }
+  }
+
+  static async getUser(req, res) {
+    const { id } = req.params;
+    try {
+      const user = await User.findOne({
+        where: { id },
+        attributes: ['id', 'nickname', 'first_name', 'last_name', 'email', 'isAdmin', 'avatar'],
+      });
+      res.json({ user });
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: 'Неправильный ввод данных...' });
+    }
+  }
   static async getFollowers(req, res) {
     const id = req.params.id;
     try {
@@ -54,11 +79,19 @@ class UserController {
   static async getUserReports(req, res) {
     try {
       const user_id = req.params.id;
-      const reports = await Report.findAll({ where: { user_id } });
-      res.status(200).json({ reports });
+      const reports = await Report.findAll({
+        where: { user_id },
+        include: { model: User, attributes: ['nickname', 'avatar'] },
+      });
+
+      console.log(reports);
+      if (reports) {
+        return res.status(200).json({ reports });
+      } else {
+        return res.status(400).json({message: 'У вас еще нет отчетов'})
+      }
     } catch (e) {
-      console.log(e);
-      res.status(400).json({ message: 'Неправильный запрос' });
+      return res.status(400).json({ message: 'Неправильный запрос' });
     }
   }
 
@@ -93,29 +126,18 @@ class UserController {
     try {
       const userId = req.params.id;
       const entries = await UserService.getUserTasks(userId);
+      console.log(entries);
+
       const tasks = entries.map((entry) => ({
         id: entry.task_id,
-        title: entry.Task.title,
-        img: entry.Task.img,
+        title: entry['Task.title'],
+        img: entry['Task.img'],
         isDone: entry.isDone,
       }));
       res.json({ tasks });
     } catch (e) {
       console.log(e);
       res.sendStatus(400);
-    }
-  }
-
-  static async getUser(req, res) {
-    const { id } = req.params;
-    try {
-      const currentUser = await UserService.getUser(id);
-
-      if (currentUser) {
-        return res.json(currentUser);
-      }
-    } catch (error) {
-      return res.status(500).json(error);
     }
   }
 

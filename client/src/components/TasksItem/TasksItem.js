@@ -1,53 +1,72 @@
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useLocation, useParams, Link } from 'react-router-dom';
 
 // mui
+import { styled } from '@mui/material/styles';
 import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import ListIcon from '@mui/icons-material/List';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TaskIcon from '@mui/icons-material/Task';
 import AddIcon from '@mui/icons-material/Add';
 
-const TasksItem = ({ task, subscribeHandler }) => {
-  const user = useSelector((state) => state.user);
+const completedItemStyle = {
+  backgroundColor: 'primary.lighter',
+  color: 'primary.darker',
+};
+const incompletedItemStyle = {
+  backgroundColor: 'error.lighter',
+  color: 'error.darker',
+};
+
+const RootStyle = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(2, 2),
+}));
+
+const TasksItem = ({ task, subscribeHandler, isSelfPage, completeTaskHandler }) => {
   const location = useLocation();
   const { id } = useParams();
-  console.log(id);
+
   const isPageTask = location.pathname.includes('tasks');
-  const isSelfPage = +id === +user.id;
 
   return (
-    <ListItem divider={true} sx={{ padding: '10px 10px' }}>
-      {/* <ListItemAvatar>
-        <Avatar>
-          <ListIcon />
-        </Avatar>
-      </ListItemAvatar> */}
+    <RootStyle
+      divider={true}
+      sx={isPageTask ? {} : task.isDone ? { ...completedItemStyle } : { ...incompletedItemStyle }}
+    >
       <ListItemText primary={task.title} primaryTypographyProps={{ variant: 'subtitle2' }} />
-      {isPageTask ? (
-        <IconButton onClick={() => subscribeHandler(task.id)} edge="end" aria-label="delete">
-          <AddIcon />
-        </IconButton>
-      ) : isSelfPage ? (
-        <>
-          <IconButton edge="end" aria-label="complete-task">
-            <CheckCircleIcon />
-          </IconButton>
-          <IconButton edge="end" aria-label="add-report">
-            <TaskIcon />
-          </IconButton>
+      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+        {isPageTask ? (
           <IconButton onClick={() => subscribeHandler(task.id)} edge="end" aria-label="delete">
-            <DeleteIcon />
+            <AddIcon />
           </IconButton>
-        </>
-      ) : null}
-    </ListItem>
+        ) : isSelfPage ? (
+          <>
+            {!task.isDone && (
+              <IconButton
+                onClick={() => completeTaskHandler(task.id)}
+                edge="end"
+                aria-label="complete-task"
+              >
+                <CheckCircleIcon />
+              </IconButton>
+            )}
+            <IconButton
+              edge="end"
+              component={Link}
+              to={`/reports/task/${task.id}/`}
+              aria-label="add-report"
+            >
+              <TaskIcon />
+            </IconButton>
+            <IconButton onClick={() => subscribeHandler(task.id)} edge="end" aria-label="delete">
+              <DeleteIcon />
+            </IconButton>
+          </>
+        ) : null}
+      </div>
+    </RootStyle>
   );
 };
 

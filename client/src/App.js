@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkUser, deleteUser } from "./store/ac/authAC";
 // routes
 import Router from "./routes";
@@ -17,7 +17,12 @@ import FlashMessage from './components/FlashMessage/FlashMessage';
 import Notification from "./components/Notification/Notification";
 import axios from "axios";
 
+
+import Loader from './components/Loader/Loader'
+
 function App() {
+  const isLoading = useSelector((state) => state.isLoading)
+
   const dispatch = useDispatch();
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://localhost:3001";
@@ -33,8 +38,10 @@ function App() {
   );
 
   useEffect(() => {
-    dispatch(checkUser());
+    dispatch(checkUser())
+    // dispatch()
   }, [dispatch]);
+
 
 
 

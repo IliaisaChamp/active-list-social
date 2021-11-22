@@ -73,7 +73,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     },
     {
       title: t('sideBar.lenta'),
-      path: '/lenta',
+      path: '/timeline',
       icon: getIcon(rewindRightFill),
     },
     {
