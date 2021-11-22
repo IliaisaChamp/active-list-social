@@ -16,7 +16,7 @@ import {
   CardContent,
 } from '@mui/material';
 // utils
-import { fDate } from '../../utils/formatTime';
+import { fDateTime } from '../../utils/formatTime';
 import { fShortenNumber } from '../../utils/formatNumber';
 //
 import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
@@ -29,10 +29,12 @@ const CardMediaStyle = styled('div')({
 });
 
 const TitleStyle = styled(Link)({
-  height: 44,
+  // height: 44,
+  marginBottom: 10,
   overflow: 'hidden',
-  WebkitLineClamp: 2,
+  WebkitLineClamp: 1,
   display: '-webkit-box',
+  textOverflow: 'ellipsis',
   WebkitBoxOrient: 'vertical',
 });
 
@@ -49,7 +51,7 @@ const InfoStyle = styled('div')(({ theme }) => ({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'flex-end',
-  marginTop: theme.spacing(3),
+  // marginTop: theme.spacing(3),
   color: theme.palette.text.disabled,
 }));
 
@@ -68,13 +70,17 @@ LentaPostCard.propTypes = {
   index: PropTypes.number,
 };
 
+
+const BASE_URL = 'http://localhost:3001/img/';
+const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
+
 export default function LentaPostCard({ post, index }) {
-  const { cover, title, view, comment, share, author, createdAt } = post;
+  const { images, desc, User, task_id, createdAt, id } = post;
 
   const POST_INFO = [
-    { number: comment, icon: messageCircleFill },
-    { number: view, icon: eyeFill },
-    { number: share, icon: shareFill },
+    { number: 100, icon: messageCircleFill },
+    { number: 100, icon: eyeFill },
+    { number: 100, icon: shareFill },
   ];
 
   return (
@@ -82,8 +88,8 @@ export default function LentaPostCard({ post, index }) {
       <Card sx={{ position: 'relative' }}>
         <CardMediaStyle>
           <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
-          <AvatarStyle alt={author.name} src={author.avatarUrl} />
-          <CoverImgStyle alt={title} src={cover} />
+          <AvatarStyle alt={User.nickname} src={`${BASE_URL}${User.avatar}`} />
+          <CoverImgStyle alt={User.nickname} src={BASE_URL_REPORT_IMAGES + images[0]} />
         </CardMediaStyle>
 
         <CardContent>
@@ -92,28 +98,27 @@ export default function LentaPostCard({ post, index }) {
             variant="caption"
             sx={{ color: 'text.disabled', display: 'block' }}
           >
-            {fDate(createdAt)}
+            {fDateTime(createdAt)}
           </Typography>
+
+          {/* <Typography>
+            @{User.nickname}
+          </Typography> */}
+
           <TitleStyle
-            to="#"
+            to={`/reports/${id}`}
             color="inherit"
             variant="subtitle2"
             underline="hover"
             component={RouterLink}
           >
-            {title}
+            {desc}
           </TitleStyle>
           <InfoStyle>
             {POST_INFO.map((info, index) => (
               <Box key={index}>
-                <Box
-                  component={Icon}
-                  icon={info.icon}
-                  sx={{ width: 16, height: 16, mr: 0.5 }}
-                />
-                <Typography variant="caption">
-                  {fShortenNumber(info.number)}
-                </Typography>
+                <Box component={Icon} icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
               </Box>
             ))}
           </InfoStyle>

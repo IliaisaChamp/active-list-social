@@ -67,13 +67,13 @@ class ReportController {
         }),
       );
 
+      console.log(followingsTasks);
       const userTasksIds = userTasks?.map((el) => el.task_id);
       const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
-
       const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
 
       const reports = await Report.findAll({
-        raw: true,
+        // raw: true,
         where: {
           task_id: {
             [Op.in]: [...tasksIdSet],
@@ -83,7 +83,7 @@ class ReportController {
       });
 
       if (reports) {
-        return res.json(reports);
+        return res.json({reports});
       } else {
         return res.status(400).json({ message: 'Отчетов нет' });
       }
