@@ -1,11 +1,14 @@
-import {} from '../types/usersListTypes';
+import { SET_USERS_LIST } from '../types/usersListTypes';
 
-export const possibleFriendsReducer = (state = [], action) => {
+export const usersListReducer = (state = [], action) => {
   const { type, payload } = action;
   switch (type) {
+    case SET_USERS_LIST:
+      return payload;
+
     default:
       return state;
   }
 };
 
-export default possibleFriendsReducer;
+export default usersListReducer;

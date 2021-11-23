@@ -1,5 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { filter } from 'lodash';
@@ -34,6 +35,11 @@ import RecommendationsToolbar from '../components/RecommendationsToolbar/Recomme
 
 //
 import USERLIST from '../_mocks_/user';
+import { getRecommendedUsers } from '../store/ac/usersListAC';
+import RecommendationItem from '../components/RecommendationItem/RecommendationItem';
+
+import { isSubscribed } from '../utils/isSubscribed';
+import { subscribeOnUser, unsubscribeFromUser } from '../store/ac/subscribesAC';
 
 // ----------------------------------------------------------------------
 
@@ -77,47 +83,64 @@ function applySortFilter(array, comparator, query) {
 }
 
 const Recommendations = () => {
+  const usersList = useSelector((state) => state.usersList);
+  const dispatch = useDispatch();
+
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  // console.log(usersList);
+  useEffect(() => {
+    dispatch(getRecommendedUsers());
+    // return () => {
+    //   cleanup
+    // }
+  }, []);
+  // const handleRequestSort = (event, property) => {
+  //   const isAsc = orderBy === property && order === 'asc';
+  //   setOrder(isAsc ? 'desc' : 'asc');
+  //   setOrderBy(property);
+  // };
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  // const handleSelectAllClick = (event) => {
+  //   if (event.target.checked) {
+  //     const newSelecteds = USERLIST.map((n) => n.name);
+  //     setSelected(newSelecteds);
+  //     return;
+  //   }
+  //   setSelected([]);
+  // };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
+  // const handleChangePage = (event, newPage) => {
+  //   setPage(newPage);
+  // };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  // const handleChangeRowsPerPage = (event) => {
+  //   setRowsPerPage(parseInt(event.target.value, 10));
+  //   setPage(0);
+  // };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  // const handleFilterByName = (event) => {
+  //   setFilterName(event.target.value);
+  // };
 
-  const handleFilterByName = (event) => {
-    setFilterName(event.target.value);
-  };
+  // const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  // const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  // const isUserNotFound = filteredUsers.length === 0;
 
-  const isUserNotFound = filteredUsers.length === 0;
+  // const subcsribHandler = use
+  const subcsribeHandler = useCallback((userId, followingsId) => {
+    dispatch(subscribeOnUser(userId, followingsId));
+  }, []);
 
+  const unsubcsribeHandler = useCallback((userId, followingsId) => {
+    dispatch(unsubscribeFromUser(userId, followingsId));
+  }, []);
   return (
     <Page title="Подписки">
       <Container>
@@ -125,7 +148,7 @@ const Recommendations = () => {
           <RecommendationsToolbar
             numSelected={selected.length}
             filterName={filterName}
-            onFilterName={handleFilterByName}
+            // onFilterName={handleFilterByName}
           />
 
           <Scrollbar>
@@ -137,11 +160,19 @@ const Recommendations = () => {
                   headLabel={TABLE_HEAD}
                   rowCount={USERLIST.length}
                   numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
+                  // onRequestSort={handleRequestSort}
+                  // onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                  {usersList.map((user) => (
+                    <RecommendationItem
+                      key={user.id}
+                      userInfo={user}
+                      subcsribeHandler={subcsribeHandler}
+                      unsubcsribeHandler={unsubcsribeHandler}
+                    />
+                  ))}
+                  {/* {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     // const { id, name, role, status, nickname, avatarUrl, isVerified } = row;
                     const { id, name, rang, status, nickname, avatarUrl } = row;
                     const isItemSelected = selected.indexOf(name) !== -1;
@@ -182,14 +213,14 @@ const Recommendations = () => {
                         </TableCell>
                       </TableRow>
                     );
-                  })}
-                  {emptyRows > 0 && (
+                  })} */}
+                  {/* {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
                       <TableCell colSpan={6} />
                     </TableRow>
-                  )}
+                  )} */}
                 </TableBody>
-                {isUserNotFound && (
+                {/* {isUserNotFound && (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
@@ -197,12 +228,12 @@ const Recommendations = () => {
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                )}
+                )} */}
               </Table>
             </TableContainer>
           </Scrollbar>
 
-          <TablePagination
+          {/* <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={USERLIST.length}
@@ -210,7 +241,7 @@ const Recommendations = () => {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          /> */}
         </Card>
       </Container>
     </Page>

@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useRoutes } from 'react-router-dom';
 
 // layouts
@@ -16,6 +17,7 @@ import ReportForm from './components/ReportForm/ReportForm';
 import DetailReport from './components/DetailReport/DetailReport';
 import Recommendations from './pages/Recommendations';
 import Loader from './components/Loader/Loader';
+import { getSubsribes } from './store/ac/subscribesAC';
 // import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -23,6 +25,12 @@ import Loader from './components/Loader/Loader';
 export default function Router() {
   const user = useSelector((state) => state.user);
   const isLoading = useSelector((state) => state.isLoading);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (user) {
+      dispatch(getSubsribes(user.id));
+    }
+  }, [user]);
 
   return useRoutes([
     {
