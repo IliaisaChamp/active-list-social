@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -10,35 +10,38 @@ import AppWeeklySales from '../components/ProfileStats/AppWeeklySales';
 import AppNewUsers from '../components/ProfileStats/AppNewUsers';
 import AppItemOrders from '../components/ProfileStats/AppItemOrders';
 import AppBugReports from '../components/ProfileStats/AppBugReports';
-// import AppCurrentVisits from '../components/ProfileStats/AppCurrentVisits';
-// import AppWebsiteVisits from '../components/ProfileStats/AppWebsiteVisits';
-// import AppConversionRates from '../components/ProfileStats/AppConversionRates';
-// import AppCurrentSubject from '../components/ProfileStats/AppCurrentSubject';
-// import AppNewsUpdate from '../components/ProfileStats/AppNewsUpdate';
-// import AppOrderTimeline from '../components/ProfileStats/AppOrderTimeline';
-// import AppTrafficBySite from '../components/ProfileStats/AppTrafficBySite';
-// import AppTasks from '../components/ProfileStats/AppTasks';
 import UserProfile from '../components/UserProfile/UserProfile';
+import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
 
 import { completeTask, getUsersTasks, setTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
-import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
 import { getUserReports } from '../store/ac/reportsAC';
-import { getSubsribes, setSubscribes } from '../store/ac/subscribesAC';
+import { getSubsribes, setSubscribes, subscribeOnUser, unsubscribeFromUser } from '../store/ac/subscribesAC';
+import { getCurrentUserSubscribes, setCurrentUserSubscribes } from '../store/ac/currentUserSubscribesAC';
+import { setCurrentUser } from '../store/ac/currentUserAC';
 
 const Profile = () => {
   const { id } = useParams();
-  const { user, reports, tasks, subscribes } = useSelector((state) => state);
+  const user = useSelector((state) => state.user);
+  const reports = useSelector((state) => state.reports);
+  const tasks = useSelector((state) => state.tasks);
+  const subscribes = useSelector((state) => state.subscribes);
+  const currentUserSubscribes = useSelector((state) => state.currentUserSubscribes);
+
   const dispatch = useDispatch();
   const isSelfPage = +id === +user.id;
 
   useEffect(() => {
-    // if (user) {
     dispatch(getUsersTasks(id));
     dispatch(getUserReports(id));
-    dispatch(getSubsribes(id));
+    dispatch(getSubsribes(user.id));
+    if (!isSelfPage) {
+      dispatch(getCurrentUserSubscribes(id));
+    }
     return () => {
-      dispatch(setSubscribes([]));
       dispatch(setTasks([]));
+      dispatch(setSubscribes([]));
+      dispatch(setCurrentUser(null));
+      dispatch(setCurrentUserSubscribes([]));
       dispatch({
         type: 'SET_REPORTS',
         payload: [],
@@ -46,9 +49,26 @@ const Profile = () => {
     };
   }, [id]);
 
-  const unscubscribeHandler = useCallback((taskId) => {
-    dispatch(unsubscribeOnTask(taskId));
-  }, []);
+  const unscubscribeFromTask = useCallback(
+    (taskId) => {
+      dispatch(unsubscribeOnTask(taskId));
+    },
+    [dispatch]
+  );
+
+  const subcsribeOnUser = useCallback(
+    (userId, followingsId) => {
+      dispatch(subscribeOnUser(userId, followingsId));
+    },
+    [dispatch]
+  );
+
+  const unsubcsribeFromUser = useCallback(
+    (userId, followingsId) => {
+      dispatch(unsubscribeFromUser(userId, followingsId));
+    },
+    [dispatch]
+  );
 
   const completeTaskHandler = useCallback((taskId) => {
     dispatch(completeTask(taskId));
@@ -57,7 +77,7 @@ const Profile = () => {
   return (
     <Page title="Profile">
       <Container maxWidth="xl">
-        <UserProfile isSelfPage={isSelfPage} />
+        <UserProfile isSelfPage={isSelfPage} subcsribeOnUser={subcsribeOnUser} />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />
@@ -77,9 +97,11 @@ const Profile = () => {
               isSelfPage={isSelfPage}
               tasks={tasks}
               reports={reports}
-              subscribes={subscribes}
-              subscribeToggle={unscubscribeHandler}
+              userSubscribes={isSelfPage ? subscribes : currentUserSubscribes}
+              subscribeOnTaskToggle={unscubscribeFromTask}
               completeTaskHandler={completeTaskHandler}
+              subcsribeOnUser={subcsribeOnUser}
+              unsubcsribeFromUser={unsubcsribeFromUser}
               buttonName={'Удалить'}
             />
           </Grid>

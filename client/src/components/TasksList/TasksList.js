@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import TasksItem from '../TasksItem/TasksItem';
 import { Typography } from '@mui/material';
 
-const TasksList = ({ tasks, subscribeToggle, completeTaskHandler, isSelfPage }) => {
+const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPage }) => {
   return (
     <>
       {tasks.length > 0 ? (
@@ -15,7 +15,7 @@ const TasksList = ({ tasks, subscribeToggle, completeTaskHandler, isSelfPage }) 
               <TasksItem
                 key={task.id}
                 task={task}
-                subscribeToggle={subscribeToggle}
+                subscribeOnTaskToggle={subscribeOnTaskToggle}
                 isSelfPage={isSelfPage}
                 completeTaskHandler={completeTaskHandler}
               />

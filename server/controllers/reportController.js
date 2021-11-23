@@ -13,7 +13,6 @@ class ReportController {
           { model: Like },
           {
             model: Comment,
-            // order: [['createdAt', 'ASC']],
             include: [{ model: User, attributes: ['nickname', 'avatar'] }],
           },
         ],

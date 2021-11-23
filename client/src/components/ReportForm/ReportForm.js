@@ -74,13 +74,7 @@ export default function ReportForm() {
       </Typography>
 
       <form onSubmit={handleSubmit}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="left"
-          flexWrap="wrap"
-          spacing={3}
-        >
+        <Stack direction="row" alignItems="center" justifyContent="left" flexWrap="wrap" spacing={3}>
           <label htmlFor="icon-button-file">
             <Input
               accept="image/*"
@@ -96,12 +90,7 @@ export default function ReportForm() {
           </label>
           <ReportPreviousImages itemData={chipData} />
         </Stack>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          flexWrap="wrap"
-          sx={{ margin: '10px 0 10px 0', height: 50 }}
-        >
+        <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{ margin: '10px 0 10px 0', height: 50 }}>
           {chipData.map((data) => {
             return (
               <ListItem key={data.label} sx={{ width: 'auto' }}>
@@ -123,12 +112,7 @@ export default function ReportForm() {
           />
         </Stack>
 
-        <Stack
-          direction="row"
-          alignItems="left"
-          justifyContent="space-between"
-          sx={{ my: 2, width: '30%' }}
-        >
+        <Stack direction="row" alignItems="left" justifyContent="space-between" sx={{ my: 2, width: '30%' }}>
           <LoadingButton fullWidth size="large" type="submit" variant="contained">
             {t('report.form_button')}
           </LoadingButton>

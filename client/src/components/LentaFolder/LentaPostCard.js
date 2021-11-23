@@ -165,7 +165,7 @@ export default function LentaPostCard({ report, index }) {
             </IconButton>
 
             <IconButton color="default" size="large" sx={{ padding: '5px' }}>
-              <Badge badgeContent={Comments.length} color="primary">
+              <Badge badgeContent={Comments?.length} color="primary">
                 <ChatBubbleOutlineIcon fontSize="inherit" />
               </Badge>
             </IconButton>

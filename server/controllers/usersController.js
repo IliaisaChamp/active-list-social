@@ -9,8 +9,8 @@ class UserController {
   static async getRecommendation(req, res) {
     try {
       const { id } = req.session.user;
-      const recommendedUsers = await UserService.getRecommendedUsers(id)
-      res.json({users: recommendedUsers});
+      const recommendedUsers = await UserService.getRecommendedUsers(id);
+      res.json({ users: recommendedUsers });
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: 'Неправильный ввод данных...' });
@@ -62,7 +62,7 @@ class UserController {
           model: User,
           raw: true,
           as: 'followings',
-          attributes: ['id', 'nickname', 'first_name', 'last_name', 'email'],
+          attributes: ['id', 'nickname', 'first_name', 'last_name', 'email', 'avatar'],
         },
       });
       const followings = result.followings.map((elem) => {
@@ -79,11 +79,11 @@ class UserController {
   static async getUserReports(req, res) {
     try {
       const user_id = req.params.id;
-      const reports = await UserService.getReports(user_id)
+      const reports = await UserService.getReports(user_id);
       if (reports) {
         return res.status(200).json({ reports });
       } else {
-        return res.status(400).json({message: 'У вас еще нет отчетов'})
+        return res.status(400).json({ message: 'У вас еще нет отчетов' });
       }
     } catch (e) {
       return res.status(400).json({ message: 'Неправильный запрос' });
@@ -140,13 +140,12 @@ class UserController {
       const follower_id = req.session.user.id;
 
       if (Number(user_id) === Number(follower_id)) {
-        return res.status().json({message: 'Вы не можете подписаться на самого себя'})
+        return res.status().json({ message: 'Вы не можете подписаться на самого себя' });
       }
 
       await Follower.create({ user_id, follower_id });
       return res.sendStatus(200);
     } catch (e) {
-
       return res.sendStatus(400);
     }
   }

@@ -1,13 +1,18 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../db/models/');
-const { UserTask, Task, Report, Like } = require('../db/models');
+const { UserTask, Task, Report, Like, Comment } = require('../db/models');
 const { Op } = require('sequelize');
 
 class UserService {
   static async getReports(user_id) {
     return await Report.findAll({
       where: { user_id },
-      include: [{ model: User, attributes: ['nickname', 'avatar'] }, { model: Task, attributes: ['title'] }, { model: Like }],
+      include: [
+        { model: User, attributes: ['nickname', 'avatar'] },
+        { model: Task, attributes: ['title'] },
+        { model: Like },
+        { model: Comment, attributes: ['id'] },
+      ],
       order: [['updatedAt', 'DESC']],
     });
   }
