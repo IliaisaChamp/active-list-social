@@ -82,6 +82,6 @@ export const checkUser = () => async (dispatch) => {
       dispatch(deleteUser());
     })
     .finally(() => {
-    dispatch(stopLoading())
+    // dispatch(stopLoading())
   })
 };

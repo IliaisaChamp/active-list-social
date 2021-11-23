@@ -22,6 +22,11 @@ const incompletedItemStyle = {
 
 const RootStyle = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(2, 2),
+  // borderRadius: 30,
+  marginBottom: 5,
+  '&:last-child': {
+    marginBottom: 0,
+  },
 }));
 
 const TasksItem = ({ task, subscribeHandler, isSelfPage, completeTaskHandler }) => {
@@ -32,9 +37,8 @@ const TasksItem = ({ task, subscribeHandler, isSelfPage, completeTaskHandler }) 
 
   return (
     <RootStyle
-      divider={true}
-      sx={isPageTask ? {} : task.isDone ? { ...completedItemStyle } : { ...incompletedItemStyle }}
-    >
+      // divider={true}
+      sx={isPageTask ? {} : task.isDone ? { ...completedItemStyle } : { ...incompletedItemStyle }}>
       <ListItemText primary={task.title} primaryTypographyProps={{ variant: 'subtitle2' }} />
       <div style={{ display: 'flex', alignItems: 'baseline' }}>
         {isPageTask ? (
@@ -44,20 +48,11 @@ const TasksItem = ({ task, subscribeHandler, isSelfPage, completeTaskHandler }) 
         ) : isSelfPage ? (
           <>
             {!task.isDone && (
-              <IconButton
-                onClick={() => completeTaskHandler(task.id)}
-                edge="end"
-                aria-label="complete-task"
-              >
+              <IconButton onClick={() => completeTaskHandler(task.id)} edge="end" aria-label="complete-task">
                 <CheckCircleIcon />
               </IconButton>
             )}
-            <IconButton
-              edge="end"
-              component={Link}
-              to={`/reports/task/${task.id}/`}
-              aria-label="add-report"
-            >
+            <IconButton edge="end" component={Link} to={`/reports/task/${task.id}/`} aria-label="add-report">
               <TaskIcon />
             </IconButton>
             <IconButton onClick={() => subscribeHandler(task.id)} edge="end" aria-label="delete">

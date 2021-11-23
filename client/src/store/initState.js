@@ -4,8 +4,9 @@ const initState = {
   flash: { message: '', type: '' },
   notification: { message: '', url: '' },
   tasks: [],
-  possibleFriends: [],
-  isLoading: 1,
+  subscribes: [],
+  usersList: [],
+  isLoading: 0,
   reports: [],
   currentReport: {},
 };

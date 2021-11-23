@@ -3,42 +3,42 @@ import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // material
-import { styled } from "@mui/material/styles";
-import { Box, Link, Drawer, Typography, Avatar } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
 
 // components
-import Logo from "../Logo/Logo";
-import Scrollbar from "../Scrollbar/Scrollbar";
-import NavSection from "../NavSection/NavSection";
-import { MHidden } from "../../components/@material-extend";
+import Logo from '../Logo/Logo';
+import Scrollbar from '../Scrollbar/Scrollbar';
+import NavSection from '../NavSection/NavSection';
+import { MHidden } from '../../components/@material-extend';
 
 // //sidebar icons
-import peopleFill from "@iconify/icons-eva/people-fill";
-import logInFill from "@iconify/icons-eva/log-in-fill";
-import personAddFill from "@iconify/icons-eva/person-add-fill";
-import alertTriangleFill from "@iconify/icons-eva/alert-triangle-fill";
-import flashOutLine from '@iconify/icons-eva/flash-outline'
-import messageSquareFill from '@iconify/icons-eva/message-square-fill'
-import rewindRightFill from '@iconify/icons-eva/rewind-right-fill'
-import checkMarkCircle2Fill from '@iconify/icons-eva/checkmark-circle-2-fill'
-import starFill from '@iconify/icons-eva/star-fill'
-import { Icon } from "@iconify/react";
+import peopleFill from '@iconify/icons-eva/people-fill';
+import logInFill from '@iconify/icons-eva/log-in-fill';
+import personAddFill from '@iconify/icons-eva/person-add-fill';
+import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
+import flashOutLine from '@iconify/icons-eva/flash-outline';
+import messageSquareFill from '@iconify/icons-eva/message-square-fill';
+import rewindRightFill from '@iconify/icons-eva/rewind-right-fill';
+import checkMarkCircle2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
+import starFill from '@iconify/icons-eva/star-fill';
+import { Icon } from '@iconify/react';
 
 // ----------------------------------------------------------------------
 import { useTranslation } from 'react-i18next';
 
 const DRAWER_WIDTH = 280;
 
-const RootStyle = styled("div")(({ theme }) => ({
-  [theme.breakpoints.up("lg")]: {
+const RootStyle = styled('div')(({ theme }) => ({
+  [theme.breakpoints.up('lg')]: {
     flexShrink: 0,
     width: DRAWER_WIDTH,
   },
 }));
 
-const AccountStyle = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
+const AccountStyle = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
   padding: theme.spacing(2, 2.5),
   borderRadius: theme.shape.borderRadiusSm,
   backgroundColor: theme.palette.grey[200],
@@ -70,7 +70,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     },
     {
       title: t('sideBar.subscribe'),
-      path: '/nearest',
+      path: '/recommendations',
       icon: getIcon(starFill),
       isAuth: true,
     },
@@ -124,16 +124,15 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const renderContent = (
     <Scrollbar
       sx={{
-        height: "100%",
-        "& .simplebar-content": {
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
+        height: '100%',
+        '& .simplebar-content': {
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
         },
-      }}
-    >
+      }}>
       <Box sx={{ px: 2.5, py: 3 }}>
-        <Box component={RouterLink} to="/" sx={{ display: "inline-flex" }}>
+        <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
           <Logo />
         </Box>
       </Box>
@@ -170,8 +169,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           onClose={onCloseSidebar}
           PaperProps={{
             sx: { width: DRAWER_WIDTH },
-          }}
-        >
+          }}>
           {renderContent}
         </Drawer>
       </MHidden>
@@ -183,10 +181,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           PaperProps={{
             sx: {
               width: DRAWER_WIDTH,
-              bgcolor: "background.default",
+              bgcolor: 'background.default',
             },
-          }}
-        >
+          }}>
           {renderContent}
         </Drawer>
       </MHidden>
