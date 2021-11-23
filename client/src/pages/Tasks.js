@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // material
@@ -26,9 +26,9 @@ export default function Tasks() {
   const location = useLocation();
   const isPageProfile = location.pathname.includes('profile');
 
-  const subscribeHandler = (taskId) => {
+  const subscribeHandler = useCallback((taskId) => {
     dispatch(subscribeOnTask(taskId));
-  };
+  }, []);
 
   useEffect(() => {
     dispatch(getAllTasks());
@@ -40,9 +40,9 @@ export default function Tasks() {
     }
   }, [filterName]);
 
-  const filterHandler = (event) => {
+  const filterHandler = useCallback((event) => {
     setFilterName(event.target.value);
-  };
+  }, []);
 
   return (
     <Page title="Tasks">

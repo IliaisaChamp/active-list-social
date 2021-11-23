@@ -138,11 +138,16 @@ class UserController {
     try {
       const user_id = req.params.id;
       const follower_id = req.session.user.id;
+
+      if (Number(user_id) === Number(follower_id)) {
+        return res.status().json({message: 'Вы не можете подписаться на самого себя'})
+      }
+
       await Follower.create({ user_id, follower_id });
-      res.sendStatus(200);
+      return res.sendStatus(200);
     } catch (e) {
-      console.log(e);
-      res.sendStatus(400);
+
+      return res.sendStatus(400);
     }
   }
 

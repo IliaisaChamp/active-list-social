@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import tasksReducer from './tasksReducer';
-import possibleFriendsReducer from './possibleFriendsReducer';
+import usersListReducer from './usersListReducer';
 import isLoadingReducer from './isLoadingReducer';
 import reportsReducer from './reportsReducer';
 import currentReportReducer from './currentReportReducer';
@@ -8,6 +8,7 @@ import authReducer from './authReducer';
 import flashReducer from './flashReducer';
 import notificationReducer from './notificationReducer';
 import currentUserReducer from './currentUserReducer';
+import subscribesReducer from './subscribesReducer';
 import onlineUsersReducer from "./onlineUsersReducer";
 import socketReducer from "./socketReducer";
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   flash: flashReducer,
   notification: notificationReducer,
   tasks: tasksReducer,
-  possibleFriends: possibleFriendsReducer,
+  subscribes: subscribesReducer,
+  usersList: usersListReducer,
   isLoading: isLoadingReducer,
   reports: reportsReducer,
   currentReport: currentReportReducer,

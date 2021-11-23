@@ -4,6 +4,24 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   ru: {
     translation: {
+      pages: {
+        auth: {
+          title: 'Привет, с возвращением!',
+          sub: 'Введите свои данные ниже.',
+          create: 'Создать',
+          q: 'Нет учетной записи?',
+          remember: 'Запомнить меня',
+          or: 'ИЛИ',
+        },
+        reg: {
+          title: 'Начни абсолютно бесплатно.',
+          sub: 'Бесплатно навсегда. Кредитная карта не требуется.',
+          login: 'Войти',
+          q: 'Уже есть аккаунт?',
+          warning: 'Регистрируясь, я принимаю',
+          politic: 'Политику конфиденциальности',
+        },
+      },
       form: {
         login_submit: 'Войти',
         register_submit: 'Зарегистрироваться',
@@ -35,6 +53,24 @@ const resources = {
   },
   en: {
     translation: {
+      pages: {
+        auth: {
+          title: 'Hello, welcome back!',
+          sub: 'Enter your info below.',
+          create: 'Create',
+          q: "Don't have an account?",
+          remember: 'Remember me',
+          or: 'OR',
+        },
+        reg: {
+          title: 'Get started absolutely free.',
+          sub: 'Free forever. No credit card required.',
+          login: 'Log in',
+          q: 'Have an account?',
+          warning: 'By registering I accept',
+          politic: 'Privacy policy',
+        },
+      },
       form: {
         login_submit: 'Log in',
         register_submit: 'Register now',
@@ -66,6 +102,24 @@ const resources = {
   },
   fr: {
     translation: {
+      pages: {
+        auth: {
+          title: 'Bonjour, bon retour !',
+          sub: 'Entrez vos informations ci-dessous.',
+          create: 'Créer',
+          q: "Vous n'avez pas de compte ?",
+          remember: 'Souviens-toi de moi',
+          or: 'OU',
+        },
+        reg: {
+          title: 'Commencez tout à fait gratuitement.',
+          sub: 'Libre pour toujours. Pas de carte de crédit nécessaire.',
+          login: 'Connexion',
+          q: 'Avoir un compte?',
+          warning: "En m'inscrivant j'accepte",
+          politic: 'Politique de confidentialité',
+        },
+      },
       form: {
         login_submit: 'Connexion',
         register_submit: "S'inscrire",

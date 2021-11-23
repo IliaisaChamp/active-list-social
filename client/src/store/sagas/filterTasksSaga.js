@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, takeLatest, delay, call, takeEvery } from 'redux-saga/effects';
+import { put, takeLatest, delay, call } from 'redux-saga/effects';
 import { GET_TASKS_SAGA, SET_TASKS } from '../types/tasksTypes';
 
 const BASE_URL = 'http://localhost:3001/api';

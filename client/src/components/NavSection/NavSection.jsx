@@ -152,15 +152,20 @@ NavSection.propTypes = {
 
 export default function NavSection({ navConfig, ...other }) {
   const { pathname } = useLocation();
+  const user = useSelector(state => state.user)
+
   const { id } = useParams();
   const match = (path) => (path ? !!matchPath({ path, end: false }, pathname) : false);
 
   return (
     <Box {...other}>
       <List disablePadding>
-        {navConfig.map((item) => (
-          <NavItem key={item.title} item={item} active={match} />
-        ))}
+        {navConfig.map((item) => {
+          if (item.isAuth === !!user) {
+            return <NavItem key={item.title} item={item} active={match} />;
+          }
+        }
+        )}
       </List>
     </Box>
   );

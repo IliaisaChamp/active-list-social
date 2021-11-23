@@ -1,13 +1,11 @@
-import { } from "../types/usersTypes";
+import {} from '../types/usersTypes';
 
-export const userReducer = (state = null, action) => {
+export const usersReducer = (state = null, action) => {
   const { type, payload } = action;
   switch (type) {
-  
     default:
       return state;
   }
 };
 
-export default userReducer;
-
+export default usersReducer;

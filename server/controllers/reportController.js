@@ -8,7 +8,7 @@ class ReportController {
     try {
       const report = await Report.findOne({
         include: [
-          { model: User, attributes: ['nickname'] },
+          { model: User, attributes: ['nickname', 'id'] },
           { model: Task, attributes: ['title'] },
         ],
         where: {
@@ -58,25 +58,29 @@ class ReportController {
         }),
       );
 
-      let tasksIdSet;
-      if (followingsTasks) {
-        const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
-        tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
+      if (!userTasks && !userFollowings) {
+        return res.status(400).json({ message: 'Отчетов нет' });
       }
 
-      tasksIdSet = userTasks?.map((el) => el.task_id);
+      const userTasksIds = userTasks?.map((el) => el.task_id);
+      const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
 
+      const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
       const reports = await Report.findAll({
         where: {
           task_id: {
             [Op.in]: [...tasksIdSet],
           },
         },
-        include: { model: User, attributes: ['nickname', 'avatar'] },
+        include: [
+          { model: User, attributes: ['nickname', 'avatar', 'id'] },
+          { model: Task, attributes: ['title'] },
+        ],
+        order: [['updatedAt', 'DESC']],
       });
 
       if (reports) {
-        return res.json({reports});
+        return res.json({ reports });
       } else {
         return res.status(400).json({ message: 'Отчетов нет' });
       }
