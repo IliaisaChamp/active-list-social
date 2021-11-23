@@ -1,8 +1,8 @@
-import { SET_ONLINE } from "../types/onlineTypes";
+import { SET_ONLINE } from "../types/onlineUsersTypes";
 
 const initState = [];
 
-function onlineReducer(state = initState, action) {
+function onlineUsersReducer(state = initState, action) {
   const { type, payload } = action;
   switch (type) {
     case SET_ONLINE:
@@ -12,4 +12,4 @@ function onlineReducer(state = initState, action) {
   }
 }
 
-export default onlineReducer;
+export default onlineUsersReducer;

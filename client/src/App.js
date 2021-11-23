@@ -17,17 +17,14 @@ import { BaseOptionChartStyle } from "./components/charts/BaseOptionChart";
 import FlashMessage from "./components/FlashMessage/FlashMessage";
 import Notification from "./components/Notification/Notification";
 import axios from "axios";
-
-import Loader from "./components/Loader/Loader";
-import { stopLoading } from "./store/ac/isLoadingAC";
-import {setOnline} from "./store/ac/onlineAc";
+import { createSocketConnect, setOnline } from "./store/ac/onlineUsersAc";
+import { setSocket } from "./store/ac/socketAc";
 
 function App() {
   const user = useSelector((state) => state.user);
-
   const socket = useRef();
-
   const dispatch = useDispatch();
+
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://localhost:3001";
   axios.interceptors.response.use(
@@ -43,20 +40,12 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUser());
-    socket.current = io("http://localhost:3001");
-    socket.current.on("get-online", (onlineUsers) => {
-      console.log(onlineUsers);
-      dispatch(setOnline(onlineUsers));
-    });
-  }, [dispatch]);
-
-  useEffect(() => {
-    console.log("USER", user);
     if (user) {
-      socket.current.emit("online", user.id);
+      dispatch(createSocketConnect(socket, user));
     }
-  }, [user]);
-console.log('APP RENDER')
+  }, [dispatch, user]);
+
+  console.log("APP RENDER");
   return (
     <ThemeConfig>
       <ScrollToTop />

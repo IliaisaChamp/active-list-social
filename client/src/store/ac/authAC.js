@@ -71,23 +71,28 @@ export const registrationUser =
       });
   };
 
-export const logoutUser = (navigate) => async (dispatch) => {
+export const logoutUser = (navigate) => async (dispatch, getState) => {
   axios("/api/auth/logout")
     .then((res) => {
       localStorage.removeItem("user");
+      const { socket } = getState();
+      socket.current.disconnect();
       dispatch(deleteUser());
       navigate("/");
     })
     .catch((err) => console.log(err));
 };
 
-export const checkUser = () => async (dispatch) => {
+export const checkUser = () => async (dispatch, getState) => {
   axios("/api/auth/check")
     .then((res) => {
       dispatch(startLoading());
       console.log("dispatch checkUser");
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      dispatch(setUser(res.data.user));
+      const { user } = getState();
+      if (Number(res.data.user.id) !== user.id) {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        dispatch(setUser(res.data.user));
+      }
     })
     .catch((e) => {
       console.log(e);
