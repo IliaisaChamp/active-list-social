@@ -77,7 +77,7 @@ export default function LanguagePopover() {
           {LANGS.map((option, id) => (
             <MenuItem
               key={option.value}
-              selected={option.value === LANGS[0].value}
+              selected={option.value === LANGS[icon].value}
               onClick={() => handleChangeLanguage(option.value, id)}
               sx={{ py: 1, px: 2.5 }}
             >

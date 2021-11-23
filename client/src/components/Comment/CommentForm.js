@@ -4,7 +4,7 @@ import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useInput from '../../hooks/useInput';
-
+import {setComment} from '../../store/ac/reportsAC'
 import Box from '@mui/material/Box';
 
 function CommentForm() {
@@ -19,7 +19,9 @@ function CommentForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log(formData.get('text'));
+    const text = formData.get('text')
+
+    dispatch(setComment(text.trim(), id));
   };
 
   return (
@@ -32,7 +34,7 @@ function CommentForm() {
             label={t('report.textarea')}
             multiline
             fullWidth
-            minRows={3}
+            rows={3}
             name="text"
             value={value.text}
             onChange={onChangeInput}

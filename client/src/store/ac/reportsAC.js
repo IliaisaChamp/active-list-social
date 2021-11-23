@@ -1,4 +1,4 @@
-import { SET_REPORT, SET_REPORTS } from '../types/reportsTypes';
+import { SET_COMMENT, SET_REPORT, SET_REPORTS } from '../types/reportsTypes';
 import axios from 'axios';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 
@@ -57,4 +57,26 @@ export const getUserReports = (id) => async (dispatch) => {
     type: SET_REPORTS,
     payload: reports,
   });
+};
+
+export const setComment = (text, id) => async (dispatch) => {
+  await axios
+    .post(`${BASE_URL}/reports/${id}/comment`, {
+      text,
+    })
+    .then(({ data }) => {
+      const { comment } = data;
+      dispatch({
+        type: SET_COMMENT,
+        payload: comment,
+      });
+    })
+    .catch(({ response }) => {
+      dispatch(
+        setErrorMessage({
+          message: response?.data?.message,
+          type: 'error',
+        }),
+      );
+    });
 };

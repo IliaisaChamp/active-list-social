@@ -163,6 +163,8 @@ export default function NavSection({ navConfig, ...other }) {
         {navConfig.map((item) => {
           if (item.isAuth === !!user) {
             return <NavItem key={item.title} item={item} active={match} />;
+          } else if (item.isTop) {
+            return <NavItem key={item.title} item={item} active={match} />;
           }
         })}
       </List>

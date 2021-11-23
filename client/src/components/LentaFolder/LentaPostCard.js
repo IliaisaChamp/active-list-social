@@ -107,7 +107,7 @@ export default function LentaPostCard({ report, index }) {
      })
      .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
  }, [isLiked]);
-  
+
 
   console.log('render');
   return (
