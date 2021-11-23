@@ -44,7 +44,7 @@ export default function ReportForm() {
     const formData = new FormData(e.target);
     chipData.forEach((el, id) => formData.append(`photos`, ...el.files));
 
-    dispatch(setNewReport(formData, task.id, user.id, navigate));
+    dispatch(setNewReport(formData, id, user.id, navigate));
   };
 
   const Input = styled('input')({

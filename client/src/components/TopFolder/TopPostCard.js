@@ -53,6 +53,10 @@ const CoverImgStyle = styled('img')({
   position: 'absolute'
 });
 
+
+const BASE_URL = 'http://localhost:3001/img/';
+const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
+
 // ----------------------------------------------------------------------
 
 TopPostCard.propTypes = {
@@ -60,15 +64,15 @@ TopPostCard.propTypes = {
   index: PropTypes.number
 };
 
-export default function TopPostCard({ post, index }) {
-  const { cover, title, view, comment, share, author, createdAt } = post;
+export default function TopPostCard({ report, index }) {
+  const { images, desc, User, Task, createdAt, id } = report;
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
 
   const POST_INFO = [
-    { number: comment, icon: messageCircleFill },
-    { number: view, icon: eyeFill },
-    { number: share, icon: shareFill }
+    { number: 100, icon: messageCircleFill },
+    { number: 100, icon: eyeFill },
+    { number: 100, icon: shareFill }
   ];
 
   return (
@@ -108,8 +112,8 @@ export default function TopPostCard({ post, index }) {
             }}
           />
           <AvatarStyle
-            alt={author.name}
-            src={author.avatarUrl}
+            alt={User?.nickname}
+            src={`${BASE_URL}${User?.avatar}`}
             sx={{
               ...((latestPostLarge || latestPost) && {
                 zIndex: 9,
@@ -120,8 +124,8 @@ export default function TopPostCard({ post, index }) {
               })
             }}
           />
-
-          <CoverImgStyle alt={title} src={cover} />
+        
+          <CoverImgStyle alt={User?.nickname}src={BASE_URL_REPORT_IMAGES + images[0]} />
         </CardMediaStyle>
 
         <CardContent
@@ -148,6 +152,7 @@ export default function TopPostCard({ post, index }) {
             variant="subtitle2"
             underline="hover"
             component={RouterLink}
+            to={`/reports/${id}`}
             sx={{
               ...(latestPostLarge && { typography: 'h5', height: 60 }),
               ...((latestPostLarge || latestPost) && {
@@ -155,7 +160,7 @@ export default function TopPostCard({ post, index }) {
               })
             }}
           >
-            {title}
+            {desc}
           </TitleStyle>
 
           <InfoStyle>

@@ -1,6 +1,7 @@
-const { Report, Follower, User, Task } = require('../db/models');
+const { Report, Follower, User, Task, UserTasks } = require('../db/models');
 const UserService = require('../services/userService');
 const { Op } = require('sequelize');
+
 
 class ReportController {
   static async getReportById(req, res) {
@@ -89,6 +90,16 @@ class ReportController {
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
     }
   }
+
+
+  
+  
+  
+
+
+
+
+
 }
 
 module.exports = ReportController;
