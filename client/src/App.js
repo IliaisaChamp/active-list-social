@@ -1,24 +1,24 @@
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { checkUser, deleteUser } from "./store/ac/authAC";
-import io from "socket.io-client";
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkUser, deleteUser } from './store/ac/authAC';
+import io from 'socket.io-client';
 // routes
-import Router from "./routes";
+import Router from './routes';
 
 // theme
-import ThemeConfig from "./theme";
-import GlobalStyles from "./theme/globalStyles";
+import ThemeConfig from './theme';
+import GlobalStyles from './theme/globalStyles';
 
 // components
-import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 // delete
-import { BaseOptionChartStyle } from "./components/charts/BaseOptionChart";
-import FlashMessage from "./components/FlashMessage/FlashMessage";
-import Notification from "./components/Notification/Notification";
-import axios from "axios";
-import { createSocketConnect, setOnline } from "./store/ac/onlineUsersAc";
-import { setSocket } from "./store/ac/socketAc";
+import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
+import FlashMessage from './components/FlashMessage/FlashMessage';
+import Notification from './components/Notification/Notification';
+import axios from 'axios';
+import { createSocketConnect, setOnline } from './store/ac/onlineUsersAc';
+import { setSocket } from './store/ac/socketAc';
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -26,16 +26,16 @@ function App() {
   const dispatch = useDispatch();
 
   axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://localhost:3001";
+  axios.defaults.baseURL = 'http://localhost:3001';
   axios.interceptors.response.use(
     (res) => res,
     (err) => {
-      console.log("intereceptor USED");
+      console.log('intereceptor USED');
       if (err.status === 401) {
         dispatch(deleteUser);
       }
       return Promise.reject(err);
-    }
+    },
   );
 
   useEffect(() => {
@@ -44,15 +44,15 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      socket.current = io("http://localhost:3001", {
+      socket.current = io('http://localhost:3001', {
         query: { id: user.id },
       });
       dispatch(createSocketConnect(socket, user));
     }
-    return () => socket.current.disconnect();
+    return () => socket?.current?.disconnect();
   }, [user, dispatch]);
 
-  console.log("APP RENDER");
+  console.log('APP RENDER');
   return (
     <ThemeConfig>
       <ScrollToTop />
