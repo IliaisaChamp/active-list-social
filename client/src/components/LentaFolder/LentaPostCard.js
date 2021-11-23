@@ -5,6 +5,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import {
@@ -78,7 +79,7 @@ const BASE_URL = 'http://localhost:3001/img/';
 const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
 
 export default function LentaPostCard({ report, index }) {
-  const { images, desc, User, Task, createdAt, id, Likes } = report;
+  const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [isLiked, setIsLiked] = useState(false);
@@ -93,21 +94,19 @@ export default function LentaPostCard({ report, index }) {
     setIsLiked(!!memoizeValue);
   }, []);
 
-
   const handleSetLike = () => {
     setLikeFetch();
   };
 
- const setLikeFetch = useCallback(() => {
-   axios
-     .post(`http://localhost:3001/api/reports/${id}/like`)
-     .then(() => {
-       setIsLiked(!isLiked);
-       setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
-     })
-     .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
- }, [isLiked]);
-
+  const setLikeFetch = useCallback(() => {
+    axios
+      .post(`http://localhost:3001/api/reports/${id}/like`)
+      .then(() => {
+        setIsLiked(!isLiked);
+        setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
+      })
+      .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
+  }, [isLiked]);
 
   console.log('render');
   return (
@@ -143,7 +142,7 @@ export default function LentaPostCard({ report, index }) {
             </Typography>
           </Stack>
 
-          {/* <Typography>{Task.title}</Typography> */}
+          <Typography>{Task.title}</Typography>
           <TitleStyle
             color="inherit"
             variant="subtitle2"
@@ -162,6 +161,12 @@ export default function LentaPostCard({ report, index }) {
             >
               <Badge badgeContent={likesCount ?? ''} color="primary">
                 <FavoriteIcon fontSize="inherit" />
+              </Badge>
+            </IconButton>
+
+            <IconButton color="default" size="large" sx={{ padding: '5px' }}>
+              <Badge badgeContent={Comments.length} color="primary">
+                <ChatBubbleOutlineIcon fontSize="inherit" />
               </Badge>
             </IconButton>
           </Stack>

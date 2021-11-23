@@ -1,20 +1,18 @@
-import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { Stack, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useInput from '../../hooks/useInput';
 import {setComment} from '../../store/ac/reportsAC'
 import Box from '@mui/material/Box';
 
 function CommentForm() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { value, onChangeInput } = useInput();
 
   const { id } = useParams();
-  const { currentReport, user } = useSelector((state) => state);
 
   const handleSubmit = (e) => {
     e.preventDefault();

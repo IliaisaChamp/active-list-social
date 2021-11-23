@@ -1,6 +1,6 @@
 const { Report, Follower, User, Task, Like, Comment } = require('../db/models');
 const UserService = require('../services/userService');
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 
 class ReportController {
   static async getReportById(req, res) {
@@ -90,7 +90,16 @@ class ReportController {
             [Op.in]: [...tasksIdSet],
           },
         },
-        include: [{ model: User, attributes: ['nickname', 'avatar', 'id'] }, { model: Task, attributes: ['title'] }, { model: Like }],
+
+        include: [
+          { model: User, attributes: ['nickname', 'avatar', 'id'] },
+          { model: Task, attributes: ['title'] },
+          { model: Like },
+          { model: Comment, attributes: ['id'], },
+        ],
+        // attributes: {
+        //   include: [[Sequelize.fn('COUNT', Sequelize.col('Comments.id')), 'commentsCount']],
+        // },
         order: [['createdAt', 'DESC']],
       });
 
@@ -133,7 +142,7 @@ class ReportController {
   static async addComment(req, res) {
     const { id } = req.params;
     const { text } = req.body;
-    console.log(req.session.user.id);
+
     if (!text.trim()) {
       return res.status(400).json({ message: 'Комментарий пустой' });
     }
