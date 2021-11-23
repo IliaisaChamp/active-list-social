@@ -49,7 +49,7 @@ function App() {
       });
       dispatch(createSocketConnect(socket, user));
     }
-    return () => socket.current.disconnect();
+    return () => socket?.current?.disconnect();
   }, [user, dispatch]);
 
   console.log("APP RENDER");

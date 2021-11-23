@@ -72,7 +72,7 @@ export const logoutUser = (navigate) => async (dispatch, getState) => {
     .then((res) => {
       localStorage.removeItem("user");
       const { socket } = getState();
-      socket.current.disconnect();
+      socket?.current?.disconnect();
       dispatch(deleteUser());
       navigate("/");
     })

@@ -16,7 +16,7 @@ io.on('connection', (socket) => {
   console.log('socket connected', socket.id);
   const id = socket.handshake.query.id
   usersOnline.set(socket, id);
-  const users = Array.from(usersOnline.values());
+  const users = usersOnline.values();
   const uniqueUsers = [...new Set(users)]
   // console.log('after connect', usersOnline)
 
@@ -27,9 +27,10 @@ io.on('connection', (socket) => {
     console.log('USER DISCONNECTED', socket.id);
     usersOnline.delete(socket);
     // console.log('after delete', usersOnline)
-    const users = Array.from(usersOnline.values());
+    const users = usersOnline.values();
+    const uniqueUsers = [...new Set(users)]
 
-    io.emit('broadcast-online', { users });
+    io.emit('broadcast-online', { users: uniqueUsers });
   });
 
 });
