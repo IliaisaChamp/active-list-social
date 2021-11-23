@@ -34,7 +34,7 @@ class ReportController {
       });
 
       if (newReport) {
-        return res.status(200).json({ message: 'Отчет успешно создан' });
+        return res.status(200).json({report: newReport, message: 'Отчет успешно создан' });
       }
     } catch (e) {
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });

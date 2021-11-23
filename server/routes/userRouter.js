@@ -8,7 +8,7 @@ router.route('/:id/tasks').get(UsersController.getUserTasks);
 router.route('/recommendation').get(checkAuth ,UsersController.getRecommendation);
 router.route('/:id/reports').get(UsersController.getUserReports);
 router.route('/:id/followings').get(UsersController.getFollowings);
-router.route('/:id/followers').get(UsersController.getFollowers);
+router.route('/:id/followers').get(UsersController.showFollowers);
 router.route('/:id/follow').post(checkAuth, UsersController.follow);
 router.route('/:id/unfollow').post(checkAuth, UsersController.unfollow);
 router.route('/:id')

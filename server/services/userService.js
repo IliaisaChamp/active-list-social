@@ -4,6 +4,22 @@ const { UserTask, Task, Report } = require('../db/models');
 const { Op } = require('sequelize');
 
 class UserService {
+  static async getFollowers(id) {
+    const result = await User.findOne({
+      where: { id },
+      include: {
+        model: User,
+        raw: true,
+        as: 'followers',
+        attributes: ['id', 'nickname', 'first_name', 'last_name', 'email'],
+      },
+    });
+    return result.followers.map((elem) => {
+      const { Followers, ...rest } = elem.get({ plain: true });
+      return rest;
+    });
+  }
+
   static async getReports(user_id) {
     return await Report.findAll({
       where: { user_id },

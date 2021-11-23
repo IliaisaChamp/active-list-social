@@ -1,19 +1,8 @@
-import {
-  NOTIFICATION_NEW_MESSAGE,
-  NOTIFICATION_NEW_FOLLOWER,
-  NOTIFICATION_NEW_REPORT,
-} from '../types/errorTypes';
+import { NOTIFICATION_NEW_REPORT } from "../types/notificationTypes";
 
-export const setNewFollowerNotification = (value) => {
-  return {
-    type: NOTIFICATION_NEW_FOLLOWER,
-    payload: value,
-  };
-};
-
-export const setNewReportNotification = (value) => {
+export const setNewReportNotification = (message) => {
   return {
     type: NOTIFICATION_NEW_REPORT,
-    payload: value,
+    payload: { message },
   };
 };

@@ -1,16 +1,24 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from "react";
+import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 // material
-import { Stack, TextField, IconButton, Chip, ListItem, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { LoadingButton } from '@mui/lab';
+import {
+  Stack,
+  TextField,
+  IconButton,
+  Chip,
+  ListItem,
+  Typography,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { LoadingButton } from "@mui/lab";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import ReportPreviousImages from '../ReportPreviousImages/ReportPreviousImages';
-import { setNewReport } from '../../store/ac/reportsAC';
-import useInput from '../../hooks/useInput';
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import ReportPreviousImages from "../ReportPreviousImages/ReportPreviousImages";
+import { setNewReport } from "../../store/ac/reportsAC";
+import useInput from "../../hooks/useInput";
+import useSocket from "../../hooks/useSocket";
 
 // ----------------------------------------------------------------------
 
@@ -25,30 +33,32 @@ export default function ReportForm() {
   const { id } = useParams();
   const { tasks, user } = useSelector((state) => state);
 
-  const memoizedCallback = useCallback(() => {
-    return tasks?.find((el) => el.id === Number(id));
-  }, [tasks, id]);
-
-  useEffect(() => {
-    const task = memoizedCallback();
-    console.log(task);
-    setTask(task);
-  }, [memoizedCallback, tasks, id]);
+  // const memoizedCallback = useCallback(() => {
+  //   return tasks?.find((el) => el.id === Number(id));
+  // }, [tasks, id]);
+  //
+  // useEffect(() => {
+  //   const task = memoizedCallback();
+  //   console.log(task);
+  //   setTask(task);
+  // }, [memoizedCallback, tasks, id]);
 
   const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    setChipData((chips) =>
+      chips.filter((chip) => chip.key !== chipToDelete.key)
+    );
   };
-
+  const socket = useSelector((state) => state.socket);
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     chipData.forEach((el, id) => formData.append(`photos`, ...el.files));
 
-    dispatch(setNewReport(formData, task.id, user.id, navigate));
+    dispatch(setNewReport(formData, id, user.id, navigate, socket));
   };
 
-  const Input = styled('input')({
-    display: 'none',
+  const Input = styled("input")({
+    display: "none",
   });
 
   const fileUploadHandler = (e) => {
@@ -56,7 +66,11 @@ export default function ReportForm() {
     const src = URL.createObjectURL(file);
 
     for (const el of e.target.files) {
-      if (el.type === 'image/png' || el.type === 'image/jpeg' || el.type === 'image/jpg') {
+      if (
+        el.type === "image/png" ||
+        el.type === "image/jpeg" ||
+        el.type === "image/jpg"
+      ) {
         setChipData((prev) => [
           ...prev,
           { label: el.name, key: el.name, img: src, files: e.target.files },
@@ -89,8 +103,13 @@ export default function ReportForm() {
               onChange={fileUploadHandler}
               multiple="multiple"
             />
-            <IconButton color="primary" aria-label="upload picture" component="span" size="large">
-              <PhotoCamera sx={{ width: '100px', height: '100px' }} />
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="span"
+              size="large"
+            >
+              <PhotoCamera sx={{ width: "100px", height: "100px" }} />
             </IconButton>
           </label>
           <ReportPreviousImages itemData={chipData} />
@@ -99,11 +118,11 @@ export default function ReportForm() {
           direction="row"
           justifyContent="center"
           flexWrap="wrap"
-          sx={{ margin: '10px 0 10px 0', height: 50 }}
+          sx={{ margin: "10px 0 10px 0", height: 50 }}
         >
           {chipData.map((data) => {
             return (
-              <ListItem key={data.key} sx={{ width: 'auto' }}>
+              <ListItem key={data.key} sx={{ width: "auto" }}>
                 <Chip label={data.label} onDelete={handleDelete(data)} />
               </ListItem>
             );
@@ -113,7 +132,7 @@ export default function ReportForm() {
         <Stack>
           <TextField
             id="outlined-multiline-static"
-            label={t('report.textarea')}
+            label={t("report.textarea")}
             multiline
             rows={5}
             name="desc"
@@ -126,10 +145,15 @@ export default function ReportForm() {
           direction="row"
           alignItems="left"
           justifyContent="space-between"
-          sx={{ my: 2, width: '30%' }}
+          sx={{ my: 2, width: "30%" }}
         >
-          <LoadingButton fullWidth size="large" type="submit" variant="contained">
-            {t('report.form_button')}
+          <LoadingButton
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+          >
+            {t("report.form_button")}
           </LoadingButton>
         </Stack>
       </form>
