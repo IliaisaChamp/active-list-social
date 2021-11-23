@@ -1,16 +1,16 @@
-import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { checkUser, deleteUser } from './store/ac/authAC';
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { checkUser, deleteUser } from "./store/ac/authAC";
 import io from "socket.io-client";
 // routes
-import Router from './routes';
+import Router from "./routes";
 
 // theme
-import ThemeConfig from './theme';
-import GlobalStyles from './theme/globalStyles';
+import ThemeConfig from "./theme";
+import GlobalStyles from "./theme/globalStyles";
 
 // components
-import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 // delete
 import { BaseOptionChartStyle } from "./components/charts/BaseOptionChart";
@@ -26,7 +26,7 @@ function App() {
   const dispatch = useDispatch();
 
   axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = 'http://localhost:3001';
+  axios.defaults.baseURL = "http://localhost:3001";
   axios.interceptors.response.use(
     (res) => res,
     (err) => {
@@ -44,9 +44,13 @@ function App() {
 
   useEffect(() => {
     if (user) {
+      socket.current = io("http://localhost:3001", {
+        query: { id: user.id },
+      });
       dispatch(createSocketConnect(socket, user));
     }
-  }, [user]);
+    return () => socket.current.disconnect();
+  }, [user, dispatch]);
 
   console.log("APP RENDER");
   return (
