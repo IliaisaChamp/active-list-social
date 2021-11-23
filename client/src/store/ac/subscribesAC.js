@@ -3,7 +3,7 @@ import { SET_SUBSCRIBES } from '../types/subscribesTypes';
 
 const BASE_URL = 'http://localhost:3001/api';
 
-const setSubscribes = (subscribers) => {
+export const setSubscribes = (subscribers) => {
   return {
     type: SET_SUBSCRIBES,
     payload: subscribers,
