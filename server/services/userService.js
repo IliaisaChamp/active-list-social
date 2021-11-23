@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../db/models/');
-const { UserTask, Task, Report} = require('../db/models');
+const { UserTask, Task, Report } = require('../db/models');
 const { Op } = require('sequelize');
 
 class UserService {
@@ -16,9 +16,14 @@ class UserService {
     const userTasks = user.Tasks.map((task) => task.id);
     const recommendedUsers = await User.findAll({
       where: {
-        '$Tasks.id$': {
-          [Op.in]: userTasks,
-        },
+        [Op.and]: [
+          {
+            '$Tasks.id$': {
+              [Op.in]: userTasks,
+            },
+          },
+          { id: { [Op.ne]: id } },
+        ],
       },
       include: Task,
     });
@@ -32,13 +37,15 @@ class UserService {
         },
       },
     });
-      return await Promise.all(recommendedUsersWithTasks.map(async (user) => {
-      const { Tasks: tasks, ...rest } = user.get({ plain: true });
-      const commonTasksCount = tasks.filter((task) => userTasks.includes(task.id)).length;
-      const percentCommonTasks = Math.floor(commonTasksCount / userTasks.length * 100);
-      const reports = await UserService.getReports(user.id);
-      return { ...rest, percentCommonTasks, reportsCount: reports.length };
-    }));
+    return await Promise.all(
+      recommendedUsersWithTasks.map(async (user) => {
+        const { Tasks: tasks, ...rest } = user.get({ plain: true });
+        const commonTasksCount = tasks.filter((task) => userTasks.includes(task.id)).length;
+        const percentCommonTasks = Math.floor((commonTasksCount / userTasks.length) * 100);
+        const reports = await UserService.getReports(user.id);
+        return { ...rest, percentCommonTasks, reportsCount: reports.length };
+      }),
+    );
   }
 
   static async getUserTasks(userId) {
