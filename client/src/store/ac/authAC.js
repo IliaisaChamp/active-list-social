@@ -66,7 +66,7 @@ export const logoutUser = (navigate) => async (dispatch, getState) => {
     .then((res) => {
       localStorage.removeItem('user');
       const { socket } = getState();
-      socket.current.disconnect();
+      socket?.current?.disconnect();
       dispatch(deleteUser());
       navigate('/');
     })
@@ -79,10 +79,10 @@ export const checkUser = () => async (dispatch, getState) => {
       dispatch(startLoading());
       console.log('dispatch checkUser');
       const { user } = getState();
-      if (Number(res.data.user.id) !== user.id) {
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        dispatch(setUser(res.data.user));
-      }
+      // if (Number(res.data.user.id) !== user.id) {
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      dispatch(setUser(res.data.user));
+      // }
     })
     .catch((e) => {
       console.log(e);

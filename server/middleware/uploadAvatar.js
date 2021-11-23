@@ -24,7 +24,6 @@ const upload = multer({
 
 function uploadAvatar (req, res, next) {
   upload(req, res, (err) => {
-    console.log(req);
     if (err) {
     res.status(415).json({message: err?.message ?? 'Что-то пошло не так......'})
     } else {
