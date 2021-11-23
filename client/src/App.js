@@ -40,10 +40,13 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUser());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (user) {
       dispatch(createSocketConnect(socket, user));
     }
-  }, [dispatch, user]);
+  }, [user]);
 
   console.log("APP RENDER");
   return (

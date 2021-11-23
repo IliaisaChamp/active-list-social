@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
   usersOnline.set(socket, id);
   const users = Array.from(usersOnline.values());
   const uniqueUsers = [...new Set(users)]
-  console.log('after connect', usersOnline)
+  // console.log('after connect', usersOnline)
 
   io.emit('broadcast-online', { users: uniqueUsers });
 
@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('USER DISCONNECTED', socket.id);
     usersOnline.delete(socket);
-    console.log('after delete', usersOnline)
+    // console.log('after delete', usersOnline)
     const users = Array.from(usersOnline.values());
 
     io.emit('broadcast-online', { users });

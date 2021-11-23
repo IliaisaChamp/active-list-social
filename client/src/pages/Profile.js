@@ -20,14 +20,14 @@ import AppBugReports from '../components/ProfileStats/AppBugReports';
 // import AppTasks from '../components/ProfileStats/AppTasks';
 import UserProfile from '../components/UserProfile/UserProfile';
 
-import { completeTask, getUsersTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
+import { completeTask, getUsersTasks, setTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
 import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
 import { getUserReports } from '../store/ac/reportsAC';
+import { getSubsribes, setSubscribes } from '../store/ac/subscribesAC';
 
 const Profile = () => {
-  const tasks = useSelector((state) => state.tasks);
   const { id } = useParams();
-  const { user, reports } = useSelector((state) => state);
+  const { user, reports, tasks, subscribes } = useSelector((state) => state);
   const dispatch = useDispatch();
   const isSelfPage = +id === +user.id;
 
@@ -35,6 +35,15 @@ const Profile = () => {
     // if (user) {
     dispatch(getUsersTasks(id));
     dispatch(getUserReports(id));
+    dispatch(getSubsribes(id));
+    return () => {
+      dispatch(setSubscribes([]));
+      dispatch(setTasks([]));
+      dispatch({
+        type: 'SET_REPORTS',
+        payload: [],
+      });
+    };
   }, [id]);
 
   const unscubscribeHandler = useCallback((taskId) => {
@@ -68,6 +77,7 @@ const Profile = () => {
               isSelfPage={isSelfPage}
               tasks={tasks}
               reports={reports}
+              subscribes={subscribes}
               subscribeToggle={unscubscribeHandler}
               completeTaskHandler={completeTaskHandler}
               buttonName={'Удалить'}
