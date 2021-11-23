@@ -57,7 +57,7 @@ export default function DetailReport() {
         </Typography>
       </CardContent>
 
-      <Comments/>
+      <Comments comments={currentReport?.Comments} />
       <CommentForm />
     </>
   );

@@ -10,14 +10,24 @@ class ReportController {
         include: [
           { model: User, attributes: ['nickname', 'id'] },
           { model: Task, attributes: ['title'] },
-          { model: Like }],
+          { model: Like },
+          {
+            model: Comment,
+            // order: [['createdAt', 'ASC']],
+            include: [{ model: User, attributes: ['nickname', 'avatar'] }],
+          },
+        ],
         where: {
           id,
         },
-        order: [['updatedAt', 'DESC']],
+        order: [
+          ['createdAt', 'DESC'],
+          [Comment, 'createdAt', 'DESC'],
+        ],
       });
       return res.json(report.get({ plain: true }));
     } catch (e) {
+      console.log(e);
       return res.status(400).json({ message: 'Отчет не найден' });
     }
   }
@@ -81,7 +91,7 @@ class ReportController {
           },
         },
         include: [{ model: User, attributes: ['nickname', 'avatar', 'id'] }, { model: Task, attributes: ['title'] }, { model: Like }],
-        order: [['updatedAt', 'DESC']],
+        order: [['createdAt', 'DESC']],
       });
 
       if (reports) {
@@ -107,7 +117,7 @@ class ReportController {
       });
       if (hasLike) {
         await hasLike.destroy();
-        return res.json({message: 'Лайк удален'})
+        return res.json({ message: 'Лайк удален' });
       } else {
         await Like.create({
           report_id: id,
@@ -123,25 +133,24 @@ class ReportController {
   static async addComment(req, res) {
     const { id } = req.params;
     const { text } = req.body;
-
+    console.log(req.session.user.id);
     if (!text.trim()) {
       return res.status(400).json({ message: 'Комментарий пустой' });
     }
     try {
-      const comment = await Comment.Create({
-        where: {
-          report_id: id,
-          user_id: req.session.user.id,
-          text: text
-        },
+      const comment = await Comment.create({
+        report_id: id,
+        user_id: req.session.user.id,
+        text,
       });
 
       if (comment) {
-        return res.sendStatus(200);
+        return res.json({ comment });
       } else {
         return res.status(500).json({ message: 'Ошибка сервера, попробуйте пожалуйста еще раз' });
       }
     } catch (e) {
+      console.log(e);
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте пожалуйста еще раз' });
     }
   }

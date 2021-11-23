@@ -1,12 +1,20 @@
 import React from 'react';
-
-import { Divider, Avatar, Grid, Paper } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Paper } from '@mui/material';
+import CommentItem from './CommentItem';
 
 export default function Comments({ comments }) {
+  const user = useSelector((state) => state.user);
   return (
-    <div style={{ padding: 14 }} className="App">
-      <h1>Comments</h1>
-      <Paper style={{ padding: '40px 20px' }}></Paper>
+    <div style={{ padding: 14 }}>
+      <Paper style={{ padding: '5px' }}>
+        {comments?.map((comment) => {
+          if (!comment.User) {
+            comment.User = user;
+          }
+          return <CommentItem key={comment.id} comment={comment} />;
+        })}
+      </Paper>
     </div>
   );
 }

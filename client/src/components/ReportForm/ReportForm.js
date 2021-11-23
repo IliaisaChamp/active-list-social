@@ -11,6 +11,8 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import ReportPreviousImages from '../ReportPreviousImages/ReportPreviousImages';
 import { setNewReport } from '../../store/ac/reportsAC';
 import useInput from '../../hooks/useInput';
+import axios from 'axios';
+import { BASE_URL_API } from '../../config/constants';
 
 // ----------------------------------------------------------------------
 
@@ -23,20 +25,25 @@ export default function ReportForm() {
   const [task, setTask] = useState({});
 
   const { id } = useParams();
-  const { tasks, user } = useSelector((state) => state);
+  const { user } = useSelector((state) => state);
 
-  const memoizedCallback = useCallback(() => {
-    return tasks?.find((el) => el.id === Number(id));
-  }, [tasks, id]);
+  const request = useCallback(async () => {
+    try {
+      const response = await axios(`${BASE_URL_API}/tasks/${id}`);
+      const { task } = await response.data;
+
+      setTask(task);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   useEffect(() => {
-    const task = memoizedCallback();
-    console.log(task);
-    setTask(task);
-  }, [memoizedCallback, tasks, id]);
+    request();
+  }, []);
 
   const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    setChipData((chips) => chips.filter((chip) => chip.label !== chipToDelete.label));
   };
 
   const handleSubmit = (e) => {
@@ -44,7 +51,7 @@ export default function ReportForm() {
     const formData = new FormData(e.target);
     chipData.forEach((el, id) => formData.append(`photos`, ...el.files));
 
-    dispatch(setNewReport(formData, task.id, user.id, navigate));
+    dispatch(setNewReport(formData, id, user?.id, navigate));
   };
 
   const Input = styled('input')({
@@ -52,15 +59,10 @@ export default function ReportForm() {
   });
 
   const fileUploadHandler = (e) => {
-    const [file] = e.target.files;
-    const src = URL.createObjectURL(file);
-
     for (const el of e.target.files) {
       if (el.type === 'image/png' || el.type === 'image/jpeg' || el.type === 'image/jpg') {
-        setChipData((prev) => [
-          ...prev,
-          { label: el.name, key: el.name, img: src, files: e.target.files },
-        ]);
+        const src = URL.createObjectURL(el);
+        setChipData((prev) => [...prev, { label: el.name, img: src, files: e.target.files }]);
       }
     }
   };
@@ -68,7 +70,6 @@ export default function ReportForm() {
   return (
     <>
       <Typography variant="h4" sx={{ mb: 5 }}>
-        {/* {t('report.title')} */}
         {task?.title}
       </Typography>
 
@@ -103,7 +104,7 @@ export default function ReportForm() {
         >
           {chipData.map((data) => {
             return (
-              <ListItem key={data.key} sx={{ width: 'auto' }}>
+              <ListItem key={data.label} sx={{ width: 'auto' }}>
                 <Chip label={data.label} onDelete={handleDelete(data)} />
               </ListItem>
             );

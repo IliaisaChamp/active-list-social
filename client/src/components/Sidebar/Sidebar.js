@@ -90,7 +90,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       title: t('sideBar.top'),
       path: '/top',
       icon: getIcon(flashOutLine),
-      isAuth: true,
+      isAuth: false,
+      isTop: true,
     },
     {
       title: t('sideBar.login'),
