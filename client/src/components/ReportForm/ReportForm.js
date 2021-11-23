@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from "react";
+import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 // material
+
 import { Stack, TextField, IconButton, Chip, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
@@ -45,17 +46,17 @@ export default function ReportForm() {
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.label !== chipToDelete.label));
   };
-
+  const socket = useSelector((state) => state.socket);
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     chipData.forEach((el, id) => formData.append(`photos`, ...el.files));
 
-    dispatch(setNewReport(formData, id, user?.id, navigate));
+    dispatch(setNewReport(formData, id, user.id, navigate, socket));
   };
 
-  const Input = styled('input')({
-    display: 'none',
+  const Input = styled("input")({
+    display: "none",
   });
 
   const fileUploadHandler = (e) => {
@@ -84,8 +85,13 @@ export default function ReportForm() {
               onChange={fileUploadHandler}
               multiple="multiple"
             />
-            <IconButton color="primary" aria-label="upload picture" component="span" size="large">
-              <PhotoCamera sx={{ width: '100px', height: '100px' }} />
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="span"
+              size="large"
+            >
+              <PhotoCamera sx={{ width: "100px", height: "100px" }} />
             </IconButton>
           </label>
           <ReportPreviousImages itemData={chipData} />
@@ -103,7 +109,7 @@ export default function ReportForm() {
         <Stack>
           <TextField
             id="outlined-multiline-static"
-            label={t('report.textarea')}
+            label={t("report.textarea")}
             multiline
             rows={5}
             name="desc"

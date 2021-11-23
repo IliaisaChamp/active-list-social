@@ -30,22 +30,10 @@ class UserController {
       res.status(400).json({ message: 'Неправильный ввод данных...' });
     }
   }
-  static async getFollowers(req, res) {
+  static async showFollowers(req, res) {
     const id = req.params.id;
     try {
-      const result = await User.findOne({
-        where: { id },
-        include: {
-          model: User,
-          raw: true,
-          as: 'followers',
-          attributes: ['id', 'nickname', 'first_name', 'last_name', 'email'],
-        },
-      });
-      const followers = result.followers.map((elem) => {
-        const { Followers, ...rest } = elem.get({ plain: true });
-        return rest;
-      });
+      const followers = await UserService.getFollowers(id)
       res.status(200).json({ followers });
     } catch (e) {
       console.log(e);

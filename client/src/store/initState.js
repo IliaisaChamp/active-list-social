@@ -1,5 +1,5 @@
 const initState = {
-  user: JSON.parse(localStorage.getItem('user')) || null,
+  user: null,
   currentUser: null,
   currentUserSubscribes: [],
   flash: { message: '', type: '' },
