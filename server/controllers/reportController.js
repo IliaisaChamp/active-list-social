@@ -1,4 +1,4 @@
-const { Report, Follower, User, Task } = require('../db/models');
+const { Report, Follower, User, Task, Like, Comment } = require('../db/models');
 const UserService = require('../services/userService');
 const { Op } = require('sequelize');
 
@@ -10,10 +10,11 @@ class ReportController {
         include: [
           { model: User, attributes: ['nickname', 'id'] },
           { model: Task, attributes: ['title'] },
-        ],
+          { model: Like }],
         where: {
           id,
         },
+        order: [['updatedAt', 'DESC']],
       });
       return res.json(report.get({ plain: true }));
     } catch (e) {
@@ -24,7 +25,13 @@ class ReportController {
   static async create(req, res) {
     const { id } = req.params;
     const photoNames = req.files?.map((el) => el.filename);
+    const userTasks = await UserService.getUserTasks(req.session.user.id);
 
+    const hasTask = userTasks.find((el) => Number(el.task_id) === Number(id));
+
+    if (!hasTask) {
+      return res.status(400).json({ message: 'Сначала добавь эту цель к себе' });
+    }
     try {
       const newReport = await Report.create({
         user_id: req.session.user.id,
@@ -52,18 +59,19 @@ class ReportController {
         },
       });
 
+      if (!userTasks && !userFollowings) {
+        return res.status(400).json({ message: 'Отчетов нет' });
+      }
+
       const [followingsTasks] = await Promise.all(
         userFollowings.map((user) => {
           return UserService.getUserTasks(user.user_id);
         }),
       );
 
-      if (!userTasks && !userFollowings) {
-        return res.status(400).json({ message: 'Отчетов нет' });
-      }
+      const userTasksIds = userTasks?.map((el) => el.task_id) ?? [];
 
-      const userTasksIds = userTasks?.map((el) => el.task_id);
-      const followingsTasksIds = followingsTasks?.map((el) => el.task_id);
+      const followingsTasksIds = followingsTasks?.map((el) => el.task_id) ?? [];
 
       const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
       const reports = await Report.findAll({
@@ -72,10 +80,7 @@ class ReportController {
             [Op.in]: [...tasksIdSet],
           },
         },
-        include: [
-          { model: User, attributes: ['nickname', 'avatar', 'id'] },
-          { model: Task, attributes: ['title'] },
-        ],
+        include: [{ model: User, attributes: ['nickname', 'avatar', 'id'] }, { model: Task, attributes: ['title'] }, { model: Like }],
         order: [['updatedAt', 'DESC']],
       });
 
@@ -87,6 +92,57 @@ class ReportController {
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
+    }
+  }
+
+  static async addLike(req, res) {
+    const { id } = req.params;
+
+    try {
+      const hasLike = await Like.findOne({
+        where: {
+          report_id: id,
+          user_id: req.session.user.id,
+        },
+      });
+      if (hasLike) {
+        await hasLike.destroy();
+        return res.json({message: 'Лайк удален'})
+      } else {
+        await Like.create({
+          report_id: id,
+          user_id: req.session.user.id,
+        });
+        return res.json({ message: 'Лайк поставлен' });
+      }
+    } catch (e) {
+      return res.status(500).json({ message: 'Ошибка сервера, попробуйте пожалуйста еще раз' });
+    }
+  }
+
+  static async addComment(req, res) {
+    const { id } = req.params;
+    const { text } = req.body;
+
+    if (!text.trim()) {
+      return res.status(400).json({ message: 'Комментарий пустой' });
+    }
+    try {
+      const comment = await Comment.Create({
+        where: {
+          report_id: id,
+          user_id: req.session.user.id,
+          text: text
+        },
+      });
+
+      if (comment) {
+        return res.sendStatus(200);
+      } else {
+        return res.status(500).json({ message: 'Ошибка сервера, попробуйте пожалуйста еще раз' });
+      }
+    } catch (e) {
+      return res.status(500).json({ message: 'Ошибка сервера, попробуйте пожалуйста еще раз' });
     }
   }
 }
