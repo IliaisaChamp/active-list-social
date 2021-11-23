@@ -78,8 +78,8 @@ export const checkUser = () => async (dispatch) => {
     .then((res) => {
       dispatch(startLoading());
       console.log('dispatch checkUser');
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        dispatch(setUser(res.data.user));
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      dispatch(setUser(res.data.user));
     })
     .catch((e) => {
       console.log(e);

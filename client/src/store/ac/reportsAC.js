@@ -25,7 +25,7 @@ export const setNewReport = (data, taskID, userID, navigate) => async (dispatch)
         setSuccessMessage({
           message: 'Отчет успешно добавлен',
           type: 'success',
-        }),
+        })
       );
       navigate(`/profile/${userID}`);
     })
@@ -34,8 +34,8 @@ export const setNewReport = (data, taskID, userID, navigate) => async (dispatch)
         setErrorMessage({
           message: response?.data?.message,
           type: 'error',
-        }),
-      ),
+        })
+      )
     );
 };
 
