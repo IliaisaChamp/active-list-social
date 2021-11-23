@@ -1,27 +1,29 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Followers', {
+    await queryInterface.createTable('Messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        unique: 'action_unique',
+      text: {
         allowNull: false,
+        type: Sequelize.TEXT
+      },
+      room_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
         references: {
           key: 'id',
-          model: 'Users',
+          model: 'Rooms',
         },
         onDelete: 'CASCADE',
       },
-      follower_id: {
-        type: Sequelize.INTEGER,
-        unique: 'action_unique',
+      user_id: {
         allowNull: false,
+        type: Sequelize.INTEGER,
         references: {
           key: 'id',
           model: 'Users',
@@ -30,17 +32,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      },
+        type: Sequelize.DATE
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Followers');
+    await queryInterface.dropTable('Messages');
   }
 };
