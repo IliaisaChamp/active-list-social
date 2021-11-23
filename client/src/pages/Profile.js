@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -10,10 +10,10 @@ import AppWeeklySales from '../components/ProfileStats/AppWeeklySales';
 import AppNewUsers from '../components/ProfileStats/AppNewUsers';
 import AppItemOrders from '../components/ProfileStats/AppItemOrders';
 import AppBugReports from '../components/ProfileStats/AppBugReports';
-import AppCurrentVisits from '../components/ProfileStats/AppCurrentVisits';
-import AppWebsiteVisits from '../components/ProfileStats/AppWebsiteVisits';
-import AppConversionRates from '../components/ProfileStats/AppConversionRates';
-import AppCurrentSubject from '../components/ProfileStats/AppCurrentSubject';
+// import AppCurrentVisits from '../components/ProfileStats/AppCurrentVisits';
+// import AppWebsiteVisits from '../components/ProfileStats/AppWebsiteVisits';
+// import AppConversionRates from '../components/ProfileStats/AppConversionRates';
+// import AppCurrentSubject from '../components/ProfileStats/AppCurrentSubject';
 // import AppNewsUpdate from '../components/ProfileStats/AppNewsUpdate';
 // import AppOrderTimeline from '../components/ProfileStats/AppOrderTimeline';
 // import AppTrafficBySite from '../components/ProfileStats/AppTrafficBySite';
@@ -22,12 +22,12 @@ import UserProfile from '../components/UserProfile/UserProfile';
 
 import { completeTask, getUsersTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
 import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
-import { getUserReports, setReports } from '../store/ac/reportsAC';
+import { getUserReports } from '../store/ac/reportsAC';
 
 const Profile = () => {
   const tasks = useSelector((state) => state.tasks);
   const { id } = useParams();
-  const {user, reports} = useSelector((state) => state);
+  const { user, reports } = useSelector((state) => state);
   const dispatch = useDispatch();
   const isSelfPage = +id === +user.id;
 
@@ -37,13 +37,13 @@ const Profile = () => {
     dispatch(getUserReports(id));
   }, [id]);
 
-  const unscubscribeHandler = (taskId) => {
+  const unscubscribeHandler = useCallback((taskId) => {
     dispatch(unsubscribeOnTask(taskId));
-  };
+  }, []);
 
-  const completeTaskHandler = (taskId) => {
+  const completeTaskHandler = useCallback((taskId) => {
     dispatch(completeTask(taskId));
-  };
+  }, []);
 
   return (
     <Page title="Profile">
@@ -68,7 +68,7 @@ const Profile = () => {
               isSelfPage={isSelfPage}
               tasks={tasks}
               reports={reports}
-              subscribeHandler={unscubscribeHandler}
+              subscribeToggle={unscubscribeHandler}
               completeTaskHandler={completeTaskHandler}
               buttonName={'Удалить'}
             />

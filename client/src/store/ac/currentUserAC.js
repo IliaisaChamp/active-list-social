@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SET_CURRENT_USER } from '../types/currentUserTypes';
-import { setErrorMessage, setSuccessMessage } from './flashAC';
+import { setErrorMessage } from './flashAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 

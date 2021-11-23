@@ -26,19 +26,22 @@ export default function Tasks() {
   const location = useLocation();
   const isPageProfile = location.pathname.includes('profile');
 
-  const subscribeHandler = useCallback((taskId) => {
-    dispatch(subscribeOnTask(taskId));
-  }, []);
+  const subscribeToggle = useCallback(
+    (taskId) => {
+      dispatch(subscribeOnTask(taskId));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     dispatch(getAllTasks());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!isPageProfile) {
       dispatch(getFilteredTasks(filterName));
     }
-  }, [filterName]);
+  }, [isPageProfile, filterName, dispatch]);
 
   const filterHandler = useCallback((event) => {
     setFilterName(event.target.value);
@@ -52,8 +55,7 @@ export default function Tasks() {
         </Typography>
         <SearchBar filterName={filterName} onFilterName={filterHandler} />
 
-        {/* <Tasks2 tasks={tasks} subscribeHandler={subscribeHandler} buttonName={'Добавить'} /> */}
-        <TasksList tasks={tasks} subscribeHandler={subscribeHandler} buttonName={'Добавить'} />
+        <TasksList tasks={tasks} subscribeToggle={subscribeToggle} buttonName={'Добавить'} />
       </Container>
     </Page>
   );
