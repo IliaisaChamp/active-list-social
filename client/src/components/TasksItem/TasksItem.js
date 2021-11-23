@@ -31,7 +31,7 @@ const RootStyle = styled(ListItem)(({ theme }) => ({
   },
 }));
 
-const TasksItem = ({ task, subscribeToggle, isSelfPage, completeTaskHandler }) => {
+const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandler }) => {
   const location = useLocation();
   // const { id } = useParams();
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ const TasksItem = ({ task, subscribeToggle, isSelfPage, completeTaskHandler }) =
 
   const subscribeHandleClose = () => {
     setOpen(false);
-    subscribeToggle(task.id);
+    subscribeOnTaskToggle(task.id);
   };
 
   const isPageTask = location.pathname.includes('tasks');
@@ -66,7 +66,7 @@ const TasksItem = ({ task, subscribeToggle, isSelfPage, completeTaskHandler }) =
           <ButtonPopover
             edge="end"
             taskId={task.id}
-            subscribeToggle={subscribeToggle}
+            subscribeOnTaskToggle={subscribeOnTaskToggle}
             aria-label="add-task"
             text={'Добавить цель'}>
             <AddIcon />

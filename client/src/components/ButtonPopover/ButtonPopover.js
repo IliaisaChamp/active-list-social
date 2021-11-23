@@ -5,7 +5,16 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-const ButtonPopover = ({ text, children, handleOpen, completeTaskHandler, subscribeToggle, taskId, component, to }) => {
+const ButtonPopover = ({
+  text,
+  children,
+  handleOpen,
+  completeTaskHandler,
+  subscribeOnTaskToggle,
+  taskId,
+  component,
+  to,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handlePopoverOpen = (event) => {
@@ -17,7 +26,7 @@ const ButtonPopover = ({ text, children, handleOpen, completeTaskHandler, subscr
   };
 
   const clickHandler = useCallback(() => {
-    completeTaskHandler ? completeTaskHandler(taskId) : subscribeToggle(taskId);
+    completeTaskHandler ? completeTaskHandler(taskId) : subscribeOnTaskToggle(taskId);
   }, []);
 
   const open = Boolean(anchorEl);

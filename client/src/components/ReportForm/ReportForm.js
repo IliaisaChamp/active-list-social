@@ -44,7 +44,7 @@ export default function ReportForm() {
     const formData = new FormData(e.target);
     chipData.forEach((el, id) => formData.append(`photos`, ...el.files));
 
-    dispatch(setNewReport(formData, task.id, user.id, navigate));
+    dispatch(setNewReport(formData, id, user.id, navigate));
   };
 
   const Input = styled('input')({
@@ -57,10 +57,7 @@ export default function ReportForm() {
 
     for (const el of e.target.files) {
       if (el.type === 'image/png' || el.type === 'image/jpeg' || el.type === 'image/jpg') {
-        setChipData((prev) => [
-          ...prev,
-          { label: el.name, key: el.name, img: src, files: e.target.files },
-        ]);
+        setChipData((prev) => [...prev, { label: el.name, key: el.name, img: src, files: e.target.files }]);
       }
     }
   };
@@ -73,13 +70,7 @@ export default function ReportForm() {
       </Typography>
 
       <form onSubmit={handleSubmit}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="left"
-          flexWrap="wrap"
-          spacing={3}
-        >
+        <Stack direction="row" alignItems="center" justifyContent="left" flexWrap="wrap" spacing={3}>
           <label htmlFor="icon-button-file">
             <Input
               accept="image/*"
@@ -95,12 +86,7 @@ export default function ReportForm() {
           </label>
           <ReportPreviousImages itemData={chipData} />
         </Stack>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          flexWrap="wrap"
-          sx={{ margin: '10px 0 10px 0', height: 50 }}
-        >
+        <Stack direction="row" justifyContent="center" flexWrap="wrap" sx={{ margin: '10px 0 10px 0', height: 50 }}>
           {chipData.map((data) => {
             return (
               <ListItem key={data.key} sx={{ width: 'auto' }}>
@@ -122,12 +108,7 @@ export default function ReportForm() {
           />
         </Stack>
 
-        <Stack
-          direction="row"
-          alignItems="left"
-          justifyContent="space-between"
-          sx={{ my: 2, width: '30%' }}
-        >
+        <Stack direction="row" alignItems="left" justifyContent="space-between" sx={{ my: 2, width: '30%' }}>
           <LoadingButton fullWidth size="large" type="submit" variant="contained">
             {t('report.form_button')}
           </LoadingButton>
