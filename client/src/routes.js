@@ -5,7 +5,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import Layout from './components/Layout/Layout';
 import Profile from './pages/Profile';
-import User from './components/NearestFolder/User';
+// import User from './components/NearestFolder/User';
 import Top from './components/TopFolder/Top';
 import Timeline from './pages/Timeline';
 import Login from './pages/Login';
@@ -16,7 +16,7 @@ import Chat from './components/ChatFolder/Chat/Chat';
 import ReportForm from './components/ReportForm/ReportForm';
 import DetailReport from './components/DetailReport/DetailReport';
 import Recommendations from './pages/Recommendations';
-import Loader from './components/Loader/Loader';
+// import Loader from './components/Loader/Loader';
 import { getSubsribes } from './store/ac/subscribesAC';
 // import NotFound from './pages/Page404';
 
@@ -24,7 +24,7 @@ import { getSubsribes } from './store/ac/subscribesAC';
 
 export default function Router() {
   const user = useSelector((state) => state.user);
-  const isLoading = useSelector((state) => state.isLoading);
+  // const isLoading = useSelector((state) => state.isLoading);
   const dispatch = useDispatch();
   useEffect(() => {
     if (user) {
