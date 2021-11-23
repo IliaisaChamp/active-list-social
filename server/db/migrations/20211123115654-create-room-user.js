@@ -2,7 +2,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable(
-      'UserTasks',
+      'RoomUsers',
       {
         id: {
           allowNull: false,
@@ -10,51 +10,45 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        user_id: {
-          type: Sequelize.INTEGER,
+        room_id: {
           allowNull: false,
-          unique: 'action_unique',
+          type: Sequelize.INTEGER,
+          unique: 'act_unique',
+          references: {
+            key: 'id',
+            model: 'Rooms',
+          },
+          onDelete: 'CASCADE',
+        },
+        user_id: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
+          unique: 'act_unique',
           references: {
             key: 'id',
             model: 'Users',
           },
           onDelete: 'CASCADE',
         },
-        task_id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          unique: 'action_unique',
-          references: {
-            key: 'id',
-            model: 'Tasks',
-          },
-          onDelete: 'CASCADE',
-        },
-        isDone: {
-          type: Sequelize.BOOLEAN,
-          defaultValue: false,
-        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
         updatedAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
       },
       {
         uniqueKeys: {
-          action_unique: {
-            fields: ['user_id', 'task_id'],
+          act_unique: {
+            fields: ['user_id', 'room_id'],
           },
         },
       },
     );
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('UserTasks');
+    await queryInterface.dropTable('RoomUsers');
   },
 };

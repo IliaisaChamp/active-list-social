@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkUser, deleteUser } from './store/ac/authAC';
+import io from "socket.io-client";
 // routes
 import Router from './routes';
 
@@ -12,23 +13,24 @@ import GlobalStyles from './theme/globalStyles';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 // delete
-import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
-import FlashMessage from './components/FlashMessage/FlashMessage';
-import Notification from './components/Notification/Notification';
-import axios from 'axios';
-
-import Loader from './components/Loader/Loader';
+import { BaseOptionChartStyle } from "./components/charts/BaseOptionChart";
+import FlashMessage from "./components/FlashMessage/FlashMessage";
+import Notification from "./components/Notification/Notification";
+import axios from "axios";
+import { createSocketConnect, setOnline } from "./store/ac/onlineUsersAc";
+import { setSocket } from "./store/ac/socketAc";
 
 function App() {
-  const isLoading = useSelector((state) => state.isLoading);
-
+  const user = useSelector((state) => state.user);
+  const socket = useRef();
   const dispatch = useDispatch();
+
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = 'http://localhost:3001';
   axios.interceptors.response.use(
     (res) => res,
     (err) => {
-      console.log('intereceptor USED');
+      console.log("intereceptor USED");
       if (err.status === 401) {
         dispatch(deleteUser);
       }
@@ -38,9 +40,15 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUser());
-    // dispatch()
   }, [dispatch]);
 
+  useEffect(() => {
+    if (user) {
+      dispatch(createSocketConnect(socket, user));
+    }
+  }, [user]);
+
+  console.log("APP RENDER");
   return (
     <ThemeConfig>
       <ScrollToTop />

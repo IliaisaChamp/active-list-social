@@ -17,9 +17,14 @@ class UserService {
     const userTasks = user.Tasks.map((task) => task.id);
     const recommendedUsers = await User.findAll({
       where: {
-        '$Tasks.id$': {
-          [Op.in]: userTasks,
-        },
+        [Op.and]: [
+          {
+            '$Tasks.id$': {
+              [Op.in]: userTasks,
+            },
+          },
+          { id: { [Op.ne]: id } },
+        ],
       },
       include: Task,
     });
@@ -83,7 +88,6 @@ class UserService {
   }
   static async findByEmail(email) {
     try {
-      console.log(email);
       const candidate = await User.findOne({
         where: {
           email,
@@ -96,7 +100,6 @@ class UserService {
   }
 
   static async findAndCheck(data) {
-    console.log(data);
     const { email, password } = data;
     try {
       const candidate = await User.findOne({ where: { email } });

@@ -4,10 +4,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const http = require('http');
 const cors = require('cors');
 const helmet = require('helmet');
-const { upgrade, connection, wss } = require('./sockets');
+// const { upgrade, connection, wss } = require('./sockets');
 
 const sessionParser = require('./session');
 
@@ -26,19 +25,15 @@ app.use(sessionParser);
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
 const taskRouter = require('./routes/taskRouter');
-const reportRouter = require('./routes/reportRouter')
+const reportRouter = require('./routes/reportRouter');
+const chatRouter = require('./routes/chatRouter')
 
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/tasks', taskRouter);
 app.use('/api/reports', reportRouter);
+app.use('/api/chats', chatRouter);
 
 app.use((req, res, next) => next(createError(404)));
 
-const server = http.createServer(app);
-
-//Client authentication
-server.on('upgrade', upgrade);
-wss.on('connection', connection);
-
-module.exports = server;
+module.exports = app;
