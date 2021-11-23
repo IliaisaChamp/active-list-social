@@ -4,16 +4,19 @@ import { setErrorMessage, setSuccessMessage } from './flashAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
+export const setTasks = (tasks) => {
+  return {
+    type: SET_TASKS,
+    payload: tasks,
+  };
+};
 export const getAllTasks = () => async (dispatch) => {
   const response = await axios(`${BASE_URL}/tasks`);
   console.log('assadfs');
   console.log({ response });
 
   const { tasks } = response.data;
-  dispatch({
-    type: SET_TASKS,
-    payload: tasks,
-  });
+  dispatch(setTasks(tasks));
 };
 
 export const getUsersTasks = (userId) => async (dispatch) => {

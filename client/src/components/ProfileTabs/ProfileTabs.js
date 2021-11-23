@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 // mui
 import Box from '@mui/material/Box';
@@ -18,7 +17,7 @@ const tabPanelStyle = {
   padding: '24px 0',
 };
 
-const ProfileTabs = ({ tasks, subscribeHandler, isSelfPage, completeTaskHandler, reports }) => {
+const ProfileTabs = ({ tasks, subscribeToggle, isSelfPage, completeTaskHandler, reports }) => {
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {
@@ -38,7 +37,7 @@ const ProfileTabs = ({ tasks, subscribeHandler, isSelfPage, completeTaskHandler,
         <TabPanel sx={tabPanelStyle} value="1">
           <TasksList
             tasks={tasks}
-            subscribeHandler={subscribeHandler}
+            subscribeToggle={subscribeToggle}
             completeTaskHandler={completeTaskHandler}
             isSelfPage={isSelfPage}
           />

@@ -20,7 +20,7 @@ export default function FlashMessage() {
 
   const { vertical, horizontal, open } = flash;
 
-  const {type, message} = useSelector((state) => state.flash);
+  const { type, message } = useSelector((state) => state.flash);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,10 +40,12 @@ export default function FlashMessage() {
     }
     setFlashState({ ...flash, open: false });
     setTimeout(() => {
-      dispatch(clearFlashMessage({
-        type: '',
-        message: ''
-      }));
+      dispatch(
+        clearFlashMessage({
+          type: '',
+          message: '',
+        })
+      );
     }, 300);
   };
 
@@ -54,9 +56,8 @@ export default function FlashMessage() {
         autoHideDuration={4000}
         onClose={handleClose}
         anchorOrigin={{ vertical, horizontal }}
-        TransitionComponent={flash.Transition}
-      >
-        <Alert onClose={handleClose} severity={ type} sx={{ width: '100%' }}>
+        TransitionComponent={flash.Transition}>
+        <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
           {message}
         </Alert>
       </Snackbar>

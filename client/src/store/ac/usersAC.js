@@ -1,4 +1,3 @@
-import { ALL_USERS } from '../types/usersTypes';
 import axios from 'axios';
 import { checkUser } from './authAC';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
@@ -17,7 +16,7 @@ export const changeAvatar = (userId, formData) => (dispatch) => {
           setSuccessMessage({
             message: 'Аватар успешно загружен',
             type: 'success',
-          }),
+          })
         );
       }
     })
@@ -28,7 +27,7 @@ export const changeAvatar = (userId, formData) => (dispatch) => {
           setErrorMessage({
             message: e.response.data.message,
             type: 'error',
-          }),
+          })
         );
       }
     });
