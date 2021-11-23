@@ -9,5 +9,7 @@ const initState = {
   isLoading: 0,
   reports: [],
   currentReport: {},
+  onlineUsers: [],
+  socket: null,
 };
 export default initState;

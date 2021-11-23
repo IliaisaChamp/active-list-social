@@ -3,12 +3,9 @@ const UserService = require('../services/userService');
 
 class CheckController {
   static async register(req, res) {
-    console.log("register",req.body);
     try {
       const errors = validationResult(req);
-      console.log(errors);
       if (!errors.isEmpty()) {
-        console.log(errors);
         return res.status(400).json({ message: 'Ошибка при регистрации', errors });
       }
       const { nickname, email, password } = req.body;
@@ -73,7 +70,6 @@ class CheckController {
   }
 
   static async check(req, res) {
-    console.log(req.session.user)
     if (req.session.user) {
       const id = req.session.user.id;
       const { password, ...user } = await UserService.getUser(id);
