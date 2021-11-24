@@ -8,6 +8,11 @@ router
     .route("/")
     .get(checkAuth, TaskController.showAll);
 
+router.route('/categories/').get(checkAuth, TaskController.getAllCategories);
+
+router.route('/categories/:id')
+  .get(checkAuth, TaskController.getTasksByCategoryID);
+      
 router
     .route("/:id")
     .get(checkAuth, TaskController.getTaskByID);
@@ -19,6 +24,6 @@ router.route('/:id/subscribe')
 router.route('/:id/report').post(checkAuth, uploadReportsPhotos, ReportController.create);
 router.route('/:id/completed').post(checkAuth, TaskController.completeTask);
 
-router.route('/categories/:id').get(checkAuth, TaskController.getTasksByCategoryID);
+
 
 module.exports = router;

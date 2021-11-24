@@ -16,11 +16,15 @@ import SearchBar from '../components/SearchBar/SearchBar';
 
 import { getAllTasks, setTasks, subscribeOnTask } from '../store/ac/tasksAC';
 import { getFilteredTasks } from '../store/ac/tasksAC';
-
+import TagsCloud from '../components/TagCloud/TagCloud'
+import axios from 'axios';
+import { BASE_URL_API } from '../config/constants';
+import { Box } from '@mui/system';
 // ----------------------------------------------------------------------
 
 export default function Tasks() {
   const [filterName, setFilterName] = useState('');
+  const [tags, setTags] = useState([]);
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -46,12 +50,29 @@ export default function Tasks() {
     setFilterName(event.target.value);
   }, []);
 
+  const fetchTags = useCallback(async () => {
+    try {
+      const response = await axios(`${BASE_URL_API}/tasks/categories`);
+      const { tags } = await response.data;
+      setTags(tags);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchTags();
+  }, [fetchTags]);
+
   return (
     <Page title="Tasks">
       <Container>
         <Typography align="center" variant="h4" sx={{ mb: 5 }}>
           Список целей
         </Typography>
+        <Box sx={{maxWidth: '70%', ml: 'auto', mr: 'auto', textAlign: 'center'}}>
+          <TagsCloud tags={tags} />
+        </Box>
         <SearchBar filterName={filterName} onFilterName={filterHandler} />
 
         <TasksList tasks={tasks} subscribeOnTaskToggle={subscribeOnTaskToggle} buttonName={'Добавить'} />

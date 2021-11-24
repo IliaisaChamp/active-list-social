@@ -103,6 +103,25 @@ class TaskController {
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
     }
   }
+
+  static async getAllCategories(req, res) {
+    console.log('vdfv');
+    function getRandom(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
+    }
+
+    try {
+      const categories = await Category.findAll();
+      const tags = categories.map((el) => ({ value: el.title, count: getRandom(8, 30), id: el.id }));
+
+      return res.json({ tags });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
+    }
+  }
 }
 
 module.exports = TaskController;

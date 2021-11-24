@@ -44,6 +44,7 @@
     "react-responsive-carousel": "^3.2.22",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+    "react-tagcloud": "^2.1.1",
     "react-window": "^1.8.6",
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.1.3",
