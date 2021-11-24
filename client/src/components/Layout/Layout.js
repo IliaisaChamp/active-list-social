@@ -41,7 +41,10 @@ export default function Layout() {
     <RootStyle>
       <Header onOpenSidebar={() => setOpen(true)} />
       <Sidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
-      <MainStyle>{isLoading ? <Loader /> : <Outlet />}</MainStyle>
+      {/* <MainStyle>{isLoading ? <Loader /> : <Outlet />}</MainStyle> */}
+      <MainStyle>
+        <Outlet />
+      </MainStyle>
     </RootStyle>
   );
 }

@@ -16,6 +16,7 @@ import SearchBar from '../components/SearchBar/SearchBar';
 
 import { getAllTasks, setTasks, subscribeOnTask } from '../store/ac/tasksAC';
 import { getFilteredTasks } from '../store/ac/tasksAC';
+import { startLoading, stopLoading } from '../store/ac/isLoadingAC';
 
 // ----------------------------------------------------------------------
 
@@ -25,22 +26,21 @@ export default function Tasks() {
   const dispatch = useDispatch();
   const location = useLocation();
   const isPageProfile = location.pathname.includes('profile');
+  useEffect(() => {
+    // dispatch(startLoading());
+    console.log('afas');
+    dispatch(getFilteredTasks(filterName));
+    return () => {
+      dispatch(setTasks([]));
+    };
+  }, []);
 
   const subscribeOnTaskToggle = useCallback(
     (taskId) => {
       dispatch(subscribeOnTask(taskId));
     },
-    [dispatch]
+    [dispatch],
   );
-
-  useEffect(() => {
-    // if (!isPageProfile) {
-    dispatch(getFilteredTasks(filterName));
-    // }
-    return () => {
-      dispatch(setTasks([]));
-    };
-  }, [isPageProfile, filterName, dispatch]);
 
   const filterHandler = useCallback((event) => {
     setFilterName(event.target.value);

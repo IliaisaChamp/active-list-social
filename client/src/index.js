@@ -12,6 +12,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 // scroll bar
 import 'simplebar/src/simplebar.css';
+// import Loader from './components/Loader/Loader';
 
 import App from './App';
 
@@ -21,9 +22,10 @@ ReactDOM.render(
       <Provider store={store}>
         <I18nextProvider i18n={i18n}>
           <App />
+          {/* <Loader /> */}
         </I18nextProvider>
       </Provider>
     </BrowserRouter>
   </HelmetProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

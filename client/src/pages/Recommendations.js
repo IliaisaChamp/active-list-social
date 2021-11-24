@@ -31,7 +31,7 @@ const Recommendations = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSubsribes(user.id));
+    dispatch(getSubsribes(user?.id));
     dispatch(getRecommendedUsers());
     return () => {
       dispatch(setSubscribes([]));
@@ -43,14 +43,14 @@ const Recommendations = () => {
     (userId, followingsId) => {
       dispatch(subscribeOnUser(userId, followingsId));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const unsubcsribeHandler = useCallback(
     (userId, followingsId) => {
       dispatch(unsubscribeFromUser(userId, followingsId));
     },
-    [dispatch]
+    [dispatch],
   );
   return (
     <Page title="Подписки">
