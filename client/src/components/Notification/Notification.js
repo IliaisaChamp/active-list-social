@@ -13,7 +13,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function Notification() {
   const [notificationState, setNotificationState] = useState({
-    open: true,
+    open: false,
     vertical: 'bottom',
     horizontal: 'right',
     Transition: Slide,
@@ -23,8 +23,9 @@ export default function Notification() {
 
   const notification = useSelector((state) => state.notification);
 
+
   useEffect(() => {
-    if (notification) {
+    if (notification.message.length > 0) {
       setNotificationState({
         ...notificationState,
         open: true,
@@ -33,13 +34,7 @@ export default function Notification() {
   }, [notification]);
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
     setNotificationState({ ...notificationState, open: false });
-    // setTimeout(() => {
-    //   dispatch();
-    // }, 300);
   };
 
   return (
@@ -51,8 +46,8 @@ export default function Notification() {
         anchorOrigin={{ vertical, horizontal }}
         TransitionComponent={notification.Transition}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          <Link variant="subtitle2" component={RouterLink} to={notification.url}>
-            {notification.message}asdkljasdlkdkljasdkljasdkljasd
+          <Link variant="subtitle2" component={RouterLink} to={notification?.url}>
+            {notification?.message}
           </Link>
         </Alert>
       </Snackbar>

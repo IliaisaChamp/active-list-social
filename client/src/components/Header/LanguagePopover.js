@@ -32,7 +32,7 @@ export default function LanguagePopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [icon, setIcon] = useState(0);
-  const [storedValue, setValue] = useLocalStorage('lg', { lang: 'ru', id: 1 });
+  const [storedValue, setValue] = useLocalStorage('lg', { lang: 'ru', id: 0 });
 
   const handleOpen = () => {
     setOpen(true);
@@ -47,6 +47,7 @@ export default function LanguagePopover() {
   }, []);
 
   const handleChangeLanguage = (lang, id) => {
+    console.log(lang, id);
     changeLanguage(lang);
     setValue('ru');
     setIcon(id);
@@ -69,15 +70,15 @@ export default function LanguagePopover() {
           }),
         }}
       >
-        <img src={LANGS[icon].icon} alt={LANGS[icon].label} />
+        <img src={LANGS[icon]?.icon} alt={LANGS[icon]?.label} />
       </IconButton>
 
       <MenuPopover open={open} onClose={handleClose} anchorEl={anchorRef.current}>
         <Box sx={{ py: 1 }}>
           {LANGS.map((option, id) => (
             <MenuItem
-              key={option.value}
-              selected={option.value === LANGS[icon].value}
+              key={option?.value}
+              selected={option?.value === LANGS[icon]?.value}
               onClick={() => handleChangeLanguage(option.value, id)}
               sx={{ py: 1, px: 2.5 }}
             >
