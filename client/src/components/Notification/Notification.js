@@ -23,23 +23,18 @@ export default function Notification() {
 
   const notification = useSelector((state) => state.notification);
 
+
   useEffect(() => {
-    if (notification) {
+    if (notification.message.length > 0) {
       setNotificationState({
         ...notificationState,
-        open: true
+        open: true,
       });
     }
   }, [notification]);
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
     setNotificationState({ ...notificationState, open: false });
-    // setTimeout(() => {
-    //   dispatch();
-    // }, 300);
   };
 
   return (

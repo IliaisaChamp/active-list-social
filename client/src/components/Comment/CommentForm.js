@@ -6,11 +6,13 @@ import { useTranslation } from 'react-i18next';
 import useInput from '../../hooks/useInput';
 import { setComment } from '../../store/ac/reportsAC';
 import Box from '@mui/material/Box';
+import { usePickerState } from '@mui/lab/internal/pickers/hooks/usePickerState';
+import { useState } from 'react';
 
 function CommentForm() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { value, onChangeInput } = useInput();
+  const [value, setValue] = useState();
 
   const { id } = useParams();
 
@@ -21,6 +23,11 @@ function CommentForm() {
     const text = formData.get('text');
 
     dispatch(setComment(text.trim(), id));
+    setValue('');
+  };
+
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
   };
 
   return (
@@ -35,7 +42,7 @@ function CommentForm() {
             fullWidth
             rows={4}
             name="text"
-            value={value.text}
+            value={value}
             onChange={onChangeInput}
             variant="outlined"
             color="success"

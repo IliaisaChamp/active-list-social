@@ -83,7 +83,7 @@ export default function LentaPostCard({ report, index }) {
     const isLiked = findUserLike(user?.id);
     setIsLiked(!!isLiked);
     setLikesCount(Likes.length);
-  }, [user]);
+  }, [user, Likes.length, findUserLike]);
 
   const handleSetLike = () => {
     setLikeFetch();

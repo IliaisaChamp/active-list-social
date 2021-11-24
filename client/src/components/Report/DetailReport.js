@@ -23,15 +23,13 @@ export default function DetailReport() {
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(currentReport?.Likes?.length);
 
-  const findUserLike = (userID) => {
-    return currentReport?.Likes?.find((like) => userID === like.user_id);
-  };
-  const memoizeValue = useMemo(() => findUserLike(user?.id), []);
+  const findUserLike = useCallback((userID) => currentReport?.Likes?.find((like) => userID === like.user_id), [currentReport?.Likes]);
 
   useEffect(() => {
-    setIsLiked(!!memoizeValue);
+    const isLiked = findUserLike(user?.id);
+    setIsLiked(!!isLiked);
     setLikesCount(currentReport?.Likes?.length);
-  }, []);
+  }, [currentReport, user, findUserLike]);
 
   const handleSetLike = () => {
     setLikeFetch();
@@ -87,7 +85,7 @@ export default function DetailReport() {
 
         <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
           <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
-            <Badge badgeContent={likesCount ?? ''} color="primary">
+            <Badge badgeContent={likesCount} color="primary">
               <FavoriteIcon fontSize="inherit" />
             </Badge>
           </IconButton>
