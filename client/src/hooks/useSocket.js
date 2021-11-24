@@ -3,6 +3,7 @@ import { setNewReportNotification } from '../store/ac/notificationAC';
 import { createSocketConnect, setOnline } from '../store/ac/onlineUsersAc';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useRef } from 'react';
+import {setSocket} from "../store/ac/socketAc";
 
 export default function useSocket(dispatch) {
   const socket = useRef();
@@ -21,7 +22,7 @@ export default function useSocket(dispatch) {
         console.log('USERS ONLINE', msg);
         dispatch(setOnline(msg.users));
       });
-      dispatch(createSocketConnect(socket, user));
+      dispatch(setSocket(socket));
     }
     return () => socket?.current?.emit('logout')
   }, [user, dispatch]);

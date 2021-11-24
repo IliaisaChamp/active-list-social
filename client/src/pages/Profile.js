@@ -28,12 +28,12 @@ const Profile = () => {
   const currentUserSubscribes = useSelector((state) => state.currentUserSubscribes);
 
   const dispatch = useDispatch();
-  const isSelfPage = +id === +user.id;
+  const isSelfPage = +id === +user?.id;
 
   useEffect(() => {
     dispatch(getUsersTasks(id));
     dispatch(getUserReports(id));
-    dispatch(getSubsribes(user.id));
+    dispatch(getSubsribes(user?.id));
     if (!isSelfPage) {
       dispatch(getCurrentUserSubscribes(id));
     }

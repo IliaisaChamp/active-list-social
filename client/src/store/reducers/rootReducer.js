@@ -12,6 +12,7 @@ import subscribesReducer from './subscribesReducer';
 import onlineUsersReducer from './onlineUsersReducer';
 import socketReducer from './socketReducer';
 import currentUserSubscribesReducer from './currentUserSubscribesReducer';
+import chatReducer from "./chatReducer";
 
 const rootReducer = combineReducers({
   user: authReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   currentReport: currentReportReducer,
   onlineUsers: onlineUsersReducer,
   socket: socketReducer,
+  chat: chatReducer
 });
 
 export default rootReducer;

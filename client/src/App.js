@@ -40,25 +40,6 @@ function App() {
     dispatch(checkUser());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //     console.log(user)
-  //   if (user) {
-  //     socket.current = io("http://localhost:3001", {
-  //       query: { id: user.id },
-  //     });
-  //       socket.current.on('notification', (msg) => {
-  //           console.log('NOTIFICATION', msg)
-  //           dispatch(setNewReportNotification(msg.message))
-  //       } );
-  //       socket.current.on("broadcast-online", (msg) => {
-  //           console.log('USERS ONLINE', msg);
-  //           dispatch(setOnline(msg.users));
-  //       });
-  //     dispatch(createSocketConnect(socket, user));
-  //   }
-  //   // return () => socket.current.emit('logout');
-  // }, [user, dispatch]);
-
   console.log('APP RENDER');
   return (
     <ThemeConfig>
