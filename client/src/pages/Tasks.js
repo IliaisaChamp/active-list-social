@@ -20,6 +20,7 @@ import TagsCloud from '../components/TagCloud/TagCloud'
 import axios from 'axios';
 import { BASE_URL_API } from '../config/constants';
 import { Box } from '@mui/system';
+import { startLoading, stopLoading } from '../store/ac/isLoadingAC';
 
 import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
@@ -32,22 +33,21 @@ export default function Tasks() {
   const location = useLocation();
   const isPageProfile = location.pathname.includes('profile');
   const { t } = useTranslation();
+  useEffect(() => {
+    // dispatch(startLoading());
+    console.log('afas');
+    dispatch(getFilteredTasks(filterName));
+    return () => {
+      dispatch(setTasks([]));
+    };
+  }, []);
 
   const subscribeOnTaskToggle = useCallback(
     (taskId) => {
       dispatch(subscribeOnTask(taskId));
     },
-    [dispatch]
+    [dispatch],
   );
-
-  useEffect(() => {
-    // if (!isPageProfile) {
-    dispatch(getFilteredTasks(filterName));
-    // }
-    return () => {
-      dispatch(setTasks([]));
-    };
-  }, [isPageProfile, filterName, dispatch]);
 
   const filterHandler = useCallback((event) => {
     setFilterName(event.target.value);

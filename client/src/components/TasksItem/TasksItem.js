@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
 // mui
@@ -10,8 +10,13 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TaskIcon from '@mui/icons-material/Task';
 import AddIcon from '@mui/icons-material/Add';
+import GroupIcon from '@mui/icons-material/Group';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+
 import ModalDeleteTask from '../ModalDeleteTask/ModalDeleteTask';
 import ButtonPopover from '../ButtonPopover/ButtonPopover';
+import { Box } from '@mui/system';
+import { Typography } from '@mui/material';
 
 const completedItemStyle = {
   backgroundColor: 'primary.lighter',
@@ -44,33 +49,43 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
   };
 
   const isPageTask = location.pathname.includes('tasks');
-
   return (
     <RootStyle
       // divider={true}
       sx={isPageTask ? {} : task.isDone ? { ...completedItemStyle } : { ...incompletedItemStyle }}>
-      <ModalDeleteTask
-        open={open}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-        subscribeHandleClose={subscribeHandleClose}
-      />
+      <ModalDeleteTask open={open} handleOpen={handleOpen} handleClose={handleClose} subscribeHandleClose={subscribeHandleClose} />
       {/* <ButtonPopover /> */}
-      <ListItemText primary={task.title} primaryTypographyProps={{ variant: 'subtitle2' }} />
+      <ListItemText
+        primary={task.title}
+        primaryTypographyProps={{ variant: 'subtitle2' }}
+        secondaryTypographyProps={{}}
+        secondary={task.Reports !== undefined ? 'Количество отчетов' + ' ' + task.Reports + ' ' : false}
+      />
 
       <div style={{ display: 'flex', alignItems: 'baseline' }}>
+        {/* <Box component={Icon} icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
+              </Box> */}
+        {/* <Box sx={{ display: 'flex', marginRight: 3 }}>
+          <AssignmentTurnedInIcon sx={{ marginRight: 2 }} />
+          <Typography>{task.Reports}</Typography>
+        </Box> */}
+
         {isPageTask ? (
-          // <IconButton onClick={() => subscribeToggle(task.id)} edge="end" aria-label="delete">
-          //   <AddIcon />
-          // </IconButton>
-          <ButtonPopover
-            edge="end"
-            taskId={task.id}
-            subscribeOnTaskToggle={subscribeOnTaskToggle}
-            aria-label="add-task"
-            text={'Добавить цель'}>
-            <AddIcon />
-          </ButtonPopover>
+          <>
+            <Box sx={{ display: 'flex', marginRight: 10 }}>
+              <GroupIcon sx={{ marginRight: 2 }} />
+              <Typography>{task.Users}</Typography>
+            </Box>
+            <ButtonPopover
+              edge="end"
+              taskId={task.id}
+              subscribeOnTaskToggle={subscribeOnTaskToggle}
+              aria-label="add-task"
+              text={'Добавить цель'}>
+              <AddIcon />
+            </ButtonPopover>
+          </>
         ) : isSelfPage ? (
           <>
             {!task.isDone && (
@@ -92,10 +107,6 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
               text={'Добавить отчет'}>
               <TaskIcon />
             </ButtonPopover>
-
-            {/* <IconButton edge="end" component={Link} to={`/reports/task/${task.id}/`} aria-label="add-report">
-              <TaskIcon />
-            </IconButton> */}
 
             {!task.isDone && (
               <ButtonPopover taskId={task.id} edge="end" handleOpen={handleOpen} aria-label="delete" text={'Удалить'}>

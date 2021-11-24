@@ -26,11 +26,11 @@ export default function Router() {
   const user = useSelector((state) => state.user);
   // const isLoading = useSelector((state) => state.isLoading);
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (user) {
-      dispatch(getSubsribes(user.id));
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     dispatch(getSubsribes(user.id));
+  //   }
+  // }, [user]);
 
   return useRoutes([
     {

@@ -1,4 +1,4 @@
-const { Task, User, UserTask, Sequelize } = require('../db/models');
+const { Task, User, UserTask, Sequelize, Report } = require('../db/models');
 
 class TaskService {
   static async unSubscribe(userId, taskId) {
@@ -27,9 +27,29 @@ class TaskService {
               [Sequelize.Op.iLike]: `%${filter}%`,
             },
           },
+          include: [
+            {
+              model: Report,
+              attributes: ['id'],
+            },
+            {
+              model: User,
+              attributes: ['id'],
+            },
+          ],
         })
       : await Task.findAll({
           order: [['title', 'ASC']],
+          include: [
+            {
+              model: Report,
+              attributes: ['id'],
+            },
+            {
+              model: User,
+              attributes: ['id'],
+            },
+          ],
         });
   }
 }

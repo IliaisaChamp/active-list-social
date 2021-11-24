@@ -47,14 +47,14 @@ const Recommendations = () => {
     (userId, followingsId) => {
       dispatch(subscribeOnUser(userId, followingsId));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const unsubcsribeHandler = useCallback(
     (userId, followingsId) => {
       dispatch(unsubscribeFromUser(userId, followingsId));
     },
-    [dispatch]
+    [dispatch],
   );
   return (
     <Page title={t('pages.recommend.head')}>
