@@ -14,6 +14,7 @@ const ButtonPopover = ({
   taskId,
   component,
   to,
+  setChecked,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -26,7 +27,11 @@ const ButtonPopover = ({
   };
 
   const clickHandler = useCallback(() => {
-    completeTaskHandler ? completeTaskHandler(taskId) : subscribeOnTaskToggle(taskId);
+    setChecked(false);
+    setTimeout(() => {
+      completeTaskHandler ? completeTaskHandler(taskId) : subscribeOnTaskToggle(taskId);
+      setChecked(true);
+    }, 500);
   }, []);
 
   const open = Boolean(anchorEl);

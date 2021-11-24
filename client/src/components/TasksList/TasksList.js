@@ -1,10 +1,14 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
+import React, { useEffect, useState } from 'react';
+// import ReactPaginate from 'react-paginate';
 
-import TasksItem from '../TasksItem/TasksItem';
+import Box from '@mui/material/Box';
+// import List from '@mui/material/List';
+
+// import TasksItem from '../TasksItem/TasksItem';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+
+import PaginatedItems from '../Paginate/Paginate';
 
 const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPage }) => {
   const { t } = useTranslation();
@@ -12,8 +16,8 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
     <>
       {tasks.length > 0 ? (
         <Box sx={{ flexGrow: 1, boxShadow: 3, borderRadius: 3, overflow: 'hidden' }}>
-          <List dense={true} sx={{ padding: 0 }}>
-            {tasks.map((task) => (
+          {/* <List dense={true} sx={{ padding: 0 }}> */}
+          {/* {tasks.map((task) => (
               <TasksItem
                 key={task.id}
                 task={task}
@@ -21,8 +25,15 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
                 isSelfPage={isSelfPage}
                 completeTaskHandler={completeTaskHandler}
               />
-            ))}
-          </List>
+            ))} */}
+          <PaginatedItems
+            itemsPerPage={5}
+            tasks={tasks}
+            subscribeOnTaskToggle={subscribeOnTaskToggle}
+            completeTaskHandler={completeTaskHandler}
+            isSelfPage={isSelfPage}
+          />
+          {/* </List> */}
         </Box>
       ) : (
         <Typography>{t('pages.profile.tabs.notasks')}</Typography>

@@ -17,8 +17,8 @@ import { completeTask, getUsersTasks, setTasks, unsubscribeOnTask } from '../sto
 import { getUserReports } from '../store/ac/reportsAC';
 import { getSubsribes, setSubscribes, subscribeOnUser, unsubscribeFromUser } from '../store/ac/subscribesAC';
 import { getCurrentUserSubscribes, setCurrentUserSubscribes } from '../store/ac/currentUserSubscribesAC';
-import { setCurrentUser } from '../store/ac/currentUserAC';
-import { getProfileStats, resetProfileStats, setProfileStats } from '../store/ac/profileStatsAC';
+import { getCurrentUser, setCurrentUser } from '../store/ac/currentUserAC';
+import { getProfileStats, resetProfileStats } from '../store/ac/profileStatsAC';
 
 const Profile = () => {
   const { id } = useParams();
@@ -38,9 +38,12 @@ const Profile = () => {
     dispatch(getUsersTasks(id));
     dispatch(getProfileStats(id));
     dispatch(getUserReports(id));
-    dispatch(getSubsribes(user?.id));
+    if (user) {
+      dispatch(getSubsribes(user.id));
+    }
     if (!isSelfPage) {
       dispatch(getCurrentUserSubscribes(id));
+      dispatch(getCurrentUser(id));
     }
     return () => {
       dispatch(setTasks([]));
@@ -53,27 +56,27 @@ const Profile = () => {
         payload: [],
       });
     };
-  }, [id]);
+  }, [id, user, isSelfPage]);
 
   const unscubscribeFromTask = useCallback(
     (taskId) => {
       dispatch(unsubscribeOnTask(taskId));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const subcsribeOnUser = useCallback(
     (userId, followingsId) => {
       dispatch(subscribeOnUser(userId, followingsId));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const unsubcsribeFromUser = useCallback(
     (userId, followingsId) => {
       dispatch(unsubscribeFromUser(userId, followingsId));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const completeTaskHandler = useCallback((taskId) => {

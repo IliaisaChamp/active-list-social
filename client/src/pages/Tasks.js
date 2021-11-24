@@ -40,7 +40,7 @@ export default function Tasks() {
     return () => {
       dispatch(setTasks([]));
     };
-  }, []);
+  }, [filterName, isPageProfile]);
 
   const subscribeOnTaskToggle = useCallback(
     (taskId) => {
