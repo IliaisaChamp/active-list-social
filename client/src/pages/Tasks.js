@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 // material
 import { Container, Typography } from '@mui/material';
@@ -26,6 +27,7 @@ export default function Tasks() {
   const dispatch = useDispatch();
   const location = useLocation();
   const isPageProfile = location.pathname.includes('profile');
+
   useEffect(() => {
     // dispatch(startLoading());
     console.log('afas');
@@ -33,7 +35,7 @@ export default function Tasks() {
     return () => {
       dispatch(setTasks([]));
     };
-  }, []);
+  }, [filterName, isPageProfile]);
 
   const subscribeOnTaskToggle = useCallback(
     (taskId) => {
