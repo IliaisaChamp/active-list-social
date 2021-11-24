@@ -23,7 +23,7 @@ export default function CommentItem({ comment }) {
           <p style={{ textAlign: 'left', color: 'gray' }}>{fDateTime(createdAt)}</p>
         </Grid>
       </Grid>
-      <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
+      <Divider variant="fullWidth" style={{ margin: '5px 0 10px 0' }} />
     </>
   );
 }

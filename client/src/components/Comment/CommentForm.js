@@ -14,12 +14,14 @@ function CommentForm() {
 
   const { id } = useParams();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (data, e) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
-    const text = formData.get('text')
+    const text = formData.get('text');
 
     dispatch(setComment(text.trim(), id));
+
   };
 
   return (
