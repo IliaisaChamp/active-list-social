@@ -1,19 +1,20 @@
 import { Icon } from '@iconify/react';
-import appleFilled from '@iconify/icons-ant-design/apple-filled';
+import bugFilled from '@iconify/icons-ant-design/bug-filled';
+import userAdmin from '@iconify/icons-carbon/user-admin';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 // utils
-import { fShortenNumber } from '../../utils/formatNumber';
-
+import CountUp from 'react-countup';
+import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   textAlign: 'center',
   padding: theme.spacing(5, 0),
-  color: theme.palette.info.darker,
-  backgroundColor: theme.palette.info.lighter,
+  color: theme.palette.error.darker,
+  backgroundColor: theme.palette.error.lighter,
 }));
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
@@ -25,26 +26,27 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   height: theme.spacing(8),
   justifyContent: 'center',
   marginBottom: theme.spacing(3),
-  color: theme.palette.info.dark,
-  backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.info.dark, 0)} 0%, ${alpha(
-    theme.palette.info.dark,
+  color: theme.palette.error.dark,
+  backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.error.dark, 0)} 0%, ${alpha(
+    theme.palette.error.dark,
     0.24
   )} 100%)`,
 }));
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 1352831;
-
-export default function AppNewUsers() {
+export default function UserReports({ stat }) {
+  const { t } = useTranslation();
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Icon icon={appleFilled} width={24} height={24} />
+        <Icon icon={userAdmin} width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h3">
+        <CountUp start={0} end={stat} delay={0.5} duration={2} />
+      </Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        New Users
+        {t('pages.profile.stat.userreports')}
       </Typography>
     </RootStyle>
   );

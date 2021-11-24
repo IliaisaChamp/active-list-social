@@ -8,7 +8,7 @@ class ReportController {
     try {
       const report = await Report.findOne({
         include: [
-          { model: User, attributes: ['nickname', 'id'] },
+          { model: User, attributes: ['nickname', 'id', 'avatar'] },
           { model: Task, attributes: ['title'] },
           { model: Like },
           {

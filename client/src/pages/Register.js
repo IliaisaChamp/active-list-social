@@ -62,7 +62,7 @@ export default function Register() {
           {/* <Box sx={{ borderRadius: '10px' }}> */}
           <img
             alt="register"
-            src="/static/illustrations/6619759.jpg"
+            src="/static/illustrations/auth.png"
             style={{ objectFit: 'contain', height: '80%' }}
           />
           {/* </Box> */}

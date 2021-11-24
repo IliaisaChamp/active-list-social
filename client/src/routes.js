@@ -13,8 +13,8 @@ import Register from './pages/Register';
 import Tasks from './pages/Tasks';
 import Report from './pages/Report';
 import Chat from './components/ChatFolder/Chat/Chat';
-import ReportForm from './components/ReportForm/ReportForm';
-import DetailReport from './components/DetailReport/DetailReport';
+import ReportForm from './components/Report/ReportForm';
+import DetailReport from './components/Report/DetailReport';
 import Recommendations from './pages/Recommendations';
 // import Loader from './components/Loader/Loader';
 import { getSubsribes } from './store/ac/subscribesAC';
@@ -26,11 +26,11 @@ export default function Router() {
   const user = useSelector((state) => state.user);
   // const isLoading = useSelector((state) => state.isLoading);
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (user) {
-      dispatch(getSubsribes(user.id));
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     dispatch(getSubsribes(user.id));
+  //   }
+  // }, [user]);
 
   return useRoutes([
     {

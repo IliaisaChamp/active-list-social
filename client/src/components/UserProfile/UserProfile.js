@@ -7,7 +7,7 @@ import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import { Button, Typography, Stack, IconButton } from '@mui/material';
-
+import { useTranslation } from 'react-i18next';
 // icons
 import AddIcon from '@mui/icons-material/Add';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -76,7 +76,7 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const isSubscribed = subscribes.filter((user) => +user.id === +id).length > 0;
-
+  const { t } = useTranslation();
   const handleFileInputChange = async (e) => {
     const formData = new FormData();
     formData.append('avatar', e.target.files[0]);
@@ -115,9 +115,7 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
               alt={isSelfPage ? user.first_name : currentUser?.first_name}
               // src={user?.avatar && `${BASE_URL}/${user.avatar}`}
               src={
-                isSelfPage
-                  ? user?.avatar && `${BASE_URL}/${user.avatar}`
-                  : currentUser?.avatar && `${BASE_URL}/${currentUser.avatar}`
+                isSelfPage ? user?.avatar && `${BASE_URL}/${user.avatar}` : currentUser?.avatar && `${BASE_URL}/${currentUser.avatar}`
               }
               classes={{ root: classes.avatar, circle: classes.circle }}
             />
@@ -133,13 +131,7 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
                 alignItems="center"
                 spacing={2}>
                 <label htmlFor="icon-button-file">
-                  <InputFile
-                    accept="image/*"
-                    id="icon-button-file"
-                    type="file"
-                    name="avatar"
-                    onChange={handleFileInputChange}
-                  />
+                  <InputFile accept="image/*" id="icon-button-file" type="file" name="avatar" onChange={handleFileInputChange} />
                   <IconButton color="primary" aria-label="upload picture" component="span" size="large">
                     <PhotoCamera sx={{ width: '100%', height: '100%' }} />
                   </IconButton>
@@ -153,12 +145,8 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
           <div className={classes.spacer} />
           <div className={classes.actionGroup}>
             {isSelfPage ? (
-              <Button
-                className={classes.button}
-                onClick={() => navigate('/tasks')}
-                variant="outlined"
-                startIcon={<AddIcon />}>
-                Добавить
+              <Button className={classes.button} onClick={() => navigate('/tasks')} variant="outlined" startIcon={<AddIcon />}>
+                {t('pages.profile.add')}
               </Button>
             ) : (
               <>
@@ -168,12 +156,12 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
                     variant="outlined"
                     startIcon={<SubscriptionsIcon />}
                     onClick={() => subcsribeOnUser(user.id, id)}>
-                    Подписаться
+                    {t('pages.profile.sub')}
                   </Button>
                 )}
 
                 <Button onClick={messageHandler} className={classes.button} variant="outlined" startIcon={<MessageIcon />}>
-                  Сообщение
+                  {t('pages.profile.message')}
                 </Button>
               </>
             )}

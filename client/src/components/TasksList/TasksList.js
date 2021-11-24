@@ -4,8 +4,10 @@ import List from '@mui/material/List';
 
 import TasksItem from '../TasksItem/TasksItem';
 import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPage }) => {
+  const { t } = useTranslation();
   return (
     <>
       {tasks.length > 0 ? (
@@ -23,7 +25,7 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
           </List>
         </Box>
       ) : (
-        <Typography>No Tasks</Typography>
+        <Typography>{t('pages.profile.tabs.notasks')}</Typography>
       )}
     </>
   );

@@ -62,11 +62,8 @@ export default function Login() {
 
       <MHidden width="mdDown">
         <SectionStyle>
-          {/* <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Hi, Welcome Back
-          </Typography> */}
           <img
-            src="/static/illustrations/6619759.jpg"
+            src="/static/illustrations/auth.png"
             alt="login"
             style={{ objectFit: 'contain', height: '80%' }}
           />

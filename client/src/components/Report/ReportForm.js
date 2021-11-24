@@ -9,7 +9,7 @@ import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import ReportPreviousImages from '../ReportPreviousImages/ReportPreviousImages';
+import ReportPreviousImages from './ReportPreviousImages';
 import { setNewReport } from '../../store/ac/reportsAC';
 import useInput from '../../hooks/useInput';
 import axios from 'axios';

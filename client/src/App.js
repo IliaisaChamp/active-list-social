@@ -1,7 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { checkUser, deleteUser } from './store/ac/authAC';
-import io from 'socket.io-client';
 // routes
 import Router from './routes';
 
@@ -18,6 +17,7 @@ import FlashMessage from './components/FlashMessage/FlashMessage';
 import Notification from './components/Notification/Notification';
 import axios from 'axios';
 import useSocket from './hooks/useSocket';
+import { startLoading } from './store/ac/isLoadingAC';
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +37,7 @@ function App() {
   );
 
   useEffect(() => {
+    // dispatch(startLoading());
     dispatch(checkUser());
   }, [dispatch]);
 
