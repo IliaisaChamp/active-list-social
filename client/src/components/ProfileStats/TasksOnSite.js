@@ -3,7 +3,7 @@ import profileFilled from '@iconify/icons-ant-design/profile-filled';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
-
+import { useTranslation } from 'react-i18next';
 import CountUp from 'react-countup';
 // ----------------------------------------------------------------------
 
@@ -34,6 +34,8 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function TasksOnSite({ stat }) {
+  const { t } = useTranslation();
+  
   return (
     <RootStyle>
       <IconWrapperStyle>
@@ -43,7 +45,7 @@ export default function TasksOnSite({ stat }) {
         <CountUp start={0} end={stat} delay={0.5} duration={2} />
       </Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Taks on site
+        {t('pages.profile.stat.alltasks')}
       </Typography>
     </RootStyle>
   );

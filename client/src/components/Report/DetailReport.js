@@ -5,8 +5,8 @@ import { Avatar, Badge, CardContent, Grid, IconButton, Stack, Typography } from 
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getReportById } from '../../store/ac/reportsAC';
-import CommentForm from '../Comment/CommentForm'
-import Comments from '../Comment/Comments'
+import CommentForm from '../Comment/CommentForm';
+import Comments from '../Comment/Comments';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
@@ -16,7 +16,7 @@ const BASE_URL = 'http://localhost:3001/img/reports/';
 
 export default function DetailReport() {
   const { id } = useParams();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const currentReport = useSelector((state) => state.currentReport);
 
   const user = useSelector((state) => state.user);
@@ -30,6 +30,7 @@ export default function DetailReport() {
 
   useEffect(() => {
     setIsLiked(!!memoizeValue);
+    setLikesCount(currentReport?.Likes?.length);
   }, []);
 
   const handleSetLike = () => {
@@ -56,19 +57,10 @@ export default function DetailReport() {
         {currentReport.Task?.title}
       </Typography>
 
-      <Carousel
-        autoPlay={false}
-        emulateTouch={true}
-        useKeyboardArrows={true}
-        style={{ backgroundColor: 'green' }}
-      >
+      <Carousel autoPlay={false} emulateTouch={true} useKeyboardArrows={true} style={{ backgroundColor: 'green' }}>
         {currentReport?.images?.map((el, id) => (
           <div key={id}>
-            <img
-              src={`${BASE_URL}${el}`}
-              style={{ maxHeight: '500px', width: '100%', objectFit: 'contain' }}
-              alt={el.src}
-            />
+            <img src={`${BASE_URL}${el}`} style={{ maxHeight: '500px', width: '100%', objectFit: 'contain' }} alt={el.src} />
           </div>
         ))}
       </Carousel>
@@ -76,10 +68,7 @@ export default function DetailReport() {
       <CardContent>
         <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
           <RouterLink to={`/profile/${currentReport?.user_id}`}>
-            <Avatar
-              alt={currentReport?.User?.nickname}
-              src={BASE_URL_AVATAR + currentReport?.User?.avatar}
-            />
+            <Avatar alt={currentReport?.User?.nickname} src={BASE_URL_AVATAR + currentReport?.User?.avatar} />
           </RouterLink>
           <Typography
             style={{ textDecoration: 'none', color: 'inherit' }}
@@ -97,12 +86,7 @@ export default function DetailReport() {
         </Typography>
 
         <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
-          <IconButton
-            color={isLiked ? 'error' : 'default'}
-            size="large"
-            sx={{ padding: '5px' }}
-            onClick={handleSetLike}
-          >
+          <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
             <Badge badgeContent={likesCount ?? ''} color="primary">
               <FavoriteIcon fontSize="inherit" />
             </Badge>
@@ -116,7 +100,7 @@ export default function DetailReport() {
         </Stack>
       </CardContent>
 
-      <Comments comments={currentReport?.Comments} />
+      {currentReport?.Comments?.length ? <Comments comments={currentReport?.Comments} /> : null}
       <CommentForm />
     </>
   );

@@ -4,7 +4,7 @@ import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useInput from '../../hooks/useInput';
-import {setComment} from '../../store/ac/reportsAC'
+import { setComment } from '../../store/ac/reportsAC';
 import Box from '@mui/material/Box';
 
 function CommentForm() {
@@ -14,14 +14,13 @@ function CommentForm() {
 
   const { id } = useParams();
 
-  const handleSubmit = (data, e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const text = formData.get('text');
 
     dispatch(setComment(text.trim(), id));
-
   };
 
   return (
@@ -58,9 +57,8 @@ export default function Container() {
     <Box
       sx={{
         width: '100%',
-        marginTop: '30px'
-      }}
-    >
+        marginTop: '30px',
+      }}>
       <Stack
         direction="row"
         justifyContent="flex-end"
@@ -68,8 +66,7 @@ export default function Container() {
         sx={{
           width: '70%',
           padding: '0 10px 0 10px',
-        }}
-      >
+        }}>
         <CommentForm />
       </Stack>
     </Box>

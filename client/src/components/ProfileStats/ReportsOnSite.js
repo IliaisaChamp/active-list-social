@@ -5,6 +5,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 // utils
 import CountUp from 'react-countup';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ReportsOnSite({ stat }) {
+   const { t } = useTranslation();
   return (
     <RootStyle>
       <IconWrapperStyle>
@@ -44,7 +46,7 @@ export default function ReportsOnSite({ stat }) {
         <CountUp start={0} end={stat} delay={0.5} duration={2} />
       </Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Reports on site
+        {t('pages.profile.stat.allreports')}
       </Typography>
     </RootStyle>
   );

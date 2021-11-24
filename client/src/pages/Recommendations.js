@@ -14,14 +14,9 @@ import RecommendationItem from '../components/RecommendationItem/RecommendationI
 
 import { isSubscribed } from '../utils/isSubscribed';
 import { getSubsribes, setSubscribes, subscribeOnUser, unsubscribeFromUser } from '../store/ac/subscribesAC';
+import { useTranslation } from 'react-i18next';
 
-const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'nickName', label: 'Percents', alignRight: false },
-  { id: 'rang', label: 'Reports', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  // { id: '' },
-];
+
 
 const Recommendations = () => {
   const user = useSelector((state) => state.user);
@@ -30,8 +25,17 @@ const Recommendations = () => {
   const subscribes = useSelector((state) => state.subscribes);
   const dispatch = useDispatch();
 
+   const { t } = useTranslation();
+
+   const TABLE_HEAD = [
+     { id: 'name', label: `${t('pages.recommend.header.name')}`, alignRight: false },
+     { id: 'nickName', label: `${t('pages.recommend.header.percent')}`, alignRight: false },
+     { id: 'rang', label: `${t('pages.recommend.header.reports')}`, alignRight: false },
+     { id: 'status', label: `${t('pages.recommend.header.status')}`, alignRight: false },
+   ];
+
   useEffect(() => {
-    dispatch(getSubsribes(user.id));
+    dispatch(getSubsribes(user?.id));
     dispatch(getRecommendedUsers());
     return () => {
       dispatch(setSubscribes([]));
@@ -53,9 +57,9 @@ const Recommendations = () => {
     [dispatch]
   );
   return (
-    <Page title="Подписки">
+    <Page title={t('pages.recommend.head')}>
       <Typography align="center" variant="h4" sx={{ mb: 5 }}>
-        Список рекомендуемых пользователей
+        {t('pages.recommend.title')}
       </Typography>
       <Container maxWidth="xl">
         <Card sx={{ maxWidth: 800, margin: 'auto' }}>

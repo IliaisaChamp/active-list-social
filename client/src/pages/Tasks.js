@@ -20,6 +20,8 @@ import TagsCloud from '../components/TagCloud/TagCloud'
 import axios from 'axios';
 import { BASE_URL_API } from '../config/constants';
 import { Box } from '@mui/system';
+
+import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
 export default function Tasks() {
@@ -29,6 +31,7 @@ export default function Tasks() {
   const dispatch = useDispatch();
   const location = useLocation();
   const isPageProfile = location.pathname.includes('profile');
+  const { t } = useTranslation();
 
   const subscribeOnTaskToggle = useCallback(
     (taskId) => {
@@ -65,12 +68,12 @@ export default function Tasks() {
   }, [fetchTags]);
 
   return (
-    <Page title="Tasks">
+    <Page title={t('pages.goals.head')}>
       <Container>
         <Typography align="center" variant="h4" sx={{ mb: 5 }}>
-          Список целей
+          {t('pages.goals.title')}
         </Typography>
-        <Box sx={{maxWidth: '70%', ml: 'auto', mr: 'auto', textAlign: 'center'}}>
+        <Box sx={{ maxWidth: '50%', ml: 'auto', mr: 'auto', textAlign: 'center' }}>
           <TagsCloud tags={tags} />
         </Box>
         <SearchBar filterName={filterName} onFilterName={filterHandler} />

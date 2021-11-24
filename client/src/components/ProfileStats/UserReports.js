@@ -6,7 +6,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 // utils
 import CountUp from 'react-countup';
-
+import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -36,6 +36,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function UserReports({ stat }) {
+  const { t } = useTranslation();
   return (
     <RootStyle>
       <IconWrapperStyle>
@@ -45,7 +46,7 @@ export default function UserReports({ stat }) {
         <CountUp start={0} end={stat} delay={0.5} duration={2} />
       </Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        User reports
+        {t('pages.profile.stat.userreports')}
       </Typography>
     </RootStyle>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next';
 // mui
 import { Container, Grid } from '@mui/material';
 
@@ -31,6 +31,8 @@ const Profile = () => {
 
   const dispatch = useDispatch();
   const isSelfPage = +id === +user?.id;
+
+   const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(getUsersTasks(id));
@@ -79,7 +81,7 @@ const Profile = () => {
   }, []);
 
   return (
-    <Page title="Profile">
+    <Page title={t('pages.profile.head')}>
       <Container maxWidth="xl">
         <UserProfile isSelfPage={isSelfPage} subcsribeOnUser={subcsribeOnUser} />
         <Grid container spacing={2}>

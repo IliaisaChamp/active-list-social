@@ -11,7 +11,7 @@ import { TopPostCard, TopPostsSort, TopPostsSearch } from '.';
 //
 import POSTS from '../../_mocks_/blog';
 import { setReports } from '../../store/ac/reportsAC';
-
+import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
 const SORT_OPTIONS = [
@@ -25,27 +25,18 @@ const SORT_OPTIONS = [
 export default function Top() {
   const reports = useSelector(state => state.reports)
   const dispatch = useDispatch()
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(setReports());
   }, [])
-  
+
   return (
-    <Page title="Топ">
+    <Page title={t('pages.top.head')}>
       <Container>
-        {/* <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            Blog
-          </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Icon icon={plusFill} />}
-          >
-            New Post
-          </Button>
-        </Stack> */}
+        <Typography variant="h4" gutterBottom align="center">
+          {t('pages.top.title')} 
+        </Typography>
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <TopPostsSearch posts={POSTS} />
