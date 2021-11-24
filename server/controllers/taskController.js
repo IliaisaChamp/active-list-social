@@ -1,5 +1,5 @@
 const TaskService = require('../services/taskService');
-const { UserTask, Report, Task, User } = require('../db/models');
+const { UserTask, Report, Task, User, Category } = require('../db/models');
 
 class TaskController {
   static async completeTask(req, res) {
@@ -65,7 +65,7 @@ class TaskController {
       const userTasks = query.Tasks.map((task) => task.id);
       const filter = req.query._filter ? decodeURIComponent(req.query._filter) : false;
       const allTasks = await TaskService.getTasks(filter);
-      const tasks = allTasks.filter((task) => !userTasks.includes(task.id))
+      const tasks = allTasks.filter((task) => !userTasks.includes(task.id));
       res.json({ tasks });
     } catch (e) {
       res.sendStatus(500);
@@ -73,21 +73,36 @@ class TaskController {
   }
 
   static async getTaskByID(req, res) {
-    const { id } = req.params
+    const { id } = req.params;
     try {
       const task = await Task.findOne({
         where: {
-          id
+          id,
         },
       });
       console.log(task);
       return res.json({ task: task.get({ plain: true }) });
     } catch (e) {
-      return res.status(500).json({message: 'Ошибка сервера, попробуйте еще раз'});
+      return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
     }
   }
 
+  static async getTasksByCategoryID(req, res) {
+    const { id } = req.params;
+    try {
+      const tasks = await Category.findAll({
+        include: Task,
+        where: {
+          id,
+        },
+      });
 
+      return res.json(tasks);
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
+    }
+  }
 }
 
 module.exports = TaskController;

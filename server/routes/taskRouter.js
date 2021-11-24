@@ -6,7 +6,7 @@ const checkAuth = require('../middleware/checkAuth');
 
 router
     .route("/")
-  .get(checkAuth, TaskController.showAll);
+    .get(checkAuth, TaskController.showAll);
 
 router
     .route("/:id")
@@ -19,5 +19,6 @@ router.route('/:id/subscribe')
 router.route('/:id/report').post(checkAuth, uploadReportsPhotos, ReportController.create);
 router.route('/:id/completed').post(checkAuth, TaskController.completeTask);
 
+router.route('/categories/:id').get(checkAuth, TaskController.getTasksByCategoryID);
 
 module.exports = router;
