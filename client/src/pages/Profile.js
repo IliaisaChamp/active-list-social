@@ -6,10 +6,10 @@ import { useParams } from 'react-router-dom';
 import { Container, Grid } from '@mui/material';
 
 import Page from '../components/Page/Page';
-import AppWeeklySales from '../components/ProfileStats/AppWeeklySales';
-import AppNewUsers from '../components/ProfileStats/AppNewUsers';
-import AppItemOrders from '../components/ProfileStats/AppItemOrders';
-import AppBugReports from '../components/ProfileStats/AppBugReports';
+import TasksOnSite from '../components/ProfileStats/TasksOnSite';
+import ReportsOnSite from '../components/ProfileStats/ReportsOnSite';
+import UserTasks from '../components/ProfileStats/UserTasks';
+import UserReports from '../components/ProfileStats/UserReports';
 import UserProfile from '../components/UserProfile/UserProfile';
 import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
 
@@ -18,6 +18,7 @@ import { getUserReports } from '../store/ac/reportsAC';
 import { getSubsribes, setSubscribes, subscribeOnUser, unsubscribeFromUser } from '../store/ac/subscribesAC';
 import { getCurrentUserSubscribes, setCurrentUserSubscribes } from '../store/ac/currentUserSubscribesAC';
 import { setCurrentUser } from '../store/ac/currentUserAC';
+import { getProfileStats, resetProfileStats, setProfileStats } from '../store/ac/profileStatsAC';
 
 const Profile = () => {
   const { id } = useParams();
@@ -26,14 +27,16 @@ const Profile = () => {
   const tasks = useSelector((state) => state.tasks);
   const subscribes = useSelector((state) => state.subscribes);
   const currentUserSubscribes = useSelector((state) => state.currentUserSubscribes);
+  const profileStats = useSelector((state) => state.profileStats);
 
   const dispatch = useDispatch();
-  const isSelfPage = +id === +user.id;
+  const isSelfPage = +id === +user?.id;
 
   useEffect(() => {
     dispatch(getUsersTasks(id));
+    dispatch(getProfileStats(id));
     dispatch(getUserReports(id));
-    dispatch(getSubsribes(user.id));
+    dispatch(getSubsribes(user?.id));
     if (!isSelfPage) {
       dispatch(getCurrentUserSubscribes(id));
     }
@@ -41,6 +44,7 @@ const Profile = () => {
       dispatch(setTasks([]));
       dispatch(setSubscribes([]));
       dispatch(setCurrentUser(null));
+      dispatch(resetProfileStats());
       dispatch(setCurrentUserSubscribes([]));
       dispatch({
         type: 'SET_REPORTS',
@@ -80,16 +84,16 @@ const Profile = () => {
         <UserProfile isSelfPage={isSelfPage} subcsribeOnUser={subcsribeOnUser} />
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWeeklySales />
+            <TasksOnSite stat={profileStats.tasksCount} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppNewUsers />
+            <ReportsOnSite stat={profileStats.reportsCount} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppItemOrders />
+            <UserTasks stat={profileStats.userTasksCount} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppBugReports />
+            <UserReports stat={profileStats.userReportsCount} />
           </Grid>
 
           <Grid item xs={12} xl={12} lg={12}>

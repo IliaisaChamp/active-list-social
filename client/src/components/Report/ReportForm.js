@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from 'react';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 // material
 
 import { Stack, TextField, IconButton, Chip, ListItem, Typography } from '@mui/material';
@@ -55,8 +55,8 @@ export default function ReportForm() {
     dispatch(setNewReport(formData, id, user.id, navigate, socket));
   };
 
-  const Input = styled("input")({
-    display: "none",
+  const Input = styled('input')({
+    display: 'none',
   });
 
   const fileUploadHandler = (e) => {
@@ -85,13 +85,8 @@ export default function ReportForm() {
               onChange={fileUploadHandler}
               multiple="multiple"
             />
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
-              size="large"
-            >
-              <PhotoCamera sx={{ width: "100px", height: "100px" }} />
+            <IconButton color="primary" aria-label="upload picture" component="span" size="large">
+              <PhotoCamera sx={{ width: '100px', height: '100px' }} />
             </IconButton>
           </label>
           <ReportPreviousImages itemData={chipData} />
@@ -109,7 +104,7 @@ export default function ReportForm() {
         <Stack>
           <TextField
             id="outlined-multiline-static"
-            label={t("report.textarea")}
+            label={t('report.textarea')}
             multiline
             rows={5}
             name="desc"

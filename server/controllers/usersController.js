@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const UserService = require('../services/userService');
+const TaskService = require('../services/taskService');
 const { User, Follower, Report, Task } = require('../db/models');
 const { Op } = require('sequelize');
 const fsp = require('fs/promises');
@@ -33,7 +34,7 @@ class UserController {
   static async showFollowers(req, res) {
     const id = req.params.id;
     try {
-      const followers = await UserService.getFollowers(id)
+      const followers = await UserService.getFollowers(id);
       res.status(200).json({ followers });
     } catch (e) {
       console.log(e);
@@ -152,6 +153,27 @@ class UserController {
         await follower.destroy();
       }
       res.sendStatus(200);
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(400);
+    }
+  }
+
+  static async getStats(req, res) {
+    try {
+      const userId = req.params.id;
+      const [tasks, reports, userReports, userTasks] = await Promise.all([
+        TaskService.getTasks(''),
+        Report.findAll(),
+        UserService.getReports(userId),
+        UserService.getUserTasks(userId),
+      ]);
+      res.json({
+        tasksCount: tasks.length,
+        reportsCount: reports.length,
+        userReportsCount: userReports.length,
+        userTasksCount: userTasks.length,
+      });
     } catch (e) {
       console.log(e);
       res.sendStatus(400);

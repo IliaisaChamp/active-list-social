@@ -15,23 +15,23 @@ const usersOnline = new Map();
 
 io.on('connection', (socket) => {
   console.log('socket connected', socket.id);
-  const id = socket.handshake.query.id;
-  usersOnline.set(id, socket);
-  const users = usersOnline.keys();
-  const uniqueUsers = [...new Set(users)];
 
+  const id = socket.handshake.query.id;
+  usersOnline.set(socket, id);
+  const users = usersOnline.values();
+  const uniqueUsers = [...new Set(users)];
+  console.log('online', usersOnline.values())
   io.emit('broadcast-online', { users: uniqueUsers });
 
   socket.on('disconnect', () => {
     console.log('USER DISCONNECTED', socket.id);
-    for (const [id, s] of usersOnline) {
+    for (const [s, id] of usersOnline) {
       if (s.id === socket.id) {
-        usersOnline.delete(id);
+        usersOnline.delete(s);
       }
     }
-    const users = usersOnline.keys();
+    const users = usersOnline.values();
     const uniqueUsers = [...new Set(users)];
-
     io.emit('broadcast-online', { users: uniqueUsers });
   });
 });
@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
     const userSubscribersId = userSubscribers.map((sub) => sub.id);
     const taskSubscribersId = taskSubscribers.Users.map((user) => user.id);
     const subscribers = [...userSubscribersId, ...taskSubscribersId];
-    for (let [id, s] of usersOnline) {
+    for (let [s, id] of usersOnline) {
       if (subscribers.includes(Number(id))) {
         s.join('room');
       }

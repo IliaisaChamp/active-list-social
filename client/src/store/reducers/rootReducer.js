@@ -12,11 +12,13 @@ import subscribesReducer from './subscribesReducer';
 import onlineUsersReducer from './onlineUsersReducer';
 import socketReducer from './socketReducer';
 import currentUserSubscribesReducer from './currentUserSubscribesReducer';
+import profileStatsReducer from './profileStatsReducer';
 
 const rootReducer = combineReducers({
   user: authReducer,
   currentUser: currentUserReducer,
   currentUserSubscribes: currentUserSubscribesReducer,
+  profileStats: profileStatsReducer,
   flash: flashReducer,
   notification: notificationReducer,
   tasks: tasksReducer,
