@@ -39,6 +39,7 @@ io.on('connection', (socket) => {
 //new report notification
 io.on('connection', (socket) => {
   socket.on('report-created', async (msg) => {
+    console.log(msg);
     const reportOwnerId = msg.user_id;
     const task_id = msg.task_id;
     const taskSubscribers = await Task.findOne({ where: { id: task_id }, include: User });
@@ -51,7 +52,7 @@ io.on('connection', (socket) => {
         s.join('room');
       }
     }
-    socket.broadcast.to('room').emit('notification', { message: 'MISSSAAAAGGGEEEEEEE' });
+    socket.broadcast.to('room').emit('notification', { message: {message: 'Новый отчет', url: `/reports/${msg.id}`} });
     io.socketsLeave('room');
   });
 });

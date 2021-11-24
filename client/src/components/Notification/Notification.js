@@ -13,7 +13,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function Notification() {
   const [notificationState, setNotificationState] = useState({
-    open: true,
+    open: false,
     vertical: 'bottom',
     horizontal: 'right',
     Transition: Slide,
@@ -27,7 +27,7 @@ export default function Notification() {
     if (notification) {
       setNotificationState({
         ...notificationState,
-        open: true,
+        open: true
       });
     }
   }, [notification]);
@@ -51,8 +51,8 @@ export default function Notification() {
         anchorOrigin={{ vertical, horizontal }}
         TransitionComponent={notification.Transition}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          <Link variant="subtitle2" component={RouterLink} to={notification.url}>
-            {notification.message}asdkljasdlkdkljasdkljasdkljasd
+          <Link variant="subtitle2" component={RouterLink} to={notification?.url}>
+            {notification?.message}
           </Link>
         </Alert>
       </Snackbar>

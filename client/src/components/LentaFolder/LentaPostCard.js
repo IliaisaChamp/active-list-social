@@ -72,18 +72,18 @@ export default function LentaPostCard({ report, index }) {
   const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState();
   const [likesCount, setLikesCount] = useState(Likes?.length);
 
-  const findUserLike = (userID) => {
-    return Likes?.find((like) => userID === like.user_id);
-  };
-  const memoizeValue = useMemo(() => findUserLike(user?.id), []);
+  const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
+
+  // const memoizeValue = useMemo(() => findUserLike(user?.id), [findUserLike, user]);
 
   useEffect(() => {
-    setIsLiked(!!memoizeValue);
-    setLikesCount(Likes?.length);
-  }, []);
+    const isLiked = findUserLike(user?.id);
+    setIsLiked(!!isLiked);
+    setLikesCount(Likes.length);
+  }, [user]);
 
   const handleSetLike = () => {
     setLikeFetch();
@@ -107,7 +107,10 @@ export default function LentaPostCard({ report, index }) {
           <CardMediaStyle>
             <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
             <AvatarStyle alt={User?.nickname} src={`${BASE_URL}${User?.avatar}`} />
-            <CoverImgStyle alt={User?.nickname} src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultreport.jpeg'} />
+            <CoverImgStyle
+              alt={User?.nickname}
+              src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultreport.jpeg'}
+            />
           </CardMediaStyle>
         </CardActionArea>
         <CardContent>
@@ -132,7 +135,7 @@ export default function LentaPostCard({ report, index }) {
             </Typography>
             <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
               <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
-                <Badge badgeContent={likesCount ?? ''} color="primary">
+                <Badge badgeContent={likesCount} color="primary">
                   <FavoriteIcon fontSize="inherit" />
                 </Badge>
               </IconButton>
