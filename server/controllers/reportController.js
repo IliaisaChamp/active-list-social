@@ -1,4 +1,4 @@
-const { Report, Follower, User, Task, Like, Comment } = require('../db/models');
+const { Report, Follower, User, Task, Like, Comment, UserTasks } = require('../db/models');
 const UserService = require('../services/userService');
 const { Op, Sequelize } = require('sequelize');
 
@@ -50,7 +50,7 @@ class ReportController {
       });
 
       if (newReport) {
-        return res.status(200).json({report: newReport, message: 'Отчет успешно создан' });
+        return res.status(200).json({ report: newReport, message: 'Отчет успешно создан' });
       }
     } catch (e) {
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
@@ -94,7 +94,7 @@ class ReportController {
           { model: User, attributes: ['nickname', 'avatar', 'id'] },
           { model: Task, attributes: ['title'] },
           { model: Like },
-          { model: Comment, attributes: ['id'], },
+          { model: Comment, attributes: ['id'] },
         ],
         // attributes: {
         //   include: [[Sequelize.fn('COUNT', Sequelize.col('Comments.id')), 'commentsCount']],
