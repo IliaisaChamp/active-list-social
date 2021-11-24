@@ -9,10 +9,7 @@ export const setOnline = (online) => {
     }
 }
 
-export const createSocketConnect = (socket, user) => (dispatch) => {
-    // socket.current = io("http://localhost:3001", {
-    //     query: { id: user.id },
-    // });
+export const createSocketConnect = (socket) => (dispatch) => {
     console.log('SOCKET CREATED')
     dispatch(setSocket(socket))
 }

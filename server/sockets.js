@@ -20,7 +20,7 @@ io.on('connection', (socket) => {
   usersOnline.set(socket, id);
   const users = usersOnline.values();
   const uniqueUsers = [...new Set(users)];
-  console.log('online', usersOnline.values())
+  console.log('online', usersOnline.values());
   io.emit('broadcast-online', { users: uniqueUsers });
 
   socket.on('disconnect', () => {
@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
 /////////////////////////////logout
 io.on('connection', (socket) => {
   socket.on('logout', () => {
-    console.log('LOGOUT')
+    console.log('LOGOUT');
     socket.disconnect();
   });
 });

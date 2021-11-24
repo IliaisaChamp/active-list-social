@@ -1,5 +1,5 @@
 const initState = {
-  user: null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   currentUser: null,
   currentUserSubscribes: [],
   profileStats: { tasksCount: 0, reportsCount: 0, userReportsCount: 0, userTasksCount: 0 },
@@ -13,5 +13,11 @@ const initState = {
   currentReport: {},
   onlineUsers: [],
   socket: null,
+  chat: {
+    room: null,
+    users: [],
+    messages: [],
+    rooms: [],
+  }
 };
 export default initState;
