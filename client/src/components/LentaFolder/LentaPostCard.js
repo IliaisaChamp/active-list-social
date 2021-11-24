@@ -37,7 +37,7 @@ const CardMediaStyle = styled('div')({
 const TitleStyle = styled(Link)({
   marginBottom: 10,
   overflow: 'hidden',
-  WebkitLineClamp: 1,
+  WebkitLineClamp: 2,
   display: '-webkit-box',
   textOverflow: 'ellipsis',
   WebkitBoxOrient: 'vertical',
@@ -133,13 +133,6 @@ export default function LentaPostCard({ report, index }) {
             >
               @{User?.nickname}
             </Typography>
-            <Typography
-              gutterBottom
-              variant="caption"
-              sx={{ color: 'text.disabled', display: 'block' }}
-            >
-              {fDateTime(createdAt)}
-            </Typography>
           </Stack>
 
           <Typography>{Task.title}</Typography>
@@ -152,23 +145,37 @@ export default function LentaPostCard({ report, index }) {
           >
             {desc}
           </TitleStyle>
-          <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
-            <IconButton
-              color={isLiked ? 'error' : 'default'}
-              size="large"
-              sx={{ padding: '5px' }}
-              onClick={handleSetLike}
+          <Stack direction="row" justifyContent="space-between" alignItems="baseline">
+            <Typography
+              gutterBottom
+              variant="caption"
+              sx={{ color: 'text.disabled', display: 'block' }}
             >
-              <Badge badgeContent={likesCount ?? ''} color="primary">
-                <FavoriteIcon fontSize="inherit" />
-              </Badge>
-            </IconButton>
+              {fDateTime(createdAt)}
+            </Typography>
+            <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
+              <IconButton
+                color={isLiked ? 'error' : 'default'}
+                size="large"
+                sx={{ padding: '5px' }}
+                onClick={handleSetLike}
+              >
+                <Badge badgeContent={likesCount ?? ''} color="primary">
+                  <FavoriteIcon fontSize="inherit" />
+                </Badge>
+              </IconButton>
 
-            <IconButton color="default" size="large" sx={{ padding: '5px' }}>
-              <Badge badgeContent={Comments?.length} color="primary">
-                <ChatBubbleOutlineIcon fontSize="inherit" />
-              </Badge>
-            </IconButton>
+              <IconButton
+                color="default"
+                size="large"
+                sx={{ padding: '5px' }}
+                onClick={() => navigate(`/reports/${id}`)}
+              >
+                <Badge badgeContent={Comments?.length} color="primary">
+                  <ChatBubbleOutlineIcon fontSize="inherit" />
+                </Badge>
+              </IconButton>
+            </Stack>
           </Stack>
         </CardContent>
       </Card>

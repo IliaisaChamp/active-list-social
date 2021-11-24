@@ -25,23 +25,23 @@ function CommentForm() {
   return (
     <>
       <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-        <Stack direction="row" alignItems="left">
+        <Stack direction="row" flexWrap="wrap" justifyContent="flex-end">
           <TextField
             id="standard-multiline-static"
             sx={{ background: 'white' }}
             label={t('report.textarea')}
             multiline
             fullWidth
-            rows={3}
+            rows={4}
             name="text"
             value={value.text}
             onChange={onChangeInput}
             variant="outlined"
-            color="secondary"
+            color="success"
           />
 
           <Stack sx={{ my: 2, width: '20%', ml: 2 }}>
-            <LoadingButton size="large" type="submit" variant="contained">
+            <LoadingButton size="medium" type="submit" variant="contained">
               {t('report.form_button')}
             </LoadingButton>
           </Stack>
@@ -56,6 +56,7 @@ export default function Container() {
     <Box
       sx={{
         width: '100%',
+        marginTop: '30px'
       }}
     >
       <Stack
@@ -64,9 +65,6 @@ export default function Container() {
         spacing={2}
         sx={{
           width: '70%',
-          position: 'fixed',
-          bottom: 10,
-          right: 0,
           padding: '0 10px 0 10px',
         }}
       >
