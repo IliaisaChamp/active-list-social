@@ -89,16 +89,13 @@ export const logoutUser = (navigate) => async (dispatch, getState) => {
     });
 };
 
-export const checkUser = () => async (dispatch, getState) => {
-  axios("/api/auth/check")
+export const checkUser = () => async (dispatch) => {
+  axios('/api/auth/check')
     .then((res) => {
       dispatch(startLoading());
-      console.log("dispatch checkUser");
-      const { user } = getState();
-      // if (Number(res.data.user.id) !== user.id) {
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      console.log('dispatch checkUser');
+      localStorage.setItem('user', JSON.stringify(res.data.user));
       dispatch(setUser(res.data.user));
-      // }
     })
     .catch((e) => {
       console.log(e);

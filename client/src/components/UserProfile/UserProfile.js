@@ -67,12 +67,14 @@ const InputFile = styled('input')({
 const img =
   'https://images.unsplash.com/photo-1604737771065-7ce2dc4ba3e8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1954&q=80';
 
-const UserProfile = ({ isSelfPage }) => {
+const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const currentUser = useSelector((state) => state.currentUser);
+  const subscribes = useSelector((state) => state.subscribes);
   const dispatch = useDispatch();
   const { id } = useParams();
+  const isSubscribed = subscribes.filter((user) => +user.id === +id).length > 0;
 
   const handleFileInputChange = async (e) => {
     const formData = new FormData();
@@ -151,9 +153,16 @@ const UserProfile = ({ isSelfPage }) => {
               </Button>
             ) : (
               <>
-                <Button className={classes.button} variant="outlined" startIcon={<SubscriptionsIcon />}>
-                  Подписаться
-                </Button>
+                {!isSubscribed && (
+                  <Button
+                    className={classes.button}
+                    variant="outlined"
+                    startIcon={<SubscriptionsIcon />}
+                    onClick={() => subcsribeOnUser(user.id, id)}>
+                    Подписаться
+                  </Button>
+                )}
+
                 <Button className={classes.button} variant="outlined" startIcon={<MessageIcon />}>
                   Сообщение
                 </Button>

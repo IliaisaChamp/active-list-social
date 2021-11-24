@@ -5,7 +5,6 @@ export const reportsReducer = (state = [], action) => {
   switch (type) {
     case SET_REPORTS:
       return payload
-  
     default:
       return state
   }

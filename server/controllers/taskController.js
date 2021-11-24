@@ -71,6 +71,23 @@ class TaskController {
       res.sendStatus(500);
     }
   }
+
+  static async getTaskByID(req, res) {
+    const { id } = req.params
+    try {
+      const task = await Task.findOne({
+        where: {
+          id
+        },
+      });
+      console.log(task);
+      return res.json({ task: task.get({ plain: true }) });
+    } catch (e) {
+      return res.status(500).json({message: 'Ошибка сервера, попробуйте еще раз'});
+    }
+  }
+
+
 }
 
 module.exports = TaskController;

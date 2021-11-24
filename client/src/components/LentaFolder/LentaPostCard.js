@@ -2,8 +2,10 @@ import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import shareFill from '@iconify/icons-eva/share-fill';
-import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import {
@@ -19,9 +21,11 @@ import {
 } from '@mui/material';
 // utils
 import { fDateTime } from '../../utils/formatTime';
-import { fShortenNumber } from '../../utils/formatNumber';
 //
 import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
+import { useSelector } from 'react-redux';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
@@ -75,15 +79,36 @@ const BASE_URL = 'http://localhost:3001/img/';
 const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
 
 export default function LentaPostCard({ report, index }) {
-  const { images, desc, User, Task, createdAt, id } = report;
- const navigate =  useNavigate()
+  const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(Likes?.length);
 
-  const POST_INFO = [
-    { number: 100, icon: messageCircleFill },
-    { number: 100, icon: eyeFill },
-    { number: 100, icon: shareFill },
-  ];
+  const findUserLike = (userID) => {
+    return Likes?.find((like) => userID === like.user_id);
+  };
+  const memoizeValue = useMemo(() => findUserLike(user?.id), []);
 
+  useEffect(() => {
+    setIsLiked(!!memoizeValue);
+  }, []);
+
+  const handleSetLike = () => {
+    setLikeFetch();
+  };
+
+  const setLikeFetch = useCallback(() => {
+    axios
+      .post(`http://localhost:3001/api/reports/${id}/like`)
+      .then(() => {
+        setIsLiked(!isLiked);
+        setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
+      })
+      .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
+  }, [isLiked]);
+
+  console.log('render');
   return (
     <Grid item xs={10} sm={10} md={8}>
       <Card sx={{ position: 'relative', border: '1px solid white' }}>
@@ -91,7 +116,10 @@ export default function LentaPostCard({ report, index }) {
           <CardMediaStyle>
             <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
             <AvatarStyle alt={User?.nickname} src={`${BASE_URL}${User?.avatar}`} />
-            <CoverImgStyle alt={User?.nickname} src={BASE_URL_REPORT_IMAGES + images[0]} />
+            <CoverImgStyle
+              alt={User?.nickname}
+              src={images ? BASE_URL_REPORT_IMAGES + images[0] : ''}
+            />
           </CardMediaStyle>
         </CardActionArea>
         <CardContent>
@@ -114,7 +142,7 @@ export default function LentaPostCard({ report, index }) {
             </Typography>
           </Stack>
 
-          {/* <Typography>{Task.title}</Typography> */}
+          <Typography>{Task.title}</Typography>
           <TitleStyle
             color="inherit"
             variant="subtitle2"
@@ -124,14 +152,24 @@ export default function LentaPostCard({ report, index }) {
           >
             {desc}
           </TitleStyle>
-          <InfoStyle>
-            {POST_INFO.map((info, index) => (
-              <Box key={index} sx={{ display: 'flex', mr: 0.5 }}>
-                <Box component={Icon} icon={info.icon} sx={{ width: 16, height: 16, mr: 0.2 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
-              </Box>
-            ))}
-          </InfoStyle>
+          <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
+            <IconButton
+              color={isLiked ? 'error' : 'default'}
+              size="large"
+              sx={{ padding: '5px' }}
+              onClick={handleSetLike}
+            >
+              <Badge badgeContent={likesCount ?? ''} color="primary">
+                <FavoriteIcon fontSize="inherit" />
+              </Badge>
+            </IconButton>
+
+            <IconButton color="default" size="large" sx={{ padding: '5px' }}>
+              <Badge badgeContent={Comments?.length} color="primary">
+                <ChatBubbleOutlineIcon fontSize="inherit" />
+              </Badge>
+            </IconButton>
+          </Stack>
         </CardContent>
       </Card>
     </Grid>

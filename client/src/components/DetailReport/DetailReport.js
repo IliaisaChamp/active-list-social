@@ -1,14 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
-// import Carousel from 'react-material-ui-carousel';
-// import { Paper, Button } from '@mui/material';
-// import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-// import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import { CardContent, Typography } from '@mui/material';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getReportById } from '../../store/ac/reportsAC';
+import CommentForm from '../Comment/CommentForm'
+import Comments from '../Comment/Comments'
 
 const BASE_URL = 'http://localhost:3001/img/reports/';
 
@@ -58,6 +56,9 @@ export default function DetailReport() {
           {currentReport.desc}
         </Typography>
       </CardContent>
+
+      <Comments comments={currentReport?.Comments} />
+      <CommentForm />
     </>
   );
 }

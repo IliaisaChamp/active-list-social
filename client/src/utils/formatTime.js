@@ -1,5 +1,5 @@
 import { format, formatDistanceToNow } from 'date-fns';
-
+import ruLocale from 'date-fns/locale/ru';
 // ----------------------------------------------------------------------
 
 export function fDate(date) {
@@ -7,7 +7,8 @@ export function fDate(date) {
 }
 
 export function fDateTime(date) {
-  return format(new Date(date), 'dd MMM yyyy HH:mm');
+
+  return format(new Date(date), 'dd MMM yyyy HH:mm', { locale: ruLocale });
 }
 
 export function fDateTimeSuffix(date) {
@@ -16,6 +17,7 @@ export function fDateTimeSuffix(date) {
 
 export function fToNow(date) {
   return formatDistanceToNow(new Date(date), {
-    addSuffix: true
+    addSuffix: true,
+    locale: ruLocale
   });
 }

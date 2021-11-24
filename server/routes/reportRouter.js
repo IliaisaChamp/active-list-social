@@ -6,4 +6,7 @@ router.route('/').get(checkAuth, ReportController.getReportsForUser);
 
 router.route('/:id').get(checkAuth, ReportController.getReportById);
 
+router.route('/:id/like').post(checkAuth, ReportController.addLike);
+router.route('/:id/comment').post(checkAuth, ReportController.addComment);
+
 module.exports = router;

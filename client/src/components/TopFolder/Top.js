@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
@@ -8,6 +10,7 @@ import Page from '../Page/Page';
 import { TopPostCard, TopPostsSort, TopPostsSearch } from '.';
 //
 import POSTS from '../../_mocks_/blog';
+import { setReports } from '../../store/ac/reportsAC';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +23,13 @@ const SORT_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function Top() {
+  const reports = useSelector(state => state.reports)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setReports());
+  }, [])
+  
   return (
     <Page title="Топ">
       <Container>
@@ -43,8 +53,8 @@ export default function Top() {
         </Stack>
 
         <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <TopPostCard key={post.id} post={post} index={index} />
+          {reports.map((report, index) => (
+            <TopPostCard key={report.id} report={report} index={index} />
           ))}
         </Grid>
       </Container>

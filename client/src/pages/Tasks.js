@@ -14,7 +14,7 @@ import Page from '../components/Page/Page';
 import TasksList from '../components/TasksList/TasksList';
 import SearchBar from '../components/SearchBar/SearchBar';
 
-import { getAllTasks, subscribeOnTask } from '../store/ac/tasksAC';
+import { getAllTasks, setTasks, subscribeOnTask } from '../store/ac/tasksAC';
 import { getFilteredTasks } from '../store/ac/tasksAC';
 
 // ----------------------------------------------------------------------
@@ -26,7 +26,7 @@ export default function Tasks() {
   const location = useLocation();
   const isPageProfile = location.pathname.includes('profile');
 
-  const subscribeToggle = useCallback(
+  const subscribeOnTaskToggle = useCallback(
     (taskId) => {
       dispatch(subscribeOnTask(taskId));
     },
@@ -34,13 +34,12 @@ export default function Tasks() {
   );
 
   useEffect(() => {
-    dispatch(getAllTasks());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!isPageProfile) {
-      dispatch(getFilteredTasks(filterName));
-    }
+    // if (!isPageProfile) {
+    dispatch(getFilteredTasks(filterName));
+    // }
+    return () => {
+      dispatch(setTasks([]));
+    };
   }, [isPageProfile, filterName, dispatch]);
 
   const filterHandler = useCallback((event) => {
@@ -55,7 +54,7 @@ export default function Tasks() {
         </Typography>
         <SearchBar filterName={filterName} onFilterName={filterHandler} />
 
-        <TasksList tasks={tasks} subscribeToggle={subscribeToggle} buttonName={'Добавить'} />
+        <TasksList tasks={tasks} subscribeOnTaskToggle={subscribeOnTaskToggle} buttonName={'Добавить'} />
       </Container>
     </Page>
   );

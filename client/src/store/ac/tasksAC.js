@@ -10,6 +10,7 @@ export const setTasks = (tasks) => {
     payload: tasks,
   };
 };
+
 export const getAllTasks = () => async (dispatch) => {
   const response = await axios(`${BASE_URL}/tasks`);
   console.log('assadfs');

@@ -6,7 +6,11 @@ const checkAuth = require('../middleware/checkAuth');
 
 router
     .route("/")
-    .get(checkAuth, TaskController.showAll);
+  .get(checkAuth, TaskController.showAll);
+
+router
+    .route("/:id")
+    .get(checkAuth, TaskController.getTaskByID);
 
 router.route('/:id/subscribe')
     .post(TaskController.subscribeUser)

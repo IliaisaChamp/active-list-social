@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
 import { useSelector } from 'react-redux';
-import Loader from '../Loader/Loader'
+import Loader from '../Loader/Loader';
 
 // ----------------------------------------------------------------------
 
@@ -36,20 +36,12 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function Layout() {
   const [open, setOpen] = useState(false);
-  const isLoading = useSelector((state) => state.isLoading)
+  const isLoading = useSelector((state) => state.isLoading);
   return (
     <RootStyle>
       <Header onOpenSidebar={() => setOpen(true)} />
       <Sidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
-      <MainStyle>
-        {
-          isLoading ?
-            <Loader/>
-
-        :  
-        <Outlet />
-        }
-      </MainStyle>
+      <MainStyle>{isLoading ? <Loader /> : <Outlet />}</MainStyle>
     </RootStyle>
   );
 }

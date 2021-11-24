@@ -3,20 +3,29 @@ import { SET_SUBSCRIBES } from '../types/subscribesTypes';
 
 const BASE_URL = 'http://localhost:3001/api';
 
-export const setSubscribes = (subscribers) => {
+export const setSubscribes = (subscribes) => {
   return {
     type: SET_SUBSCRIBES,
-    payload: subscribers,
+    payload: subscribes,
   };
 };
 
-const fetchSubscribes = (userId) => {
+export const fetchSubscribes = (userId) => {
   return axios(`${BASE_URL}/users/${userId}/followings`);
 };
 
 export const getSubsribes = (userId) => (dispatch) => {
   // axios(`${BASE_URL}/users/${userId}/followings`)
   fetchSubscribes(userId)
+    .then((response) => {
+      dispatch(setSubscribes(response.data.followings));
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getCurrentUserSubsribes = (currentUserId) => (dispatch) => {
+  // axios(`${BASE_URL}/users/${userId}/followings`)
+  fetchSubscribes(currentUserId)
     .then((response) => {
       dispatch(setSubscribes(response.data.followings));
     })
