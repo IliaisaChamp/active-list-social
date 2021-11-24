@@ -39,7 +39,8 @@ export default function Router() {
       children: [
         {
           path: '/profile/:id',
-          element: !user ? <Navigate to="/" /> : <Profile />,
+          // element: !user ? <Navigate to="/" /> : <Profile />,
+          element: <Profile />,
         },
         {
           path: '/tasks',

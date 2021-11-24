@@ -1444,6 +1444,11 @@
   resolved "https://registry.npmjs.org/@iconify/icons-ant-design/-/icons-ant-design-1.1.1.tgz"
   integrity sha512-u2/G/69uCeAvUYYxpXVM8r9WQxOa25H0BytDj/x987LPThMI8VRJ885XZZ/NJkgbbANhemcr5pmOG96KwJlHNg==
 
+"@iconify/icons-carbon@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-carbon/-/icons-carbon-1.1.7.tgz#f3e79927ad44b5fb268ff2acae993402d2211e6f"
+  integrity sha512-UoGfTmkcQHscFIuuWmB0x1SAmCic7WVU7j/VBRtZe8BXDUNH0v35QkeU2bqxWBNPKh3Ot90bcpyl2sfajZpzZA==
+
 "@iconify/icons-eva@^1.1.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@iconify/icons-eva/-/icons-eva-1.1.0.tgz"
@@ -4134,6 +4139,11 @@ cosmiconfig@^7.0.0:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.10.0"
+
+countup.js@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/countup.js/-/countup.js-2.0.8.tgz#eca0c31c9db3f7769cba494d9315cd52dbaaf1b9"
+  integrity sha512-pW3xwwD+hB+xmtI16xFcuLS0D5hSQqPQWkZOdgpKQyzxCquDNo2VCFPkRw12vmvdpnicXVTcjmYiakG6biwINg==
 
 create-ecdh@^4.0.0:
   version "4.0.4"
@@ -9869,6 +9879,13 @@ react-app-polyfill@^2.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
+
+react-countup@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/react-countup/-/react-countup-6.1.0.tgz#ac9b923ecf1351a0c3281209ba55952345814cd8"
+  integrity sha512-0tN65l4ksaNa4rm8ZKshpGxbIHQ4RAh8TGaKYp06EZ7nZw+haXpW3dQTVDhTey9+10jDkJgdzyXKDmC96c1M8g==
+  dependencies:
+    countup.js "^2.0.8"
 
 react-dev-utils@^11.0.3:
   version "11.0.4"
