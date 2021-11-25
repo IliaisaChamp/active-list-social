@@ -8,7 +8,7 @@ import Badge from '@mui/material/Badge';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent, Stack, CardActionArea } from '@mui/material';
+import { Box, Link, Card, Grid, Avatar, Typography, CardContent, Stack, CardActionArea, Slide } from '@mui/material';
 // utils
 import { fDateTime } from '../../utils/formatTime';
 //
@@ -95,53 +95,58 @@ export default function LentaPostCard({ report, index }) {
       .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
   }, [isLiked]);
 
-  console.log('render');
+  // console.log('render');
   return (
-    <Grid item xs={10} sm={10} md={8}>
-      <Card sx={{ position: 'relative', border: '1px solid white' }}>
-        <CardActionArea onClick={() => navigate(`/reports/${id}`)}>
-          <CardMediaStyle>
-            <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
-            <AvatarStyle alt={User?.nickname} src={User?.avatar ? `${BASE_URL_AVATAR}${User?.avatar}` : '/static/defaultavatar.png'} />
-            <CoverImgStyle alt={User?.nickname} src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultred.webp'} />
-          </CardMediaStyle>
-        </CardActionArea>
-        <CardContent>
-          <Stack direction="row" justifyContent="flex-start" alignItems="baseline" spacing={2}>
-            <Typography
-              gutterBottom
-              variant="h6"
-              component={RouterLink}
-              to={`/profile/${User?.id}`}
-              sx={{ textDecoration: 'none', color: 'inherit', mb: '5px' }}>
-              @{User?.nickname}
-            </Typography>
-          </Stack>
-
-          <Typography>{Task.title}</Typography>
-          <TitleStyle color="inherit" variant="subtitle2" underline="hover" component={RouterLink} to={`/reports/${id}`}>
-            {desc}
-          </TitleStyle>
-          <Stack direction="row" justifyContent="space-between" alignItems="baseline">
-            <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-              {fDateTime(createdAt)}
-            </Typography>
-            <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
-              <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
-                <Badge badgeContent={likesCount} color="primary">
-                  <FavoriteIcon fontSize="inherit" />
-                </Badge>
-              </IconButton>
-
-              <IconButton color="default" size="large" sx={{ padding: '5px' }} onClick={() => navigate(`/reports/${id}`)}>
-                <Badge badgeContent={Comments?.length} color="primary">
-                  <ChatBubbleOutlineIcon fontSize="inherit" />
-                </Badge>
-              </IconButton>
+    <Slide direction="up" timeout={1500} in={true} mountOnEnter unmountOnExit>
+      <Grid item xs={10} sm={10} md={8}>
+        <Card sx={{ position: 'relative', border: '1px solid white' }}>
+          <CardActionArea onClick={() => navigate(`/reports/${id}`)}>
+            <CardMediaStyle>
+              <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
+              <AvatarStyle alt={User?.nickname} src={User?.avatar ? `${BASE_URL_AVATAR}${User?.avatar}` : '/static/defaultavatar.png'} />
+              <CoverImgStyle
+                alt={User?.nickname}
+                src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultred.webp'}
+              />
+            </CardMediaStyle>
+          </CardActionArea>
+          <CardContent>
+            <Stack direction="row" justifyContent="flex-start" alignItems="baseline" spacing={2}>
+              <Typography
+                gutterBottom
+                variant="h6"
+                component={RouterLink}
+                to={`/profile/${User?.id}`}
+                sx={{ textDecoration: 'none', color: 'inherit', mb: '5px' }}>
+                @{User?.nickname}
+              </Typography>
             </Stack>
-          </Stack>
-        </CardContent>
-      </Card>
-    </Grid>
+
+            <Typography>{Task.title}</Typography>
+            <TitleStyle color="inherit" variant="subtitle2" underline="hover" component={RouterLink} to={`/reports/${id}`}>
+              {desc}
+            </TitleStyle>
+            <Stack direction="row" justifyContent="space-between" alignItems="baseline">
+              <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
+                {fDateTime(createdAt)}
+              </Typography>
+              <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
+                <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
+                  <Badge badgeContent={likesCount} color="primary">
+                    <FavoriteIcon fontSize="inherit" />
+                  </Badge>
+                </IconButton>
+
+                <IconButton color="default" size="large" sx={{ padding: '5px' }} onClick={() => navigate(`/reports/${id}`)}>
+                  <Badge badgeContent={Comments?.length} color="primary">
+                    <ChatBubbleOutlineIcon fontSize="inherit" />
+                  </Badge>
+                </IconButton>
+              </Stack>
+            </Stack>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Slide>
   );
 }

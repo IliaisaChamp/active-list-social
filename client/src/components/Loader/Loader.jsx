@@ -1,14 +1,15 @@
 import React from 'react';
+import { Container } from '@mui/material';
 
 const Loader = () => {
   return (
-    <div>
+    <Container sx={{ display: 'flex', justifyContent: 'center' }} maxWidth="xl">
       <img
-        style={{ position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh', display: 'block', zIndex: 100 }}
+        style={{ display: 'block', zIndex: 100 }}
         src="https://media2.giphy.com/media/3ov9jQKWfIZedOqVa0/giphy.gif?cid=790b76116a38dd75c811721322d416cdeb59456a5edc6263&rid=giphy.gif&ct=g"
         alt="Бип-бип"
       />
-    </div>
+    </Container>
   );
 };
 

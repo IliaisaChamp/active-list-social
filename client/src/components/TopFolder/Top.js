@@ -35,7 +35,7 @@ export default function Top() {
     <Page title={t('pages.top.head')}>
       <Container>
         <Typography variant="h4" gutterBottom align="center">
-          {t('pages.top.title')} 
+          {t('pages.top.title')}
         </Typography>
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SET_USERS_LIST } from '../types/usersListTypes';
 import { setErrorMessage } from './flashAC';
+import { stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
@@ -16,7 +17,8 @@ export const getRecommendedUsers = () => (dispatch) => {
     .then((response) => {
       dispatch(setUsersList(response.data.users));
     })
-    .catch(({ response }) => dispatch(setErrorMessage(response)));
+    .catch(({ response }) => dispatch(setErrorMessage(response)))
+    .finally(() => dispatch(stopLoading()));
 
   // dispatch()
 };

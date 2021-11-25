@@ -1,4 +1,5 @@
 import { SET_CURRENT_USER_SUBSCRIBES } from '../types/currentUserSubscribesTypes';
+import { stopLoading } from './isLoadingAC';
 import { fetchSubscribes } from './subscribesAC';
 
 export const setCurrentUserSubscribes = (subscribes) => {
@@ -13,5 +14,6 @@ export const getCurrentUserSubscribes = (currentUserId) => (dispatch) => {
     .then((response) => {
       dispatch(setCurrentUserSubscribes(response.data.followings));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => dispatch(stopLoading()));
 };

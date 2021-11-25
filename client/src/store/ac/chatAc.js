@@ -2,11 +2,16 @@ import { ADD_CHAT_MESSAGE, SET_CHAT, SET_CHAT_USERS, SET_MESSAGES, SET_ROOM, SET
 import axios from 'axios';
 import { setErrorMessage } from './flashAC';
 
-export const openChat = (recipient) => async (dispatch) => {
-  const resRoom = await axios.post('/api/rooms', { id: recipient });
-  const roomId = resRoom.data.room.id;
-  dispatch(chooseChatRoom(roomId));
-  console.log('CHAT ROOM CREATED OR RECEIVED', resRoom.data.room);
+export const openChat = (recipient, t) => async (dispatch) => {
+  try {
+    const resRoom = await axios.post('/api/rooms', { id: recipient });
+    const roomId = resRoom.data.room.id;
+    dispatch(chooseChatRoom(roomId));
+    console.log('CHAT ROOM CREATED OR RECEIVED', resRoom.data.room);
+  } catch(e) {
+    setErrorMessage(t('chat.errorMessage'));
+    console.log(e);
+  }
 };
 
 export const setMessages = (messages) => {
