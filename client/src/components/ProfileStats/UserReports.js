@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react';
-import bugFilled from '@iconify/icons-ant-design/bug-filled';
 import userAdmin from '@iconify/icons-carbon/user-admin';
 // material
 import { alpha, styled } from '@mui/material/styles';
@@ -27,10 +26,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   marginBottom: theme.spacing(3),
   color: theme.palette.error.dark,
-  backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.error.dark, 0)} 0%, ${alpha(
-    theme.palette.error.dark,
-    0.24
-  )} 100%)`,
+  backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.error.dark, 0)} 0%, ${alpha(theme.palette.error.dark, 0.24)} 100%)`,
 }));
 
 // ----------------------------------------------------------------------

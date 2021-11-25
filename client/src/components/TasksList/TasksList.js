@@ -6,7 +6,6 @@ import List from '@mui/material/List';
 import Pagination from '@mui/material/Pagination';
 
 import TasksItem from '../TasksItem/TasksItem';
-import { Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPage }) => {

@@ -1,4 +1,12 @@
-import { SET_COMMENT, SET_REPORT, SET_REPORTS, ALL_REPORTS_FOR_TOP, CURRENT_TASK_REPORTS } from '../types/reportsTypes';
+import {
+  SET_COMMENT,
+  SET_REPORT,
+  SET_REPORTS,
+  ALL_REPORTS_FOR_TOP,
+  CURRENT_TASK_REPORTS,
+  REPORTS_FOR_TOP_SORTED_BY_COMMENTS,
+  REPORTS_FOR_TOP_SORTED_BY_LIKES,
+} from '../types/reportsTypes';
 import axios from 'axios';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 import { stopLoading } from './isLoadingAC';
@@ -16,7 +24,6 @@ export const currentTaskReports = (taskID) => async (dispatch) => {
   console.log(taskID);
   const response = await axios(`${BASE_URL}/reports/tasks/${taskID}`);
   const { reports } = response.data;
-  console.log(response.data);
   dispatch({
     type: CURRENT_TASK_REPORTS,
     payload: reports,
@@ -32,6 +39,14 @@ export const setAllReportsForTop = () => async (dispatch) => {
     payload: reports,
   });
 };
+
+export const setAllReportsForTopSortedByComments = () => ({
+  type: REPORTS_FOR_TOP_SORTED_BY_COMMENTS,
+});
+
+export const setAllReportsForTopSortedByLikes = () => ({
+  type: REPORTS_FOR_TOP_SORTED_BY_LIKES,
+});
 
 export const setNewReport = (data, taskID, userID, navigate, socket) => async (dispatch) => {
   await axios
@@ -61,7 +76,6 @@ export const setNewReport = (data, taskID, userID, navigate, socket) => async (d
       );
     });
 };
-
 export const getReports = () => (dispatch) => {
   axios(`${BASE_URL}/reports`)
     .then((response) => dispatch(setReports(response.data.reports)))
@@ -69,7 +83,6 @@ export const getReports = () => (dispatch) => {
     .finally(() => dispatch(stopLoading()));
   // const { reports } = response.data;
 };
-
 const setReportAction = (value) => ({
   type: SET_REPORT,
   payload: value,
@@ -77,14 +90,12 @@ const setReportAction = (value) => ({
 
 export const getReportById = (id) => async (dispatch) => {
   const response = await axios(`${BASE_URL}/reports/${id}`);
-  console.log(response.data);
   dispatch(setReportAction(response.data));
 };
 
 export const getUserReports = (id) => (dispatch) => {
   axios(`${BASE_URL}/users/${id}/reports`)
     .then((response) => {
-      console.log(response.data);
       dispatch(setReports(response.data.reports));
     })
     .catch((e) => console.log(e))

@@ -1,11 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 
 // mui
 import { styled } from '@mui/material/styles';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { Link as mLink } from '@mui/material';
 import Grow from '@mui/material/Grow';
 // import IconButton from '@mui/material/IconButton';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -20,7 +19,6 @@ import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { currentTaskReports } from '../../store/ac/reportsAC';
 import { useDispatch } from 'react-redux';
-import Salut from '../Salut/Salut';
 
 const completedItemStyle = {
   backgroundColor: 'primary.lighter',
@@ -42,7 +40,6 @@ const RootStyle = styled(ListItem)(({ theme }) => ({
 
 const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandler }) => {
   const location = useLocation();
-  // const { id } = useParams();
   const [checked, setChecked] = useState(true);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
