@@ -19,7 +19,7 @@ class RoomService {
         ],
       },
       include: { model: User, attributes: ['id', 'nickname', 'first_name', 'last_name', 'email', 'avatar'] },
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC']],
     });
   }
 
@@ -28,16 +28,16 @@ class RoomService {
     const recipientRooms = await RoomUser.findAll({ where: { user_id: recipienttId } });
     const senderRoomsId = senderRooms.map((room) => room.room_id);
     const recipientRoomsId = recipientRooms.map((room) => room.room_id);
-    let room;
+    let chat;
     console.log(senderRoomsId);
     console.log(recipientRoomsId);
     senderRoomsId.forEach((roomId) => {
       if (recipientRoomsId.includes(roomId)) {
-        room = roomId;
+        chat = roomId;
       }
     });
-    console.log('ROOM ->>>', room);
-    if (!room) {
+    console.log('ROOM ->>>', chat);
+    if (!chat) {
       const newRoom = await Room.create();
       console.log('NEW ROOM CREATED ->>>>>>', newRoom);
       await RoomUser.bulkCreate(
@@ -49,7 +49,7 @@ class RoomService {
       );
       return newRoom;
     } else {
-      return room;
+      return await Room.findOne({ where: { id: chat } });
     }
   }
 }

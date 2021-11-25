@@ -3,6 +3,7 @@ import { AUTH_USER_REGISTRATION, AUTH_USER_LOGOUT, AUTH_USER_LOGIN } from '../ty
 import { IS_LOADING, STOP_LOADING } from '../types/isLoadingTypes';
 import { setErrorMessage } from './flashAC';
 import { startLoading, stopLoading } from './isLoadingAC';
+import {resetChat} from "./chatAc";
 
 const setUser = (value) => {
   return {
@@ -64,17 +65,16 @@ export const registrationUser = (data, navigate, setSubmitting) => async (dispat
 export const logoutUser = (navigate) => async (dispatch, getState) => {
   const { socket } = getState();
   axios('/api/auth/logout')
-    .then((res) => {
+    .then(() => {
+      navigate('/');
       socket?.current?.emit('logout');
       localStorage.removeItem('user');
-      // socket?.current?.disconnect();
       dispatch(deleteUser());
-      navigate('/');
+      dispatch(resetChat());
     })
     .catch((err) => {
       socket?.current?.emit('logout');
       console.log('error in logout');
-      // socket?.current?.disconnect();
       console.log(err);
     });
 };

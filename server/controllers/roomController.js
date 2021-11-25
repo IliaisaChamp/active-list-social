@@ -35,11 +35,17 @@ class RoomController {
 
   static async createMessage(req, res) {
     try {
-      const user_id = req.session.user.id
-      const room_id = req.params.id
+      const user_id = req.session.user.id;
+      const room_id = req.params.id;
       console.log(req.body);
-      const newMessage = await Message.create({text: req.body.message, room_id, user_id})
-      res.json({message: newMessage});
+      const newMessage = await Message.create({ text: req.body.message, room_id, user_id });
+      const plainMessage = newMessage.get({ plain: true });
+      const user = await User.findOne({
+        where: { id: user_id },
+        attributes: ['id', 'nickname', 'first_name', 'last_name', 'email', 'avatar'],
+      });
+      plainMessage.User = user.get({ plain: true });
+      res.json({ message: newMessage });
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: 'Ошибка чата' });
