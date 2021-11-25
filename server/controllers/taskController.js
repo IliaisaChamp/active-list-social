@@ -64,6 +64,7 @@ class TaskController {
       });
       const userTasks = query.Tasks.map((task) => task.id);
       const filter = req.query._filter ? decodeURIComponent(req.query._filter) : false;
+      console.log({ filter });
       const allTasks = await TaskService.getTasks(filter);
       const tasks = allTasks.filter((task) => !userTasks.includes(task.id));
       res.json({ tasks });

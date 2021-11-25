@@ -6,7 +6,7 @@ import List from '@mui/material/List';
 import Pagination from '@mui/material/Pagination';
 
 import TasksItem from '../TasksItem/TasksItem';
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPage }) => {
@@ -19,7 +19,8 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
   useEffect(() => {
     setCurrentPage(1);
     setItemOffset(0);
-  }, [tasks]);
+  }, []);
+
   useEffect(() => {
     const endOffset = itemOffset + 5;
     setPageCount(Math.ceil(tasks.length / 5));
@@ -67,7 +68,11 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
           </Box>
         </Box>
       ) : (
-        <Typography>{t('pages.profile.tabs.notasks')}</Typography>
+        <Container>
+          <Typography align="center" variant="h6">
+            {t('pages.profile.tabs.notasks')}
+          </Typography>
+        </Container>
       )}
     </>
   );

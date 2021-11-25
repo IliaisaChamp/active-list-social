@@ -8,10 +8,16 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
 import { useTranslation } from 'react-i18next';
 import Label from '../Label/Label';
+import useChat from '../../hooks/useChat';
 
 const RecommendationItem = ({ userInfo, subcsribeHandler, unsubcsribeHandler, isOnline, isSubscribed }) => {
   const user = useSelector((state) => state.user);
   const { t } = useTranslation();
+  const openChat = useChat();
+  const openChatHandler = () => {
+    openChat(userInfo?.id);
+  };
+
   return (
     <TableRow hover tabIndex={-1} role="checkbox">
       <TableCell sx={{ padding: 2 }} padding="checkbox">
@@ -35,7 +41,7 @@ const RecommendationItem = ({ userInfo, subcsribeHandler, unsubcsribeHandler, is
         </Label>
       </TableCell>
       <TableCell align="center">
-        <Button onClick={() => {}}>Chat</Button>
+        <Button onClick={openChatHandler}>Chat</Button>
       </TableCell>
       <TableCell align="center">
         {isSubscribed ? (

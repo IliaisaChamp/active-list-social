@@ -18,7 +18,8 @@ import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import { changeAvatar } from '../../store/ac/usersAC';
 import { Box } from '@mui/system';
 import { getCurrentUser } from '../../store/ac/currentUserAC';
-import {openChat} from "../../store/ac/chatAc";
+import { openChat } from '../../store/ac/chatAc';
+import useChat from '../../hooks/useChat';
 
 const BASE_URL = 'http://localhost:3001/img';
 
@@ -70,6 +71,7 @@ const img =
 
 const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
   const navigate = useNavigate();
+  const openChat = useChat();
   const user = useSelector((state) => state.user);
   const currentUser = useSelector((state) => state.currentUser);
   const subscribes = useSelector((state) => state.subscribes);
@@ -89,12 +91,8 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
   }, []);
 
   const messageHandler = () => {
-    const senderId = user.id;
-    const recipientId  = id;
-
-    dispatch(openChat(senderId, recipientId))
-    navigate('/chats');
-
+    const recipientId = id;
+    openChat(recipientId);
   };
   const classes = useStyles();
   return (

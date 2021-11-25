@@ -1,25 +1,23 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // mui
 import { TableRow, TableCell, Avatar, Button, Typography } from '@mui/material';
 import Label from '../Label/Label';
 import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { openChat } from '../../store/ac/chatAc';
+import useChat from '../../hooks/useChat';
 
 const BASE_URL = 'http://localhost:3001/img/';
 
 const SubscribesItem = ({ userInfo, unsubcsribeFromUser, isOnline, isSelfPage }) => {
   const { id, nickname, first_name, last_name, avatar } = userInfo;
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-
+  const openChat = useChat();
   const openChatHandler = () => {
-    dispatch(openChat(id));
-    navigate('/chats');
+    openChat(id);
   };
+
   return (
     <TableRow hover>
       <TableCell sx={{ padding: 2 }} padding="checkbox">

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SET_SUBSCRIBES } from '../types/subscribesTypes';
+import { startLoading, stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
@@ -15,12 +16,14 @@ export const fetchSubscribes = (userId) => {
 };
 
 export const getSubsribes = (userId) => (dispatch) => {
+  // dispatch(startLoading());
   // axios(`${BASE_URL}/users/${userId}/followings`)
   fetchSubscribes(userId)
     .then((response) => {
       dispatch(setSubscribes(response.data.followings));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => dispatch(stopLoading()));
 };
 
 export const getCurrentUserSubsribes = (currentUserId) => (dispatch) => {
