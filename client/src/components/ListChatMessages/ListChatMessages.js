@@ -10,10 +10,7 @@ function ListChatMessages({ messages, user }) {
         <ListItem key={message.id}>
           <Grid container>
             <Grid item xs={12}>
-              <ListItemText
-                align={user.id === message.user_id ? 'right' : 'left'}
-                primary={<Avatar alt="User" src={`${BASE_URL_AVATAR}/${message.User.avatar}`} />}
-              />
+              <ListItemText align={user.id === message.user_id ? 'right' : 'left'} primary={message.User.nickname} />
             </Grid>
             <Grid item xs={12}>
               <ListItemText align={user.id === message.user_id ? 'right' : 'left'} primary={message?.text} />

@@ -1,4 +1,4 @@
-import { ADD_CHAT_MESSAGE, SET_CHAT, SET_CHAT_USERS, SET_MESSAGES, SET_ROOM, SET_ROOMS } from '../types/chatTypes';
+import { ADD_CHAT_MESSAGE, DELETE_ROOM, SET_CHAT, SET_CHAT_USERS, SET_MESSAGES, SET_ROOM, SET_ROOMS } from '../types/chatTypes';
 import axios from 'axios';
 import { setErrorMessage } from './flashAC';
 
@@ -8,7 +8,7 @@ export const openChat = (recipient, t) => async (dispatch) => {
     const roomId = resRoom.data.room.id;
     dispatch(chooseChatRoom(roomId));
     console.log('CHAT ROOM CREATED OR RECEIVED', resRoom.data.room);
-  } catch(e) {
+  } catch (e) {
     setErrorMessage(t('chat.errorMessage'));
     console.log(e);
   }
@@ -98,5 +98,23 @@ export const addChatMessage = (message) => {
   return {
     type: ADD_CHAT_MESSAGE,
     payload: message,
+  };
+};
+
+export const leaveRoom = (roomId, t) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/rooms/${roomId}`);
+    dispatch(deleteRoom(roomId));
+    console.log('dasdasdasdasd')
+  } catch(e) {
+    setErrorMessage(t('chat.errorMessage'));
+    console.log(e);
+  }
+};
+
+export const deleteRoom = (roomId) => {
+  return {
+    type: DELETE_ROOM,
+    payload: roomId,
   };
 };

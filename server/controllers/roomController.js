@@ -3,6 +3,25 @@ const RoomService = require('../services/RoomService');
 const sequelize = require('sequelize');
 
 class RoomController {
+  static async deleteRoom(req, res) {
+    //need req.session.user check before remove
+    try {
+      const user_id = req.session.user.id;
+      const room_id = req.params.id;
+      const roomUser = RoomUser.findOne({ where: { user_id, room_id } });
+      if (roomUser) {
+        const room = await Room.findOne({ where: { id: room_id } });
+        await room.destroy();
+        res.status(200).json({ message: 'Комната удалена' });
+      } else {
+        res.status(400).json({ message: 'Ошибка чата' });
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: 'Ошибка чата' });
+    }
+  }
+
   static async getUserRooms(req, res) {
     try {
       const { id } = req.session.user;
