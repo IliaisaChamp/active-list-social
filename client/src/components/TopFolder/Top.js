@@ -10,7 +10,7 @@ import Page from '../Page/Page';
 import { TopPostCard, TopPostsSort, TopPostsSearch } from '.';
 //
 import POSTS from '../../_mocks_/blog';
-import { setReports } from '../../store/ac/reportsAC';
+import { setReports, setAllReportsForTop } from '../../store/ac/reportsAC';
 import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ export default function Top() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(setReports());
+    dispatch(setAllReportsForTop());
   }, [])
 
   return (

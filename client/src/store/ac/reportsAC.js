@@ -1,4 +1,4 @@
-import { SET_COMMENT, SET_REPORT, SET_REPORTS } from '../types/reportsTypes';
+import { SET_COMMENT, SET_REPORT, SET_REPORTS, ALL_REPORTS_FOR_TOP } from '../types/reportsTypes';
 import axios from 'axios';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 
@@ -7,11 +7,22 @@ const BASE_URL = "http://localhost:3001/api";
 export const setReports = () => async (dispatch) => {
   const response = await axios(`${BASE_URL}/reports`);
   const { reports } = response.data;
+  console.log(response.data)
   dispatch({
     type: SET_REPORTS,
     payload: reports,
   });
 };
+
+export const setAllReportsForTop = () => async (dispatch) => {
+  const response = await axios(`${BASE_URL}/reports/top`);
+  console.log('response for top', response.data);
+  const { reports } = response.data;
+  dispatch({
+    type: ALL_REPORTS_FOR_TOP,
+    payload: reports,
+  })
+}
 
 export const setNewReport =
   (data, taskID, userID, navigate, socket) => async (dispatch) => {
@@ -50,6 +61,7 @@ const setReportAction = (value) => ({
 
 export const getReportById = (id) => async (dispatch) => {
   const response = await axios(`${BASE_URL}/reports/${id}`);
+  console.log(response.data);
   dispatch(setReportAction(response.data));
 };
 
