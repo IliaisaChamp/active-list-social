@@ -1,10 +1,7 @@
-import { Link as RouterLink } from 'react-router-dom';
-// material
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Card, Stack, Link, Container, Typography } from '@mui/material';
-// layouts
+import { Card, Link, Container, Typography, Button } from '@mui/material';
 import AuthLayout from '../layouts/AuthLayout';
-// components
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { LoginForm } from '../components/authentication/login';
@@ -29,7 +26,6 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  // margin: theme.spacing(2, 0, 2, 2)
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -45,13 +41,16 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
-
-  const { t } = useTranslation()
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
-    <RootStyle title="Login | Minimal-UI">
+    <RootStyle title={t('pages.auth.head')}>
       <AuthLayout>
-        <Box display="flex" justifyContent="right" spacing={{ xs: 0.5, sm: 1.5 }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }} sx={{ mb: 1 }}>
+          <Button variant="outlined" onClick={() => navigate('/')} sx={{maxHeight: 30}}>
+            {t('pages.auth.button')}
+          </Button>
           <LanguagePopover />
         </Box>
         {t('pages.auth.q')} &nbsp;
@@ -62,20 +61,14 @@ export default function Login() {
 
       <MHidden width="mdDown">
         <SectionStyle>
-          <img
-            src="/static/illustrations/auth.png"
-            alt="login"
-            style={{ objectFit: 'contain', height: '80%' }}
-          />
+          <img src="/static/illustrations/auth.png" alt="login" style={{ objectFit: 'contain', height: '80%' }} />
         </SectionStyle>
       </MHidden>
 
       <Container maxWidth="sm">
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
-            <Typography variant="h4">
-              {t('pages.auth.title')}
-            </Typography>
+            <Typography variant="h4">{t('pages.auth.title')}</Typography>
             <Typography sx={{ color: 'text.secondary' }}>{t('pages.auth.sub')}</Typography>
           </Box>
           <AuthSocial />

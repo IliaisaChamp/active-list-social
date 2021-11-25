@@ -1,17 +1,9 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
-import shareFill from '@iconify/icons-eva/share-fill';
-import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
-// material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent, IconButton, Stack, Badge } from '@mui/material';
-// utils
+import { Link, Card, Grid, Avatar, Typography, CardContent, IconButton, Stack, Badge } from '@mui/material';
 import { fDate } from '../../utils/formatTime';
-import { fShortenNumber } from '../../utils/formatNumber';
-//
 import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -59,9 +51,6 @@ const CoverImgStyle = styled('img')({
   position: 'absolute',
 });
 
-const BASE_URL = 'http://localhost:3001/img/';
-// const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
-
 // ----------------------------------------------------------------------
 
 TopPostCard.propTypes = {
@@ -74,6 +63,7 @@ export default function TopPostCard({ report, index }) {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [isLiked, setIsLiked] = useState();
+  const [disabled, setDisabled] = useState(true);
   const [likesCount, setLikesCount] = useState(Likes?.length);
   const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
 
@@ -81,6 +71,9 @@ export default function TopPostCard({ report, index }) {
     const isLiked = findUserLike(user?.id);
     setIsLiked(!!isLiked);
     setLikesCount(Likes.length);
+    if (user) {
+      setDisabled(false);
+    }
   }, [user, Likes.length, findUserLike]);
 
   const handleSetLike = () => {
@@ -185,7 +178,12 @@ export default function TopPostCard({ report, index }) {
 
           <InfoStyle>
             <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
-              <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
+              <IconButton
+                color={isLiked ? 'error' : 'default'}
+                size="large"
+                sx={{ padding: '5px' }}
+                disabled={disabled}
+                onClick={handleSetLike}>
                 <Badge badgeContent={likesCount} color="primary">
                   <FavoriteIcon fontSize="inherit" />
                 </Badge>

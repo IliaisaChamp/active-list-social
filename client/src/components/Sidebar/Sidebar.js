@@ -56,12 +56,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { t } = useTranslation();
 
   const sidebarConfig = [
-    {
-      title: t('sideBar.profile'),
-      path: '/profile/:id',
-      icon: getIcon(peopleFill),
-      isAuth: true,
-    },
+    // {
+    //   title: t('sideBar.profile'),
+    //   path: '/profile/:id',
+    //   icon: getIcon(peopleFill),
+    //   isAuth: true,
+    // },
     {
       title: t('sideBar.tasks'),
       path: '/tasks',
@@ -105,12 +105,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       icon: getIcon(personAddFill),
       isAuth: false,
     },
-    {
-      title: t('sideBar.notFound'),
-      path: '/404',
-      icon: getIcon(alertTriangleFill),
-      isAuth: true,
-    },
+    // {
+    //   title: t('sideBar.notFound'),
+    //   path: '/404',
+    //   icon: getIcon(alertTriangleFill),
+    //   isAuth: true,
+    // },
   ];
 
   const { pathname } = useLocation();

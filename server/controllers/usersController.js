@@ -92,7 +92,7 @@ class UserController {
           .access(pathToAvatar)
           .then(() => true)
           .catch(() => false);
-        if (isFileExist) {
+        if (isFileExist && user.avatar !== 'defaultAvatar.jpg') {
           await fsp.unlink(pathToAvatar);
         }
       }

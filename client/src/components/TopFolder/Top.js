@@ -9,6 +9,7 @@ import { TopPostCard, TopPostsSort, TopPostsSearch } from '.';
 
 import { setAllReportsForTop } from '../../store/ac/reportsAC';
 import { useTranslation } from 'react-i18next';
+import Loader from '../Loader/Loader';
 // ----------------------------------------------------------------------
 
 const SORT_OPTIONS = [
@@ -21,6 +22,8 @@ const SORT_OPTIONS = [
 export default function Top() {
   const reports = useSelector((state) => state.reports);
   const dispatch = useDispatch();
+
+  const isLoading = useSelector((state) => state.isLoading);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -37,11 +40,16 @@ export default function Top() {
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <TopPostsSort options={SORT_OPTIONS} />
         </Stack>
-        <Grid container spacing={3}>
-          {reports.map((report, index) => (
-            <TopPostCard key={report.id} report={report} index={index} />
-          ))}
-        </Grid>
+
+        {isLoading > 0 ? (
+          <Loader />
+        ) : (
+          <Grid container spacing={3}>
+            {reports.map((report, index) => (
+              <TopPostCard key={report.id} report={report} index={index} />
+            ))}
+          </Grid>
+        )}
       </Container>
     </Page>
   );

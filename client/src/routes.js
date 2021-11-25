@@ -1,11 +1,7 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Navigate, useRoutes } from 'react-router-dom';
-
-// layouts
 import Layout from './components/Layout/Layout';
 import Profile from './pages/Profile';
-// import User from './components/NearestFolder/User';
 import Top from './components/TopFolder/Top';
 import Timeline from './pages/Timeline';
 import Login from './pages/Login';
@@ -27,13 +23,6 @@ import Salut from './components/Salut/Salut';
 
 export default function Router() {
   const user = useSelector((state) => state.user);
-  // const isLoading = useSelector((state) => state.isLoading);
-  const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (user) {
-  //     dispatch(getSubsribes(user.id));
-  //   }
-  // }, [user]);
 
   return useRoutes([
     {
@@ -41,35 +30,38 @@ export default function Router() {
       element: <Layout />,
       children: [
         {
+          path: '',
+          element: <Top />,
+        },
+        {
           path: '/profile/:id',
-          // element: !user ? <Navigate to="/" /> : <Profile />,
-          element: <Profile />,
+          element: !user ? <Navigate to={'/login'} /> : <Profile />,
         },
         {
           path: '/tasks',
-          element: <Tasks />,
+          element: !user ? <Navigate to={'/login'} /> : <Tasks />,
         },
         {
           path: '/tasks/:id',
-          element: <CurrentTaskReportLenta />,
+          element: !user ? <Navigate to={'/login'} /> : <CurrentTaskReportLenta />,
         },
         { path: '/timeline', element: <Timeline /> },
         {
           path: '/reports',
-          element: <Report />,
+          element: !user ? <Navigate to={'/login'} /> : <Report />,
           children: [
             {
               path: 'task/:id',
-              element: <ReportForm />,
+              element: !user ? <Navigate to={'/login'} /> : <ReportForm />,
             },
             {
               path: ':id',
-              element: <DetailReport />,
+              element: !user ? <Navigate to={'/login'} /> : <DetailReport />,
             },
           ],
         },
-        { path: '/chats', element: <Chat /> },
-        { path: '/recommendations', element: <Recommendations /> },
+        { path: '/chats', element: !user ? <Navigate to={'/login'} /> : <Chat /> },
+        { path: '/recommendations', element: !user ? <Navigate to={'/login'} /> : <Recommendations /> },
         { path: '/top', element: <Top /> },
       ],
     },
@@ -77,5 +69,6 @@ export default function Router() {
     { path: '/register', element: user ? <Navigate to={'/profile/' + user.id} /> : <Register /> },
     { path: '/elbrus', element: <Salut /> },
     // { path: '*', element: <NotFound /> },
+    { path: '*', element: <Navigate to={'/top'} /> },
   ]);
 }
