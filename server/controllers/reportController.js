@@ -3,7 +3,35 @@ const UserService = require('../services/userService');
 const { Op, Sequelize } = require('sequelize');
 
 class ReportController {
+
+
+  static async getAllReportsForTop(req, res) {
+    try {
+      const reports = await Report.findAll({
+        include: [
+          { model: User, attributes: ['nickname', 'id', 'avatar'] },
+          { model: Task, attributes: ['title'] },
+          { model: Like },
+          {
+            model: Comment,
+            include: [{ model: User, attributes: ['nickname', 'avatar'] }],
+          },
+        ],
+        order: [
+          ['createdAt', 'DESC'],
+        ],
+      });
+      reports.sort((a, b) => -a.Likes.length + b.Likes.length)
+      return res.json({reports});
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: 'Отчет не найден' });
+    }
+  }
+  
+
   static async getReportById(req, res) {
+    // console.log("router by id");
     const { id } = req.params;
     try {
       const report = await Report.findOne({

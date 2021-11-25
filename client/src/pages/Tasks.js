@@ -16,31 +16,37 @@ import SearchBar from '../components/SearchBar/SearchBar';
 
 import { getAllTasks, setTasks, subscribeOnTask } from '../store/ac/tasksAC';
 import { getFilteredTasks } from '../store/ac/tasksAC';
-import TagsCloud from '../components/TagCloud/TagCloud'
+import TagsCloud from '../components/TagCloud/TagCloud';
 import axios from 'axios';
 import { BASE_URL_API } from '../config/constants';
 import { Box } from '@mui/system';
 import { startLoading, stopLoading } from '../store/ac/isLoadingAC';
 
 import { useTranslation } from 'react-i18next';
+import Loader from '../components/Loader/Loader';
 // ----------------------------------------------------------------------
 
 export default function Tasks() {
   const [filterName, setFilterName] = useState('');
   const [tags, setTags] = useState([]);
+  const [filterUsed, setFilterUsed] = useState(false);
   const tasks = useSelector((state) => state.tasks);
+  const isLoading = useSelector((state) => state.isLoading);
   const dispatch = useDispatch();
-  const location = useLocation();
-  const isPageProfile = location.pathname.includes('profile');
   const { t } = useTranslation();
+
   useEffect(() => {
-    // dispatch(startLoading());
-    console.log('afas');
-    dispatch(getFilteredTasks(filterName));
+    dispatch(getAllTasks());
     return () => {
       dispatch(setTasks([]));
     };
-  }, [filterName, isPageProfile]);
+  }, []);
+
+  useEffect(() => {
+    if (filterUsed) {
+      dispatch(getFilteredTasks(filterName));
+    }
+  }, [filterName]);
 
   const subscribeOnTaskToggle = useCallback(
     (taskId) => {
@@ -50,6 +56,7 @@ export default function Tasks() {
   );
 
   const filterHandler = useCallback((event) => {
+    setFilterUsed(true);
     setFilterName(event.target.value);
   }, []);
 
@@ -69,7 +76,7 @@ export default function Tasks() {
 
   return (
     <Page title={t('pages.goals.head')}>
-      <Container>
+      <Container maxWidth="xl">
         <Typography align="center" variant="h4" sx={{ mb: 5 }}>
           {t('pages.goals.title')}
         </Typography>
@@ -78,7 +85,7 @@ export default function Tasks() {
         </Box>
         <SearchBar filterName={filterName} onFilterName={filterHandler} />
 
-        <TasksList tasks={tasks} subscribeOnTaskToggle={subscribeOnTaskToggle} buttonName={'Добавить'} />
+        {isLoading > 0 ? <Loader /> : <TasksList tasks={tasks} subscribeOnTaskToggle={subscribeOnTaskToggle} buttonName={'Добавить'} />}
       </Container>
     </Page>
   );

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { SET_CURRENT_USER } from '../types/currentUserTypes';
 import { setErrorMessage } from './flashAC';
+import { stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
@@ -21,7 +22,8 @@ export const getCurrentUser = (userId) => async (dispatch) => {
         setErrorMessage({
           type: 'error',
           message: response?.data?.message ? response.data.message : 'Непредвиденная ошибка',
-        })
+        }),
       );
-    });
+    })
+    .finally(() => dispatch(stopLoading()));
 };

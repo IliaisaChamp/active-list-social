@@ -1,23 +1,29 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import { Link as RouterLink } from 'react-router-dom';
 import shareFill from '@iconify/icons-eva/share-fill';
 import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
+import { Box, Link, Card, Grid, Avatar, Typography, CardContent, IconButton, Stack, Badge } from '@mui/material';
 // utils
 import { fDate } from '../../utils/formatTime';
 import { fShortenNumber } from '../../utils/formatNumber';
 //
 import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import axios from 'axios';
+import { BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
 
 // ----------------------------------------------------------------------
 
 const CardMediaStyle = styled('div')({
   position: 'relative',
-  paddingTop: 'calc(100% * 3 / 4)'
+  paddingTop: 'calc(100% * 3 / 4)',
 });
 
 const TitleStyle = styled(Link)({
@@ -25,7 +31,7 @@ const TitleStyle = styled(Link)({
   overflow: 'hidden',
   WebkitLineClamp: 2,
   display: '-webkit-box',
-  WebkitBoxOrient: 'vertical'
+  WebkitBoxOrient: 'vertical',
 });
 
 const AvatarStyle = styled(Avatar)(({ theme }) => ({
@@ -34,7 +40,7 @@ const AvatarStyle = styled(Avatar)(({ theme }) => ({
   height: 32,
   position: 'absolute',
   left: theme.spacing(3),
-  bottom: theme.spacing(-2)
+  bottom: theme.spacing(-2),
 }));
 
 const InfoStyle = styled('div')(({ theme }) => ({
@@ -42,7 +48,7 @@ const InfoStyle = styled('div')(({ theme }) => ({
   flexWrap: 'wrap',
   justifyContent: 'flex-end',
   marginTop: theme.spacing(3),
-  color: theme.palette.text.disabled
+  color: theme.palette.text.disabled,
 }));
 
 const CoverImgStyle = styled('img')({
@@ -50,30 +56,49 @@ const CoverImgStyle = styled('img')({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  position: 'absolute'
+  position: 'absolute',
 });
 
-
 const BASE_URL = 'http://localhost:3001/img/';
-const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
+// const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
 
 // ----------------------------------------------------------------------
 
 TopPostCard.propTypes = {
-  post: PropTypes.object.isRequired,
-  index: PropTypes.number
+  post: PropTypes.object,
+  index: PropTypes.number,
 };
 
 export default function TopPostCard({ report, index }) {
-  const { images, desc, User, Task, createdAt, id } = report;
+  const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const [isLiked, setIsLiked] = useState();
+  const [likesCount, setLikesCount] = useState(Likes?.length);
+  const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
+
+  useEffect(() => {
+    const isLiked = findUserLike(user?.id);
+    setIsLiked(!!isLiked);
+    setLikesCount(Likes.length);
+  }, [user, Likes.length, findUserLike]);
+
+  const handleSetLike = () => {
+    setLikeFetch();
+  };
+
+  const setLikeFetch = useCallback(() => {
+    axios
+      .post(`http://localhost:3001/api/reports/${id}/like`)
+      .then(() => {
+        setIsLiked(!isLiked);
+        setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
+      })
+      .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
+  }, [isLiked]);
+
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
-
-  const POST_INFO = [
-    { number: 100, icon: messageCircleFill },
-    { number: 100, icon: eyeFill },
-    { number: 100, icon: shareFill }
-  ];
 
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
@@ -88,17 +113,16 @@ export default function TopPostCard({ report, index }) {
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
-                bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
-              }
+                bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
+              },
             }),
             ...(latestPostLarge && {
               pt: {
                 xs: 'calc(100% * 4 / 3)',
-                sm: 'calc(100% * 3 / 4.66)'
-              }
-            })
-          }}
-        >
+                sm: 'calc(100% * 3 / 4.66)',
+              },
+            }),
+          }}>
           <SvgIconStyle
             color="paper"
             src="/static/icons/shape-avatar.svg"
@@ -108,24 +132,26 @@ export default function TopPostCard({ report, index }) {
               zIndex: 9,
               bottom: -15,
               position: 'absolute',
-              ...((latestPostLarge || latestPost) && { display: 'none' })
+              ...((latestPostLarge || latestPost) && { display: 'none' }),
             }}
           />
           <AvatarStyle
             alt={User?.nickname}
-            src={`${BASE_URL}${User?.avatar}`}
+            src={User?.avatar ? `${BASE_URL_AVATAR}${User?.avatar}` : '/static/defaultavatar.png'}
+            component={RouterLink}
+            to={`/profile/${User?.id}`}
             sx={{
               ...((latestPostLarge || latestPost) && {
                 zIndex: 9,
                 top: 24,
                 left: 24,
                 width: 40,
-                height: 40
-              })
+                height: 40,
+              }),
             }}
           />
-        
-          <CoverImgStyle alt={User?.nickname}src={BASE_URL_REPORT_IMAGES + images[0]} />
+
+          <CoverImgStyle alt={User?.nickname} src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultred.webp'} />
         </CardMediaStyle>
 
         <CardContent
@@ -134,15 +160,10 @@ export default function TopPostCard({ report, index }) {
             ...((latestPostLarge || latestPost) && {
               bottom: 0,
               width: '100%',
-              position: 'absolute'
-            })
-          }}
-        >
-          <Typography
-            gutterBottom
-            variant="caption"
-            sx={{ color: 'text.disabled', display: 'block' }}
-          >
+              position: 'absolute',
+            }),
+          }}>
+          <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
             {fDate(createdAt)}
           </Typography>
 
@@ -156,30 +177,26 @@ export default function TopPostCard({ report, index }) {
             sx={{
               ...(latestPostLarge && { typography: 'h5', height: 60 }),
               ...((latestPostLarge || latestPost) && {
-                color: 'common.white'
-              })
-            }}
-          >
+                color: 'common.white',
+              }),
+            }}>
             {desc}
           </TitleStyle>
 
           <InfoStyle>
-            {POST_INFO.map((info, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  ml: index === 0 ? 0 : 1.5,
-                  ...((latestPostLarge || latestPost) && {
-                    color: 'grey.500'
-                  })
-                }}
-              >
-                <Box component={Icon} icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
-              </Box>
-            ))}
+            <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
+              <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
+                <Badge badgeContent={likesCount} color="primary">
+                  <FavoriteIcon fontSize="inherit" />
+                </Badge>
+              </IconButton>
+
+              <IconButton color="default" size="large" sx={{ padding: '5px' }} onClick={() => navigate(`/reports/${id}`)}>
+                <Badge badgeContent={Comments?.length} color="primary">
+                  <ChatBubbleOutlineIcon fontSize="inherit" />
+                </Badge>
+              </IconButton>
+            </Stack>
           </InfoStyle>
         </CardContent>
       </Card>

@@ -45,7 +45,6 @@ function CommentForm() {
             value={value}
             onChange={onChangeInput}
             variant="outlined"
-            color="success"
           />
 
           <Stack sx={{ my: 2, width: '20%', ml: 2 }}>

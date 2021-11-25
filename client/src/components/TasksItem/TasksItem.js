@@ -41,7 +41,7 @@ const RootStyle = styled(ListItem)(({ theme }) => ({
 const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandler }) => {
   const location = useLocation();
   // const { id } = useParams();
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = useState(true);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -69,14 +69,6 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
         />
 
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
-          {/* <Box component={Icon} icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
-              </Box> */}
-          {/* <Box sx={{ display: 'flex', marginRight: 3 }}>
-          <AssignmentTurnedInIcon sx={{ marginRight: 2 }} />
-          <Typography>{task.Reports}</Typography>
-        </Box> */}
-
           {isPageTask ? (
             <>
               <Box sx={{ display: 'flex', marginRight: 10 }}>
@@ -87,8 +79,8 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
                 edge="end"
                 taskId={task?.id}
                 subscribeOnTaskToggle={subscribeOnTaskToggle}
-                setChecked={setChecked}
                 aria-label="add-task"
+                setChecked={setChecked}
                 text={'Добавить цель'}>
                 <AddIcon />
               </ButtonPopover>
@@ -100,6 +92,7 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
                   edge="end"
                   taskId={task?.id}
                   completeTaskHandler={completeTaskHandler}
+                  setChecked={setChecked}
                   aria-label="complete-task"
                   text={'Отметить как выполненое'}>
                   <CheckCircleIcon />

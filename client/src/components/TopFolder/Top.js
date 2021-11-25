@@ -10,14 +10,14 @@ import Page from '../Page/Page';
 import { TopPostCard, TopPostsSort, TopPostsSearch } from '.';
 //
 import POSTS from '../../_mocks_/blog';
-import { setReports } from '../../store/ac/reportsAC';
+import { setReports, setAllReportsForTop } from '../../store/ac/reportsAC';
 import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
 const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' }
+  { value: 'Популярные', label: 'Популярные' },
+  { value: 'Проматриваемые', label: 'Проматриваемые' },
+  { value: 'Комментируемые', label: 'Комментируемые' }
 ];
 
 // ----------------------------------------------------------------------
@@ -28,14 +28,14 @@ export default function Top() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(setReports());
+    dispatch(setAllReportsForTop());
   }, [])
 
   return (
     <Page title={t('pages.top.head')}>
       <Container>
         <Typography variant="h4" gutterBottom align="center">
-          {t('pages.top.title')} 
+          {t('pages.top.title')}
         </Typography>
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">

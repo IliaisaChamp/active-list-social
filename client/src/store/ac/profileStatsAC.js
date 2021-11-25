@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { SET_PROFILE_STATS } from '../types/profileStatsTypes';
+import { stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api/users/';
 
@@ -24,5 +25,5 @@ export const getProfileStats = (userId) => (dispatch) => {
   fetchProfileStats(userId)
     .then((response) => dispatch(setProfileStats(response.data)))
     .catch((e) => console.log(e))
-    .finally();
+    .finally(() => dispatch(stopLoading()));
 };
