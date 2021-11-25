@@ -14,9 +14,9 @@ import Page from '../components/Page/Page';
 import TasksList from '../components/TasksList/TasksList';
 import SearchBar from '../components/SearchBar/SearchBar';
 
-import { getAllTasks, setTasks, subscribeOnTask } from '../store/ac/tasksAC';
+import { setTasks, subscribeOnTask } from '../store/ac/tasksAC';
 import { getFilteredTasks } from '../store/ac/tasksAC';
-import TagsCloud from '../components/TagCloud/TagCloud'
+import TagsCloud from '../components/TagCloud/TagCloud';
 import axios from 'axios';
 import { BASE_URL_API } from '../config/constants';
 import { Box } from '@mui/system';
@@ -37,10 +37,10 @@ export default function Tasks() {
     // dispatch(startLoading());
     console.log('afas');
     dispatch(getFilteredTasks(filterName));
-    return () => {
-      dispatch(setTasks([]));
-    };
-  }, [filterName, isPageProfile]);
+    // return () => {
+    //   dispatch(setTasks([]));
+    // };
+  }, [filterName]);
 
   const subscribeOnTaskToggle = useCallback(
     (taskId) => {
