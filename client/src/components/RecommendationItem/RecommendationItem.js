@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 // material
-import { Stack, Avatar, Button, TableRow, TableCell, Typography } from '@mui/material';
+import { Avatar, Button, TableRow, TableCell, Typography } from '@mui/material';
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
@@ -34,14 +34,16 @@ const RecommendationItem = ({ userInfo, subcsribeHandler, unsubcsribeHandler, is
           {isOnline ? 'Online' : 'Offline'}
         </Label>
       </TableCell>
-
+      <TableCell align="center">
+        <Button onClick={() => {}}>Chat</Button>
+      </TableCell>
       <TableCell align="center">
         {isSubscribed ? (
-          <Button variant="outlined" onClick={() => unsubcsribeHandler(user.id, userInfo.id)} startIcon={<Icon icon={closeFill} />}>
+          <Button onClick={() => unsubcsribeHandler(user.id, userInfo.id)} startIcon={<Icon icon={closeFill} />}>
             {t('pages.recommend.unsub')}
           </Button>
         ) : (
-          <Button variant="contained" onClick={() => subcsribeHandler(user.id, userInfo.id)} startIcon={<Icon icon={plusFill} />}>
+          <Button onClick={() => subcsribeHandler(user.id, userInfo.id)} startIcon={<Icon icon={plusFill} />}>
             {t('pages.recommend.sub')}
           </Button>
         )}

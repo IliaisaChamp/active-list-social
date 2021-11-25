@@ -18,6 +18,7 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
 
   useEffect(() => {
     setCurrentPage(1);
+    setItemOffset(0);
   }, [tasks]);
   useEffect(() => {
     const endOffset = itemOffset + 5;
@@ -26,7 +27,12 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
   }, [currentPage, tasks]);
 
   const handleChange = (event, value) => {
-    const newOffset = (value * 5) % tasks.length;
+    let newOffset;
+    if (value === 1) {
+      newOffset = 0;
+    } else {
+      newOffset = (value * 5) % tasks.length;
+    }
     setCurrentPage(value);
     setItemOffset(newOffset);
   };
