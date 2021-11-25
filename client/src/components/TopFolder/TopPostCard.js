@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import { Link as RouterLink } from 'react-router-dom';
 import shareFill from '@iconify/icons-eva/share-fill';
 import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
+import { Box, Link, Card, Grid, Avatar, Typography, CardContent, IconButton, Stack, Badge } from '@mui/material';
 // utils
 import { fDate } from '../../utils/formatTime';
 import { fShortenNumber } from '../../utils/formatNumber';
 //
 import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
@@ -65,15 +70,37 @@ TopPostCard.propTypes = {
 };
 
 export default function TopPostCard({ report, index }) {
-  const { images, desc, User, Task, createdAt, id } = report;
+  const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
+  const navigate = useNavigate()
+  const user = useSelector((state) => state.user);
+  const [isLiked, setIsLiked] = useState();
+  const [likesCount, setLikesCount] = useState(Likes?.length);
+
+  const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
+
+  useEffect(() => {
+    const isLiked = findUserLike(user?.id);
+    setIsLiked(!!isLiked);
+    setLikesCount(Likes.length);
+  }, [user, Likes.length, findUserLike]);
+
+  const handleSetLike = () => {
+    setLikeFetch();
+  };
+
+  const setLikeFetch = useCallback(() => {
+    axios
+      .post(`http://localhost:3001/api/reports/${id}/like`)
+      .then(() => {
+        setIsLiked(!isLiked);
+        setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
+      })
+      .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
+  }, [isLiked]);
+
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
 
-  const POST_INFO = [
-    { number: 100, icon: messageCircleFill },
-    { number: 100, icon: eyeFill },
-    { number: 100, icon: shareFill }
-  ];
 
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
@@ -164,22 +191,19 @@ export default function TopPostCard({ report, index }) {
           </TitleStyle>
 
           <InfoStyle>
-            {POST_INFO.map((info, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  ml: index === 0 ? 0 : 1.5,
-                  ...((latestPostLarge || latestPost) && {
-                    color: 'grey.500'
-                  })
-                }}
-              >
-                <Box component={Icon} icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
-              </Box>
-            ))}
+          <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
+              <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
+                <Badge badgeContent={likesCount} color="primary">
+                  <FavoriteIcon fontSize="inherit" />
+                </Badge>
+              </IconButton>
+
+              <IconButton color="default" size="large" sx={{ padding: '5px' }} onClick={() => navigate(`/reports/${id}`)}>
+                <Badge badgeContent={Comments?.length} color="primary">
+                  <ChatBubbleOutlineIcon fontSize="inherit" />
+                </Badge>
+              </IconButton>
+            </Stack>
           </InfoStyle>
         </CardContent>
       </Card>
