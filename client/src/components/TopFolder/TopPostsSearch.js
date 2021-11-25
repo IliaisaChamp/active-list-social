@@ -37,7 +37,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 TopPostsSearch.propTypes = {
-  posts: PropTypes.array.isRequired
+  posts: PropTypes.array
 };
 
 export default function TopPostsSearch({ posts }) {

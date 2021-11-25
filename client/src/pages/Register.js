@@ -26,8 +26,6 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  // borderRadius: 0,
-  // margin: theme.spacing(0, 0, 2, 2)
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -59,13 +57,11 @@ export default function Register() {
 
       <MHidden width="mdDown">
         <SectionStyle>
-          {/* <Box sx={{ borderRadius: '10px' }}> */}
           <img
             alt="register"
             src="/static/illustrations/auth.png"
             style={{ objectFit: 'contain', height: '80%' }}
           />
-          {/* </Box> */}
         </SectionStyle>
       </MHidden>
 
@@ -84,10 +80,6 @@ export default function Register() {
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
             {t('pages.reg.warning')}&nbsp;
-            {/* <Link underline="always" sx={{ color: 'text.primary' }}>
-              Terms of Service
-            </Link>
-            &nbsp;and&nbsp; */}
             <Link underline="always" sx={{ color: 'text.primary' }}>
               {t('pages.reg.politic')}
             </Link>

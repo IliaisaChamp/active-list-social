@@ -56,12 +56,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { t } = useTranslation();
 
   const sidebarConfig = [
-    {
-      title: t('sideBar.profile'),
-      path: '/profile/:id',
-      icon: getIcon(peopleFill),
-      isAuth: true,
-    },
+    // {
+    //   title: t('sideBar.profile'),
+    //   path: '/profile/:id',
+    //   icon: getIcon(peopleFill),
+    //   isAuth: true,
+    // },
     {
       title: t('sideBar.tasks'),
       path: '/tasks',
