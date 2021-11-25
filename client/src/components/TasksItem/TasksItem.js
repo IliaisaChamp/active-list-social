@@ -21,6 +21,7 @@ import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { currentTaskReports } from '../../store/ac/reportsAC';
 import { useDispatch } from 'react-redux';
+import Salut from '../Salut/Salut';
 
 const completedItemStyle = {
   backgroundColor: 'primary.lighter',
@@ -55,25 +56,26 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
   };
 
   const isPageTask = location.pathname.includes('tasks');
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const currentTaskIdBitch = () => {
-    console.log("adassfsdf");
-    dispatch(currentTaskReports(task?.id))
-    navigate(`/tasks/${task?.id}`)
+    console.log('adassfsdf');
+    dispatch(currentTaskReports(task?.id));
+    navigate(`/tasks/${task?.id}`);
     console.log(task?.id);
   };
 
   return (
     // <Collapse key={task}>
     <Grow in={checked} timeout={500}>
+      <Salut />
       <RootStyle
         // divider={true}
         sx={isPageTask ? {} : task?.isDone ? { ...completedItemStyle } : { ...incompletedItemStyle }}>
         <ModalDeleteTask open={open} handleOpen={handleOpen} handleClose={handleClose} subscribeHandleClose={subscribeHandleClose} />
         {/* <ButtonPopover /> */}
         <ListItemText
-          onClick={()=> currentTaskIdBitch()}
+          onClick={() => currentTaskIdBitch()}
           primary={task?.title}
           primaryTypographyProps={{ variant: 'subtitle2' }}
           secondaryTypographyProps={{}}
