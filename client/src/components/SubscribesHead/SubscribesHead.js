@@ -1,7 +1,7 @@
 import React from 'react';
 
 // mui
-import { TableRow, TableCell, TableHead } from '@mui/material';
+import { TableRow, TableCell } from '@mui/material';
 
 const SubscribesHead = ({ isSelfPage }) => {
   return (

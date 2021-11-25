@@ -85,7 +85,17 @@ export default function Tasks() {
         </Box>
         <SearchBar filterName={filterName} onFilterName={filterHandler} />
 
-        {isLoading > 0 ? <Loader /> : <TasksList tasks={tasks} subscribeOnTaskToggle={subscribeOnTaskToggle} buttonName={'Добавить'} />}
+        {isLoading > 0 ? (
+          <Loader />
+        ) : tasks.length > 0 ? (
+          <TasksList tasks={tasks} subscribeOnTaskToggle={subscribeOnTaskToggle} buttonName={'Добавить'} />
+        ) : (
+          <Container>
+            <Typography align="center" variant="h6">
+              {t('pages.profile.tabs.notasks')}
+            </Typography>
+          </Container>
+        )}
       </Container>
     </Page>
   );

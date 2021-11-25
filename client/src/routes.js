@@ -20,6 +20,7 @@ import Recommendations from './pages/Recommendations';
 
 // import Loader from './components/Loader/Loader';
 import { getSubsribes } from './store/ac/subscribesAC';
+import Salut from './components/Salut/Salut';
 // import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -74,6 +75,7 @@ export default function Router() {
     },
     { path: '/login', element: user ? <Navigate to={'/profile/' + user.id} /> : <Login /> },
     { path: '/register', element: user ? <Navigate to={'/profile/' + user.id} /> : <Register /> },
+    { path: '/elbrus', element: <Salut /> },
     // { path: '*', element: <NotFound /> },
   ]);
 }

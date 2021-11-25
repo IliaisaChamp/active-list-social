@@ -11,7 +11,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
 import { BASE_URL_AVATAR } from '../../config/constants';
-import { fDateTime } from '../../utils/formatTime';
 
 const BASE_URL = 'http://localhost:3001/img/reports/';
 
@@ -67,11 +66,7 @@ export default function DetailReport() {
           ))
         ) : (
           <div key={id}>
-            <img
-              src={`/static/defaultred.webp`}
-              style={{ maxHeight: '300px', width: '100%', objectFit: 'contain' }}
-              alt="default"
-            />
+            <img src={`/static/defaultred.webp`} style={{ maxHeight: '300px', width: '100%', objectFit: 'contain' }} alt="default" />
           </div>
         )}
       </Carousel>

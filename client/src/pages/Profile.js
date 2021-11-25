@@ -21,6 +21,7 @@ import { getCurrentUser, setCurrentUser } from '../store/ac/currentUserAC';
 import { getProfileStats, resetProfileStats } from '../store/ac/profileStatsAC';
 import Loader from '../components/Loader/Loader';
 import { startLoading } from '../store/ac/isLoadingAC';
+import Salut from '../components/Salut/Salut';
 
 const Profile = () => {
   const { id } = useParams();
@@ -95,6 +96,7 @@ const Profile = () => {
 
   return (
     <Page title={t('pages.profile.head')}>
+      {/* <Salut /> */}
       {isLoading > 0 ? (
         <Loader />
       ) : (

@@ -4,6 +4,7 @@ import React, { useCallback } from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import { useNavigate } from 'react-router-dom';
 
 const ButtonPopover = ({
   text,
@@ -15,9 +16,10 @@ const ButtonPopover = ({
   component,
   to,
   setChecked,
+  taskTitle,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const navigate = useNavigate();
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -28,9 +30,14 @@ const ButtonPopover = ({
 
   const clickHandler = useCallback(() => {
     setChecked(false);
+    console.log(taskId);
     setTimeout(() => {
       completeTaskHandler ? completeTaskHandler(taskId) : subscribeOnTaskToggle(taskId);
       setChecked(true);
+      if (taskTitle?.toLowerCase().includes('elbrus')) {
+        // if (taskTitle?.toLowerCase().includes('группой') && completeTaskHandler) {
+        navigate('/elbrus');
+      }
     }, 500);
   }, []);
 

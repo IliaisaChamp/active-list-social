@@ -6,27 +6,17 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { Card, Table, TableBody, TableContainer, Container, Grid, Typography } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 // my components
 import TasksList from '../TasksList/TasksList';
 import { LentaPostCard } from '../LentaFolder';
-import RecommendationsHead from '../RecommendationsHead/RecommentationsHead';
-import RecommendationItem from '../RecommendationItem/RecommendationItem';
-import Scrollbar from '../Scrollbar/Scrollbar';
 import SubscribesList from '../SubscribesList/SubscribesList';
 
 const tabPanelStyle = {
   padding: '24px 0',
 };
-const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'nickName', label: 'nickName', alignRight: false },
-  { id: 'rang', label: 'Rang', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
-];
 
 const ProfileTabs = ({
   tasks,
@@ -56,12 +46,20 @@ const ProfileTabs = ({
           </TabList>
         </Box>
         <TabPanel sx={tabPanelStyle} value="1">
-          <TasksList
-            tasks={tasks}
-            subscribeOnTaskToggle={subscribeOnTaskToggle}
-            completeTaskHandler={completeTaskHandler}
-            isSelfPage={isSelfPage}
-          />
+          {tasks.length > 0 ? (
+            <TasksList
+              tasks={tasks}
+              subscribeOnTaskToggle={subscribeOnTaskToggle}
+              completeTaskHandler={completeTaskHandler}
+              isSelfPage={isSelfPage}
+            />
+          ) : (
+            <Container>
+              <Typography align="center" variant="h6">
+                {t('pages.profile.tabs.notasks')}
+              </Typography>
+            </Container>
+          )}
         </TabPanel>
         <TabPanel sx={tabPanelStyle} value="2">
           <Container sx={{ display: 'flex', position: 'relative' }}>
@@ -72,7 +70,11 @@ const ProfileTabs = ({
                 ))}
               </Grid>
             ) : (
-              <Typography>{t('pages.profile.tabs.noreports')}</Typography>
+              <Container>
+                <Typography align="center" variant="h6">
+                  {t('pages.profile.tabs.noreports')}
+                </Typography>
+              </Container>
             )}
           </Container>
         </TabPanel>
@@ -80,7 +82,11 @@ const ProfileTabs = ({
           {userSubscribes.length > 0 ? (
             <SubscribesList isSelfPage={isSelfPage} userSubscribes={userSubscribes} unsubcsribeFromUser={unsubcsribeFromUser} />
           ) : (
-            <Typography>{t('pages.profile.tabs.nosub')}</Typography>
+            <Container>
+              <Typography align="center" variant="h6">
+                {t('pages.profile.tabs.nosub')}
+              </Typography>
+            </Container>
           )}
         </TabPanel>
       </TabContext>
