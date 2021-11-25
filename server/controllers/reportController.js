@@ -4,6 +4,36 @@ const { Op, Sequelize } = require('sequelize');
 
 class ReportController {
 
+  static async getCurrentTaskReports(req, res) {
+    const { id } = req.params;
+    console.log(id);
+    try {
+      const reports = await Report.findAll({
+        include: [
+          { model: User, attributes: ['nickname', 'id', 'avatar'] },
+          { model: Task, attributes: ['title'] },
+          { model: Like },
+          {
+            model: Comment,
+            include: [{ model: User, attributes: ['nickname', 'avatar'] }],
+          },
+        ],
+        where: {
+          task_id: id
+        },
+        order: [
+          ['createdAt', 'DESC'],
+          [Comment, 'createdAt', 'DESC'],
+        ],
+      });
+      console.log({reports});
+      return res.json({reports});
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ message: 'Отчет не найден' });
+    }
+  }
+
 
   static async getAllReportsForTop(req, res) {
     try {
