@@ -22,7 +22,7 @@ import axios from 'axios';
 
 const CardMediaStyle = styled('div')({
   position: 'relative',
-  paddingTop: 'calc(100% * 3 / 4)'
+  paddingTop: 'calc(100% * 3 / 4)',
 });
 
 const TitleStyle = styled(Link)({
@@ -30,7 +30,7 @@ const TitleStyle = styled(Link)({
   overflow: 'hidden',
   WebkitLineClamp: 2,
   display: '-webkit-box',
-  WebkitBoxOrient: 'vertical'
+  WebkitBoxOrient: 'vertical',
 });
 
 const AvatarStyle = styled(Avatar)(({ theme }) => ({
@@ -39,7 +39,7 @@ const AvatarStyle = styled(Avatar)(({ theme }) => ({
   height: 32,
   position: 'absolute',
   left: theme.spacing(3),
-  bottom: theme.spacing(-2)
+  bottom: theme.spacing(-2),
 }));
 
 const InfoStyle = styled('div')(({ theme }) => ({
@@ -47,7 +47,7 @@ const InfoStyle = styled('div')(({ theme }) => ({
   flexWrap: 'wrap',
   justifyContent: 'flex-end',
   marginTop: theme.spacing(3),
-  color: theme.palette.text.disabled
+  color: theme.palette.text.disabled,
 }));
 
 const CoverImgStyle = styled('img')({
@@ -55,9 +55,8 @@ const CoverImgStyle = styled('img')({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  position: 'absolute'
+  position: 'absolute',
 });
-
 
 const BASE_URL = 'http://localhost:3001/img/';
 const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
@@ -66,16 +65,15 @@ const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
 
 TopPostCard.propTypes = {
   post: PropTypes.object.isRequired,
-  index: PropTypes.number
+  index: PropTypes.number,
 };
 
 export default function TopPostCard({ report, index }) {
   const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [isLiked, setIsLiked] = useState();
   const [likesCount, setLikesCount] = useState(Likes?.length);
-
   const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
 
   useEffect(() => {
@@ -101,7 +99,6 @@ export default function TopPostCard({ report, index }) {
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
 
-
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
       <Card sx={{ position: 'relative' }}>
@@ -115,17 +112,16 @@ export default function TopPostCard({ report, index }) {
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
-                bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
-              }
+                bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
+              },
             }),
             ...(latestPostLarge && {
               pt: {
                 xs: 'calc(100% * 4 / 3)',
-                sm: 'calc(100% * 3 / 4.66)'
-              }
-            })
-          }}
-        >
+                sm: 'calc(100% * 3 / 4.66)',
+              },
+            }),
+          }}>
           <SvgIconStyle
             color="paper"
             src="/static/icons/shape-avatar.svg"
@@ -135,24 +131,26 @@ export default function TopPostCard({ report, index }) {
               zIndex: 9,
               bottom: -15,
               position: 'absolute',
-              ...((latestPostLarge || latestPost) && { display: 'none' })
+              ...((latestPostLarge || latestPost) && { display: 'none' }),
             }}
           />
           <AvatarStyle
             alt={User?.nickname}
             src={`${BASE_URL}${User?.avatar}`}
+            component={RouterLink}
+            to={`/profile/${User?.id}`}
             sx={{
               ...((latestPostLarge || latestPost) && {
                 zIndex: 9,
                 top: 24,
                 left: 24,
                 width: 40,
-                height: 40
-              })
+                height: 40,
+              }),
             }}
           />
-        
-          <CoverImgStyle alt={User?.nickname}src={BASE_URL_REPORT_IMAGES + images[0]} />
+
+          <CoverImgStyle alt={User?.nickname} src={BASE_URL_REPORT_IMAGES + images[0]} />
         </CardMediaStyle>
 
         <CardContent
@@ -161,15 +159,10 @@ export default function TopPostCard({ report, index }) {
             ...((latestPostLarge || latestPost) && {
               bottom: 0,
               width: '100%',
-              position: 'absolute'
-            })
-          }}
-        >
-          <Typography
-            gutterBottom
-            variant="caption"
-            sx={{ color: 'text.disabled', display: 'block' }}
-          >
+              position: 'absolute',
+            }),
+          }}>
+          <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
             {fDate(createdAt)}
           </Typography>
 
@@ -183,15 +176,14 @@ export default function TopPostCard({ report, index }) {
             sx={{
               ...(latestPostLarge && { typography: 'h5', height: 60 }),
               ...((latestPostLarge || latestPost) && {
-                color: 'common.white'
-              })
-            }}
-          >
+                color: 'common.white',
+              }),
+            }}>
             {desc}
           </TitleStyle>
 
           <InfoStyle>
-          <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
+            <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
               <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
                 <Badge badgeContent={likesCount} color="primary">
                   <FavoriteIcon fontSize="inherit" />

@@ -15,9 +15,9 @@ import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
 const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' }
+  { value: 'Популярные', label: 'Популярные' },
+  { value: 'Проматриваемые', label: 'Проматриваемые' },
+  { value: 'Комментируемые', label: 'Комментируемые' }
 ];
 
 // ----------------------------------------------------------------------
