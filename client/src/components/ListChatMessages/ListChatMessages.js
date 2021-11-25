@@ -1,6 +1,5 @@
 import React from 'react';
-import { Avatar, Grid, ListItem, ListItemText } from '@mui/material';
-import { BASE_URL_AVATAR } from '../../config/constants';
+import { Grid, ListItem, ListItemText } from '@mui/material';
 import { fDateTime } from '../../utils/formatTime';
 
 function ListChatMessages({ messages, user }) {

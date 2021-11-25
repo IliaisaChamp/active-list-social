@@ -14,17 +14,14 @@ const io = new Server(server, {
 const usersOnline = new Map();
 
 io.on('connection', (socket) => {
-  console.log('socket connected', socket.id);
 
   const id = socket.handshake.query.id;
   usersOnline.set(socket, id);
   const users = usersOnline.values();
   const uniqueUsers = [...new Set(users)];
-  console.log('online', usersOnline.values());
   io.emit('broadcast-online', { users: uniqueUsers });
 
   socket.on('disconnect', () => {
-    console.log('USER DISCONNECTED', socket.id);
     for (const [s, id] of usersOnline) {
       if (s.id === socket.id) {
         usersOnline.delete(s);
@@ -59,7 +56,6 @@ io.on('connection', (socket) => {
 /////////////////////////////logout
 io.on('connection', (socket) => {
   socket.on('logout', () => {
-    console.log('LOGOUT');
     socket.disconnect();
   });
 });
@@ -75,7 +71,6 @@ io.on('connection', (socket) => {
     }
     io.to('room').emit('new-message', { message, room });
     io.socketsLeave('room');
-    console.log(msg);
   });
 });
 module.exports = server;

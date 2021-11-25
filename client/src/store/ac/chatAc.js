@@ -2,13 +2,11 @@ import { ADD_CHAT_MESSAGE, DELETE_ROOM, SET_CHAT, SET_CHAT_USERS, SET_MESSAGES, 
 import axios from 'axios';
 import { setErrorMessage } from './flashAC';
 
-export const openChat = (recipient, t) => async (dispatch, getState) => {
+export const openChat = (recipient, t) => async (dispatch) => {
   try {
     const resRoom = await axios.post('/api/rooms', { id: recipient });
     const roomId = resRoom.data.room.id;
-    console.log('___________ROOM MEMBERS_______');
     dispatch(chooseChatRoom(roomId));
-    console.log('CHAT ROOM CREATED OR RECEIVED', resRoom.data.room);
   } catch (e) {
     setErrorMessage(t('chat.errorMessage'));
     console.log(e);
@@ -24,7 +22,6 @@ export const setMessages = (messages) => {
 
 export const createMessage = (formData, roomId, t) => async (dispatch, getState) => {
   try {
-    console.log('CREATEMESSAGE ROOM ID', roomId);
     const response = await axios.post(`/api/rooms/${roomId}/messages`, Object.fromEntries(formData));
     const state = getState();
     const { socket } = state;
@@ -38,12 +35,13 @@ export const createMessage = (formData, roomId, t) => async (dispatch, getState)
 };
 
 export const chooseChatRoom = (roomId) => async (dispatch, getState) => {
-  console.log('CHOOSE CHAT ROOM ROOM ID ->>>>', roomId);
+  await axios.put(`/api/rooms/${roomId}`, { hasMessages: false });
   const response = await axios.get(`/api/rooms/${roomId}/messages`);
   const messages = response.data.messages;
   const state = getState();
   const senderId = state.user.id;
   const recieversId = state.chat.rooms.filter((room) => room.id === roomId).map((room) => room.user.id);
+  dispatch(loadRooms());
   dispatch(setRoom(roomId));
   dispatch(setChatUsers([senderId, ...recieversId]));
   dispatch(setMessages(messages));
@@ -56,9 +54,14 @@ export const setRoom = (roomId) => {
   };
 };
 
-export const loadRooms = () => async (dispatch) => {
-  const userRooms = await axios.get(`/api/rooms`);
-  dispatch(setRooms(userRooms.data.rooms));
+export const loadRooms = () => async (dispatch, getState) => {
+  const currentRoom = getState().chat.room;
+  if (currentRoom) {
+    await axios.put(`/api/rooms/${currentRoom}`, { hasMessages: false });
+  }
+  const response = await axios.get(`/api/rooms`);
+  const userRooms = response.data.rooms;
+  dispatch(setRooms(userRooms));
 };
 
 export const resetChat = () => {
@@ -74,7 +77,6 @@ export const resetChat = () => {
 };
 
 export const setChat = (payload) => {
-  console.log('set chat');
   return {
     type: SET_CHAT,
     payload,
@@ -106,7 +108,6 @@ export const leaveRoom = (roomId, t) => async (dispatch) => {
   try {
     await axios.delete(`/api/rooms/${roomId}`);
     dispatch(deleteRoom(roomId));
-    console.log('dasdasdasdasd');
   } catch (e) {
     setErrorMessage(t('chat.errorMessage'));
     console.log(e);

@@ -10,6 +10,7 @@ router
 router
     .route('/:id')
     .delete(checkAuth, RoomController.deleteRoom)
+    .put(checkAuth, RoomController.changeRoomStatus)
 
 router
     .route('/:id/users')

@@ -18,6 +18,7 @@ const initState = {
     users: [],
     messages: [],
     rooms: [],
-  }
+  },
+  unreadMessages: 0,
 };
 export default initState;

@@ -1,16 +1,18 @@
 import React from 'react';
-import { Avatar, Badge, Button, Grid, Icon, List, ListItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
+import { Avatar, Badge, Grid, List, ListItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
 import { BASE_URL_AVATAR } from '../../config/constants';
-import { chooseChatRoom, leaveRoom } from '../../store/ac/chatAc';
+import { chooseChatRoom, leaveRoom, setMessages, setRoom } from '../../store/ac/chatAc';
 import { useDispatch, useSelector } from 'react-redux';
 import { alpha, useTheme } from '@mui/material/styles';
-import { Label } from '@mui/icons-material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useTranslation } from 'react-i18next';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { useNavigate } from 'react-router-dom';
 
 function ListChatRooms({ rooms, currentRoomId }) {
   const dispatch = useDispatch();
   const online = useSelector((state) => state.onlineUsers);
+  const currentRoom = useSelector((state) => state.chat.room);
   const { t } = useTranslation();
 
   const theme = useTheme();
@@ -18,7 +20,6 @@ function ListChatRooms({ rooms, currentRoomId }) {
     color: 'primary.main',
     fontWeight: 'fontWeightMedium',
     bgcolor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
-    // '&:before': { display: 'block' },
   };
 
   const chooseRoom = (roomId) => {
@@ -29,6 +30,10 @@ function ListChatRooms({ rooms, currentRoomId }) {
   const leaveRoomHandler = (e, id) => {
     e.stopPropagation();
     dispatch(leaveRoom(id, t));
+    if (currentRoom === id) {
+      dispatch(setRoom());
+      dispatch(setMessages([]));
+    }
   };
 
   return (
@@ -36,12 +41,8 @@ function ListChatRooms({ rooms, currentRoomId }) {
       {rooms.map((room) => (
         <Grid key={room.id} sx={{ ...(room.id === currentRoomId && activeRootStyle) }} container>
           <Grid item xs={12}>
-            <ListItem
-              // sx={{ ...(room.id === currentRoomId && activeRootStyle) }}
-              onClick={() => chooseRoom(room.id)}
-              button
-              key={room.id}>
-              <ListItemIcon>
+            <ListItem onClick={() => currentRoom !== room.id && chooseRoom(room.id)} button key={room.id}>
+              <ListItemIcon sx={{ position: 'relative' }}>
                 <Badge
                   anchorOrigin={{
                     vertical: 'bottom',
@@ -55,9 +56,12 @@ function ListChatRooms({ rooms, currentRoomId }) {
                 </Badge>
               </ListItemIcon>
               <ListItemText secondary={room.user.nickname} />
+              {/*<Badge color="error" badgeContent={    <MailOutlineIcon/>} variant="dot" overlap="circular">*/}
               <IconButton onClick={(e) => leaveRoomHandler(e, room.id)}>
                 <ClearIcon color="action" fontSize="small" />
               </IconButton>
+              {room.hasMessages && <MailOutlineIcon color="success" sx={{ position: 'absolute', left: '93%', top: '-20%' }} />}
+              {/*</Badge>*/}
             </ListItem>
           </Grid>
         </Grid>

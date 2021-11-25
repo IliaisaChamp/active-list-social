@@ -12,8 +12,9 @@ import subscribesReducer from './subscribesReducer';
 import onlineUsersReducer from './onlineUsersReducer';
 import socketReducer from './socketReducer';
 import currentUserSubscribesReducer from './currentUserSubscribesReducer';
-import chatReducer from "./chatReducer";
+import chatReducer from './chatReducer';
 import profileStatsReducer from './profileStatsReducer';
+import unreadMessagesReducer from './unreadMessagesReducer';
 
 const rootReducer = combineReducers({
   user: authReducer,
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
   currentReport: currentReportReducer,
   onlineUsers: onlineUsersReducer,
   socket: socketReducer,
-  chat: chatReducer
+  chat: chatReducer,
+  unreadMessages: unreadMessagesReducer,
 });
 
 export default rootReducer;

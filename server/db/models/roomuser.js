@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       room_id: DataTypes.INTEGER,
       user_id: DataTypes.INTEGER,
+      hasMessages: DataTypes.BOOLEAN,
     },
     {
       sequelize,

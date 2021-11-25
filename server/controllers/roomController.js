@@ -3,6 +3,24 @@ const RoomService = require('../services/RoomService');
 const sequelize = require('sequelize');
 
 class RoomController {
+  static async changeRoomStatus(req, res) {
+    try {
+      const user_id = req.session.user.id;
+      const room_id = req.params.id;
+      const status = req.body.hasMessages;
+      const entry = await RoomUser.findOne({ where: { user_id, room_id } });
+      if (!entry) {
+        res.sendStatus(200);
+      }
+      entry.hasMessages = status;
+      await entry.save();
+      res.sendStatus(200);
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: 'Ошибка чата' });
+    }
+  }
+
   static async deleteRoom(req, res) {
     try {
       const user_id = req.session.user.id;
@@ -26,10 +44,13 @@ class RoomController {
   static async getUserRooms(req, res) {
     try {
       const { id } = req.session.user;
+      const entrys = await RoomUser.findAll({ where: { user_id: id } });
+      const result = {};
+      entrys.forEach((entry) => (result[entry.room_id] = entry.hasMessages));
       const user = await User.findOne({ where: { id }, include: Room });
       const rooms = user.Rooms.map((room) => room.id);
       const roomsWithUsers = await RoomService.getRoomsWithRecipients(id, rooms);
-      const formattedRooms = roomsWithUsers.map((el) => ({ id: el.room_id, user: el.User.dataValues }));
+      const formattedRooms = roomsWithUsers.map((el) => ({ id: el.room_id, user: el.User.dataValues, hasMessages: result[el.room_id] }));
       res.json({ rooms: formattedRooms });
     } catch (e) {
       console.log(e);
@@ -57,7 +78,6 @@ class RoomController {
     try {
       const user_id = req.session.user.id;
       const room_id = req.params.id;
-      console.log(req.body);
       const newMessage = await Message.create({ text: req.body.message, room_id, user_id });
       const plainMessage = newMessage.get({ plain: true });
       const user = await User.findOne({
@@ -78,7 +98,7 @@ class RoomController {
       const recipientId = req.body.id;
       const room = await RoomService.getRoom(senderId, recipientId);
       const entries = await RoomUser.findAll({ where: { room_id: room.id } });
-      const roomMembers = entries.map((entry) => entry.user_id)
+      const roomMembers = entries.map((entry) => entry.user_id);
       res.status(200).json({ room, members: roomMembers });
     } catch (e) {
       console.log(e);

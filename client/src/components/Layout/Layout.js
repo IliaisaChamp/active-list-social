@@ -36,12 +36,10 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function Layout() {
   const [open, setOpen] = useState(false);
-  const isLoading = useSelector((state) => state.isLoading);
   return (
     <RootStyle>
       <Header onOpenSidebar={() => setOpen(true)} />
       <Sidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
-      {/* <MainStyle>{isLoading ? <Loader /> : <Outlet />}</MainStyle> */}
       <MainStyle>
         <Outlet />
       </MainStyle>

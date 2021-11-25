@@ -3,14 +3,17 @@ import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, IconButton, Badge } from '@mui/material';
 // components
 import { MHidden } from '../@material-extend';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LanguagePopover from './LanguagePopover';
-import NotificationsPopover from './NotificationsPopover';
 import Logout from './Logout';
-
+import bellFill from '@iconify/icons-eva/bell-fill';
+import { resetUnreadMessages } from '../../store/ac/unreadMessagesAC';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/styles';
+import palette from '../../theme/palette';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -43,6 +46,14 @@ Header.propTypes = {
 
 export default function Header({ onOpenSidebar }) {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const unreadMessages = useSelector((state) => state.unreadMessages);
+  const theme = useTheme();
+  const bellClickHandler = () => {
+    dispatch(resetUnreadMessages());
+    navigate('/chats');
+  };
 
   return (
     <RootStyle>
@@ -60,7 +71,12 @@ export default function Header({ onOpenSidebar }) {
 
           {user && (
             <>
-              <NotificationsPopover />
+              <IconButton onClick={bellClickHandler} size="large">
+                <Badge badgeContent={unreadMessages} color="error">
+                  <Icon icon={bellFill} width={20} height={20} />
+                </Badge>
+              </IconButton>
+
               <Logout />
             </>
           )}
