@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL_AVATAR } from '../../../config/constants';
-import { createMessage, chooseChatRoom, loadUserChats, resetChat, setRoom } from '../../../store/ac/chatAc';
+import { createMessage, chooseChatRoom, loadRooms, resetChat, setRoom } from '../../../store/ac/chatAc';
 import { fDateTime, fToNow } from '../../../utils/formatTime';
 import { alpha, useTheme } from '@mui/material/styles';
 import ListChatMessages from '../../ListChatMessages/ListChatMessages';
@@ -54,7 +54,7 @@ const Chat = () => {
   const messages = useSelector((state) => state.chat.messages);
 
   useEffect(() => {
-    dispatch(loadUserChats(user.id));
+    dispatch(loadRooms(user.id));
   }, [user, dispatch]);
 
   return (

@@ -4,14 +4,15 @@ const sequelize = require('sequelize');
 
 class RoomController {
   static async deleteRoom(req, res) {
-    //need req.session.user check before remove
     try {
       const user_id = req.session.user.id;
       const room_id = req.params.id;
       const roomUser = RoomUser.findOne({ where: { user_id, room_id } });
       if (roomUser) {
         const room = await Room.findOne({ where: { id: room_id } });
-        await room.destroy();
+        if (room) {
+          await room.destroy();
+        }
         res.status(200).json({ message: 'Комната удалена' });
       } else {
         res.status(400).json({ message: 'Ошибка чата' });
@@ -76,7 +77,9 @@ class RoomController {
       const senderId = req.session.user.id;
       const recipientId = req.body.id;
       const room = await RoomService.getRoom(senderId, recipientId);
-      res.status(200).json({ room });
+      const entries = await RoomUser.findAll({ where: { room_id: room.id } });
+      const roomMembers = entries.map((entry) => entry.user_id)
+      res.status(200).json({ room, members: roomMembers });
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: 'Ошибка чата' });
