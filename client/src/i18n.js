@@ -97,6 +97,9 @@ const resources = {
         tasks: 'Цели',
         profile: 'Профиль',
       },
+      chat: {
+        errorMessage: 'Сообщение не отправлено'
+      }
     },
   },
   en: {

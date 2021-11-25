@@ -38,10 +38,9 @@ io.on('connection', (socket) => {
 
 //new report notification
 io.on('connection', (socket) => {
-  socket.on('report-created', async (msg) => {
-    console.log(msg);
-    const reportOwnerId = msg.user_id;
-    const task_id = msg.task_id;
+  socket.on('report-created', async (report) => {
+    const reportOwnerId = report.user_id;
+    const task_id = report.task_id;
     const taskSubscribers = await Task.findOne({ where: { id: task_id }, include: User });
     const userSubscribers = await UserService.getFollowers(reportOwnerId);
     const userSubscribersId = userSubscribers.map((sub) => sub.id);
@@ -52,7 +51,7 @@ io.on('connection', (socket) => {
         s.join('room');
       }
     }
-    socket.broadcast.to('room').emit('notification', { message: {message: 'Новый отчет', url: `/reports/${msg.id}`} });
+    socket.broadcast.to('room').emit('notification', { message: { message: 'Новый отчет', url: `/reports/${report.id}` } });
     io.socketsLeave('room');
   });
 });
@@ -62,6 +61,21 @@ io.on('connection', (socket) => {
   socket.on('logout', () => {
     console.log('LOGOUT');
     socket.disconnect();
+  });
+});
+
+///////chat
+io.on('connection', (socket) => {
+  socket.on('create-message', (msg) => {
+    const { users, message, room } = msg;
+    for (let [s, id] of usersOnline) {
+      if (users.includes(Number(id))) {
+        s.join('room');
+      }
+    }
+    io.to('room').emit('new-message', { message, room });
+    io.socketsLeave('room');
+    console.log(msg);
   });
 });
 module.exports = server;

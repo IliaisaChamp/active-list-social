@@ -1,4 +1,4 @@
-import { SET_CHAT, SET_MESSAGES, SET_ROOM, SET_ROOMS } from '../types/chatTypes';
+import { ADD_CHAT_MESSAGE, SET_CHAT, SET_CHAT_USERS, SET_MESSAGES, SET_ROOM, SET_ROOMS } from '../types/chatTypes';
 
 const initState = {};
 
@@ -13,6 +13,10 @@ function chatReducer(state = initState, action) {
       return { ...state, room: payload };
     case SET_MESSAGES:
       return { ...state, messages: payload };
+    case SET_CHAT_USERS:
+      return { ...state, users: payload };
+    case ADD_CHAT_MESSAGE:
+      return { ...state, messages: [...state.messages, payload] };
     default:
       return state;
   }
