@@ -1,4 +1,4 @@
-import { SET_COMMENT, SET_REPORT, SET_REPORTS, ALL_REPORTS_FOR_TOP } from '../types/reportsTypes';
+import { SET_COMMENT, SET_REPORT, SET_REPORTS, ALL_REPORTS_FOR_TOP, CURRENT_TASK_REPORTS } from '../types/reportsTypes';
 import axios from 'axios';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 
@@ -12,6 +12,18 @@ export const setReports = () => async (dispatch) => {
     type: SET_REPORTS,
     payload: reports,
   });
+};
+
+export const currentTaskReports = (taskID) => async (dispatch) => {
+  console.log(taskID)
+  const response = await axios(`${BASE_URL}/reports/tasks/${taskID}`);
+  const { reports } = response.data;
+  console.log(response.data)
+  dispatch({
+    type: CURRENT_TASK_REPORTS,
+    payload: reports,
+  });
+
 };
 
 export const setAllReportsForTop = () => async (dispatch) => {
