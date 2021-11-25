@@ -16,33 +16,34 @@ import { useTranslation } from 'react-i18next';
 
 const SORT_OPTIONS = [
   { value: 'Популярные', label: 'Популярные' },
-  { value: 'Проматриваемые', label: 'Проматриваемые' },
-  { value: 'Комментируемые', label: 'Комментируемые' }
+  { value: 'Проcматриваемые', label: 'Проcматриваемые' },
+  { value: 'Комментируемые', label: 'Комментируемые' },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function Top() {
-  const reports = useSelector(state => state.reports)
-  const dispatch = useDispatch()
+  const reports = useSelector((state) => state.reports);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(setAllReportsForTop());
-  }, [])
+  }, []);
+
+
 
   return (
     <Page title={t('pages.top.head')}>
       <Container>
         <Typography variant="h4" gutterBottom align="center">
-          {t('pages.top.title')} 
+          {t('pages.top.title')}
         </Typography>
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <TopPostsSearch posts={POSTS} />
           <TopPostsSort options={SORT_OPTIONS} />
         </Stack>
-
         <Grid container spacing={3}>
           {reports.map((report, index) => (
             <TopPostCard key={report.id} report={report} index={index} />

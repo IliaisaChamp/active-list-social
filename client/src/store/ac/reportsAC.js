@@ -1,4 +1,4 @@
-import { SET_COMMENT, SET_REPORT, SET_REPORTS, ALL_REPORTS_FOR_TOP, CURRENT_TASK_REPORTS } from '../types/reportsTypes';
+import { SET_COMMENT, SET_REPORT, SET_REPORTS, ALL_REPORTS_FOR_TOP, CURRENT_TASK_REPORTS, REPORTS_FOR_TOP_SORTED_BY_COMMENTS, REPORTS_FOR_TOP_SORTED_BY_LIKES } from '../types/reportsTypes';
 import axios from 'axios';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 
@@ -35,6 +35,16 @@ export const setAllReportsForTop = () => async (dispatch) => {
     payload: reports,
   })
 }
+
+export const setAllReportsForTopSortedByComments = () => ({
+
+  type: REPORTS_FOR_TOP_SORTED_BY_COMMENTS,
+    
+})
+
+export const setAllReportsForTopSortedByLikes = () => ({
+  type: REPORTS_FOR_TOP_SORTED_BY_LIKES,
+})
 
 export const setNewReport =
   (data, taskID, userID, navigate, socket) => async (dispatch) => {
