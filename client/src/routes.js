@@ -15,7 +15,9 @@ import Report from './pages/Report';
 import Chat from './components/ChatFolder/Chat/Chat';
 import ReportForm from './components/Report/ReportForm';
 import DetailReport from './components/Report/DetailReport';
+import CurrentTaskReportLenta from './components/CurrentTasksReportsFolder/CurrentTaskReportLenta';
 import Recommendations from './pages/Recommendations';
+
 // import Loader from './components/Loader/Loader';
 import { getSubsribes } from './store/ac/subscribesAC';
 // import NotFound from './pages/Page404';
@@ -38,6 +40,10 @@ export default function Router() {
         {
           path: '/tasks',
           element: <Tasks />,
+        },
+        {
+          path: '/tasks/:id',
+          element: <CurrentTaskReportLenta />,
         },
         { path: '/timeline', element: <Timeline /> },
         {

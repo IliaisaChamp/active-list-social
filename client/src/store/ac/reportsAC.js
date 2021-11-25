@@ -1,4 +1,4 @@
-import { SET_COMMENT, SET_REPORT, SET_REPORTS, ALL_REPORTS_FOR_TOP } from '../types/reportsTypes';
+import { SET_COMMENT, SET_REPORT, SET_REPORTS, ALL_REPORTS_FOR_TOP, CURRENT_TASK_REPORTS } from '../types/reportsTypes';
 import axios from 'axios';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 import { stopLoading } from './isLoadingAC';
@@ -12,6 +12,16 @@ export const setReports = (reports) => {
   };
 };
 
+export const currentTaskReports = (taskID) => async (dispatch) => {
+  console.log(taskID);
+  const response = await axios(`${BASE_URL}/reports/tasks/${taskID}`);
+  const { reports } = response.data;
+  console.log(response.data);
+  dispatch({
+    type: CURRENT_TASK_REPORTS,
+    payload: reports,
+  });
+};
 
 export const setAllReportsForTop = () => async (dispatch) => {
   const response = await axios(`${BASE_URL}/reports/top`);
@@ -20,38 +30,37 @@ export const setAllReportsForTop = () => async (dispatch) => {
   dispatch({
     type: ALL_REPORTS_FOR_TOP,
     payload: reports,
-  })
-}
+  });
+};
 
-export const setNewReport =
-  (data, taskID, userID, navigate, socket) => async (dispatch) => {
-    await axios
-      .post(`${BASE_URL}/tasks/${taskID}/report`, data, {
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        // dispatch(setNewReportNotification('REPORT CREATED'))
-        socket.current.emit("report-created", res.data.report);
-        dispatch(
-          setSuccessMessage({
-            message: "Отчет успешно добавлен",
-            type: "success",
-          })
-        );
-        navigate(`/profile/${userID}`);
-      })
-      .catch((e) => {
-        console.log(e);
-        dispatch(
-          setErrorMessage({
-            message: e?.response?.data?.message,
-            type: "error",
-          })
-        );
-      });
-  };
+export const setNewReport = (data, taskID, userID, navigate, socket) => async (dispatch) => {
+  await axios
+    .post(`${BASE_URL}/tasks/${taskID}/report`, data, {
+      headers: {
+        'Content-type': 'multipart/form-data',
+      },
+    })
+    .then((res) => {
+      // dispatch(setNewReportNotification('REPORT CREATED'))
+      socket.current.emit('report-created', res.data.report);
+      dispatch(
+        setSuccessMessage({
+          message: 'Отчет успешно добавлен',
+          type: 'success',
+        }),
+      );
+      navigate(`/profile/${userID}`);
+    })
+    .catch((e) => {
+      console.log(e);
+      dispatch(
+        setErrorMessage({
+          message: e?.response?.data?.message,
+          type: 'error',
+        }),
+      );
+    });
+};
 
 export const getReports = () => (dispatch) => {
   axios(`${BASE_URL}/reports`)
@@ -60,7 +69,6 @@ export const getReports = () => (dispatch) => {
     .finally(() => dispatch(stopLoading()));
   // const { reports } = response.data;
 };
-
 
 const setReportAction = (value) => ({
   type: SET_REPORT,
