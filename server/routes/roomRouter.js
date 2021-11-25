@@ -5,7 +5,11 @@ const RoomController = require('../controllers/roomController');
 router
     .route('/')
     .post(checkAuth, RoomController.createRoom)
-    .get(checkAuth, RoomController.getUserRooms);
+    .get(checkAuth, RoomController.getUserRooms)
+
+router
+    .route('/:id')
+    .delete(checkAuth, RoomController.deleteRoom)
 
 router
     .route('/:id/users')

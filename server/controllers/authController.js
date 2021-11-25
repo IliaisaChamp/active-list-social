@@ -6,7 +6,7 @@ class CheckController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ message: 'Ошибка при регистрации', errors });
+        return res.status(400).json({ message: errors.errors[0].msg, errors });
       }
       const { nickname, email, password } = req.body;
 

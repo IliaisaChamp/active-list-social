@@ -29,17 +29,13 @@ class RoomService {
     const senderRoomsId = senderRooms.map((room) => room.room_id);
     const recipientRoomsId = recipientRooms.map((room) => room.room_id);
     let chat;
-    console.log(senderRoomsId);
-    console.log(recipientRoomsId);
     senderRoomsId.forEach((roomId) => {
       if (recipientRoomsId.includes(roomId)) {
         chat = roomId;
       }
     });
-    console.log('ROOM ->>>', chat);
     if (!chat) {
       const newRoom = await Room.create();
-      console.log('NEW ROOM CREATED ->>>>>>', newRoom);
       await RoomUser.bulkCreate(
         [
           { room_id: newRoom.id, user_id: senderId },
@@ -47,9 +43,10 @@ class RoomService {
         ],
         { returning: true },
       );
-      return newRoom;
+      return { ...newRoom.get({ plain: true }), new: true };
     } else {
-      return await Room.findOne({ where: { id: chat } });
+      const room = await Room.findOne({ where: { id: chat } });
+      return { ...room.get({ plain: true }), new: false };
     }
   }
 }
