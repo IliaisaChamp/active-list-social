@@ -1,8 +1,4 @@
-import {
-  FLASH_SET_ERROR,
-  FLASH_SET_SUCCESS,
-  FLASH_CLEAR,
-} from '../types/flashTypes';
+import { FLASH_SET_ERROR, FLASH_SET_SUCCESS, FLASH_CLEAR } from '../types/flashTypes';
 
 const flashMessageReducer = (state = {}, action) => {
   const { type, payload } = action;

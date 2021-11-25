@@ -1,5 +1,5 @@
 import { Fireworks, useFireworks } from 'fireworks-js/dist/react';
-import { CSSProperties } from 'react';
+import { CSSProperties, useEffect } from 'react';
 
 const Salut = () => {
   const { enabled, options, setEnabled, setOptions } = useFireworks({
@@ -34,15 +34,11 @@ const Salut = () => {
         visible: false,
       },
       sound: {
-        enabled: false,
-        files: [
-          'https://fireworks.js.org/sounds/explosion0.mp3',
-          'https://fireworks.js.org/sounds/explosion1.mp3',
-          'https://fireworks.js.org/sounds/explosion2.mp3',
-        ],
+        enabled: true,
+        files: ['/static/sounds/explosion0.mp3', '/static/sounds/explosion1.mp3', '/static/sounds/explosion2.mp3'],
         volume: {
-          min: 1,
-          max: 2,
+          min: 100,
+          max: 100,
         },
       },
       mouse: {
@@ -52,33 +48,43 @@ const Salut = () => {
       },
     },
   });
-
+  //  useEffect(() => {
+  //     // setOptions({ sound: { enabled: !options.sound?.enabled } });
+  //     // setOptions({ sound: { enabled: !options.sound?.enabled } });
+  //     setOptions({ sound: { enabled: true } });
+  //   }, []);
+  // const toggleSound = () => {
+  //   setOptions({ sound: { enabled: !options.sound?.enabled } });
+  // };
   const style: CSSProperties = {
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
+    // top: 0,
+    // left: 0,
+    width: '100vw',
+    height: '100vh',
     position: 'fixed',
     background: '#000',
-  };
-
-  const toggleSound = () => {
-    setOptions({ sound: { enabled: !options.sound?.enabled } });
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
   };
 
   return (
     <Fireworks style={style} enabled={enabled} options={options}>
       <div
         style={{
-          gap: '6px',
-          padding: '6px',
-          display: 'flex',
-          background: '#607d8b',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+
+          width: 400,
+          height: 300,
+          overflow: 'hidden',
+          borderRadius: 30,
         }}>
-        <button onClick={() => setEnabled()}>Fireworks {enabled ? 'enabled' : 'disabled'}</button>
-        {/* <button onClick={() => toggleSound()}>
-          Sound {options.sound!.enabled ? 'enabled' : 'disabled'}
-        </button> */}
+        {/* <button onClick={() => setEnabled()}>Fireworks {enabled ? 'disabled' : 'enabled'}</button> */}
+        {/* <button onClick={() => toggleSound()}>Sound {options.sound?.enabled ? 'disabled' : 'enabled'}</button> */}
+        <img src="/static/elbrus.jpg" alt="" />
       </div>
     </Fireworks>
   );
