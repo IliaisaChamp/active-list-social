@@ -17,6 +17,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
+import { BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
 
 // ----------------------------------------------------------------------
 
@@ -59,12 +60,12 @@ const CoverImgStyle = styled('img')({
 });
 
 const BASE_URL = 'http://localhost:3001/img/';
-const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
+// const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
 
 // ----------------------------------------------------------------------
 
 TopPostCard.propTypes = {
-  post: PropTypes.object.isRequired,
+  post: PropTypes.object,
   index: PropTypes.number,
 };
 
@@ -136,7 +137,7 @@ export default function TopPostCard({ report, index }) {
           />
           <AvatarStyle
             alt={User?.nickname}
-            src={`${BASE_URL}${User?.avatar}`}
+            src={User?.avatar ? `${BASE_URL_AVATAR}${User?.avatar}` : '/static/defaultavatar.png'}
             component={RouterLink}
             to={`/profile/${User?.id}`}
             sx={{
@@ -150,7 +151,7 @@ export default function TopPostCard({ report, index }) {
             }}
           />
 
-          <CoverImgStyle alt={User?.nickname} src={BASE_URL_REPORT_IMAGES + images[0]} />
+          <CoverImgStyle alt={User?.nickname} src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultred.webp'} />
         </CardMediaStyle>
 
         <CardContent

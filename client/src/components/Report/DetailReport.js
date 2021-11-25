@@ -11,6 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
 import { BASE_URL_AVATAR } from '../../config/constants';
+import { fDateTime } from '../../utils/formatTime';
 
 const BASE_URL = 'http://localhost:3001/img/reports/';
 
@@ -21,6 +22,7 @@ export default function DetailReport() {
 
   const user = useSelector((state) => state.user);
   const [isLiked, setIsLiked] = useState(false);
+  const [time, setTime] = useState(false);
   const [likesCount, setLikesCount] = useState(currentReport?.Likes?.length);
 
   const findUserLike = useCallback((userID) => currentReport?.Likes?.find((like) => userID === like.user_id), [currentReport?.Likes]);
@@ -29,6 +31,7 @@ export default function DetailReport() {
     const isLiked = findUserLike(user?.id);
     setIsLiked(!!isLiked);
     setLikesCount(currentReport?.Likes?.length);
+    setTime(currentReport?.createdAt);
   }, [currentReport, user, findUserLike]);
 
   const handleSetLike = () => {
@@ -43,7 +46,7 @@ export default function DetailReport() {
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
       })
       .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
-  }, [isLiked]);
+  }, [isLiked, id]);
 
   useEffect(() => {
     dispatch(getReportById(id));
@@ -56,11 +59,21 @@ export default function DetailReport() {
       </Typography>
 
       <Carousel autoPlay={false} emulateTouch={true} useKeyboardArrows={true} style={{ backgroundColor: 'green' }}>
-        {currentReport?.images?.map((el, id) => (
+        {currentReport?.images?.length ? (
+          currentReport?.images?.map((el, id) => (
+            <div key={id}>
+              <img src={`${BASE_URL}${el}`} style={{ maxHeight: '450px', width: '100%', objectFit: 'contain' }} alt={el.src} />
+            </div>
+          ))
+        ) : (
           <div key={id}>
-            <img src={`${BASE_URL}${el}`} style={{ maxHeight: '500px', width: '100%', objectFit: 'contain' }} alt={el.src} />
+            <img
+              src={`/static/defaultred.webp`}
+              style={{ maxHeight: '300px', width: '100%', objectFit: 'contain' }}
+              alt="default"
+            />
           </div>
-        ))}
+        )}
       </Carousel>
 
       <CardContent>
@@ -73,10 +86,11 @@ export default function DetailReport() {
             gutterBottom
             variant="h5"
             component={RouterLink}
-            to={`/profile/${currentReport.User?.id}`}
-            // sx={{ textDecoration: 'none', color: 'inherit' }}
-          >
+            to={`/profile/${currentReport.User?.id}`}>
             &#64;{currentReport.User?.nickname}
+          </Typography>
+          <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
+            {/* {fDateTime(time && currentReport.createdAt)} */}
           </Typography>
         </Stack>
         <Typography padding={2} color="text.secondary">

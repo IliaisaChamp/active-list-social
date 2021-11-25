@@ -23,7 +23,6 @@ export default function Notification() {
 
   const notification = useSelector((state) => state.notification);
 
-
   useEffect(() => {
     if (notification.message.length > 0) {
       setNotificationState({
@@ -46,7 +45,7 @@ export default function Notification() {
         anchorOrigin={{ vertical, horizontal }}
         TransitionComponent={notification.Transition}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          <Link variant="subtitle2" component={RouterLink} to={notification?.url}>
+          <Link variant="subtitle2" component={RouterLink} to={notification?.url} sx={{ textDecoration: 'none', color: 'inherit' }}>
             {notification?.message}
           </Link>
         </Alert>

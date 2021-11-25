@@ -16,6 +16,7 @@ import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
+import { BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
 
 // ----------------------------------------------------------------------
 
@@ -65,9 +66,6 @@ LentaPostCard.propTypes = {
   index: PropTypes.number,
 };
 
-const BASE_URL = 'http://localhost:3001/img/';
-const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
-
 export default function LentaPostCard({ report, index }) {
   const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
   const navigate = useNavigate();
@@ -76,8 +74,6 @@ export default function LentaPostCard({ report, index }) {
   const [likesCount, setLikesCount] = useState(Likes?.length);
 
   const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
-
-  // const memoizeValue = useMemo(() => findUserLike(user?.id), [findUserLike, user]);
 
   useEffect(() => {
     const isLiked = findUserLike(user?.id);
@@ -106,11 +102,8 @@ export default function LentaPostCard({ report, index }) {
         <CardActionArea onClick={() => navigate(`/reports/${id}`)}>
           <CardMediaStyle>
             <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
-            <AvatarStyle alt={User?.nickname} src={`${BASE_URL}${User?.avatar}`} />
-            <CoverImgStyle
-              alt={User?.nickname}
-              src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultreport.jpeg'}
-            />
+            <AvatarStyle alt={User?.nickname} src={User?.avatar ? `${BASE_URL_AVATAR}${User?.avatar}` : '/static/defaultavatar.png'} />
+            <CoverImgStyle alt={User?.nickname} src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultred.webp'} />
           </CardMediaStyle>
         </CardActionArea>
         <CardContent>

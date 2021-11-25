@@ -16,8 +16,6 @@ module.exports = {
       if (id > 180 && id <= 230) return { task_id: id, category_id: 7 };
       return { task_id: id, category_id: 8};
     })
-    console.log(categoryTasks.length);
-    console.dir(categoryTasks);
     await queryInterface.bulkInsert('CategoryTasks', categoryTasks, {});
   },
 
