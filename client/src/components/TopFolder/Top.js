@@ -7,7 +7,6 @@ import { Grid, Container, Stack, Typography } from '@mui/material';
 import Page from '../Page/Page';
 import { TopPostCard, TopPostsSort, TopPostsSearch } from '.';
 
-import POSTS from '../../_mocks_/blog';
 import { setAllReportsForTop } from '../../store/ac/reportsAC';
 import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
@@ -36,7 +35,6 @@ export default function Top() {
         </Typography>
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <TopPostsSearch posts={POSTS} />
           <TopPostsSort options={SORT_OPTIONS} />
         </Stack>
         <Grid container spacing={3}>
