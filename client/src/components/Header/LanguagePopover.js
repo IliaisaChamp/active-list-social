@@ -24,6 +24,16 @@ const LANGS = [
     label: 'French',
     icon: '/static/icons/ic_flag_fr.svg',
   },
+  {
+    value: 'korean',
+    label: 'Korean',
+    icon: '/static/icons/Flag_of_South_Korea.png',
+  },
+  {
+    value: 'buryat',
+    label: 'Buryatia',
+    icon: '/static/icons/ic_flag_ru.svg',
+  },
 ];
 
 // ----------------------------------------------------------------------
@@ -80,10 +90,11 @@ export default function LanguagePopover() {
               key={option?.value}
               selected={option?.value === LANGS[icon]?.value}
               onClick={() => handleChangeLanguage(option.value, id)}
-              sx={{ py: 1, px: 2.5 }}
+
+
             >
               <ListItemIcon>
-                <Box component="img" alt={option.label} src={option.icon} />
+                <Box component="img" alt={option.label} src={option.icon} sx={{ width: 44, height: 20}}/>
               </ListItemIcon>
               <ListItemText primaryTypographyProps={{ variant: 'body2' }}>
                 {option.label}
