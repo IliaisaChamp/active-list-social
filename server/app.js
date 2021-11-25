@@ -26,13 +26,14 @@ const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
 const taskRouter = require('./routes/taskRouter');
 const reportRouter = require('./routes/reportRouter');
-const roomRouter = require('./routes/roomRouter')
+const roomRouter = require('./routes/roomRouter');
+const spinnerTimeout = require('./middleware/spinnerTimeout');
 
-app.use('/api/users', userRouter);
+app.use('/api/users', spinnerTimeout, userRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/tasks', taskRouter);
-app.use('/api/reports', reportRouter);
-app.use('/api/rooms', roomRouter);
+app.use('/api/tasks', spinnerTimeout, taskRouter);
+app.use('/api/reports', spinnerTimeout, reportRouter);
+app.use('/api/rooms', spinnerTimeout, roomRouter);
 
 app.use((req, res, next) => next(createError(404)));
 

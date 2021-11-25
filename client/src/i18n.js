@@ -6,12 +6,14 @@ const resources = {
     translation: {
       pages: {
         auth: {
+          head: 'Авторизация',
           title: 'Привет, с возвращением!',
           sub: 'Введите свои данные ниже.',
           create: 'Создать',
           q: 'Нет учетной записи?',
           remember: 'Запомнить меня',
           or: 'ИЛИ',
+          button: 'Главная',
         },
         reg: {
           title: 'Начни абсолютно бесплатно.',
@@ -98,20 +100,22 @@ const resources = {
         profile: 'Профиль',
       },
       chat: {
-        errorMessage: 'Сообщение не отправлено'
-      }
+        errorMessage: 'Сообщение не отправлено',
+      },
     },
   },
   en: {
     translation: {
       pages: {
         auth: {
+          head: 'Authorization',
           title: 'Hello, welcome back!',
           sub: 'Enter your info below.',
           create: 'Create',
           q: "Don't have an account?",
           remember: 'Remember me',
           or: 'OR',
+          button: 'Home',
         },
         reg: {
           title: 'Get started absolutely free.',
@@ -123,11 +127,11 @@ const resources = {
         },
         goals: {
           head: 'Goals',
-          title: 'Goal list',
+          title: 'Goals list',
         },
         recommend: {
           head: 'Recommended',
-          title: 'These users have the same goal lists',
+          title: 'These users have the same goals lists',
           header: {
             reports: 'Reports',
             name: 'Nickname',
@@ -203,12 +207,14 @@ const resources = {
     translation: {
       pages: {
         auth: {
+          head: 'Autorisation',
           title: 'Bonjour, bon retour !',
           sub: 'Entrez vos informations ci-dessous.',
           create: 'Créer',
           q: "Vous n'avez pas de compte ?",
           remember: 'Souviens-toi de moi',
           or: 'OU',
+          button: 'Accueil',
         },
         reg: {
           title: 'Commencez tout à fait gratuitement.',
@@ -258,16 +264,17 @@ const resources = {
           title: 'Сайн уу, эргэн тавтай морил!',
           sub: 'Доор дэлгэрэнгүй мэдээллээ оруулна уу.',
           create: 'Үүсгэх',
-          q: "Бүртгэлгүй юу?",
+          q: 'Бүртгэлгүй юу?',
           remember: 'Намайг санаарай',
           or: 'ЭСВЭЛ',
+          button: 'Accueil',
         },
         reg: {
           title: 'Үнэгүй эхлээрэй.',
           sub: 'Үүрд ​​чөлөөтэй. Зээлийн карт шаардлагагүй.',
           login: 'Орох гэж',
           q: 'Бүртгэлтэй юу?',
-          warning: "Бүртгүүлснээр би зөвшөөрч байна",
+          warning: 'Бүртгүүлснээр би зөвшөөрч байна',
           politic: 'Нууцлалын бодлого',
         },
         goals: {
@@ -276,7 +283,7 @@ const resources = {
       },
       form: {
         login_submit: 'Орох гэж',
-        register_submit: "Яг одоо бүртгүүл",
+        register_submit: 'Яг одоо бүртгүүл',
         email: 'Имэйл',
         first_name: 'Нэр',
         last_name: 'Овог',
@@ -287,7 +294,7 @@ const resources = {
       },
       report: {
         textarea: 'Дэлгэрэнгүй тодорхойлолт',
-        title: "Зорилго гүйцэтгэлийн тайланг үүсгэх",
+        title: 'Зорилго гүйцэтгэлийн тайланг үүсгэх',
         form_button: 'Илгээх',
       },
       sideBar: {
@@ -307,19 +314,21 @@ const resources = {
     translation: {
       pages: {
         auth: {
+          head: '권한 부여',
           title: '안녕하세요, 다시 오신 것을 환영합니다!',
           sub: '아래에 세부정보를 입력하세요.',
           create: '창조하다',
-          q: "계정이 없으신가요?",
+          q: '계정이 없으신가요?',
           remember: 'Н날 기억해',
           or: '또는',
+          button: '홈페이지',
         },
         reg: {
           title: '완전 무료로 시작하세요.',
           sub: '영원히 무료입니다. 신용 카드가 필요하지 않습니다.',
           login: '안으로',
           q: '이미 계정이 있습니까?',
-          warning: "Б등록함으로써 동의합니다",
+          warning: 'Б등록함으로써 동의합니다',
           politic: '개인 정보 정책',
         },
         goals: {
@@ -328,7 +337,7 @@ const resources = {
       },
       form: {
         login_submit: '안으로',
-        register_submit: "지금 등록하세요",
+        register_submit: '지금 등록하세요',
         email: '이메일',
         first_name: '이름',
         last_name: '성',
@@ -339,7 +348,7 @@ const resources = {
       },
       report: {
         textarea: '상세 설명',
-        title: "목표 완료 보고서 생성",
+        title: '목표 완료 보고서 생성',
         form_button: '보내다',
       },
       sideBar: {

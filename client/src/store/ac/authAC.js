@@ -66,7 +66,7 @@ export const logoutUser = (navigate) => async (dispatch, getState) => {
   const { socket } = getState();
   axios('/api/auth/logout')
     .then(() => {
-      navigate('/');
+      navigate('/top');
       socket?.current?.emit('logout');
       localStorage.removeItem('user');
       dispatch(deleteUser());

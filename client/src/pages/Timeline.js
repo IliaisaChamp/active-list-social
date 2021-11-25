@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-// mui
 import { Grid, Container, Typography } from '@mui/material';
-
 import Page from '../components/Page/Page';
 import Loader from '../components/Loader/Loader';
 import LentaPostCard from '../components/LentaFolder/LentaPostCard';
@@ -11,11 +9,13 @@ import RightSideLentaMenu from '../components/LentaFolder/RightSideLentaMenu';
 import { getReports, setReports } from '../store/ac/reportsAC';
 import { startLoading } from '../store/ac/isLoadingAC';
 
+
 export default function Timeline() {
   const reports = useSelector((state) => state.reports);
   const isLoading = useSelector((state) => state.isLoading);
   const dispatch = useDispatch();
   const [offset, setOffset] = useState(0);
+
   const [currentReports, setCurrentReports] = useState(null);
   const { t } = useTranslation();
 
@@ -60,14 +60,13 @@ export default function Timeline() {
               {currentReports?.map((report, index) => (
                 <LentaPostCard key={report.id} report={report} index={index} />
               ))}
-              {/* {reports?.map((report, index) => (
-            <LentaPostCard key={report.id} report={report} index={index} />
-          ))} */}
             </Grid>
-            <RightSideLentaMenu />
           </Container>
         </>
       )}
+
+      <RightSideLentaMenu />
+
     </Page>
   );
 }

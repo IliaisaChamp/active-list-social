@@ -1,8 +1,9 @@
-import { Grid, List, ListItemButton, ListItemText } from '@mui/material';
-
-import { makeStyles } from '@mui/styles';
-
 import React from 'react';
+import { Grid, List, ListItemButton, ListItemText } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { makeStyles } from '@mui/styles';
+import { getSubsReports, getReports, setAllReports } from '../../store/ac/reportsAC';
+import { startLoading } from '../../store/ac/isLoadingAC';
 
 const useStyles = makeStyles({
   table: {
@@ -25,18 +26,33 @@ const useStyles = makeStyles({
 });
 
 const RightSideLentaMenu = () => {
+  const dispatch = useDispatch();
+
+  const getOnlyUserReports = () => {
+    dispatch(startLoading());
+    dispatch(getReports());
+  };
+
+  const getAllReports = () => {
+    dispatch(setAllReports());
+  }
+
+  const getOnlySubsReports = () => {
+    dispatch(getSubsReports());
+  };
+
   const classes = useStyles();
   return (
-    <Grid item xs={3} className={classes.borderLeft500} sx={{ position: 'fixed', right: 0, top: '40%' }}>
+    <Grid item xs={3} className={classes.borderLeft500} sx={{ position: 'fixed', right: 10, top: '40%' }}>
       <List>
-        <ListItemButton>
+        <ListItemButton onClick={getOnlyUserReports}>
           <ListItemText>Отчеты для Вас</ListItemText>
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton onClick={getOnlySubsReports}>
           <ListItemText>Отчеты подписок</ListItemText>
         </ListItemButton>
-        <ListItemButton>
-          <ListItemText>Случайные отчеты</ListItemText>
+        <ListItemButton onClick={getAllReports}>
+          <ListItemText>Все отчеты</ListItemText>
         </ListItemButton>
       </List>
     </Grid>

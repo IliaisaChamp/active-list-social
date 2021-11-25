@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { checkUser, deleteUser } from './store/ac/authAC';
 // routes
 import Router from './routes';
-
 // theme
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';

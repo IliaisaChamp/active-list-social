@@ -58,10 +58,8 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentTaskIdBitch = () => {
-    console.log("adassfsdf");
     dispatch(currentTaskReports(task?.id))
     navigate(`/tasks/${task?.id}`)
-    console.log(task?.id);
   };
 
   return (
@@ -78,6 +76,7 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
           primaryTypographyProps={{ variant: 'subtitle2' }}
           secondaryTypographyProps={{}}
           secondary={task?.Reports !== undefined ? 'Количество отчетов' + ' ' + task?.Reports + ' ' : false}
+          sx={{'&:hover': {cursor: 'pointer'}}}
         />
 
         <div style={{ display: 'flex', alignItems: 'baseline' }}>

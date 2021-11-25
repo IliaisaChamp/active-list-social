@@ -3,7 +3,6 @@ const UserService = require('../services/userService');
 const { Op, Sequelize } = require('sequelize');
 
 class ReportController {
-
   static async getCurrentTaskReports(req, res) {
     const { id } = req.params;
     console.log(id);
@@ -19,21 +18,20 @@ class ReportController {
           },
         ],
         where: {
-          task_id: id
+          task_id: id,
         },
         order: [
           ['createdAt', 'DESC'],
           [Comment, 'createdAt', 'DESC'],
         ],
       });
-      console.log({reports});
-      return res.json({reports});
+      console.log({ reports });
+      return res.json({ reports });
     } catch (e) {
       console.log(e);
       return res.status(400).json({ message: 'Отчет не найден' });
     }
   }
-
 
   static async getAllReportsForTop(req, res) {
     try {
@@ -47,18 +45,16 @@ class ReportController {
             include: [{ model: User, attributes: ['nickname', 'avatar'] }],
           },
         ],
-        order: [
-          ['createdAt', 'DESC'],
-        ],
+        order: [['createdAt', 'DESC']],
       });
-      reports.sort((a, b) => -a.Likes.length + b.Likes.length)
-      return res.json({reports});
+
+      // reports.sort((a, b) => -a.Likes.length + b.Likes.length);
+      return res.json({ reports });
     } catch (e) {
       console.log(e);
       return res.status(400).json({ message: 'Отчет не найден' });
     }
   }
-  
 
   static async getReportById(req, res) {
     // console.log("router by id");
@@ -119,32 +115,32 @@ class ReportController {
     try {
       const userTasks = await UserService.getUserTasks(req.session.user.id);
 
-      const userFollowings = await Follower.findAll({
-        raw: true,
-        where: {
-          follower_id: req.session.user.id,
-        },
-      });
+      // const userFollowings = await Follower.findAll({
+      //   raw: true,
+      //   where: {
+      //     follower_id: req.session.user.id,
+      //   },
+      // });
 
-      if (!userTasks && !userFollowings) {
+      if (!userTasks) {
         return res.status(400).json({ message: 'Отчетов нет' });
       }
 
-      const [followingsTasks] = await Promise.all(
-        userFollowings.map((user) => {
-          return UserService.getUserTasks(user.user_id);
-        }),
-      );
+      // const [followingsTasks] = await Promise.all(
+      //   userFollowings.map((user) => {
+      //     return UserService.getUserTasks(user.user_id);
+      //   }),
+      // );
 
       const userTasksIds = userTasks?.map((el) => el.task_id) ?? [];
 
-      const followingsTasksIds = followingsTasks?.map((el) => el.task_id) ?? [];
+      // const followingsTasksIds = followingsTasks?.map((el) => el.task_id) ?? [];
 
-      const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
+      // const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
       const reports = await Report.findAll({
         where: {
           task_id: {
-            [Op.in]: [...tasksIdSet],
+            [Op.in]: userTasksIds,
           },
         },
 
@@ -157,6 +153,55 @@ class ReportController {
         // attributes: {
         //   include: [[Sequelize.fn('COUNT', Sequelize.col('Comments.id')), 'commentsCount']],
         // },
+        order: [['createdAt', 'DESC']],
+      });
+
+      if (reports) {
+        return res.json({ reports });
+      } else {
+        return res.status(400).json({ message: 'Отчетов нет' });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
+    }
+  }
+
+  static async getSubsReports(req, res) {
+    try {
+      const userFollowings = await Follower.findAll({
+        raw: true,
+        where: {
+          follower_id: req.session.user.id,
+        },
+      });
+
+      if (!userFollowings) {
+        return res.status(400).json({ message: 'Отчетов нет' });
+      }
+
+      const [followingsTasks] = await Promise.all(
+        userFollowings.map((user) => {
+          return UserService.getUserTasks(user.user_id);
+        }),
+      );
+
+      const followingsTasksIds = followingsTasks?.map((el) => el.task_id) ?? [];
+
+      // const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
+      const reports = await Report.findAll({
+        where: {
+          task_id: {
+            [Op.in]: followingsTasksIds,
+          },
+        },
+
+        include: [
+          { model: User, attributes: ['nickname', 'avatar', 'id'] },
+          { model: Task, attributes: ['title'] },
+          { model: Like },
+          { model: Comment, attributes: ['id'] },
+        ],
         order: [['createdAt', 'DESC']],
       });
 

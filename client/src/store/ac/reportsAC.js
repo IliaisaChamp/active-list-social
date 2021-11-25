@@ -1,7 +1,7 @@
 import { SET_COMMENT, SET_REPORT, SET_REPORTS, ALL_REPORTS_FOR_TOP, CURRENT_TASK_REPORTS } from '../types/reportsTypes';
 import axios from 'axios';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
-import { stopLoading } from './isLoadingAC';
+import { startLoading, stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
@@ -13,10 +13,9 @@ export const setReports = (reports) => {
 };
 
 export const currentTaskReports = (taskID) => async (dispatch) => {
-  console.log(taskID);
   const response = await axios(`${BASE_URL}/reports/tasks/${taskID}`);
   const { reports } = response.data;
-  console.log(response.data);
+
   dispatch({
     type: CURRENT_TASK_REPORTS,
     payload: reports,
@@ -24,13 +23,14 @@ export const currentTaskReports = (taskID) => async (dispatch) => {
 };
 
 export const setAllReportsForTop = () => async (dispatch) => {
+  dispatch(startLoading());
   const response = await axios(`${BASE_URL}/reports/top`);
-  console.log('response for top', response.data);
   const { reports } = response.data;
   dispatch({
     type: ALL_REPORTS_FOR_TOP,
     payload: reports,
   });
+  dispatch(stopLoading());
 };
 
 export const setNewReport = (data, taskID, userID, navigate, socket) => async (dispatch) => {
@@ -41,7 +41,6 @@ export const setNewReport = (data, taskID, userID, navigate, socket) => async (d
       },
     })
     .then((res) => {
-      // dispatch(setNewReportNotification('REPORT CREATED'))
       socket.current.emit('report-created', res.data.report);
       dispatch(
         setSuccessMessage({
@@ -52,7 +51,6 @@ export const setNewReport = (data, taskID, userID, navigate, socket) => async (d
       navigate(`/profile/${userID}`);
     })
     .catch((e) => {
-      console.log(e);
       dispatch(
         setErrorMessage({
           message: e?.response?.data?.message,
@@ -67,7 +65,6 @@ export const getReports = () => (dispatch) => {
     .then((response) => dispatch(setReports(response.data.reports)))
     .catch((e) => console.log(e))
     .finally(() => dispatch(stopLoading()));
-  // const { reports } = response.data;
 };
 
 const setReportAction = (value) => ({
@@ -76,15 +73,16 @@ const setReportAction = (value) => ({
 });
 
 export const getReportById = (id) => async (dispatch) => {
+  dispatch(startLoading());
   const response = await axios(`${BASE_URL}/reports/${id}`);
-  console.log(response.data);
+
   dispatch(setReportAction(response.data));
+  dispatch(stopLoading());
 };
 
 export const getUserReports = (id) => (dispatch) => {
   axios(`${BASE_URL}/users/${id}/reports`)
     .then((response) => {
-      console.log(response.data);
       dispatch(setReports(response.data.reports));
     })
     .catch((e) => console.log(e))
@@ -111,4 +109,21 @@ export const setComment = (text, id) => async (dispatch) => {
         }),
       );
     });
+};
+
+export const getSubsReports = () => async (dispatch) => {
+  dispatch(startLoading());
+  axios(`${BASE_URL}/reports/subs`)
+    .then((response) => dispatch(setReports(response.data.reports)))
+    .catch((e) => console.log(e))
+    .finally(() => dispatch(stopLoading()));
+};
+
+export const setAllReports = () => async (dispatch) => {
+  dispatch(startLoading());
+  const response = await axios(`${BASE_URL}/reports/top`);
+  const { reports } = response.data;
+
+  dispatch(setReports(reports));
+  dispatch(stopLoading());
 };

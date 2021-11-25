@@ -1,7 +1,7 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography } from '@mui/material';
+import { Box, Card, Link, Container, Typography, Button } from '@mui/material';
 // layouts
 import AuthLayout from '../layouts/AuthLayout';
 // components
@@ -15,8 +15,8 @@ import { useTranslation } from 'react-i18next';
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 }));
 
 const SectionStyle = styled(Card)(({ theme }) => ({
@@ -35,18 +35,22 @@ const ContentStyle = styled('div')(({ theme }) => ({
   minHeight: '100vh',
   flexDirection: 'column',
   justifyContent: 'center',
-  padding: theme.spacing(12, 0)
+  padding: theme.spacing(12, 0),
 }));
 
 // ----------------------------------------------------------------------
 
 export default function Register() {
   const { t } = useTranslation();
+   const navigate = useNavigate();
 
   return (
     <RootStyle title="Register | Minimal-UI">
       <AuthLayout>
-        <Box display="flex" justifyContent="right" spacing={{ xs: 0.5, sm: 1.5 }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }} sx={{ mb: 1 }}>
+          <Button variant="outlined" onClick={() => navigate('/')} sx={{ maxHeight: 30 }}>
+            {t('pages.auth.button')}
+          </Button>
           <LanguagePopover />
         </Box>
         {t('pages.reg.q')} &nbsp;
@@ -57,11 +61,7 @@ export default function Register() {
 
       <MHidden width="mdDown">
         <SectionStyle>
-          <img
-            alt="register"
-            src="/static/illustrations/auth.png"
-            style={{ objectFit: 'contain', height: '80%' }}
-          />
+          <img alt="register" src="/static/illustrations/auth.png" style={{ objectFit: 'contain', height: '80%' }} />
         </SectionStyle>
       </MHidden>
 

@@ -10,8 +10,9 @@ import Comments from '../Comment/Comments';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
-import { BASE_URL_AVATAR } from '../../config/constants';
+import { BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
 import { fDateTime } from '../../utils/formatTime';
+import Loader from '../Loader/Loader';
 
 const BASE_URL = 'http://localhost:3001/img/reports/';
 
@@ -19,10 +20,12 @@ export default function DetailReport() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const currentReport = useSelector((state) => state.currentReport);
+  const isLoading = useSelector((state) => state.isLoading);
 
   const user = useSelector((state) => state.user);
   const [isLiked, setIsLiked] = useState(false);
   const [time, setTime] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [likesCount, setLikesCount] = useState(currentReport?.Likes?.length);
 
   const findUserLike = useCallback((userID) => currentReport?.Likes?.find((like) => userID === like.user_id), [currentReport?.Likes]);
@@ -32,6 +35,9 @@ export default function DetailReport() {
     setIsLiked(!!isLiked);
     setLikesCount(currentReport?.Likes?.length);
     setTime(currentReport?.createdAt);
+    if (user) {
+      setDisabled(false);
+    }
   }, [currentReport, user, findUserLike]);
 
   const handleSetLike = () => {
@@ -54,66 +60,77 @@ export default function DetailReport() {
 
   return (
     <>
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        {currentReport.Task?.title}
-      </Typography>
-
-      <Carousel autoPlay={false} emulateTouch={true} useKeyboardArrows={true} style={{ backgroundColor: 'green' }}>
-        {currentReport?.images?.length ? (
-          currentReport?.images?.map((el, id) => (
-            <div key={id}>
-              <img src={`${BASE_URL}${el}`} style={{ maxHeight: '450px', width: '100%', objectFit: 'contain' }} alt={el.src} />
-            </div>
-          ))
-        ) : (
-          <div key={id}>
-            <img
-              src={`/static/defaultred.webp`}
-              style={{ maxHeight: '300px', width: '100%', objectFit: 'contain' }}
-              alt="default"
-            />
-          </div>
-        )}
-      </Carousel>
-
-      <CardContent>
-        <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-          <RouterLink to={`/profile/${currentReport?.user_id}`}>
-            <Avatar alt={currentReport?.User?.nickname} src={BASE_URL_AVATAR + currentReport?.User?.avatar} />
-          </RouterLink>
-          <Typography
-            style={{ textDecoration: 'none', color: 'inherit' }}
-            gutterBottom
-            variant="h5"
-            component={RouterLink}
-            to={`/profile/${currentReport.User?.id}`}>
-            &#64;{currentReport.User?.nickname}
+      {isLoading > 0 ? (
+        <Loader />
+      ) : (
+        <>
+          <Typography variant="h4" sx={{ mb: 5 }}>
+            {currentReport.Task?.title}
           </Typography>
-          <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-            {/* {fDateTime(time && currentReport.createdAt)} */}
-          </Typography>
-        </Stack>
-        <Typography padding={2} color="text.secondary">
-          {currentReport.desc}
-        </Typography>
 
-        <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
-          <IconButton color={isLiked ? 'error' : 'default'} size="large" sx={{ padding: '5px' }} onClick={handleSetLike}>
-            <Badge badgeContent={likesCount} color="primary">
-              <FavoriteIcon fontSize="inherit" />
-            </Badge>
-          </IconButton>
+          <Carousel autoPlay={false} emulateTouch={true} useKeyboardArrows={true} style={{ backgroundColor: 'green' }}>
+            {currentReport?.images?.length ? (
+              currentReport?.images?.map((el, id) => (
+                <div key={id}>
+                  <img
+                    src={`${BASE_URL_REPORT_IMAGES}${el}`}
+                    style={{ maxHeight: '450px', width: '100%', objectFit: 'contain' }}
+                    alt={el.src}
+                  />
+                </div>
+              ))
+            ) : (
+              <div key={id}>
+                <img src={`/static/defaultred.webp`} style={{ maxHeight: '300px', width: '100%', objectFit: 'contain' }} alt="default" />
+              </div>
+            )}
+          </Carousel>
 
-          <IconButton color="default" size="large" sx={{ padding: '5px' }}>
-            <Badge badgeContent={currentReport.Comments?.length} color="primary">
-              <ChatBubbleOutlineIcon fontSize="inherit" />
-            </Badge>
-          </IconButton>
-        </Stack>
-      </CardContent>
+          <CardContent>
+            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+              <RouterLink to={`/profile/${currentReport?.user_id}`}>
+                <Avatar alt={currentReport?.User?.nickname} src={BASE_URL_AVATAR + currentReport?.User?.avatar} />
+              </RouterLink>
+              <Typography
+                style={{ textDecoration: 'none', color: 'inherit' }}
+                gutterBottom
+                variant="h5"
+                component={RouterLink}
+                to={`/profile/${currentReport.User?.id}`}>
+                {currentReport.User?.nickname}
+              </Typography>
+              <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
+                {fDateTime(time)}
+              </Typography>
+            </Stack>
+            <Typography padding={2} color="text.secondary">
+              {currentReport.desc}
+            </Typography>
 
-      {currentReport?.Comments?.length ? <Comments comments={currentReport?.Comments} /> : null}
-      <CommentForm />
+            <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
+              <IconButton
+                color={isLiked ? 'error' : 'default'}
+                size="large"
+                sx={{ padding: '5px' }}
+                disabled={disabled}
+                onClick={handleSetLike}>
+                <Badge badgeContent={likesCount} color="primary">
+                  <FavoriteIcon fontSize="inherit" />
+                </Badge>
+              </IconButton>
+
+              <IconButton color="default" size="large" sx={{ padding: '5px' }}>
+                <Badge badgeContent={currentReport.Comments?.length} color="primary">
+                  <ChatBubbleOutlineIcon fontSize="inherit" />
+                </Badge>
+              </IconButton>
+            </Stack>
+          </CardContent>
+
+          {currentReport?.Comments?.length ? <Comments comments={currentReport?.Comments} /> : null}
+          {!!user ? <CommentForm /> : null}
+        </>
+      )}
     </>
   );
 }
