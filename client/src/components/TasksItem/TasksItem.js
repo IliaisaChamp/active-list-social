@@ -65,7 +65,7 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
       <RootStyle sx={isPageTask ? {} : task?.isDone ? { ...completedItemStyle } : { ...incompletedItemStyle }}>
         <ModalDeleteTask open={open} handleOpen={handleOpen} handleClose={handleClose} subscribeHandleClose={subscribeHandleClose} />
         <ListItemText
-          disableTypography
+          // disableTypography
           secondaryTypographyProps={{}}
           sx={{ display: 'block' }}
           secondary={task?.Reports !== undefined ? 'Количество отчетов' + ' ' + task?.Reports + ' ' : false}>
