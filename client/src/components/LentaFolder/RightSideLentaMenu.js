@@ -29,7 +29,6 @@ const RightSideLentaMenu = () => {
   const dispatch = useDispatch();
 
   const getOnlyUserReports = () => {
-    dispatch(startLoading());
     dispatch(getReports());
   };
 

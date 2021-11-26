@@ -41,7 +41,6 @@ const useStyles = makeStyles({
 });
 
 const Chat = () => {
-  console.log('CHAT RENDERED');
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();

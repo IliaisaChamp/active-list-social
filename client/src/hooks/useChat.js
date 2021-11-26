@@ -9,10 +9,8 @@ function useChat() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (id) => {
-    dispatch(startLoading());
     dispatch(openChat(id, t));
     navigate('/chats');
-    dispatch(stopLoading());
   };
 }
 

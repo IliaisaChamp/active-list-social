@@ -20,7 +20,6 @@ export default function Timeline() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(startLoading());
     dispatch(getReports());
     return () => {
       dispatch(setReports([]));

@@ -17,8 +17,7 @@ export const fetchSubscribes = (userId) => {
 };
 
 export const getSubsribes = (userId) => (dispatch) => {
-  // dispatch(startLoading());
-  // axios(`${BASE_URL}/users/${userId}/followings`)
+  dispatch(startLoading());
   fetchSubscribes(userId)
     .then((response) => {
       dispatch(setSubscribes(response.data.followings));

@@ -39,20 +39,13 @@ const Profile = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(startLoading());
-    dispatch(startLoading());
-    dispatch(startLoading());
-
     dispatch(getUsersTasks(id));
     dispatch(getProfileStats(id));
     dispatch(getUserReports(id));
     if (user) {
-      dispatch(startLoading());
       dispatch(getSubsribes(user.id));
     }
     if (!isSelfPage) {
-      dispatch(startLoading());
-      dispatch(startLoading());
       dispatch(getCurrentUserSubscribes(id));
       dispatch(getCurrentUser(id));
     }

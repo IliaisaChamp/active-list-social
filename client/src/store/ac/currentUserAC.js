@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { SET_CURRENT_USER } from '../types/currentUserTypes';
 import { setErrorMessage } from './flashAC';
-import { stopLoading } from './isLoadingAC';
+import { startLoading, stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
@@ -13,6 +13,7 @@ export const setCurrentUser = (userInfo) => {
 };
 
 export const getCurrentUser = (userId) => async (dispatch) => {
+  dispatch(startLoading());
   axios(`${BASE_URL}/users/${userId}`)
     .then((response) => {
       dispatch(setCurrentUser(response.data.user));

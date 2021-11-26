@@ -79,22 +79,19 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
   const { id } = useParams();
   const isSubscribed = subscribes.filter((user) => +user.id === +id).length > 0;
   const { t } = useTranslation();
+  const classes = useStyles();
+
   const handleFileInputChange = async (e) => {
     const formData = new FormData();
     formData.append('avatar', e.target.files[0]);
     dispatch(changeAvatar(user?.id, formData));
   };
-  useEffect(() => {
-    if (!isSelfPage) {
-      dispatch(getCurrentUser(id));
-    }
-  }, []);
 
   const messageHandler = () => {
     const recipientId = id;
     openChat(recipientId);
   };
-  const classes = useStyles();
+
   return (
     <div>
       <div
@@ -111,7 +108,6 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
           <Box sx={{ position: 'relative', mr: 6 }}>
             <Avatar
               alt={isSelfPage ? user.first_name : currentUser?.first_name}
-              // src={user?.avatar && `${BASE_URL}/${user.avatar}`}
               src={
                 isSelfPage ? user?.avatar && `${BASE_URL}/${user.avatar}` : currentUser?.avatar && `${BASE_URL}/${currentUser.avatar}`
               }

@@ -33,11 +33,11 @@ export default function ReportForm() {
     try {
       const response = await axios(`${BASE_URL_API}/tasks/${id}`);
       const { task } = await response.data;
-
       setTask(task);
-      dispatch(stopLoading());
     } catch (e) {
       console.log(e);
+    } finally {
+      dispatch(stopLoading());
     }
   }, []);
 

@@ -3,7 +3,7 @@ import { AUTH_USER_REGISTRATION, AUTH_USER_LOGOUT, AUTH_USER_LOGIN } from '../ty
 import { IS_LOADING, STOP_LOADING } from '../types/isLoadingTypes';
 import { setErrorMessage } from './flashAC';
 import { startLoading, stopLoading } from './isLoadingAC';
-import {resetChat} from "./chatAc";
+import { resetChat } from './chatAc';
 
 const setUser = (value) => {
   return {

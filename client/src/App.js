@@ -36,11 +36,9 @@ function App() {
   );
 
   useEffect(() => {
-    // dispatch(startLoading());
     dispatch(checkUser());
   }, [dispatch]);
 
-  console.log('APP RENDER');
   return (
     <ThemeConfig>
       <ScrollToTop />

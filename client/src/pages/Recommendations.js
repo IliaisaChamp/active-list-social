@@ -36,8 +36,6 @@ const Recommendations = () => {
   ];
 
   useEffect(() => {
-    dispatch(startLoading());
-    dispatch(startLoading());
     dispatch(getSubsribes(user?.id));
     dispatch(getRecommendedUsers());
     return () => {

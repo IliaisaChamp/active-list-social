@@ -31,6 +31,7 @@ export const getAllTasks = () => async (dispatch) => {
 };
 
 export const getUsersTasks = (userId) => async (dispatch) => {
+  dispatch(startLoading());
   axios(`${BASE_URL}/users/${userId}/tasks`)
     .then((response) => dispatch(setTasks(response.data.tasks)))
     .catch((e) => console.log(e))
