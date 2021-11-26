@@ -66,8 +66,8 @@ const Salut = () => {
           left: '50%',
           transform: 'translate(-50%, -50%)',
 
-          width: 400,
-          height: 300,
+          width: 800,
+          height: 600,
           overflow: 'hidden',
           borderRadius: 30,
         }}>
