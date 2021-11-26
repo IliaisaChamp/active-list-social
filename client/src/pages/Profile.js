@@ -81,7 +81,6 @@ const Profile = () => {
   const completeTaskHandler = useCallback((taskId) => {
     dispatch(completeTask(taskId));
   }, []);
-
   return (
     <Page title={t('pages.profile.head')}>
       {/* <Salut /> */}

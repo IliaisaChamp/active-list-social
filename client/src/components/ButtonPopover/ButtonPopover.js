@@ -30,7 +30,6 @@ const ButtonPopover = ({
 
   const clickHandler = useCallback(() => {
     setChecked(false);
-    console.log(taskId);
     setTimeout(() => {
       completeTaskHandler ? completeTaskHandler(taskId) : subscribeOnTaskToggle(taskId);
       setChecked(true);
@@ -42,7 +41,7 @@ const ButtonPopover = ({
   }, []);
 
   const open = Boolean(anchorEl);
-
+  // console.log('POPO');
   return (
     <>
       <IconButton
@@ -71,7 +70,8 @@ const ButtonPopover = ({
           horizontal: 'center',
         }}
         onClose={handlePopoverClose}
-        disableRestoreFocus>
+        disableRestoreFocus
+        disableScrollLock>
         <Typography sx={{ p: 1 }}>{text}</Typography>
       </Popover>
     </>
