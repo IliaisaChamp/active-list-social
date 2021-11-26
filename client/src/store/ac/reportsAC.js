@@ -77,7 +77,7 @@ export const setNewReport = (data, taskID, userID, navigate, socket) => async (d
     });
 };
 export const getReports = () => (dispatch) => {
-  dispatch(startLoading())
+  dispatch(startLoading());
   axios(`${BASE_URL}/reports`)
     .then((response) => dispatch(setReports(response.data.reports)))
     .catch((e) => console.log(e))
@@ -90,14 +90,14 @@ const setReportAction = (value) => ({
 
 export const getReportById = (id) => async (dispatch) => {
   dispatch(startLoading());
-  const response = await axios(`${BASE_URL}/reports/${id}`);
-
-  dispatch(setReportAction(response.data));
-  dispatch(stopLoading());
+  await axios(`${BASE_URL}/reports/${id}`)
+    .then((response) => dispatch(setReportAction(response.data)))
+    .catch((e) => console.log(e))
+    .finally(() => dispatch(stopLoading()));
 };
 
 export const getUserReports = (id) => (dispatch) => {
-  dispatch(startLoading())
+  dispatch(startLoading());
   axios(`${BASE_URL}/users/${id}/reports`)
     .then((response) => {
       dispatch(setReports(response.data.reports));
@@ -139,7 +139,7 @@ export const getSubsReports = () => async (dispatch) => {
 export const setAllReports = () => async (dispatch) => {
   dispatch(startLoading());
   axios(`${BASE_URL}/reports/top`)
-      .then((response) => dispatch(setReports(response.data.reports)))
-      .catch((e) => console.log(e))
-      .finally(() => dispatch(stopLoading()));
+    .then((response) => dispatch(setReports(response.data.reports)))
+    .catch((e) => console.log(e))
+    .finally(() => dispatch(stopLoading()));
 };

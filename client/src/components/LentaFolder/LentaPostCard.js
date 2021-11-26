@@ -93,7 +93,10 @@ export default function LentaPostCard({ report }) {
           <CardActionArea onClick={() => (user ? navigate(`/reports/${id}`) : navigate(`/login`))}>
             <CardMediaStyle>
               <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
-              <AvatarStyle alt={User?.nickname} src={User?.avatar ? `${BASE_URL_AVATAR}${User?.avatar}` : '/static/defaultavatar.png'} />
+              <AvatarStyle
+                alt={User?.nickname}
+                src={User?.avatar ? `${BASE_URL_AVATAR}/${User?.avatar}` : '/static/defaultavatar.png'}
+              />
               <CoverImgStyle
                 alt={User?.nickname}
                 src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultred.webp'}

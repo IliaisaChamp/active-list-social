@@ -130,7 +130,7 @@ export default function TopPostCard({ report, index }) {
           />
           <AvatarStyle
             alt={User?.nickname}
-            src={User?.avatar ? `${BASE_URL_AVATAR}${User?.avatar}` : '/static/defaultavatar.png'}
+            src={User?.avatar ? `${BASE_URL_AVATAR}/${User?.avatar}` : '/static/defaultavatar.png'}
             component={RouterLink}
             to={`/profile/${User?.id}`}
             sx={{

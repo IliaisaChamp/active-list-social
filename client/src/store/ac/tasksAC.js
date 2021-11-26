@@ -39,9 +39,7 @@ export const getUsersTasks = (userId) => async (dispatch) => {
 };
 
 export const getFilteredTasks = (filter) => (dispatch) => {
-  // dispatch(startLoading());
   dispatch({ type: GET_TASKS_SAGA, payload: filter });
-  // return ;
 };
 
 export const subscribeOnTask = (taskId) => async (dispatch) => {

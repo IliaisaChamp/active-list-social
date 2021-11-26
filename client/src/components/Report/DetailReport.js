@@ -89,7 +89,7 @@ export default function DetailReport() {
           <CardContent>
             <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
               <RouterLink to={`/profile/${currentReport?.user_id}`}>
-                <Avatar alt={currentReport?.User?.nickname} src={BASE_URL_AVATAR + currentReport?.User?.avatar} />
+                <Avatar alt={currentReport?.User?.nickname} src={`${BASE_URL_AVATAR}/${currentReport?.User?.avatar}`} />
               </RouterLink>
               <Typography
                 style={{ textDecoration: 'none', color: 'inherit' }}
@@ -100,7 +100,7 @@ export default function DetailReport() {
                 {currentReport.User?.nickname}
               </Typography>
               <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-                {fDateTime(time)}
+                {/*{ time && fDateTime(time)}*/}
               </Typography>
             </Stack>
             <Typography padding={2} color="text.secondary">

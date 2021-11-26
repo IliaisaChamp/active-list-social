@@ -36,7 +36,7 @@ function CommentForm() {
           <TextField
             id="standard-multiline-static"
             sx={{ background: 'white' }}
-            label={t('report.textarea')}
+            label="Комментарий"
             multiline
             fullWidth
             rows={4}
