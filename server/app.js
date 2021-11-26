@@ -33,7 +33,7 @@ app.use('/api/users', spinnerTimeout, userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/tasks', spinnerTimeout, taskRouter);
 app.use('/api/reports', spinnerTimeout, reportRouter);
-app.use('/api/rooms', spinnerTimeout, roomRouter);
+app.use('/api/rooms', roomRouter);
 
 app.use((req, res, next) => next(createError(404)));
 

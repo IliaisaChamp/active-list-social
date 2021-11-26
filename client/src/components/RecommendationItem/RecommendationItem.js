@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link, Link as RouterLink} from 'react-router-dom';
 // material
 import { Avatar, Button, TableRow, TableCell, Typography } from '@mui/material';
 import { Icon } from '@iconify/react';
@@ -24,14 +24,7 @@ const RecommendationItem = ({ userInfo, subcsribeHandler, unsubcsribeHandler, is
         <Avatar alt={userInfo.nickname} src={'http://localhost:3001/img/' + userInfo.avatar} />
       </TableCell>
       <TableCell align="left">
-        <Typography
-          gutterBottom
-          variant="h6"
-          component={RouterLink}
-          to={`/profile/${userInfo?.id}`}
-          sx={{ textDecoration: 'none', color: 'inherit', mb: '5px' }}>
-          {userInfo?.nickname}
-        </Typography>
+          <Button component={Link} to={`/profile/${userInfo?.id}`} >{userInfo?.nickname}</Button>
       </TableCell>
       <TableCell align="left">{userInfo.percentCommonTasks}%</TableCell>
       <TableCell align="left">{userInfo.reportsCount}</TableCell>

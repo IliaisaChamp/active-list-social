@@ -24,14 +24,7 @@ const SubscribesItem = ({ userInfo, unsubcsribeFromUser, isOnline, isSelfPage })
         <Avatar src={BASE_URL + avatar} />
       </TableCell>
       <TableCell align="left">
-        <Typography
-          gutterBottom
-          variant="h6"
-          component={Link}
-          to={`/profile/${id}`}
-          sx={{ textDecoration: 'none', color: 'inherit', mb: '5px' }}>
-          {first_name + ' ' + last_name}
-        </Typography>
+          <Button component={Link} to={`/profile/${id}`} >{first_name + ' ' + last_name}</Button>
       </TableCell>
       <TableCell align="left">{nickname}</TableCell>
       <TableCell align="left">
