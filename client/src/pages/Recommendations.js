@@ -1,22 +1,16 @@
 import React from 'react';
 import { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// material
 import { Card, Table, Typography, TableBody, Container, TableContainer } from '@mui/material';
-
-// components
 import Page from '../components/Page/Page';
 import Scrollbar from '../components/Scrollbar/Scrollbar';
 import Loader from '../components/Loader/Loader';
-//
 import RecommendationsHead from '../components/RecommendationsHead/RecommentationsHead';
 import { getRecommendedUsers, setUsersList } from '../store/ac/usersListAC';
 import RecommendationItem from '../components/RecommendationItem/RecommendationItem';
-
 import { isSubscribed } from '../utils/isSubscribed';
 import { getSubsribes, setSubscribes, subscribeOnUser, unsubscribeFromUser } from '../store/ac/subscribesAC';
 import { useTranslation } from 'react-i18next';
-import { startLoading } from '../store/ac/isLoadingAC';
 
 const Recommendations = () => {
   const user = useSelector((state) => state.user);

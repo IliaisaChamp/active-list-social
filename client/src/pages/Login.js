@@ -6,11 +6,9 @@ import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { LoginForm } from '../components/authentication/login';
 import AuthSocial from '../components/authentication/AuthSocial';
-
 import { useTranslation } from 'react-i18next';
 import LanguagePopover from '../components/Header/LanguagePopover';
 import { Box } from '@mui/system';
-
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({

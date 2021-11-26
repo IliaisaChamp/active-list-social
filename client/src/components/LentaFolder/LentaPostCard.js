@@ -53,12 +53,12 @@ LentaPostCard.propTypes = {
   index: PropTypes.number,
 };
 
-export default function LentaPostCard({ report, index }) {
+export default function LentaPostCard({ report }) {
   const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [isLiked, setIsLiked] = useState();
-    const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(true);
   const [likesCount, setLikesCount] = useState(Likes?.length);
 
   const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
@@ -83,7 +83,7 @@ export default function LentaPostCard({ report, index }) {
         setIsLiked(!isLiked);
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
       })
-      .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
+      .catch(() => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
   }, [isLiked]);
 
   return (

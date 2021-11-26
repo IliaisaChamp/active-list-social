@@ -1,19 +1,18 @@
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Stack, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import useInput from '../../hooks/useInput';
 import { setComment } from '../../store/ac/reportsAC';
 import Box from '@mui/material/Box';
-import { usePickerState } from '@mui/lab/internal/pickers/hooks/usePickerState';
 import { useState } from 'react';
+
+//-----------------------------------------------------------------------
 
 function CommentForm() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [value, setValue] = useState();
-
   const { id } = useParams();
 
   const handleSubmit = (e) => {

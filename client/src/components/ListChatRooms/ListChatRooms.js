@@ -7,14 +7,14 @@ import { alpha, useTheme } from '@mui/material/styles';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useTranslation } from 'react-i18next';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { useNavigate } from 'react-router-dom';
+
+//-----------------------------------------------------------------------
 
 function ListChatRooms({ rooms, currentRoomId }) {
   const dispatch = useDispatch();
   const online = useSelector((state) => state.onlineUsers);
   const currentRoom = useSelector((state) => state.chat.room);
   const { t } = useTranslation();
-
   const theme = useTheme();
   const activeRootStyle = {
     color: 'primary.main',
@@ -56,12 +56,10 @@ function ListChatRooms({ rooms, currentRoomId }) {
                 </Badge>
               </ListItemIcon>
               <ListItemText secondary={room.user.nickname} />
-              {/*<Badge color="error" badgeContent={    <MailOutlineIcon/>} variant="dot" overlap="circular">*/}
               <IconButton onClick={(e) => leaveRoomHandler(e, room.id)}>
                 <ClearIcon color="action" fontSize="small" />
               </IconButton>
               {room.hasMessages && <MailOutlineIcon color="success" sx={{ position: 'absolute', left: '93%', top: '-20%' }} />}
-              {/*</Badge>*/}
             </ListItem>
           </Grid>
         </Grid>

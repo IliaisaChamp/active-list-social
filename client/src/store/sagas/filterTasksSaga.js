@@ -2,12 +2,11 @@ import axios from 'axios';
 import { put, takeLatest, delay, call } from 'redux-saga/effects';
 import { startLoading, stopLoading } from '../ac/isLoadingAC';
 import { setTasks } from '../ac/tasksAC';
-import { GET_TASKS_SAGA, SET_TASKS } from '../types/tasksTypes';
-
-const BASE_URL = 'http://localhost:3001/api';
+import { GET_TASKS_SAGA } from '../types/tasksTypes';
+import { BASE_URL_API } from '../../config/constants';
 
 const fetchFilteredTasks = async (filter) => {
-  const response = await axios(`${BASE_URL}/tasks?_filter=${filter}`);
+  const response = await axios(`${BASE_URL_API}/tasks?_filter=${filter}`);
   return response;
 };
 
@@ -21,10 +20,10 @@ function* searchTasksWorker(action) {
       const payload = [...response.data.tasks].map((task) => ({ ...task, Reports: task.Reports.length, Users: task.Users.length }));
       yield put(setTasks(payload));
     }
-    yield put(stopLoading());
   } catch (e) {
     console.log(e);
   } finally {
+    yield put(stopLoading());
   }
 }
 

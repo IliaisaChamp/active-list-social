@@ -59,7 +59,7 @@ TopPostCard.propTypes = {
 };
 
 export default function TopPostCard({ report, index }) {
-  const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
+  const { images, desc, User, createdAt, id, Likes, Comments } = report;
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [isLiked, setIsLiked] = useState();
@@ -87,7 +87,7 @@ export default function TopPostCard({ report, index }) {
         setIsLiked(!isLiked);
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
       })
-      .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
+      .catch(() => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
   }, [isLiked]);
 
   const latestPostLarge = index === 0;
@@ -161,7 +161,6 @@ export default function TopPostCard({ report, index }) {
           </Typography>
 
           <TitleStyle
-            to="#"
             color="inherit"
             variant="subtitle2"
             underline="hover"

@@ -1,20 +1,15 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import eyeFill from '@iconify/icons-eva/eye-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-// material
-import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent, Stack, CardActionArea } from '@mui/material';
-// utils
+import { styled } from '@mui/material/styles';
+import { Link, Card, Grid, Avatar, Typography, CardContent, Stack, CardActionArea } from '@mui/material';
 import { fDateTime } from '../../utils/formatTime';
-//
 import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
 import { useSelector } from 'react-redux';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 
 // ----------------------------------------------------------------------
@@ -42,14 +37,6 @@ const AvatarStyle = styled(Avatar)(({ theme }) => ({
   bottom: theme.spacing(-3),
 }));
 
-const InfoStyle = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  color: theme.palette.text.disabled,
-}));
-
 const CoverImgStyle = styled('img')({
   top: 0,
   width: '100%',
@@ -74,10 +61,7 @@ export default function LentaPostCard({ report, index }) {
   const user = useSelector((state) => state.user);
   const [isLiked, setIsLiked] = useState();
   const [likesCount, setLikesCount] = useState(Likes?.length);
-
   const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
-
-  // const memoizeValue = useMemo(() => findUserLike(user?.id), [findUserLike, user]);
 
   useEffect(() => {
     const isLiked = findUserLike(user?.id);
@@ -96,7 +80,7 @@ export default function LentaPostCard({ report, index }) {
         setIsLiked(!isLiked);
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
       })
-      .catch((error) => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
+      .catch(() => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
   }, [isLiked]);
 
   console.log('render');

@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
-// material
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
-// components
-import Logo from '../components/Logo';
-//
 import { MHidden } from '../components/@material-extend';
 
 // ----------------------------------------------------------------------
@@ -35,7 +31,7 @@ AuthLayout.propTypes = {
 export default function AuthLayout({ children }) {
   return (
     <HeaderStyle>
-      <RouterLink to="/"></RouterLink>
+      <RouterLink to="/"/>
 
       <MHidden width="smDown">
         <Typography
@@ -43,7 +39,7 @@ export default function AuthLayout({ children }) {
           sx={{
             mt: { md: -2 },
             textAlign: 'end',
-            width: '100%'
+            width: '100%',
           }}>
           {children}
         </Typography>

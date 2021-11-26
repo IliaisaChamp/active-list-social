@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SET_SUBSCRIBES } from '../types/subscribesTypes';
-import { clearFlashMessage, setSuccessMessage } from './flashAC';
+import { setSuccessMessage } from './flashAC';
 import { startLoading, stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
@@ -27,7 +27,6 @@ export const getSubsribes = (userId) => (dispatch) => {
 };
 
 export const getCurrentUserSubsribes = (currentUserId) => (dispatch) => {
-  // axios(`${BASE_URL}/users/${userId}/followings`)
   fetchSubscribes(currentUserId)
     .then((response) => {
       dispatch(setSubscribes(response.data.followings));
@@ -40,7 +39,6 @@ export const subscribeOnUser = (userId, followingsId) => (dispatch) => {
     .post(`${BASE_URL}/users/${followingsId}/follow`)
     .then(() => fetchSubscribes(userId))
     .then((response) => {
-      // console.log(response);
       dispatch(setSubscribes(response.data.followings));
       dispatch(setSuccessMessage({ type: 'success', message: 'Подписка оформлена' }));
     })

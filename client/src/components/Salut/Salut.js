@@ -1,8 +1,7 @@
 import { Fireworks, useFireworks } from 'fireworks-js/dist/react';
-import { CSSProperties, useEffect } from 'react';
 
 const Salut = () => {
-  const { enabled, options, setEnabled, setOptions } = useFireworks({
+  const { enabled, options } = useFireworks({
     initialStart: true,
     initialOptions: {
       hue: {
@@ -48,17 +47,7 @@ const Salut = () => {
       },
     },
   });
-  //  useEffect(() => {
-  //     // setOptions({ sound: { enabled: !options.sound?.enabled } });
-  //     // setOptions({ sound: { enabled: !options.sound?.enabled } });
-  //     setOptions({ sound: { enabled: true } });
-  //   }, []);
-  // const toggleSound = () => {
-  //   setOptions({ sound: { enabled: !options.sound?.enabled } });
-  // };
-  const style: CSSProperties = {
-    // top: 0,
-    // left: 0,
+  const style = {
     width: '100vw',
     height: '100vh',
     position: 'fixed',
@@ -82,8 +71,6 @@ const Salut = () => {
           overflow: 'hidden',
           borderRadius: 30,
         }}>
-        {/* <button onClick={() => setEnabled()}>Fireworks {enabled ? 'disabled' : 'enabled'}</button> */}
-        {/* <button onClick={() => toggleSound()}>Sound {options.sound?.enabled ? 'disabled' : 'enabled'}</button> */}
         <img src="/static/elbrus.jpg" alt="" />
       </div>
     </Fireworks>

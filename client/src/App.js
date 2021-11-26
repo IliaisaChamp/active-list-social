@@ -16,7 +16,6 @@ import FlashMessage from './components/FlashMessage/FlashMessage';
 import Notification from './components/Notification/Notification';
 import axios from 'axios';
 import useSocket from './hooks/useSocket';
-import { startLoading } from './store/ac/isLoadingAC';
 
 function App() {
   const dispatch = useDispatch();
