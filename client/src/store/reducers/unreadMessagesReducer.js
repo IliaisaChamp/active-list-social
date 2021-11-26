@@ -1,9 +1,9 @@
-import {ADD_UNREAD_MESSAGES, RESET_UNREAD_MESSAGES} from '../types/unreadMessages';
+import { ADD_UNREAD_MESSAGES, RESET_UNREAD_MESSAGES } from '../types/unreadMessages';
 
 const initState = 0;
 
 function unreadMessagesReducer(state = initState, action) {
-  const { type, payload } = action;
+  const { type } = action;
   switch (type) {
     case ADD_UNREAD_MESSAGES:
       return state + 1;

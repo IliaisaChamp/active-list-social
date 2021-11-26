@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
-// material
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton, Badge } from '@mui/material';
-// components
 import { MHidden } from '../@material-extend';
 import { useDispatch, useSelector } from 'react-redux';
 import LanguagePopover from './LanguagePopover';
@@ -13,7 +11,7 @@ import bellFill from '@iconify/icons-eva/bell-fill';
 import { resetUnreadMessages } from '../../store/ac/unreadMessagesAC';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
-import palette from '../../theme/palette';
+
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;

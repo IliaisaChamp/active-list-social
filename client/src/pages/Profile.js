@@ -1,10 +1,8 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-// mui
 import { Container, Grid } from '@mui/material';
-
 import Page from '../components/Page/Page';
 import TasksOnSite from '../components/ProfileStats/TasksOnSite';
 import ReportsOnSite from '../components/ProfileStats/ReportsOnSite';
@@ -12,7 +10,6 @@ import UserTasks from '../components/ProfileStats/UserTasks';
 import UserReports from '../components/ProfileStats/UserReports';
 import UserProfile from '../components/UserProfile/UserProfile';
 import ProfileTabs from '../components/ProfileTabs/ProfileTabs';
-
 import { completeTask, getUsersTasks, setTasks, unsubscribeOnTask } from '../store/ac/tasksAC';
 import { getUserReports } from '../store/ac/reportsAC';
 import { getSubsribes, setSubscribes, subscribeOnUser, unsubscribeFromUser } from '../store/ac/subscribesAC';
@@ -20,8 +17,6 @@ import { getCurrentUserSubscribes, setCurrentUserSubscribes } from '../store/ac/
 import { getCurrentUser, setCurrentUser } from '../store/ac/currentUserAC';
 import { getProfileStats, resetProfileStats } from '../store/ac/profileStatsAC';
 import Loader from '../components/Loader/Loader';
-import { startLoading } from '../store/ac/isLoadingAC';
-import Salut from '../components/Salut/Salut';
 
 const Profile = () => {
   const { id } = useParams();

@@ -1,27 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
-
-// material
 import { Container, Typography } from '@mui/material';
-// components
 import Page from '../components/Page/Page';
-
-//
-// import TASKS from '../_mocks_/products';
-
-// import TaskSort from '../components/TaskSort/TaskSort';
 import TasksList from '../components/TasksList/TasksList';
 import SearchBar from '../components/SearchBar/SearchBar';
-
 import { getAllTasks, setTasks, subscribeOnTask } from '../store/ac/tasksAC';
 import { getFilteredTasks } from '../store/ac/tasksAC';
 import TagsCloud from '../components/TagCloud/TagCloud';
 import axios from 'axios';
 import { BASE_URL_API } from '../config/constants';
 import { Box } from '@mui/system';
-import { startLoading, stopLoading } from '../store/ac/isLoadingAC';
-
 import { useTranslation } from 'react-i18next';
 import Loader from '../components/Loader/Loader';
 // ----------------------------------------------------------------------
@@ -40,7 +28,7 @@ export default function Tasks() {
     return () => {
       dispatch(setTasks([]));
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (filterUsed) {

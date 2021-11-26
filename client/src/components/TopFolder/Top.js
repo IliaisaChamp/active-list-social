@@ -1,11 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-
-// material
 import { Grid, Container, Stack, Typography } from '@mui/material';
-// components
 import Page from '../Page/Page';
-import { TopPostCard, TopPostsSort, TopPostsSearch } from '.';
+import { TopPostCard, TopPostsSort } from '.';
 
 import { setAllReportsForTop } from '../../store/ac/reportsAC';
 import { useTranslation } from 'react-i18next';
@@ -16,8 +13,6 @@ const SORT_OPTIONS = [
   { value: 'Популярные', label: 'Популярные' },
   { value: 'Комментируемые', label: 'Комментируемые' },
 ];
-
-// ----------------------------------------------------------------------
 
 export default function Top() {
   const reports = useSelector((state) => state.reports);

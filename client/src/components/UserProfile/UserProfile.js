@@ -1,27 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-
-// mui
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import { Button, Typography, Stack, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-// icons
 import AddIcon from '@mui/icons-material/Add';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import MessageIcon from '@mui/icons-material/Message';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
-
-// mufunc
 import { changeAvatar } from '../../store/ac/usersAC';
 import { Box } from '@mui/system';
-import { getCurrentUser } from '../../store/ac/currentUserAC';
-import { openChat } from '../../store/ac/chatAc';
 import useChat from '../../hooks/useChat';
+import { BASE_URL_AVATAR } from '../../config/constants';
 
-const BASE_URL = 'http://localhost:3001/img';
+// const BASE_URL = 'http://localhost:3001/img';
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -109,7 +103,9 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
             <Avatar
               alt={isSelfPage ? user.first_name : currentUser?.first_name}
               src={
-                isSelfPage ? user?.avatar && `${BASE_URL}/${user.avatar}` : currentUser?.avatar && `${BASE_URL}/${currentUser.avatar}`
+                isSelfPage
+                  ? user?.avatar && `${BASE_URL_AVATAR}/${user.avatar}`
+                  : currentUser?.avatar && `${BASE_URL_AVATAR}/${currentUser.avatar}`
               }
               classes={{ root: classes.avatar, circle: classes.circle }}
             />
@@ -153,7 +149,6 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
                     {t('pages.profile.sub')}
                   </Button>
                 )}
-
                 <Button onClick={messageHandler} className={classes.button} variant="outlined" startIcon={<MessageIcon />}>
                   {t('pages.profile.message')}
                 </Button>

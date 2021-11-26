@@ -7,8 +7,6 @@ import Loader from '../components/Loader/Loader';
 import LentaPostCard from '../components/LentaFolder/LentaPostCard';
 import RightSideLentaMenu from '../components/LentaFolder/RightSideLentaMenu';
 import { getReports, setReports } from '../store/ac/reportsAC';
-import { startLoading } from '../store/ac/isLoadingAC';
-
 
 export default function Timeline() {
   const reports = useSelector((state) => state.reports);
@@ -24,7 +22,7 @@ export default function Timeline() {
     return () => {
       dispatch(setReports([]));
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler);
@@ -40,7 +38,6 @@ export default function Timeline() {
   const scrollHandler = (e) => {
     const heightFromBot = e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight);
     if (reports.length > offset && heightFromBot < 100) {
-      console.log('asfasdffdasfdsafsd');
       setOffset((prev) => prev + 1);
     }
   };
@@ -65,7 +62,6 @@ export default function Timeline() {
       )}
 
       <RightSideLentaMenu />
-
     </Page>
   );
 }

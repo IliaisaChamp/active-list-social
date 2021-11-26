@@ -1,14 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {Link, Link as RouterLink} from 'react-router-dom';
-// material
-import { Avatar, Button, TableRow, TableCell, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { Avatar, Button, TableRow, TableCell } from '@mui/material';
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import closeFill from '@iconify/icons-eva/close-fill';
 import { useTranslation } from 'react-i18next';
 import Label from '../Label/Label';
 import useChat from '../../hooks/useChat';
+
+//-------------------------------------------------------------------------------
 
 const RecommendationItem = ({ userInfo, subcsribeHandler, unsubcsribeHandler, isOnline, isSubscribed }) => {
   const user = useSelector((state) => state.user);
@@ -24,7 +25,9 @@ const RecommendationItem = ({ userInfo, subcsribeHandler, unsubcsribeHandler, is
         <Avatar alt={userInfo.nickname} src={'http://localhost:3001/img/' + userInfo.avatar} />
       </TableCell>
       <TableCell align="left">
-          <Button component={Link} to={`/profile/${userInfo?.id}`} >{userInfo?.nickname}</Button>
+        <Button component={Link} to={`/profile/${userInfo?.id}`}>
+          {userInfo?.nickname}
+        </Button>
       </TableCell>
       <TableCell align="left">{userInfo.percentCommonTasks}%</TableCell>
       <TableCell align="left">{userInfo.reportsCount}</TableCell>

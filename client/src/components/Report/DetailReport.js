@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
-import { Avatar, Badge, CardContent, Grid, IconButton, Stack, Typography } from '@mui/material';
+import { Avatar, Badge, CardContent, IconButton, Stack, Typography } from '@mui/material';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getReportById } from '../../store/ac/reportsAC';
@@ -10,11 +10,11 @@ import Comments from '../Comment/Comments';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
-import { BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
+import { BASE_URL_API, BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
 import { fDateTime } from '../../utils/formatTime';
 import Loader from '../Loader/Loader';
 
-const BASE_URL = 'http://localhost:3001/img/reports/';
+// ----------------------------------------------------------------------
 
 export default function DetailReport() {
   const { id } = useParams();
@@ -46,7 +46,7 @@ export default function DetailReport() {
 
   const setLikeFetch = useCallback(() => {
     axios
-      .post(`http://localhost:3001/api/reports/${id}/like`)
+      .post(`${BASE_URL_API}/reports/${id}/like`)
       .then(() => {
         setIsLiked(!isLiked);
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));

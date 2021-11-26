@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
-
-// mui
 import { styled } from '@mui/material/styles';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grow from '@mui/material/Grow';
-// import IconButton from '@mui/material/IconButton';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TaskIcon from '@mui/icons-material/Task';
 import AddIcon from '@mui/icons-material/Add';
 import GroupIcon from '@mui/icons-material/Group';
-
 import ModalDeleteTask from '../ModalDeleteTask/ModalDeleteTask';
 import ButtonPopover from '../ButtonPopover/ButtonPopover';
 import { Box } from '@mui/system';
@@ -20,6 +16,7 @@ import { Typography } from '@mui/material';
 import { currentTaskReports } from '../../store/ac/reportsAC';
 import { useDispatch } from 'react-redux';
 
+//----------------------------------------------------------
 const completedItemStyle = {
   backgroundColor: 'primary.lighter',
   color: 'primary.darker',
@@ -31,7 +28,6 @@ const incompletedItemStyle = {
 
 const RootStyle = styled(ListItem)(({ theme }) => ({
   padding: theme.spacing(2, 2),
-  // borderRadius: 30,
   marginBottom: 5,
   '&:last-child': {
     marginBottom: 0,
@@ -68,7 +64,7 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
           disableTypography
           secondaryTypographyProps={{}}
           sx={{ display: 'block' }}
-          secondary={task?.Reports !== undefined ? 'Количество отчетов' + ' ' + task?.Reports + ' ' : false}>
+          secondary={task?.Reports !== undefined ? `Количество отчетов ${task?.Reports} ` : false}>
           <Typography
             onClick={() => currentTaskIdBitch()}
             variant="subtitle2"

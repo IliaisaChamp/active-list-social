@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
-// mui
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Pagination from '@mui/material/Pagination';
-
 import TasksItem from '../TasksItem/TasksItem';
-import { useTranslation } from 'react-i18next';
-
 const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPage }) => {
-  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [currentTasks, setCurrentTasks] = useState(null);

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
-// material
 import { visuallyHidden } from '@mui/utils';
-import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@mui/material';
+import { Box, TableRow, TableCell, TableHead, TableSortLabel } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -15,21 +14,11 @@ RecommendationsHead.propTypes = {
   onSelectAllClick: PropTypes.func,
 };
 
-export default function RecommendationsHead({ order, orderBy, rowCount, headLabel, numSelected, onRequestSort, onSelectAllClick }) {
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
+export default function RecommendationsHead({ order, orderBy, headLabel }) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          {/* <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-          /> */}
-        </TableCell>
+        <TableCell padding="checkbox"/>
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}

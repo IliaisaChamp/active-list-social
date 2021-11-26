@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, Avatar, Grid } from '@mui/material';
-import { fDateTime, fToNow } from '../../utils/formatTime';
+import { fDateTime } from '../../utils/formatTime';
 import { BASE_URL_AVATAR } from '../../config/constants';
 import { Link } from 'react-router-dom';
 
