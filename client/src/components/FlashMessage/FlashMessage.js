@@ -6,6 +6,8 @@ import Slide from '@mui/material/Slide';
 import MuiAlert from '@mui/material/Alert';
 import { clearFlashMessage } from '../../store/ac/flashAC';
 
+//-----------------------------------------------------------------
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -25,12 +27,12 @@ export default function FlashMessage() {
 
   useEffect(() => {
     if (message) {
-      setFlashState({
-        ...flash,
+      setFlashState((prev) => ({
+        ...prev,
         open: true,
         vertical: 'top',
         horizontal: 'center',
-      });
+      }));
     }
   }, [message]);
 
@@ -44,7 +46,7 @@ export default function FlashMessage() {
         clearFlashMessage({
           type: '',
           message: '',
-        })
+        }),
       );
     }, 300);
   };

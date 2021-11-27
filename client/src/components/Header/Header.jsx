@@ -10,7 +10,6 @@ import Logout from './Logout';
 import bellFill from '@iconify/icons-eva/bell-fill';
 import { resetUnreadMessages } from '../../store/ac/unreadMessagesAC';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '@mui/styles';
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +46,6 @@ export default function Header({ onOpenSidebar }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const unreadMessages = useSelector((state) => state.unreadMessages);
-  const theme = useTheme();
   const bellClickHandler = () => {
     dispatch(resetUnreadMessages());
     navigate('/chats');

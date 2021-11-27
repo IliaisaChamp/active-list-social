@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback} from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -55,7 +55,7 @@ const Profile = () => {
         payload: [],
       });
     };
-  }, [id, user, isSelfPage]);
+  }, [dispatch, id, user, isSelfPage]);
 
   const unscubscribeFromTask = useCallback(
     (taskId) => {
@@ -78,9 +78,12 @@ const Profile = () => {
     [dispatch],
   );
 
-  const completeTaskHandler = useCallback((taskId) => {
-    dispatch(completeTask(taskId));
-  }, []);
+  const completeTaskHandler = useCallback(
+    (taskId) => {
+      dispatch(completeTask(taskId));
+    },
+    [dispatch],
+  );
   return (
     <Page title={t('pages.profile.head')}>
       {/* <Salut /> */}

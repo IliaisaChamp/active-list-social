@@ -8,6 +8,8 @@ import LentaPostCard from '../components/LentaFolder/LentaPostCard';
 import RightSideLentaMenu from '../components/LentaFolder/RightSideLentaMenu';
 import { getReports, setReports } from '../store/ac/reportsAC';
 
+//-----------------------------------------------------------------------------
+
 export default function Timeline() {
   const reports = useSelector((state) => state.reports);
   const isLoading = useSelector((state) => state.isLoading);

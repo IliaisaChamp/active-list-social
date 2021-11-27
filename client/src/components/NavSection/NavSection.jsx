@@ -82,12 +82,8 @@ export default function NavSection({ navConfig, ...other }) {
   return (
     <Box {...other}>
       <List disablePadding>
-        {navConfig.map((item) => {
-          if (item.isAuth === !!user) {
+        {navConfig.filter((item) => item.isAuth === !!user || item.isTop ).map((item) => {
             return <NavItem key={item.title} item={item} active={match} />;
-          } else if (item.isTop) {
-            return <NavItem key={item.title} item={item} active={match} />;
-          }
         })}
       </List>
     </Box>

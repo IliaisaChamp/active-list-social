@@ -88,7 +88,7 @@ export default function TopPostCard({ report, index }) {
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
       })
       .catch(() => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
-  }, [isLiked]);
+  }, [id, isLiked]);
 
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;

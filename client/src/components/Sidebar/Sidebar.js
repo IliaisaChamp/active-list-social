@@ -13,10 +13,8 @@ import NavSection from '../NavSection/NavSection';
 import { MHidden } from '../../components/@material-extend';
 
 // //sidebar icons
-import peopleFill from '@iconify/icons-eva/people-fill';
 import logInFill from '@iconify/icons-eva/log-in-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
-import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import flashOutLine from '@iconify/icons-eva/flash-outline';
 import messageSquareFill from '@iconify/icons-eva/message-square-fill';
 import rewindRightFill from '@iconify/icons-eva/rewind-right-fill';
@@ -56,12 +54,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { t } = useTranslation();
 
   const sidebarConfig = [
-    // {
-    //   title: t('sideBar.profile'),
-    //   path: '/profile/:id',
-    //   icon: getIcon(peopleFill),
-    //   isAuth: true,
-    // },
     {
       title: t('sideBar.tasks'),
       path: '/tasks',
@@ -105,12 +97,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       icon: getIcon(personAddFill),
       isAuth: false,
     },
-    // {
-    //   title: t('sideBar.notFound'),
-    //   path: '/404',
-    //   icon: getIcon(alertTriangleFill),
-    //   isAuth: true,
-    // },
   ];
 
   const { pathname } = useLocation();
@@ -120,7 +106,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
-  }, [pathname]);
+  }, [isOpenSidebar, onCloseSidebar, pathname]);
 
   const renderContent = (
     <Scrollbar

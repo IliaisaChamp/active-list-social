@@ -84,7 +84,7 @@ export default function LentaPostCard({ report }) {
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
       })
       .catch(() => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
-  }, [isLiked]);
+  }, [isLiked, id]);
 
   return (
     <Slide direction="up" timeout={1500} in={true} mountOnEnter unmountOnExit>

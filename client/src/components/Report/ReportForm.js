@@ -39,11 +39,11 @@ export default function ReportForm() {
     } finally {
       dispatch(stopLoading());
     }
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {
     request();
-  }, []);
+  }, [request]);
 
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.label !== chipToDelete.label));

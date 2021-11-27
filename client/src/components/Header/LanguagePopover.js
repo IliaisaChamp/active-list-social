@@ -54,6 +54,7 @@ export default function LanguagePopover() {
 
   useEffect(() => {
     handleChangeLanguage(storedValue?.lang, storedValue?.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChangeLanguage = (lang, id) => {
@@ -90,8 +91,6 @@ export default function LanguagePopover() {
               key={option?.value}
               selected={option?.value === LANGS[icon]?.value}
               onClick={() => handleChangeLanguage(option.value, id)}
-
-
             >
               <ListItemIcon>
                 <Box component="img" alt={option.label} src={option.icon} sx={{ width: 44, height: 20}}/>

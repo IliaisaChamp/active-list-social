@@ -100,7 +100,7 @@ export default function DetailReport() {
                 {currentReport.User?.nickname}
               </Typography>
               <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-                {/*{ time && fDateTime(time)}*/}
+                { time && fDateTime(time)}
               </Typography>
             </Stack>
             <Typography padding={2} color="text.secondary">

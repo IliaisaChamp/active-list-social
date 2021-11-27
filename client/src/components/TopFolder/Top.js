@@ -23,7 +23,7 @@ export default function Top() {
 
   useEffect(() => {
     dispatch(setAllReportsForTop());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Page title={t('pages.top.head')}>

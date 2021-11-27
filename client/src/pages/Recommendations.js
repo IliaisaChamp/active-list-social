@@ -36,7 +36,7 @@ const Recommendations = () => {
       dispatch(setSubscribes([]));
       dispatch(setUsersList([]));
     };
-  }, []);
+  }, [dispatch, user]);
 
   const subcsribeHandler = useCallback(
     (userId, followingsId) => {

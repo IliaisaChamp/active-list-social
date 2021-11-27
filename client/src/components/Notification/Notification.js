@@ -25,15 +25,15 @@ export default function Notification() {
 
   useEffect(() => {
     if (notification.message.length > 0) {
-      setNotificationState({
-        ...notificationState,
+      setNotificationState(prev => ({
+        ...prev,
         open: true,
-      });
+      }));
     }
   }, [notification]);
 
-  const handleClose = (event, reason) => {
-    setNotificationState({ ...notificationState, open: false });
+  const handleClose = () => {
+    setNotificationState(prev => ({ ...prev, open: false }));
   };
 
   return (

@@ -34,7 +34,7 @@ export default function Tasks() {
     if (filterUsed) {
       dispatch(getFilteredTasks(filterName));
     }
-  }, [filterName]);
+  }, [filterUsed, dispatch, filterName]);
 
   const subscribeOnTaskToggle = useCallback(
     (taskId) => {

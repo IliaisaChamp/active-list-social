@@ -18,7 +18,7 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
     const endOffset = itemOffset + 5;
     setPageCount(Math.ceil(tasks.length / 5));
     setCurrentTasks(tasks.slice(itemOffset, endOffset));
-  }, [currentPage, tasks]);
+  }, [itemOffset, currentPage, tasks]);
 
   const handleChange = (event, value) => {
     let newOffset;

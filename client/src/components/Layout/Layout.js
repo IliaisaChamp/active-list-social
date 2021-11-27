@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-// material
 import { styled } from '@mui/material/styles';
-//
 import Sidebar from '../Sidebar/Sidebar';
 import Header from '../Header/Header';
-import { useSelector } from 'react-redux';
-import Loader from '../Loader/Loader';
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +17,6 @@ const RootStyle = styled('div')({
 
 const MainStyle = styled('div')(({ theme }) => ({
   flexGrow: 1,
-  // overflow: 'auto',
   minHeight: '100%',
   paddingTop: APP_BAR_MOBILE + 24,
   paddingBottom: theme.spacing(10),

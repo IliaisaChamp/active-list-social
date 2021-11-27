@@ -1,20 +1,13 @@
 import { Grid, Container, Typography } from '@mui/material';
 import Page from '../Page/Page';
 import LentaPostCard from './LentaPostCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { currentTaskReports } from '../../store/ac/reportsAC';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+//-----------------------------------------------------------------
 
 export default function CurrentTaskReportLenta(taskId) {
   const reports = useSelector((state) => state.reports);
-  const dispatch = useDispatch();
-
   const { t } = useTranslation();
-
-  // useEffect(() => {
-  //   dispatch(currentTaskReports(taskId));
-  // }, [])
 
   return (
     <Page title={t('pages.timeline.title')}>
