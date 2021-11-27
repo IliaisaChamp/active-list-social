@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Grid, Container, Typography } from '@mui/material';
@@ -15,6 +15,16 @@ export default function Timeline() {
   const [offset, setOffset] = useState(0);
 
   const [currentReports, setCurrentReports] = useState(null);
+
+  const scrollHandler = (e) => {
+    const heightFromBot = e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight);
+    if (reports.length > offset && heightFromBot < 100) {
+      setOffset((prev) => prev + 1);
+    }
+  };
+
+  const memoizedScrollHandler = useCallback(scrollHandler, [reports, offset]);
+
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -25,22 +35,15 @@ export default function Timeline() {
   }, [dispatch]);
 
   useEffect(() => {
-    document.addEventListener('scroll', scrollHandler);
+    document.addEventListener('scroll', memoizedScrollHandler);
     return () => {
-      document.removeEventListener('scroll', scrollHandler);
+      document.removeEventListener('scroll', memoizedScrollHandler);
     };
-  }, [reports]);
+  }, [memoizedScrollHandler]);
 
   useEffect(() => {
     setCurrentReports(reports.slice(0, offset + 1));
   }, [offset, reports]);
-
-  const scrollHandler = (e) => {
-    const heightFromBot = e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight);
-    if (reports.length > offset && heightFromBot < 100) {
-      setOffset((prev) => prev + 1);
-    }
-  };
 
   return (
     <Page title={t('pages.timeline.title')}>

@@ -10,6 +10,7 @@ export const setProfileStats = (stats) => {
     payload: stats,
   };
 };
+
 export const resetProfileStats = () => {
   return {
     type: SET_PROFILE_STATS,

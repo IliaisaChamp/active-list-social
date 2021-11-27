@@ -1,6 +1,6 @@
-const { Report, Follower, User, Task, Like, Comment, UserTasks } = require('../db/models');
+const { Report, Follower, User, Task, Like, Comment } = require('../db/models');
 const UserService = require('../services/userService');
-const { Op, Sequelize } = require('sequelize');
+const { Op } = require('sequelize');
 
 class ReportController {
   static async getCurrentTaskReports(req, res) {
@@ -48,7 +48,7 @@ class ReportController {
         order: [['createdAt', 'DESC']],
       });
 
-      // reports.sort((a, b) => -a.Likes.length + b.Likes.length);
+      reports.sort((a, b) => -a.Likes.length + b.Likes.length);
       return res.json({ reports });
     } catch (e) {
       console.log(e);
@@ -57,7 +57,6 @@ class ReportController {
   }
 
   static async getReportById(req, res) {
-    // console.log("router by id");
     const { id } = req.params;
     try {
       const report = await Report.findOne({
@@ -114,24 +113,9 @@ class ReportController {
   static async getReportsForUser(req, res) {
     try {
       const userTasks = await UserService.getUserTasks(req.session.user.id);
-
-      // const userFollowings = await Follower.findAll({
-      //   raw: true,
-      //   where: {
-      //     follower_id: req.session.user.id,
-      //   },
-      // });
-
       if (!userTasks) {
         return res.status(400).json({ message: 'Отчетов нет' });
       }
-
-      // const [followingsTasks] = await Promise.all(
-      //   userFollowings.map((user) => {
-      //     return UserService.getUserTasks(user.user_id);
-      //   }),
-      // );
-
       const userTasksIds = userTasks?.map((el) => el.task_id) ?? [];
 
       // const followingsTasksIds = followingsTasks?.map((el) => el.task_id) ?? [];
