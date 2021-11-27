@@ -12,7 +12,7 @@ export default function CommentItem({ comment }) {
       <Grid container wrap="nowrap" spacing={2}>
         <Grid item>
           <Link to={`/profile/${user_id}`}>
-            <Avatar alt={User?.nickname} src={BASE_URL_AVATAR + User?.avatar} />
+            <Avatar alt={User?.nickname} src={`${BASE_URL_AVATAR}/${User?.avatar}`} />
           </Link>
         </Grid>
         <Grid justifyContent="left" item xs zeroMinWidth>

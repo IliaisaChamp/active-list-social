@@ -3,7 +3,7 @@ import ruLocale from 'date-fns/locale/ru';
 // ----------------------------------------------------------------------
 
 export function fDate(date) {
-  return format(new Date(date), 'dd MMMM yyyy');
+  return format(new Date(date), 'dd MMMM yyyy' ,{ locale: ruLocale });
 }
 
 export function fDateTime(date) {

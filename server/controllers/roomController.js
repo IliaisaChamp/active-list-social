@@ -11,10 +11,11 @@ class RoomController {
       const entry = await RoomUser.findOne({ where: { user_id, room_id } });
       if (!entry) {
         res.sendStatus(200);
+      } else {
+        entry.hasMessages = status;
+        await entry.save();
+        res.sendStatus(200);
       }
-      entry.hasMessages = status;
-      await entry.save();
-      res.sendStatus(200);
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: 'Ошибка чата' });

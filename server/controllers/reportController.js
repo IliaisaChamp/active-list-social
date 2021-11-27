@@ -48,7 +48,7 @@ class ReportController {
         order: [['createdAt', 'DESC']],
       });
 
-      // reports.sort((a, b) => -a.Likes.length + b.Likes.length);
+      reports.sort((a, b) => -a.Likes.length + b.Likes.length);
       return res.json({ reports });
     } catch (e) {
       console.log(e);

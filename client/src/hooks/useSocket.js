@@ -16,34 +16,38 @@ export default function useSocket(dispatch) {
   const location = useLocation();
 
   useEffect(() => {
-    if (user) {
-      socket.current = io('http://localhost:3001', {
-        query: { id: user.id },
-      });
+    try {
+      if (user) {
+        socket.current = io('http://localhost:3001', {
+          query: { id: user.id },
+        });
 
-      socket.current.on('notification', (msg) => {
-        dispatch(setNewReportNotification(msg.message));
-      });
+        socket.current.on('notification', (msg) => {
+          dispatch(setNewReportNotification(msg.message));
+        });
 
-      socket.current.on('broadcast-online', (msg) => {
-        dispatch(setOnline(msg.users));
-      });
+        socket.current.on('broadcast-online', (msg) => {
+          dispatch(setOnline(msg.users));
+        });
 
-      socket.current.on('new-message', async (msg) => {
-        await axios.put(`/api/rooms/${msg.room}`, { hasMessages: true });
-        if (currentRoom === msg.room) {
-          dispatch(addChatMessage(msg.message));
-        } else {
-          dispatch(loadRooms());
-        }
-        console.log('NAVIGATE', location);
-        if (msg.message.user_id !== user.id && location.pathname !== '/chats') {
-          let audio = new Audio('/static/audio/icq.wav');
-          audio.play();
-          dispatch(addUnreadMessage());
-        }
-      });
-      dispatch(setSocket(socket));
+        socket.current.on('new-message', async (msg) => {
+          await axios.put(`/api/rooms/${msg.room}`, { hasMessages: true });
+          if (currentRoom === msg.room) {
+            dispatch(addChatMessage(msg.message));
+          } else {
+            dispatch(loadRooms());
+          }
+          console.log('NAVIGATE', location);
+          if (msg.message.user_id !== user.id && location.pathname !== '/chats') {
+            let audio = new Audio('/static/audio/icq.wav');
+            audio.play();
+            dispatch(addUnreadMessage());
+          }
+        });
+        dispatch(setSocket(socket));
+      }
+    } catch (e) {
+      console.log(e);
     }
     return () => socket?.current?.emit('logout');
   }, [user, dispatch, currentRoom, location]);
