@@ -23,7 +23,6 @@ function ListChatRooms({ rooms, currentRoomId }) {
   };
 
   const chooseRoom = (roomId) => {
-    console.log('roomI222d ->>>', roomId);
     dispatch(chooseChatRoom(roomId));
   };
 

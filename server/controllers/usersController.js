@@ -1,10 +1,9 @@
-const { validationResult } = require('express-validator');
-const UserService = require('../services/userService');
-const TaskService = require('../services/taskService');
-const { User, Follower, Report, Task } = require('../db/models');
-const { Op } = require('sequelize');
+/*eslint-disable*/
 const fsp = require('fs/promises');
 const path = require('path');
+const UserService = require('../services/userService');
+const TaskService = require('../services/taskService');
+const { User, Follower, Report } = require('../db/models');
 
 class UserController {
   static async getRecommendation(req, res) {
@@ -31,8 +30,9 @@ class UserController {
       res.status(400).json({ message: 'Неправильный ввод данных...' });
     }
   }
+
   static async showFollowers(req, res) {
-    const id = req.params.id;
+    const { id } = req.params;
     try {
       const followers = await UserService.getFollowers(id);
       res.status(200).json({ followers });
@@ -43,7 +43,7 @@ class UserController {
   }
 
   static async getFollowings(req, res) {
-    const id = req.params.id;
+    const { id } = req.params;
     try {
       const result = await User.findOne({
         where: { id },
@@ -71,9 +71,8 @@ class UserController {
       const reports = await UserService.getReports(user_id);
       if (reports) {
         return res.status(200).json({ reports });
-      } else {
-        return res.status(400).json({ message: 'У вас еще нет отчетов' });
       }
+      return res.status(400).json({ message: 'У вас еще нет отчетов' });
     } catch (e) {
       return res.status(400).json({ message: 'Неправильный запрос' });
     }
@@ -81,13 +80,11 @@ class UserController {
 
   static async edit(req, res) {
     try {
-      const id = req.session.user.id;
+      const { id } = req.session.user;
       const user = await User.findOne({ where: { id } });
       const prevAvatar = user.avatar;
-
       if (prevAvatar) {
         const pathToAvatar = path.join(process.cwd(), 'public/img', prevAvatar);
-
         const isFileExist = await fsp
           .access(pathToAvatar)
           .then(() => true)
@@ -96,7 +93,6 @@ class UserController {
           await fsp.unlink(pathToAvatar);
         }
       }
-
       user.avatar = req.file.filename;
       await user.save();
       res.sendStatus(200);
@@ -127,11 +123,9 @@ class UserController {
     try {
       const user_id = req.params.id;
       const follower_id = req.session.user.id;
-
       if (Number(user_id) === Number(follower_id)) {
         return res.status().json({ message: 'Вы не можете подписаться на самого себя' });
       }
-
       await Follower.create({ user_id, follower_id });
       return res.sendStatus(200);
     } catch (e) {

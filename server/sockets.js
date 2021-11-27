@@ -1,7 +1,9 @@
+/*eslint-disable*/
 const http = require('http');
 const { Server } = require('socket.io');
 const app = require('./app');
 const { User, Task } = require('./db/models');
+
 const server = http.createServer(app);
 const UserService = require('./services/userService');
 
@@ -10,12 +12,11 @@ const io = new Server(server, {
     origin: process.env.CORS_ORIGIN,
   },
 });
-//online users sockets
+// online users sockets
 const usersOnline = new Map();
 
 io.on('connection', (socket) => {
-
-  const id = socket.handshake.query.id;
+  const { id } = socket.handshake.query;
   usersOnline.set(socket, id);
   const users = usersOnline.values();
   const uniqueUsers = [...new Set(users)];
@@ -33,17 +34,17 @@ io.on('connection', (socket) => {
   });
 });
 
-//new report notification
+// new report notification
 io.on('connection', (socket) => {
   socket.on('report-created', async (report) => {
     const reportOwnerId = report.user_id;
-    const task_id = report.task_id;
+    const { task_id } = report;
     const taskSubscribers = await Task.findOne({ where: { id: task_id }, include: User });
     const userSubscribers = await UserService.getFollowers(reportOwnerId);
     const userSubscribersId = userSubscribers.map((sub) => sub.id);
     const taskSubscribersId = taskSubscribers.Users.map((user) => user.id);
     const subscribers = [...userSubscribersId, ...taskSubscribersId];
-    for (let [s, id] of usersOnline) {
+    for (const [s, id] of usersOnline) {
       if (subscribers.includes(Number(id))) {
         s.join('room');
       }
@@ -53,18 +54,18 @@ io.on('connection', (socket) => {
   });
 });
 
-/////////////////////////////logout
+/// //////////////////////////logout
 io.on('connection', (socket) => {
   socket.on('logout', () => {
     socket.disconnect();
   });
 });
 
-///////chat
+/// ////chat
 io.on('connection', (socket) => {
   socket.on('create-message', (msg) => {
     const { users, message, room } = msg;
-    for (let [s, id] of usersOnline) {
+    for (const [s, id] of usersOnline) {
       if (users.includes(Number(id))) {
         s.join('room');
       }

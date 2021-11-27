@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-// material
 import { alpha, styled } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
@@ -69,17 +67,3 @@ export default function Label({ color = 'default', variant = 'ghost', children, 
     </RootStyle>
   );
 }
-
-Label.propTypes = {
-  children: PropTypes.node,
-  color: PropTypes.oneOf([
-    'default',
-    'primary',
-    'secondary',
-    'info',
-    'success',
-    'warning',
-    'error',
-  ]),
-  variant: PropTypes.oneOf(['filled', 'outlined', 'ghost']),
-};

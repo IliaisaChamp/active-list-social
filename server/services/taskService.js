@@ -15,42 +15,42 @@ class TaskService {
   }
 
   static async subscribe(userId, taskId) {
-    return await UserTask.create({ user_id: userId, task_id: taskId });
+    return UserTask.create({ user_id: userId, task_id: taskId });
   }
 
   static async getTasks(filter) {
     return filter
-      ? await Task.findAll({
-          order: [['title', 'ASC']],
-          where: {
-            title: {
-              [Sequelize.Op.iLike]: `%${filter}%`,
-            },
+      ? Task.findAll({
+        order: [['title', 'ASC']],
+        where: {
+          title: {
+            [Sequelize.Op.iLike]: `%${filter}%`,
           },
-          include: [
-            {
-              model: Report,
-              attributes: ['id'],
-            },
-            {
-              model: User,
-              attributes: ['id'],
-            },
-          ],
-        })
-      : await Task.findAll({
-          order: [['title', 'ASC']],
-          include: [
-            {
-              model: Report,
-              attributes: ['id'],
-            },
-            {
-              model: User,
-              attributes: ['id'],
-            },
-          ],
-        });
+        },
+        include: [
+          {
+            model: Report,
+            attributes: ['id'],
+          },
+          {
+            model: User,
+            attributes: ['id'],
+          },
+        ],
+      })
+      : Task.findAll({
+        order: [['title', 'ASC']],
+        include: [
+          {
+            model: Report,
+            attributes: ['id'],
+          },
+          {
+            model: User,
+            attributes: ['id'],
+          },
+        ],
+      });
   }
 }
 

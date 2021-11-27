@@ -1,6 +1,6 @@
+/* eslint-disable */
 const { Room, User, Message, RoomUser } = require('../db/models');
 const RoomService = require('../services/RoomService');
-const sequelize = require('sequelize');
 
 class RoomController {
   static async changeRoomStatus(req, res) {
@@ -61,8 +61,7 @@ class RoomController {
 
   static async getRoomMessages(req, res) {
     try {
-      ////if user in RoomUsers ...... need check
-
+      /// /if user in RoomUsers ...... need check
       const room_id = req.params.id;
       const messages = await Message.findAll({
         where: { room_id },
@@ -116,7 +115,9 @@ class RoomController {
       });
       const users = room.Users.map((user) => user.get({ plain: true }));
       res.status(200).json({ users });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
 

@@ -1,7 +1,5 @@
-import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
-// material
 import { styled } from '@mui/material/styles';
 import { Box, Toolbar, Typography, OutlinedInput, InputAdornment } from '@mui/material';
 
@@ -28,12 +26,6 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-RecommendationsToolbar.propTypes = {
-  numSelected: PropTypes.number,
-  filterName: PropTypes.string,
-  onFilterName: PropTypes.func,
-};
 
 export default function RecommendationsToolbar({ numSelected, filterName, onFilterName }) {
   return (
@@ -63,20 +55,6 @@ export default function RecommendationsToolbar({ numSelected, filterName, onFilt
           )}
         />
       )}
-
-      {/* {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <Icon icon={trash2Fill} />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <Icon icon={roundFilterList} />
-          </IconButton>
-        </Tooltip>
-      )} */}
     </RootStyle>
   );
 }

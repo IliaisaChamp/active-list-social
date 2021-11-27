@@ -1,7 +1,8 @@
+/*eslint-disable*/
 const bcrypt = require('bcrypt');
-const { User } = require('../db/models/');
-const { UserTask, Task, Report, Like, Comment } = require('../db/models');
 const { Op } = require('sequelize');
+const { User } = require('../db/models');
+const { UserTask, Task, Report, Like, Comment } = require('../db/models');
 
 class UserService {
   static async getFollowers(id) {
@@ -21,7 +22,7 @@ class UserService {
   }
 
   static async getReports(user_id) {
-    return await Report.findAll({
+    return Report.findAll({
       where: { user_id },
       include: [
         { model: User, attributes: ['nickname', 'avatar'] },
@@ -49,7 +50,7 @@ class UserService {
       },
       include: Task,
     });
-    const idRecommendedUsers = recommendedUsers.map((user) => user.id);
+    const idRecommendedUsers = recommendedUsers.map((recUser) => recUser.id);
     const recommendedUsersWithTasks = await User.findAll({
       attributes: ['id', 'nickname', 'first_name', 'last_name', 'email', 'isAdmin', 'avatar'],
       include: Task,
@@ -59,7 +60,7 @@ class UserService {
         },
       },
     });
-    return await Promise.all(
+    return Promise.all(
       recommendedUsersWithTasks.map(async (user) => {
         const { Tasks: tasks, ...rest } = user.get({ plain: true });
         const commonTasksCount = tasks.filter((task) => userTasks.includes(task.id)).length;
@@ -71,7 +72,7 @@ class UserService {
   }
 
   static async getUserTasks(userId) {
-    return await UserTask.findAll({
+    return UserTask.findAll({
       raw: true,
       where: {
         user_id: userId,
@@ -82,9 +83,11 @@ class UserService {
 
   static async createUser(regData) {
     const { password } = regData;
+    // eslint-disable-next-line no-useless-catch
     try {
       const hashPassword = await bcrypt.hash(password, Number(process.env.SALT_ROUND));
 
+      // eslint-disable-next-line no-param-reassign
       regData.password = hashPassword;
 
       const user = await User.create({
@@ -95,7 +98,9 @@ class UserService {
       throw error;
     }
   }
+
   static async findByNickname(nickname) {
+    // eslint-disable-next-line no-useless-catch
     try {
       const candidate = await User.findOne({
         where: {
@@ -107,7 +112,9 @@ class UserService {
       throw error;
     }
   }
+
   static async findByEmail(email) {
+    // eslint-disable-next-line no-useless-catch
     try {
       const candidate = await User.findOne({
         where: {
@@ -122,6 +129,7 @@ class UserService {
 
   static async findAndCheck(data) {
     const { email, password } = data;
+    // eslint-disable-next-line no-useless-catch
     try {
       const candidate = await User.findOne({ where: { email } });
       if (!candidate) {
@@ -138,17 +146,15 @@ class UserService {
   }
 
   static async updateUser(data, id) {
-    const { userId, password } = data;
-
+    const { password } = data;
+    // eslint-disable-next-line no-useless-catch
     try {
       if (password) {
         const hashPassword = await bcrypt.hash(password, Number(process.env.SALT_ROUND));
         data.password = hashPassword;
-
-        const user = await User.findByIdAndUpdate(id, {
+        await User.findByIdAndUpdate(id, {
           $set: data,
         });
-
         return true;
       }
     } catch (error) {
@@ -157,6 +163,7 @@ class UserService {
   }
 
   static async delete(id) {
+    // eslint-disable-next-line no-useless-catch
     try {
       await User.findByIdAndDelete(id);
 
@@ -167,6 +174,7 @@ class UserService {
   }
 
   static async getUser(id) {
+    // eslint-disable-next-line no-useless-catch
     try {
       return await User.findOne({ where: { id }, raw: true });
     } catch (error) {

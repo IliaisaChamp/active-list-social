@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
-// const { upgrade, connection, wss } = require('./sockets');
 
 const sessionParser = require('./session');
 

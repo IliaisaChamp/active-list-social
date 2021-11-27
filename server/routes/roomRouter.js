@@ -3,21 +3,21 @@ const checkAuth = require('../middleware/checkAuth');
 const RoomController = require('../controllers/roomController');
 
 router
-    .route('/')
-    .post(checkAuth, RoomController.createRoom)
-    .get(checkAuth, RoomController.getUserRooms)
+  .route('/')
+  .post(checkAuth, RoomController.createRoom)
+  .get(checkAuth, RoomController.getUserRooms);
 
 router
-    .route('/:id')
-    .delete(checkAuth, RoomController.deleteRoom)
-    .put(checkAuth, RoomController.changeRoomStatus)
+  .route('/:id')
+  .delete(checkAuth, RoomController.deleteRoom)
+  .put(checkAuth, RoomController.changeRoomStatus);
 
 router
-    .route('/:id/users')
-    .get(checkAuth, RoomController.showUsers);
+  .route('/:id/users')
+  .get(checkAuth, RoomController.showUsers);
 
 router
-    .route('/:id/messages')
-    .post(checkAuth, RoomController.createMessage)
-    .get(checkAuth, RoomController.getRoomMessages);
+  .route('/:id/messages')
+  .post(checkAuth, RoomController.createMessage)
+  .get(checkAuth, RoomController.getRoomMessages);
 module.exports = router;

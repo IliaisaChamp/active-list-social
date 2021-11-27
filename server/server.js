@@ -1,4 +1,4 @@
-const server = require('./sockets')
+const server = require('./sockets');
 
 const PORT = process.env.PORT || 3001;
 

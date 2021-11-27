@@ -67,7 +67,6 @@ export const logoutUser = (navigate) => async (dispatch, getState) => {
     })
     .catch((err) => {
       socket?.current?.emit('logout');
-      console.log('error in logout');
       console.log(err);
     });
 };
@@ -76,7 +75,6 @@ export const checkUser = () => async (dispatch) => {
   dispatch(startLoading());
   axios('/api/auth/check')
     .then((res) => {
-      console.log('dispatch checkUser');
       localStorage.setItem('user', JSON.stringify(res.data.user));
       dispatch(setUser(res.data.user));
     })

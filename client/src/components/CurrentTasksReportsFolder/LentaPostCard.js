@@ -77,7 +77,6 @@ export default function LentaPostCard({ report }) {
     setLikeFetch();
   };
 
-  console.log('render');
   return (
     <Grid item xs={10} sm={10} md={8}>
       <Card sx={{ position: 'relative', border: '1px solid white' }}>

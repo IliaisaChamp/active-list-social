@@ -24,19 +24,17 @@ class CheckController {
         const createdUser = await UserService.createUser(req.body);
 
         if (createdUser) {
-          const { password, ...other } = createdUser;
+          const { password: clear, ...other } = createdUser;
 
           req.session.user = {
             ...other,
           };
           return res.json({ user: req.session.user });
-        } else {
-          console.log('error');
-          return res.sendStatus(501);
         }
-      } else {
-        return res.status(400).json({ message: 'Не все данные заполнены' });
+        console.log('error');
+        return res.sendStatus(501);
       }
+      return res.status(400).json({ message: 'Не все данные заполнены' });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: error.message });
@@ -50,33 +48,30 @@ class CheckController {
         const currentUser = await UserService.findAndCheck({ email, password });
 
         if (currentUser) {
-          const { password, ...other } = currentUser;
+          const { password: clear, ...other } = currentUser;
 
           req.session.user = {
             ...other,
           };
 
           return res.json({ user: req.session.user });
-        } else {
-          return res.status(404).json({ message: 'Пользователь c таким email не найден или неверный пароль' });
         }
-      } else {
-        return res.status(401).json({ message: 'Данные не заполнены' });
+        return res.status(404).json({ message: 'Пользователь c таким email не найден или неверный пароль' });
       }
+      return res.status(401).json({ message: 'Данные не заполнены' });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(500).json({ message: error.message });
     }
   }
 
   static async check(req, res) {
     if (req.session.user) {
-      const id = req.session.user.id;
+      const { id } = req.session.user;
       const { password, ...user } = await UserService.getUser(id);
       return res.json({ user });
-    } else {
-      return res.status(401).json({ message: 'Сессия истекла' });
     }
+    return res.status(401).json({ message: 'Сессия истекла' });
   }
 }
 

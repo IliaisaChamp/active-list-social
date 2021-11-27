@@ -4,24 +4,25 @@ const ReportController = require('../controllers/reportController');
 const uploadReportsPhotos = require('../middleware/uploadReportsPhotos');
 const checkAuth = require('../middleware/checkAuth');
 
-router
-    .route("/")
-    .get(checkAuth, TaskController.showAll);
+router.route('/')
+  .get(checkAuth, TaskController.showAll);
 
-router.route('/categories/').get(checkAuth, TaskController.getAllCategories);
+router.route('/categories/')
+  .get(checkAuth, TaskController.getAllCategories);
 
 router.route('/categories/:id')
   .get(checkAuth, TaskController.getTasksByCategoryID);
 
-router
-    .route("/:id")
-    .get(checkAuth, TaskController.getTaskByID);
+router.route('/:id')
+  .get(checkAuth, TaskController.getTaskByID);
 
-router.route('/:id/subscribe').post(TaskController.subscribeUser).delete(TaskController.unsubscribeUser);
+router.route('/:id/subscribe')
+  .post(TaskController.subscribeUser)
+  .delete(TaskController.unsubscribeUser);
 
-router.route('/:id/report').post(checkAuth, uploadReportsPhotos, ReportController.create);
-router.route('/:id/completed').post(checkAuth, TaskController.completeTask);
+router.route('/:id/report')
+  .post(checkAuth, uploadReportsPhotos, ReportController.create);
 
-
-
+router.route('/:id/completed')
+  .post(checkAuth, TaskController.completeTask);
 module.exports = router;

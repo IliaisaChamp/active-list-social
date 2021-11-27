@@ -1,13 +1,12 @@
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination(req, file, cb) {
     cb(null, 'public/img');
   },
-  filename: function (req, file, cb) {
-    console.log(file);
+  filename(req, file, cb) {
     const ext = file.mimetype.split('/')[1];
-    cb(null, file.fieldname + Date.now() + `.${ext}`);
+    cb(null, `${file.fieldname + Date.now()}.${ext}`);
   },
 });
 const upload = multer({
@@ -22,10 +21,10 @@ const upload = multer({
   },
 }).single('avatar');
 
-function uploadAvatar (req, res, next) {
+function uploadAvatar(req, res, next) {
   upload(req, res, (err) => {
     if (err) {
-    res.status(415).json({message: err?.message ?? 'Что-то пошло не так......'})
+      res.status(415).json({ message: err?.message ?? 'Что-то пошло не так......' });
     } else {
       next();
     }

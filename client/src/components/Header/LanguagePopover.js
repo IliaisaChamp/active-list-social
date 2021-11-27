@@ -52,7 +52,6 @@ export default function LanguagePopover() {
   };
 
   const handleChangeLanguage = (lang, id) => {
-    console.log(lang);
     changeLanguage(lang);
     setValue('ru');
     setIcon(id);

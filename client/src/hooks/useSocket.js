@@ -37,7 +37,6 @@ export default function useSocket(dispatch) {
           } else {
             dispatch(loadRooms());
           }
-          console.log('NAVIGATE', location);
           if (msg.message.user_id !== user.id && location.pathname !== '/chats') {
             const audio = new Audio('/static/audio/icq.wav');
             audio.play();

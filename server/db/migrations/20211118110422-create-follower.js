@@ -1,4 +1,4 @@
-'use strict';
+/*eslint-disable*/
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Followers', {
@@ -42,5 +42,5 @@ module.exports = {
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Followers');
-  }
+  },
 };

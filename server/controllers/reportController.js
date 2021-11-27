@@ -1,11 +1,10 @@
+const { Op } = require('sequelize');
 const { Report, Follower, User, Task, Like, Comment } = require('../db/models');
 const UserService = require('../services/userService');
-const { Op } = require('sequelize');
 
 class ReportController {
   static async getCurrentTaskReports(req, res) {
     const { id } = req.params;
-    console.log(id);
     try {
       const reports = await Report.findAll({
         include: [
@@ -25,7 +24,6 @@ class ReportController {
           [Comment, 'createdAt', 'DESC'],
         ],
       });
-      console.log({ reports });
       return res.json({ reports });
     } catch (e) {
       console.log(e);
@@ -88,9 +86,7 @@ class ReportController {
     const { id } = req.params;
     const photoNames = req.files?.map((el) => el.filename);
     const userTasks = await UserService.getUserTasks(req.session.user.id);
-
     const hasTask = userTasks.find((el) => Number(el.task_id) === Number(id));
-
     if (!hasTask) {
       return res.status(400).json({ message: 'Сначала добавь эту цель к себе' });
     }
@@ -101,10 +97,7 @@ class ReportController {
         task_id: id,
         images: photoNames,
       });
-
-      if (newReport) {
-        return res.status(200).json({ report: newReport, message: 'Отчет успешно создан' });
-      }
+      return res.status(200).json({ report: newReport, message: 'Отчет успешно создан' });
     } catch (e) {
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
     }
@@ -117,34 +110,24 @@ class ReportController {
         return res.status(400).json({ message: 'Отчетов нет' });
       }
       const userTasksIds = userTasks?.map((el) => el.task_id) ?? [];
-
-      // const followingsTasksIds = followingsTasks?.map((el) => el.task_id) ?? [];
-
-      // const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
       const reports = await Report.findAll({
         where: {
           task_id: {
             [Op.in]: userTasksIds,
           },
         },
-
         include: [
           { model: User, attributes: ['nickname', 'avatar', 'id'] },
           { model: Task, attributes: ['title'] },
           { model: Like },
           { model: Comment, attributes: ['id'] },
         ],
-        // attributes: {
-        //   include: [[Sequelize.fn('COUNT', Sequelize.col('Comments.id')), 'commentsCount']],
-        // },
         order: [['createdAt', 'DESC']],
       });
-
       if (reports) {
         return res.json({ reports });
-      } else {
-        return res.status(400).json({ message: 'Отчетов нет' });
       }
+      return res.status(400).json({ message: 'Отчетов нет' });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
@@ -159,27 +142,17 @@ class ReportController {
           follower_id: req.session.user.id,
         },
       });
-
       if (!userFollowings) {
         return res.status(400).json({ message: 'Отчетов нет' });
       }
-
-      const [followingsTasks] = await Promise.all(
-        userFollowings.map((user) => {
-          return UserService.getUserTasks(user.user_id);
-        }),
-      );
-
+      const [followingsTasks] = await Promise.all(userFollowings.map((user) => UserService.getUserTasks(user.user_id)));
       const followingsTasksIds = followingsTasks?.map((el) => el.task_id) ?? [];
-
-      // const tasksIdSet = new Set([...userTasksIds, ...followingsTasksIds]);
       const reports = await Report.findAll({
         where: {
           task_id: {
             [Op.in]: followingsTasksIds,
           },
         },
-
         include: [
           { model: User, attributes: ['nickname', 'avatar', 'id'] },
           { model: Task, attributes: ['title'] },
@@ -188,12 +161,10 @@ class ReportController {
         ],
         order: [['createdAt', 'DESC']],
       });
-
       if (reports) {
         return res.json({ reports });
-      } else {
-        return res.status(400).json({ message: 'Отчетов нет' });
       }
+      return res.status(400).json({ message: 'Отчетов нет' });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
@@ -202,7 +173,6 @@ class ReportController {
 
   static async addLike(req, res) {
     const { id } = req.params;
-
     try {
       const hasLike = await Like.findOne({
         where: {
@@ -213,13 +183,12 @@ class ReportController {
       if (hasLike) {
         await hasLike.destroy();
         return res.json({ message: 'Лайк удален' });
-      } else {
-        await Like.create({
-          report_id: id,
-          user_id: req.session.user.id,
-        });
-        return res.json({ message: 'Лайк поставлен' });
       }
+      await Like.create({
+        report_id: id,
+        user_id: req.session.user.id,
+      });
+      return res.json({ message: 'Лайк поставлен' });
     } catch (e) {
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте пожалуйста еще раз' });
     }
@@ -228,7 +197,6 @@ class ReportController {
   static async addComment(req, res) {
     const { id } = req.params;
     const { text } = req.body;
-
     if (!text.trim()) {
       return res.status(400).json({ message: 'Комментарий пустой' });
     }
@@ -238,12 +206,10 @@ class ReportController {
         user_id: req.session.user.id,
         text,
       });
-
       if (comment) {
         return res.json({ comment });
-      } else {
-        return res.status(500).json({ message: 'Ошибка сервера, попробуйте пожалуйста еще раз' });
       }
+      return res.status(500).json({ message: 'Ошибка сервера, попробуйте пожалуйста еще раз' });
     } catch (e) {
       console.log(e);
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте пожалуйста еще раз' });

@@ -7,6 +7,5 @@ export const setOnline = (online) => ({
 });
 
 export const createSocketConnect = (socket) => (dispatch) => {
-  console.log('SOCKET CREATED');
   dispatch(setSocket(socket));
 };

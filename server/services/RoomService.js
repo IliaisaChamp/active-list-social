@@ -1,8 +1,9 @@
-const { Room, RoomUser, User } = require('../db/models');
 const sequelize = require('sequelize');
+const { Room, RoomUser, User } = require('../db/models');
 
 class RoomService {
   static async getRoomsWithRecipients(id, rooms) {
+    // eslint-disable-next-line no-return-await
     return await RoomUser.findAll({
       where: {
         [sequelize.Op.and]: [
@@ -44,10 +45,9 @@ class RoomService {
         { returning: true },
       );
       return { ...newRoom.get({ plain: true }), new: true };
-    } else {
-      const room = await Room.findOne({ where: { id: chat } });
-      return { ...room.get({ plain: true }), new: false };
     }
+    const room = await Room.findOne({ where: { id: chat } });
+    return { ...room.get({ plain: true }), new: false };
   }
 }
 

@@ -1,4 +1,4 @@
-'use strict';
+/*eslint-disable*/
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable(
@@ -30,10 +30,10 @@ module.exports = {
           },
           onDelete: 'CASCADE',
         },
-          hasMessages: {
-            type: Sequelize.BOOLEAN,
-            defaultValue: false
-          },
+        hasMessages: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,

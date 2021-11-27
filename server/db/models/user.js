@@ -1,5 +1,5 @@
-'use strict';
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(User, { through: 'Followers', foreignKey: 'follower_id', as: 'followings' });
       this.belongsToMany(User, { through: 'Followers', foreignKey: 'user_id', as: 'followers' });
       this.belongsToMany(Task, { through: 'UserTasks', foreignKey: 'user_id' });
-      //chat
+      // chat
       this.belongsToMany(Room, { through: 'RoomUsers', foreignKey: 'user_id' });
       this.hasMany(Message, { foreignKey: 'user_id' });
     }

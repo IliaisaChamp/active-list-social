@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Report extends Model {
     /**
@@ -15,15 +13,18 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(User, { foreignKey: 'user_id' });
       this.belongsTo(Task, { foreignKey: 'task_id' });
     }
-  };
-  Report.init({
-    task_id: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER,
-    images: DataTypes.JSON,
-    desc: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Report',
-  });
+  }
+  Report.init(
+    {
+      task_id: DataTypes.INTEGER,
+      user_id: DataTypes.INTEGER,
+      images: DataTypes.JSON,
+      desc: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Report',
+    },
+  );
   return Report;
 };

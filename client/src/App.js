@@ -26,7 +26,6 @@ function App() {
   axios.interceptors.response.use(
     (res) => res,
     (err) => {
-      console.log('intereceptor USED');
       if (err.status === 401) {
         dispatch(deleteUser);
       }

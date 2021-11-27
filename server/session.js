@@ -3,6 +3,7 @@ require('dotenv').config();
 const redis = require('redis');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+
 const redisClient = redis.createClient();
 
 const sessionParser = session({
@@ -12,6 +13,5 @@ const sessionParser = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
 });
-
 
 module.exports = sessionParser;

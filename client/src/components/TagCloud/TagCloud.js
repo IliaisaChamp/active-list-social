@@ -2,6 +2,7 @@
 import React from 'react';
 import { TagCloud } from 'react-tagcloud';
 
+// eslint-disable-next-line func-names
 export default function ({ tags }) {
   return (
     <TagCloud
@@ -11,7 +12,6 @@ export default function ({ tags }) {
       shuffle
       disableRandomColor={false}
       className="simple-cloud"
-      onClick={(tag) => console.log(tag)}
     />
   );
 }

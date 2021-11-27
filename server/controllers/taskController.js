@@ -1,3 +1,4 @@
+/* eslint-disable*/
 const TaskService = require('../services/taskService');
 const { UserTask, Report, Task, User, Category } = require('../db/models');
 
@@ -14,12 +15,12 @@ class TaskController {
       if (task) {
         task.isDone = true;
         await task.save();
-        res.status(200).json({ message: 'Задача выполнена! Поздравляю!' });
+        return res.status(200).json({ message: 'Задача выполнена! Поздравляю!' });
       } else {
-        res.status(400).json({ message: 'Вы не подписаны на данную задачу...' });
+        return res.status(400).json({ message: 'Вы не подписаны на данную задачу...' });
       }
     } catch (e) {
-      res.status(400).json({ message: 'Неправильный запрос...' });
+      return res.status(400).json({ message: 'Неправильный запрос...' });
     }
   }
 
@@ -37,6 +38,7 @@ class TaskController {
       res.sendStatus(400);
     }
   }
+
   static async subscribeUser(req, res) {
     try {
       const userId = req.session.user.id;
@@ -53,6 +55,7 @@ class TaskController {
       res.sendStatus(400);
     }
   }
+
   static async showAll(req, res) {
     try {
       const userId = req.session.user.id;
@@ -64,7 +67,6 @@ class TaskController {
       });
       const userTasks = query.Tasks.map((task) => task.id);
       const filter = req.query._filter ? decodeURIComponent(req.query._filter) : false;
-      console.log({ filter });
       const allTasks = await TaskService.getTasks(filter);
       const tasks = allTasks.filter((task) => !userTasks.includes(task.id));
       res.json({ tasks });
@@ -81,7 +83,6 @@ class TaskController {
           id,
         },
       });
-      console.log(task);
       return res.json({ task: task.get({ plain: true }) });
     } catch (e) {
       return res.status(500).json({ message: 'Ошибка сервера, попробуйте еще раз' });
@@ -97,7 +98,6 @@ class TaskController {
           id,
         },
       });
-
       return res.json(tasks);
     } catch (e) {
       console.log(e);
@@ -106,17 +106,14 @@ class TaskController {
   }
 
   static async getAllCategories(req, res) {
-    console.log('vdfv');
     function getRandom(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-
     try {
       const categories = await Category.findAll();
       const tags = categories.map((el) => ({ value: el.title, count: getRandom(8, 30), id: el.id }));
-
       return res.json({ tags });
     } catch (e) {
       console.log(e);
