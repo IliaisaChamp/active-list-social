@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from '@mui/material';
 
-const Loader = () => {
+function Loader() {
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center' }} maxWidth="xl">
       <img
@@ -11,6 +11,6 @@ const Loader = () => {
       />
     </Container>
   );
-};
+}
 
 export default Loader;

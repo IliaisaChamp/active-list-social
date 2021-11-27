@@ -28,7 +28,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   color: theme.palette.warning.dark,
   backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.warning.dark, 0)} 0%, ${alpha(
     theme.palette.warning.dark,
-    0.24
+    0.24,
   )} 100%)`,
 }));
 

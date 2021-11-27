@@ -1,16 +1,9 @@
-import PropTypes from 'prop-types';
-// material
 import { MenuItem, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { setAllReportsForTopSortedByComments, setAllReportsForTopSortedByLikes } from '../../store/ac/reportsAC';
 import { useState } from 'react';
+import { setAllReportsForTopSortedByComments, setAllReportsForTopSortedByLikes } from '../../store/ac/reportsAC';
 
 // ----------------------------------------------------------------------
-
-TopPostsSort.propTypes = {
-  options: PropTypes.array,
-  onSort: PropTypes.func,
-};
 
 export default function TopPostsSort({ options }) {
   const dispatch = useDispatch();

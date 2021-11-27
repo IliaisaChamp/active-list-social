@@ -31,39 +31,39 @@ export default function Router() {
         },
         {
           path: '/profile/:id',
-          element: !user ? <Navigate to={'/login'} /> : <Profile />,
+          element: !user ? <Navigate to="/login" /> : <Profile />,
         },
         {
           path: '/tasks',
-          element: !user ? <Navigate to={'/login'} /> : <Tasks />,
+          element: !user ? <Navigate to="/login" /> : <Tasks />,
         },
         {
           path: '/tasks/:id',
-          element: !user ? <Navigate to={'/login'} /> : <CurrentTaskReportLenta />,
+          element: !user ? <Navigate to="/login" /> : <CurrentTaskReportLenta />,
         },
         { path: '/timeline', element: <Timeline /> },
         {
           path: '/reports',
-          element: !user ? <Navigate to={'/login'} /> : <Report />,
+          element: !user ? <Navigate to="/login" /> : <Report />,
           children: [
             {
               path: 'task/:id',
-              element: !user ? <Navigate to={'/login'} /> : <ReportForm />,
+              element: !user ? <Navigate to="/login" /> : <ReportForm />,
             },
             {
               path: ':id',
-              element: !user ? <Navigate to={'/login'} /> : <DetailReport />,
+              element: !user ? <Navigate to="/login" /> : <DetailReport />,
             },
           ],
         },
-        { path: '/chats', element: !user ? <Navigate to={'/login'} /> : <Chat /> },
-        { path: '/recommendations', element: !user ? <Navigate to={'/login'} /> : <Recommendations /> },
+        { path: '/chats', element: !user ? <Navigate to="/login" /> : <Chat /> },
+        { path: '/recommendations', element: !user ? <Navigate to="/login" /> : <Recommendations /> },
         { path: '/top', element: <Top /> },
       ],
     },
-    { path: '/login', element: user ? <Navigate to={'/profile/' + user.id} /> : <Login /> },
-    { path: '/register', element: user ? <Navigate to={'/profile/' + user.id} /> : <Register /> },
+    { path: '/login', element: user ? <Navigate to={`/profile/${ user.id}`} /> : <Login /> },
+    { path: '/register', element: user ? <Navigate to={`/profile/${ user.id}`} /> : <Register /> },
     { path: '/elbrus', element: <Salut /> },
-    { path: '*', element: <Navigate to={'/top'} /> },
+    { path: '*', element: <Navigate to="/top" /> },
   ]);
 }

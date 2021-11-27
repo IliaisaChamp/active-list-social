@@ -16,7 +16,8 @@ export default function ReportPreviousImages({ itemData }) {
               height: '100%',
               width: '100%',
               border: '1px dashed green',
-            }}>
+            }}
+          >
             <img src={item.img} alt={item.title} loading="lazy" style={{ objectFit: 'cover', height: '100%' }} />
           </ImageListItem>
         ))}

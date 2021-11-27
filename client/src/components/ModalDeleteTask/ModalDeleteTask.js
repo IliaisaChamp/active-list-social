@@ -1,11 +1,12 @@
 import React from 'react';
-
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+
+//-------------------------------------------------------------------------
 
 const buttonContainer = {
   display: 'flex',
@@ -41,7 +42,7 @@ const style = {
   p: 4,
 };
 
-const ModalDeleteTask = ({ open, handleClose, handleOpen, subscribeHandleClose }) => {
+function ModalDeleteTask({ open, handleClose, subscribeHandleClose }) {
   return (
     <div>
       <Modal
@@ -54,7 +55,8 @@ const ModalDeleteTask = ({ open, handleClose, handleOpen, subscribeHandleClose }
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
-        }}>
+        }}
+      >
         <Fade in={open}>
           <Box sx={style}>
             <Box sx={contentContainer}>
@@ -75,6 +77,6 @@ const ModalDeleteTask = ({ open, handleClose, handleOpen, subscribeHandleClose }
       </Modal>
     </div>
   );
-};
+}
 
 export default ModalDeleteTask;

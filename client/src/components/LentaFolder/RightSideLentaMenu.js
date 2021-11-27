@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-const RightSideLentaMenu = () => {
+function RightSideLentaMenu() {
   const dispatch = useDispatch();
 
   const getOnlyUserReports = () => {
@@ -35,7 +35,7 @@ const RightSideLentaMenu = () => {
 
   const getAllReports = () => {
     dispatch(setAllReports());
-  }
+  };
 
   const getOnlySubsReports = () => {
     dispatch(getSubsReports());
@@ -57,6 +57,6 @@ const RightSideLentaMenu = () => {
       </List>
     </Grid>
   );
-};
+}
 
 export default RightSideLentaMenu;

@@ -29,14 +29,14 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
   color: theme.palette.info.dark,
   backgroundImage: `linear-gradient(135deg, ${alpha(theme.palette.info.dark, 0)} 0%, ${alpha(
     theme.palette.info.dark,
-    0.24
+    0.24,
   )} 100%)`,
 }));
 
 // ----------------------------------------------------------------------
 
 export default function ReportsOnSite({ stat }) {
-   const { t } = useTranslation();
+  const { t } = useTranslation();
   return (
     <RootStyle>
       <IconWrapperStyle>

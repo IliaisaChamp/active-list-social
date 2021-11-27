@@ -1,12 +1,12 @@
 import React from 'react';
 import { Avatar, Badge, Grid, List, ListItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
-import { BASE_URL_AVATAR } from '../../config/constants';
-import { chooseChatRoom, leaveRoom, setMessages, setRoom } from '../../store/ac/chatAc';
 import { useDispatch, useSelector } from 'react-redux';
 import { alpha, useTheme } from '@mui/material/styles';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useTranslation } from 'react-i18next';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { chooseChatRoom, leaveRoom, setMessages, setRoom } from '../../store/ac/chatAc';
+import { BASE_URL_AVATAR } from '../../config/constants';
 
 //-----------------------------------------------------------------------
 
@@ -51,7 +51,8 @@ function ListChatRooms({ rooms, currentRoomId }) {
                   badgeContent=""
                   variant="dot"
                   overlap="circular"
-                  color={online.includes(String(room.user.id)) ? 'success' : 'error'}>
+                  color={online.includes(String(room.user.id)) ? 'success' : 'error'}
+                >
                   <Avatar alt={room.user.nickname} src={`${BASE_URL_AVATAR}/${room.user.avatar}`} />
                 </Badge>
               </ListItemIcon>

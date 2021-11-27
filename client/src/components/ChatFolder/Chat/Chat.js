@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@mui/styles';
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { BASE_URL_AVATAR } from '../../../config/constants';
 import { loadRooms } from '../../../store/ac/chatAc';
 import ListChatMessages from '../../ListChatMessages/ListChatMessages';
@@ -40,7 +40,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Chat = () => {
+function Chat() {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -53,47 +53,45 @@ const Chat = () => {
   }, [user, dispatch]);
 
   return (
-    <>
-      <Container>
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography variant="h5" className="header-message">
-              Chat
-            </Typography>
-          </Grid>
+    <Container>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h5" className="header-message">
+            Chat
+          </Typography>
         </Grid>
-        <Grid container component={Paper} className={classes.chatSection}>
-          <Grid item xs={9}>
-            <List className={classes.messageArea}>
-              {/*chat-messages*/}
-              <ListChatMessages messages={messages} user={user} />
-            </List>
-            <Divider />
-            {/*chat-input*/}
-            {currentRoomId && <ChatMessageForm currentRoomId={currentRoomId} />}
-          </Grid>
-          <Grid item xs={3} className={classes.borderLeft500}>
-            <List>
-              <ListItem button key="Owner">
-                <ListItemIcon>
-                  <Avatar alt="User" src={`${BASE_URL_AVATAR}/${user?.avatar}`} />
-                </ListItemIcon>
-                <ListItemText primary={user.nickname} />
-              </ListItem>
-            </List>
-            <Divider />
-            {/*search*/}
-            <Grid item xs={12} style={{ padding: '10px' }}>
-              <TextField id="outlined-basic-email" label="Search" variant="outlined" fullWidth />
-            </Grid>
-            <Divider />
-            {/*chat-rooms*/}
-            <ListChatRooms rooms={rooms} currentRoomId={currentRoomId} />
-          </Grid>
+      </Grid>
+      <Grid container component={Paper} className={classes.chatSection}>
+        <Grid item xs={9}>
+          <List className={classes.messageArea}>
+            {/* chat-messages */}
+            <ListChatMessages messages={messages} user={user} />
+          </List>
+          <Divider />
+          {/* chat-input */}
+          {currentRoomId && <ChatMessageForm currentRoomId={currentRoomId} />}
         </Grid>
-      </Container>
-    </>
+        <Grid item xs={3} className={classes.borderLeft500}>
+          <List>
+            <ListItem button key="Owner">
+              <ListItemIcon>
+                <Avatar alt="User" src={`${BASE_URL_AVATAR}/${user?.avatar}`} />
+              </ListItemIcon>
+              <ListItemText primary={user.nickname} />
+            </ListItem>
+          </List>
+          <Divider />
+          {/* search */}
+          <Grid item xs={12} style={{ padding: '10px' }}>
+            <TextField id="outlined-basic-email" label="Search" variant="outlined" fullWidth />
+          </Grid>
+          <Divider />
+          {/* chat-rooms */}
+          <ListChatRooms rooms={rooms} currentRoomId={currentRoomId} />
+        </Grid>
+      </Grid>
+    </Container>
   );
-};
+}
 
 export default Chat;

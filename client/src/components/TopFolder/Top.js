@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Grid, Container, Stack, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import Page from '../Page/Page';
 import { TopPostCard, TopPostsSort } from '.';
 
 import { setAllReportsForTop } from '../../store/ac/reportsAC';
-import { useTranslation } from 'react-i18next';
 import Loader from '../Loader/Loader';
 // ----------------------------------------------------------------------
 

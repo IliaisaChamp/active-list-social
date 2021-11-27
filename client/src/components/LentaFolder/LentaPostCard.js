@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
@@ -6,11 +5,11 @@ import Badge from '@mui/material/Badge';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { styled } from '@mui/material/styles';
 import { Link, Card, Grid, Avatar, Typography, CardContent, Stack, CardActionArea, Slide } from '@mui/material';
-import { fDateTime } from '../../utils/formatTime';
-import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
+import { fDateTime } from '../../utils/formatTime';
 import { BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
 
 // ----------------------------------------------------------------------
@@ -48,11 +47,6 @@ const CoverImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-LentaPostCard.propTypes = {
-  report: PropTypes.object.isRequired,
-  index: PropTypes.number,
-};
-
 export default function LentaPostCard({ report }) {
   const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
   const navigate = useNavigate();
@@ -64,17 +58,13 @@ export default function LentaPostCard({ report }) {
   const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
 
   useEffect(() => {
-    const isLiked = findUserLike(user?.id);
-    setIsLiked(!!isLiked);
+    const like = findUserLike(user?.id);
+    setIsLiked(like);
     setLikesCount(Likes.length);
     if (user) {
       setDisabled(false);
     }
   }, [user, Likes.length, findUserLike]);
-
-  const handleSetLike = () => {
-    setLikeFetch();
-  };
 
   const setLikeFetch = useCallback(() => {
     axios
@@ -86,11 +76,15 @@ export default function LentaPostCard({ report }) {
       .catch(() => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
   }, [isLiked, id]);
 
+  const handleSetLike = () => {
+    setLikeFetch();
+  };
+
   return (
-    <Slide direction="up" timeout={1500} in={true} mountOnEnter unmountOnExit>
+    <Slide direction="up" timeout={1500} in mountOnEnter unmountOnExit>
       <Grid item xs={10} sm={10} md={8}>
         <Card sx={{ position: 'relative', border: '1px solid white' }}>
-          <CardActionArea onClick={() => (user ? navigate(`/reports/${id}`) : navigate(`/login`))}>
+          <CardActionArea onClick={() => (user ? navigate(`/reports/${id}`) : navigate('/login'))}>
             <CardMediaStyle>
               <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
               <AvatarStyle
@@ -110,8 +104,10 @@ export default function LentaPostCard({ report }) {
                 variant="h6"
                 component={RouterLink}
                 to={`/profile/${User?.id}`}
-                sx={{ textDecoration: 'none', color: 'inherit', mb: '5px' }}>
-                @{User?.nickname}
+                sx={{ textDecoration: 'none', color: 'inherit', mb: '5px' }}
+              >
+                @
+                {User?.nickname}
               </Typography>
             </Stack>
 
@@ -129,7 +125,8 @@ export default function LentaPostCard({ report }) {
                   size="large"
                   sx={{ padding: '5px' }}
                   disabled={disabled}
-                  onClick={handleSetLike}>
+                  onClick={handleSetLike}
+                >
                   <Badge badgeContent={likesCount} color="primary">
                     <FavoriteIcon fontSize="inherit" />
                   </Badge>

@@ -1,4 +1,4 @@
-import { START_LOADING, STOP_LOADING } from "../types/isLoadingTypes";
+import { START_LOADING, STOP_LOADING } from '../types/isLoadingTypes';
 
 export const startLoading = () => ({
   type: START_LOADING,

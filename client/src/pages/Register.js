@@ -1,16 +1,14 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-// material
 import { styled } from '@mui/material/styles';
 import { Box, Card, Link, Container, Typography, Button } from '@mui/material';
-// layouts
+import { useTranslation } from 'react-i18next';
 import AuthLayout from '../layouts/AuthLayout';
-// components
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { RegisterForm } from '../components/authentication/register';
 import AuthSocial from '../components/authentication/AuthSocial';
 import LanguagePopover from '../components/Header/LanguagePopover';
-import { useTranslation } from 'react-i18next';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -19,7 +17,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
   },
 }));
 
-const SectionStyle = styled(Card)(({ theme }) => ({
+const SectionStyle = styled(Card)(() => ({
   width: '100%',
   maxWidth: 660,
   height: '100vh',
@@ -42,7 +40,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Register() {
   const { t } = useTranslation();
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <RootStyle title="Register | Minimal-UI">
@@ -53,7 +51,9 @@ export default function Register() {
           </Button>
           <LanguagePopover />
         </Box>
-        {t('pages.reg.q')} &nbsp;
+        {t('pages.reg.q')}
+        {' '}
+&nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
           {t('pages.reg.login')}
         </Link>
@@ -79,8 +79,9 @@ export default function Register() {
           <RegisterForm />
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            {t('pages.reg.warning')}&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
+            {t('pages.reg.warning')}
+            &nbsp;
+            <Link href="#" underline="always" sx={{ color: 'text.primary' }}>
               {t('pages.reg.politic')}
             </Link>
             .
@@ -88,7 +89,9 @@ export default function Register() {
 
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              {t('pages.reg.q')} &nbsp;
+              {t('pages.reg.q')}
+              {' '}
+&nbsp;
               <Link to="/login" component={RouterLink}>
                 {t('pages.reg.login')}
               </Link>

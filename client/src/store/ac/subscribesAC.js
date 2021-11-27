@@ -5,16 +5,12 @@ import { startLoading, stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
-export const setSubscribes = (subscribes) => {
-  return {
-    type: SET_SUBSCRIBES,
-    payload: subscribes,
-  };
-};
+export const setSubscribes = (subscribes) => ({
+  type: SET_SUBSCRIBES,
+  payload: subscribes,
+});
 
-export const fetchSubscribes = (userId) => {
-  return axios(`${BASE_URL}/users/${userId}/followings`);
-};
+export const fetchSubscribes = (userId) => axios(`${BASE_URL}/users/${userId}/followings`);
 
 export const getSubsribes = (userId) => (dispatch) => {
   dispatch(startLoading());

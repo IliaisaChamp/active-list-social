@@ -7,9 +7,7 @@ import Slide from '@mui/material/Slide';
 import MuiAlert from '@mui/material/Alert';
 import { Link } from '@mui/material';
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef((props, ref) => <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />);
 
 export default function Notification() {
   const [notificationState, setNotificationState] = useState({
@@ -25,7 +23,7 @@ export default function Notification() {
 
   useEffect(() => {
     if (notification.message.length > 0) {
-      setNotificationState(prev => ({
+      setNotificationState((prev) => ({
         ...prev,
         open: true,
       }));
@@ -33,7 +31,7 @@ export default function Notification() {
   }, [notification]);
 
   const handleClose = () => {
-    setNotificationState(prev => ({ ...prev, open: false }));
+    setNotificationState((prev) => ({ ...prev, open: false }));
   };
 
   return (
@@ -43,7 +41,8 @@ export default function Notification() {
         autoHideDuration={4000}
         onClose={handleClose}
         anchorOrigin={{ vertical, horizontal }}
-        TransitionComponent={notification.Transition}>
+        TransitionComponent={notification.Transition}
+      >
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
           <Link variant="subtitle2" component={RouterLink} to={notification?.url} sx={{ textDecoration: 'none', color: 'inherit' }}>
             {notification?.message}

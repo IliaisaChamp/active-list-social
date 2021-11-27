@@ -7,7 +7,7 @@ import Scrollbar from '../Scrollbar/Scrollbar';
 import SubscribesItem from '../SubscribesItem/SubscribesItem';
 import SubscribesHead from '../SubscribesHead/SubscribesHead';
 
-const SubscribesList = ({ userSubscribes, unsubcsribeFromUser, isSelfPage }) => {
+function SubscribesList({ userSubscribes, unsubcsribeFromUser, isSelfPage }) {
   const onlineUsers = useSelector((state) => state.onlineUsers);
 
   return (
@@ -36,6 +36,6 @@ const SubscribesList = ({ userSubscribes, unsubcsribeFromUser, isSelfPage }) => 
       </Card>
     </Container>
   );
-};
+}
 
 export default SubscribesList;

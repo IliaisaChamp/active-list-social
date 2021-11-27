@@ -10,12 +10,12 @@ import AddIcon from '@mui/icons-material/Add';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import MessageIcon from '@mui/icons-material/Message';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
-import { changeAvatar } from '../../store/ac/usersAC';
 import { Box } from '@mui/system';
+import { changeAvatar } from '../../store/ac/usersAC';
 import useChat from '../../hooks/useChat';
 import { BASE_URL_AVATAR } from '../../config/constants';
 
-// const BASE_URL = 'http://localhost:3001/img';
+//--------------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
   headerContainer: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: '1',
   },
   avatar: {
-    border: `3px solid white`,
+    border: '3px solid white',
     width: theme.spacing(20),
     height: theme.spacing(20),
     boxShadow: theme.shadows[3],
@@ -60,11 +60,11 @@ const InputFile = styled('input')({
   display: 'none',
 });
 
-// const img =
-//   'https://images.unsplash.com/photo-1604737771065-7ce2dc4ba3e8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1954&q=80';
+//--------------------------------------------------------------------------
+
 const img = '/static/bgprofile.jpeg';
 
-const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
+function UserProfile({ isSelfPage, subcsribeOnUser }) {
   const navigate = useNavigate();
   const openChat = useChat();
   const user = useSelector((state) => state.user);
@@ -72,7 +72,7 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
   const subscribes = useSelector((state) => state.subscribes);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const isSubscribed = subscribes.filter((user) => +user.id === +id).length > 0;
+  const isSubscribed = subscribes.filter((sub) => +sub.id === +id).length > 0;
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -120,7 +120,9 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
                 }}
                 direction="row"
                 alignItems="center"
-                spacing={2}>
+                spacing={2}
+              >
+                {/* eslint-disable-next-line */}
                 <label htmlFor="icon-button-file">
                   <InputFile accept="image/*" id="icon-button-file" type="file" name="avatar" onChange={handleFileInputChange} />
                   <IconButton color="primary" aria-label="upload picture" component="span" size="large">
@@ -130,9 +132,9 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
               </Stack>
             )}
           </Box>
-          <Typography variant={'h5'}>{isSelfPage ? user?.first_name : currentUser?.first_name}</Typography>
+          <Typography variant="h5">{isSelfPage ? user?.first_name : currentUser?.first_name}</Typography>
           &nbsp;
-          <Typography variant={'h5'}>{isSelfPage ? user?.last_name : currentUser?.last_name}</Typography>
+          <Typography variant="h5">{isSelfPage ? user?.last_name : currentUser?.last_name}</Typography>
           <div className={classes.spacer} />
           <div className={classes.actionGroup}>
             {isSelfPage ? (
@@ -146,7 +148,8 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
                     className={classes.button}
                     variant="outlined"
                     startIcon={<SubscriptionsIcon />}
-                    onClick={() => subcsribeOnUser(user.id, id)}>
+                    onClick={() => subcsribeOnUser(user.id, id)}
+                  >
                     {t('pages.profile.sub')}
                   </Button>
                 )}
@@ -160,6 +163,6 @@ const UserProfile = ({ isSelfPage, subcsribeOnUser }) => {
       </div>
     </div>
   );
-};
+}
 
 export default UserProfile;

@@ -5,12 +5,10 @@ import { startLoading, stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
-export const setCurrentUser = (userInfo) => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: userInfo,
-  };
-};
+export const setCurrentUser = (userInfo) => ({
+  type: SET_CURRENT_USER,
+  payload: userInfo,
+});
 
 export const getCurrentUser = (userId) => async (dispatch) => {
   dispatch(startLoading());

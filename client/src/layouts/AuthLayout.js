@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
@@ -24,14 +23,10 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-AuthLayout.propTypes = {
-  children: PropTypes.node,
-};
-
 export default function AuthLayout({ children }) {
   return (
     <HeaderStyle>
-      <RouterLink to="/"/>
+      <RouterLink to="/" />
 
       <MHidden width="smDown">
         <Typography
@@ -40,7 +35,8 @@ export default function AuthLayout({ children }) {
             mt: { md: -2 },
             textAlign: 'end',
             width: '100%',
-          }}>
+          }}
+        >
           {children}
         </Typography>
       </MHidden>

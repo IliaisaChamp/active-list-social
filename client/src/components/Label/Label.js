@@ -1,12 +1,9 @@
-import PropTypes from 'prop-types';
-// material
 import { alpha, styled } from '@mui/material/styles';
-
+/*eslint-disable*/
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('span')(({ theme, ownerState }) => {
   const { color, variant } = ownerState;
-
   const styleFilled = (color) => ({
     color: theme.palette[color].contrastText,
     backgroundColor: theme.palette[color].main,
@@ -69,9 +66,3 @@ export default function Label({ color = 'default', variant = 'ghost', children, 
     </RootStyle>
   );
 }
-
-Label.propTypes = {
-  children: PropTypes.node,
-  color: PropTypes.oneOf(['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error']),
-  variant: PropTypes.oneOf(['filled', 'outlined', 'ghost']),
-};

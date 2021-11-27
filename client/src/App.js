@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import { checkUser, deleteUser } from './store/ac/authAC';
 // routes
 import Router from './routes';
@@ -14,7 +15,6 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
 import FlashMessage from './components/FlashMessage/FlashMessage';
 import Notification from './components/Notification/Notification';
-import axios from 'axios';
 import useSocket from './hooks/useSocket';
 
 function App() {

@@ -2,16 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TableRow, TableCell, Avatar, Button } from '@mui/material';
-import Label from '../Label/Label';
 import { Icon } from '@iconify/react';
 import closeFill from '@iconify/icons-eva/close-fill';
+import Label from '../Label/Label';
 import useChat from '../../hooks/useChat';
 import { BASE_URL_AVATAR } from '../../config/constants';
 
-// const BASE_URL = 'http://localhost:3001/img/';
+//-----------------------------------------------------------------------
 
-const SubscribesItem = ({ userInfo, unsubcsribeFromUser, isOnline, isSelfPage }) => {
-  const { id, nickname, first_name, last_name, avatar } = userInfo;
+function SubscribesItem({ userInfo, unsubcsribeFromUser, isOnline, isSelfPage }) {
+  const { id, nickname, first_name: firstName, last_name: lastName, avatar } = userInfo;
   const user = useSelector((state) => state.user);
   const openChat = useChat();
   const openChatHandler = () => {
@@ -25,7 +25,7 @@ const SubscribesItem = ({ userInfo, unsubcsribeFromUser, isOnline, isSelfPage })
       </TableCell>
       <TableCell align="left">
         <Button component={Link} to={`/profile/${id}`}>
-          {first_name + ' ' + last_name}
+          {`${firstName} ${lastName}`}
         </Button>
       </TableCell>
       <TableCell align="left">{nickname}</TableCell>
@@ -46,6 +46,6 @@ const SubscribesItem = ({ userInfo, unsubcsribeFromUser, isOnline, isSelfPage })
       )}
     </TableRow>
   );
-};
+}
 
 export default SubscribesItem;

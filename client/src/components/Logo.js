@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 // ----------------------------------------------------------------------
 
 Logo.propTypes = {
-  sx: PropTypes.object
+  sx: PropTypes.object,
 };
 
 export default function Logo({ sx }) {

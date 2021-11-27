@@ -1,6 +1,4 @@
 import React, { useCallback } from 'react';
-
-// mui
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -8,26 +6,17 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-// my components
 import TasksList from '../TasksList/TasksList';
 import { LentaPostCard } from '../LentaFolder';
 import SubscribesList from '../SubscribesList/SubscribesList';
+
+//---------------------------------------------------------------------
 
 const tabPanelStyle = {
   padding: '24px 0',
 };
 
-const ProfileTabs = ({
-  tasks,
-  subscribeOnTaskToggle,
-  isSelfPage,
-  completeTaskHandler,
-  reports,
-  userSubscribes,
-  subcsribeOnUser,
-  unsubcsribeFromUser,
-}) => {
+function ProfileTabs({ tasks, subscribeOnTaskToggle, isSelfPage, completeTaskHandler, reports, userSubscribes, unsubcsribeFromUser }) {
   const { t } = useTranslation();
   const [value, setValue] = React.useState('1');
 
@@ -92,6 +81,6 @@ const ProfileTabs = ({
       </TabContext>
     </Box>
   );
-};
+}
 
 export default ProfileTabs;

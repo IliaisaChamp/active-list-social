@@ -8,14 +8,14 @@ const authReducer = (state = {}, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case AUTH_USER_REGISTRATION:
-      return payload;
-    case AUTH_USER_LOGIN:
-      return payload;
-    case AUTH_USER_LOGOUT:
-      return null;
-    default:
-      return state;
+  case AUTH_USER_REGISTRATION:
+    return payload;
+  case AUTH_USER_LOGIN:
+    return payload;
+  case AUTH_USER_LOGOUT:
+    return null;
+  default:
+    return state;
   }
 };
 

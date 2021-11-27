@@ -1,5 +1,5 @@
 const initState = {
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  user: JSON.parse(localStorage.getItem('user')) || null,
   currentUser: null,
   currentUserSubscribes: [],
   profileStats: { tasksCount: 0, reportsCount: 0, userReportsCount: 0, userTasksCount: 0 },

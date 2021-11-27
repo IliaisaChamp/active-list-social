@@ -7,7 +7,7 @@ import { Icon } from '@iconify/react';
 import logOutFill from '@iconify/icons-eva/log-out-fill';
 import { logoutUser } from '../../store/ac/authAC';
 
-const Logout = () => {
+function Logout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,6 +16,6 @@ const Logout = () => {
       <Icon icon={logOutFill} width={20} height={20} />
     </IconButton>
   );
-};
+}
 
 export default Logout;

@@ -1,15 +1,14 @@
-import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton, Badge } from '@mui/material';
-import { MHidden } from '../@material-extend';
 import { useDispatch, useSelector } from 'react-redux';
+import bellFill from '@iconify/icons-eva/bell-fill';
+import { useNavigate } from 'react-router-dom';
+import { MHidden } from '../@material-extend';
 import LanguagePopover from './LanguagePopover';
 import Logout from './Logout';
-import bellFill from '@iconify/icons-eva/bell-fill';
 import { resetUnreadMessages } from '../../store/ac/unreadMessagesAC';
-import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -36,10 +35,6 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-Header.propTypes = {
-  onOpenSidebar: PropTypes.func,
-};
 
 export default function Header({ onOpenSidebar }) {
   const user = useSelector((state) => state.user);

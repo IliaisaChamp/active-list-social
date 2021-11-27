@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { NavLink as RouterLink, matchPath, useLocation } from 'react-router-dom';
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, List, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
@@ -38,11 +37,6 @@ const ListItemIconStyle = styled(ListItemIcon)({
 
 // ----------------------------------------------------------------------
 
-NavItem.propTypes = {
-  item: PropTypes.object,
-  active: PropTypes.func,
-};
-
 function NavItem({ item, active }) {
   const theme = useTheme();
   const isActiveRoot = active(item.path);
@@ -62,17 +56,14 @@ function NavItem({ item, active }) {
       to={path === '/profile/:id' ? `/profile/${user?.id}` : path}
       sx={{
         ...(isActiveRoot && activeRootStyle),
-      }}>
+      }}
+    >
       <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
       <ListItemText disableTypography primary={title} />
       {info && info}
     </ListItemStyle>
   );
 }
-
-NavSection.propTypes = {
-  navConfig: PropTypes.array,
-};
 
 export default function NavSection({ navConfig, ...other }) {
   const { pathname } = useLocation();
@@ -82,9 +73,11 @@ export default function NavSection({ navConfig, ...other }) {
   return (
     <Box {...other}>
       <List disablePadding>
-        {navConfig.filter((item) => item.isAuth === !!user || item.isTop ).map((item) => {
-            return <NavItem key={item.title} item={item} active={match} />;
-        })}
+        {navConfig
+          .filter((item) => item.isAuth === !!user || item.isTop)
+          .map((item) => (
+            <NavItem key={item.title} item={item} active={match} />
+          ))}
       </List>
     </Box>
   );

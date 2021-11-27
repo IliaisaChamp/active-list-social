@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-// material
 import { alpha } from '@mui/material/styles';
 import { Box, MenuItem, ListItemIcon, ListItemText, IconButton } from '@mui/material';
-// components
-import MenuPopover from '../MenuPopover/MenuPopover';
 import { changeLanguage } from 'i18next';
+import MenuPopover from '../MenuPopover/MenuPopover';
 import useLocalStorage from '../../hooks/useLocalStorage';
+
 // ----------------------------------------------------------------------
 
 const LANGS = [
@@ -52,11 +51,6 @@ export default function LanguagePopover() {
     setOpen(false);
   };
 
-  useEffect(() => {
-    handleChangeLanguage(storedValue?.lang, storedValue?.id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleChangeLanguage = (lang, id) => {
     console.log(lang);
     changeLanguage(lang);
@@ -65,6 +59,11 @@ export default function LanguagePopover() {
     setValue({ lang, id });
     handleClose();
   };
+
+  useEffect(() => {
+    handleChangeLanguage(storedValue?.lang, storedValue?.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -76,8 +75,7 @@ export default function LanguagePopover() {
           width: 44,
           height: 44,
           ...(open && {
-            bgcolor: (theme) =>
-              alpha(theme.palette.primary.main, theme.palette.action.focusOpacity),
+            bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.focusOpacity),
           }),
         }}
       >
@@ -93,11 +91,9 @@ export default function LanguagePopover() {
               onClick={() => handleChangeLanguage(option.value, id)}
             >
               <ListItemIcon>
-                <Box component="img" alt={option.label} src={option.icon} sx={{ width: 44, height: 20}}/>
+                <Box component="img" alt={option.label} src={option.icon} sx={{ width: 44, height: 20 }} />
               </ListItemIcon>
-              <ListItemText primaryTypographyProps={{ variant: 'body2' }}>
-                {option.label}
-              </ListItemText>
+              <ListItemText primaryTypographyProps={{ variant: 'body2' }}>{option.label}</ListItemText>
             </MenuItem>
           ))}
         </Box>

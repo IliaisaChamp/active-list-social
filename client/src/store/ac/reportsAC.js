@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   SET_COMMENT,
   SET_REPORT,
@@ -7,18 +8,15 @@ import {
   REPORTS_FOR_TOP_SORTED_BY_COMMENTS,
   REPORTS_FOR_TOP_SORTED_BY_LIKES,
 } from '../types/reportsTypes';
-import axios from 'axios';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 import { startLoading, stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
-export const setReports = (reports) => {
-  return {
-    type: SET_REPORTS,
-    payload: reports,
-  };
-};
+export const setReports = (reports) => ({
+  type: SET_REPORTS,
+  payload: reports,
+});
 
 export const currentTaskReports = (taskID) => async (dispatch) => {
   const response = await axios(`${BASE_URL}/reports/tasks/${taskID}`);

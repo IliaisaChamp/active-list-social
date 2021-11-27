@@ -1,7 +1,7 @@
-import React from 'react';
-import { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card, Table, Typography, TableBody, Container, TableContainer } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import Page from '../components/Page/Page';
 import Scrollbar from '../components/Scrollbar/Scrollbar';
 import Loader from '../components/Loader/Loader';
@@ -10,9 +10,8 @@ import { getRecommendedUsers, setUsersList } from '../store/ac/usersListAC';
 import RecommendationItem from '../components/RecommendationItem/RecommendationItem';
 import { isSubscribed } from '../utils/isSubscribed';
 import { getSubsribes, setSubscribes, subscribeOnUser, unsubscribeFromUser } from '../store/ac/subscribesAC';
-import { useTranslation } from 'react-i18next';
 
-const Recommendations = () => {
+function Recommendations() {
   const user = useSelector((state) => state.user);
   const usersList = useSelector((state) => state.usersList);
   const onlineUsers = useSelector((state) => state.onlineUsers);
@@ -67,14 +66,14 @@ const Recommendations = () => {
                   <Table>
                     <RecommendationsHead headLabel={TABLE_HEAD} />
                     <TableBody>
-                      {usersList.map((user) => (
+                      {usersList.map((man) => (
                         <RecommendationItem
-                          key={user.id}
-                          userInfo={user}
+                          key={man.id}
+                          userInfo={man}
                           subcsribeHandler={subcsribeHandler}
                           unsubcsribeHandler={unsubcsribeHandler}
-                          isOnline={onlineUsers.includes(user.id.toString())}
-                          isSubscribed={isSubscribed(subscribes, user.id)}
+                          isOnline={onlineUsers.includes(man.id.toString())}
+                          isSubscribed={isSubscribed(subscribes, man.id)}
                         />
                       ))}
                     </TableBody>
@@ -87,6 +86,6 @@ const Recommendations = () => {
       )}
     </Page>
   );
-};
+}
 
 export default Recommendations;

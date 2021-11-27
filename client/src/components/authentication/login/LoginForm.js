@@ -13,7 +13,7 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-  FormControlLabel
+  FormControlLabel,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
@@ -54,12 +54,12 @@ export default function LoginForm() {
     setShowPassword((show) => !show);
   };
 
-   const styles = {
-     helper: {
-       position: 'absolute',
-       bottom: '-17px',
-     },
-   };
+  const styles = {
+    helper: {
+      position: 'absolute',
+      bottom: '-17px',
+    },
+  };
 
   return (
     <FormikProvider value={formik}>

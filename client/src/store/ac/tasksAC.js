@@ -5,19 +5,15 @@ import { startLoading, stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
-export const setTasks = (tasks) => {
-  return {
-    type: SET_TASKS,
-    payload: tasks,
-  };
-};
+export const setTasks = (tasks) => ({
+  type: SET_TASKS,
+  payload: tasks,
+});
 
-export const removeTasks = (tasksId) => {
-  return {
-    type: REMOVE_TASK,
-    payload: tasksId,
-  };
-};
+export const removeTasks = (tasksId) => ({
+  type: REMOVE_TASK,
+  payload: tasksId,
+});
 
 export const getAllTasks = () => async (dispatch) => {
   dispatch(startLoading());
@@ -45,7 +41,7 @@ export const getFilteredTasks = (filter) => (dispatch) => {
 export const subscribeOnTask = (taskId) => async (dispatch) => {
   axios
     .post(`${BASE_URL}/tasks/${taskId}/subscribe`)
-    .then((response) => dispatch(removeTasks(taskId)))
+    .then(() => dispatch(removeTasks(taskId)))
     .catch((e) => console.log(e));
 };
 

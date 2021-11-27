@@ -23,6 +23,6 @@ export default function ComponentsOverrides(theme) {
     Backdrop(theme),
     Typography(theme),
     IconButton(theme),
-    Autocomplete(theme)
+    Autocomplete(theme),
   );
 }

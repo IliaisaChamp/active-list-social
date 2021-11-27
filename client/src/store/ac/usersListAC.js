@@ -5,12 +5,10 @@ import { startLoading, stopLoading } from './isLoadingAC';
 
 const BASE_URL = 'http://localhost:3001/api';
 
-export const setUsersList = (usersList) => {
-  return {
-    type: SET_USERS_LIST,
-    payload: usersList,
-  };
-};
+export const setUsersList = (usersList) => ({
+  type: SET_USERS_LIST,
+  payload: usersList,
+});
 
 export const getRecommendedUsers = () => (dispatch) => {
   dispatch(startLoading());

@@ -18,7 +18,7 @@ import { getCurrentUser, setCurrentUser } from '../store/ac/currentUserAC';
 import { getProfileStats, resetProfileStats } from '../store/ac/profileStatsAC';
 import Loader from '../components/Loader/Loader';
 
-const Profile = () => {
+function Profile() {
   const { id } = useParams();
   const user = useSelector((state) => state.user);
   const reports = useSelector((state) => state.reports);
@@ -29,7 +29,7 @@ const Profile = () => {
   const isLoading = useSelector((state) => state.isLoading);
 
   const dispatch = useDispatch();
-  const isSelfPage = +id === +user?.id;
+  const isSelfPage = Number(id) === Number(user?.id);
 
   const { t } = useTranslation();
 
@@ -116,7 +116,7 @@ const Profile = () => {
                 completeTaskHandler={completeTaskHandler}
                 subcsribeOnUser={subcsribeOnUser}
                 unsubcsribeFromUser={unsubcsribeFromUser}
-                buttonName={'Удалить'}
+                buttonName="Удалить"
               />
             </Grid>
           </Grid>
@@ -124,6 +124,6 @@ const Profile = () => {
       )}
     </Page>
   );
-};
+}
 
 export default Profile;

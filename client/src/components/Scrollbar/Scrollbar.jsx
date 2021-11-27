@@ -1,6 +1,4 @@
-import PropTypes from 'prop-types';
 import SimpleBarReact from 'simplebar-react';
-// material
 import { alpha, styled } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
@@ -33,11 +31,6 @@ const SimpleBarStyle = styled(SimpleBarReact)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-Scrollbar.propTypes = {
-  children: PropTypes.node.isRequired,
-  sx: PropTypes.object,
-};
 
 export default function Scrollbar({ children, sx, ...other }) {
   return (

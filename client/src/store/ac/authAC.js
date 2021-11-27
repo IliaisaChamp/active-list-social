@@ -4,24 +4,18 @@ import { setErrorMessage } from './flashAC';
 import { startLoading, stopLoading } from './isLoadingAC';
 import { resetChat } from './chatAc';
 
-const setUser = (value) => {
-  return {
-    type: AUTH_USER_REGISTRATION,
-    payload: value,
-  };
-};
-const setUserAfterLogin = (value) => {
-  return {
-    type: AUTH_USER_LOGIN,
-    payload: value,
-  };
-};
+const setUser = (value) => ({
+  type: AUTH_USER_REGISTRATION,
+  payload: value,
+});
+const setUserAfterLogin = (value) => ({
+  type: AUTH_USER_LOGIN,
+  payload: value,
+});
 
-export const deleteUser = () => {
-  return {
-    type: AUTH_USER_LOGOUT,
-  };
-};
+export const deleteUser = () => ({
+  type: AUTH_USER_LOGOUT,
+});
 
 export const loginUser = (data, navigate, setSubmitting) => async (dispatch) => {
   axios

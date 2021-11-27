@@ -1,7 +1,5 @@
-import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
-// material
 import { styled } from '@mui/material/styles';
 import { Box, TextField, Autocomplete, InputAdornment } from '@mui/material';
 
@@ -12,33 +10,29 @@ const RootStyle = styled('div')(({ theme }) => ({
     width: 200,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.easeInOut,
-      duration: theme.transitions.duration.shorter
+      duration: theme.transitions.duration.shorter,
     }),
     '&.Mui-focused': {
       width: 240,
       '& .MuiAutocomplete-inputRoot': {
-        boxShadow: theme.customShadows.z12
-      }
-    }
+        boxShadow: theme.customShadows.z12,
+      },
+    },
   },
   '& .MuiAutocomplete-inputRoot': {
     '& fieldset': {
-      borderWidth: `1px !important`,
-      borderColor: `${theme.palette.grey[500_32]} !important`
-    }
+      borderWidth: '1px !important',
+      borderColor: `${theme.palette.grey[500_32]} !important`,
+    },
   },
   '& .MuiAutocomplete-option': {
     '&:not(:last-child)': {
-      borderBottom: `solid 1px ${theme.palette.divider}`
-    }
-  }
+      borderBottom: `solid 1px ${theme.palette.divider}`,
+    },
+  },
 }));
 
 // ----------------------------------------------------------------------
-
-TopPostsSearch.propTypes = {
-  posts: PropTypes.array
-};
 
 export default function TopPostsSearch({ posts }) {
   return (
@@ -65,13 +59,13 @@ export default function TopPostsSearch({ posts }) {
                         ml: 1,
                         width: 20,
                         height: 20,
-                        color: 'text.disabled'
+                        color: 'text.disabled',
                       }}
                     />
                   </InputAdornment>
                   {params.InputProps.startAdornment}
                 </>
-              )
+              ),
             }}
           />
         )}

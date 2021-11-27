@@ -8,9 +8,7 @@ import { clearFlashMessage } from '../../store/ac/flashAC';
 
 //-----------------------------------------------------------------
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef((props, ref) => <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />);
 
 export default function FlashMessage() {
   const [flash, setFlashState] = useState({
@@ -58,7 +56,8 @@ export default function FlashMessage() {
         autoHideDuration={4000}
         onClose={handleClose}
         anchorOrigin={{ vertical, horizontal }}
-        TransitionComponent={flash.Transition}>
+        TransitionComponent={flash.Transition}
+      >
         <Alert onClose={handleClose} severity={type} sx={{ width: '100%' }}>
           {message}
         </Alert>

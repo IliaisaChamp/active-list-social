@@ -6,12 +6,10 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { useNavigate } from 'react-router-dom';
-// material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { registrationUser } from '../../../store/ac/authAC';
-
 import { useTranslation } from 'react-i18next';
+import { registrationUser } from '../../../store/ac/authAC';
 
 // ----------------------------------------------------------------------
 
@@ -22,21 +20,15 @@ export default function RegisterForm() {
   const { t } = useTranslation();
 
   const RegisterSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Электронная почта должна быть валидным адресом')
-      .required('Электронная почта обязательна'),
-    nickname: Yup.string()
-      .min(2, 'Слишком короткий ник')
-      .max(50, 'Слишком длинный ник')
-      .required('Никнейм обязательный'),
-    password: Yup.string()
-      .min(6, 'Слишком короткий пароль')
-      .max(20, 'Слишком длинный пароль')
+    email: Yup.string().email('Электронная почта должна быть валидным адресом').required('Электронная почта обязательна'),
+    nickname: Yup.string().min(2, 'Слишком короткий ник').max(50, 'Слишком длинный ник').required('Никнейм обязательный'),
+    password: Yup.string().min(6, 'Слишком короткий пароль').max(20, 'Слишком длинный пароль').required('Пароль обязательный'),
+    password_confirm: Yup.string()
+      .when('password', {
+        is: (val) => !!(val && val.length > 0),
+        then: Yup.string().oneOf([Yup.ref('password')], 'Пароли должны совпадать'),
+      })
       .required('Пароль обязательный'),
-    password_confirm: Yup.string().when('password', {
-      is: (val) => (val && val.length > 0 ? true : false),
-      then: Yup.string().oneOf([Yup.ref('password')], 'Пароли должны совпадать'),
-    }).required('Пароль обязательный'),
   });
 
   const formik = useFormik({
@@ -149,13 +141,7 @@ export default function RegisterForm() {
             />
           </Stack>
 
-          <LoadingButton
-            fullWidth
-            size="large"
-            type="submit"
-            variant="contained"
-            loading={isSubmitting}
-          >
+          <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
             {t('form.register_submit')}
           </LoadingButton>
         </Stack>

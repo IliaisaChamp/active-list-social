@@ -9,18 +9,18 @@ const RootStyle = styled('span')(({ theme, ownerState }) => {
 
   const styleFilled = (color) => ({
     color: theme.palette[color].contrastText,
-    backgroundColor: theme.palette[color].main
+    backgroundColor: theme.palette[color].main,
   });
 
   const styleOutlined = (color) => ({
     color: theme.palette[color].main,
     backgroundColor: 'transparent',
-    border: `1px solid ${theme.palette[color].main}`
+    border: `1px solid ${theme.palette[color].main}`,
   });
 
   const styleGhost = (color) => ({
     color: theme.palette[color].dark,
-    backgroundColor: alpha(theme.palette[color].main, 0.16)
+    backgroundColor: alpha(theme.palette[color].main, 0.16),
   });
 
   return {
@@ -42,21 +42,21 @@ const RootStyle = styled('span')(({ theme, ownerState }) => {
 
     ...(color !== 'default'
       ? {
-          ...(variant === 'filled' && { ...styleFilled(color) }),
-          ...(variant === 'outlined' && { ...styleOutlined(color) }),
-          ...(variant === 'ghost' && { ...styleGhost(color) })
-        }
+        ...(variant === 'filled' && { ...styleFilled(color) }),
+        ...(variant === 'outlined' && { ...styleOutlined(color) }),
+        ...(variant === 'ghost' && { ...styleGhost(color) }),
+      }
       : {
-          ...(variant === 'outlined' && {
-            backgroundColor: 'transparent',
-            color: theme.palette.text.primary,
-            border: `1px solid ${theme.palette.grey[500_32]}`
-          }),
-          ...(variant === 'ghost' && {
-            color: theme.palette.text.secondary,
-            backgroundColor: theme.palette.grey[500_16]
-          })
-        })
+        ...(variant === 'outlined' && {
+          backgroundColor: 'transparent',
+          color: theme.palette.text.primary,
+          border: `1px solid ${theme.palette.grey[500_32]}`,
+        }),
+        ...(variant === 'ghost' && {
+          color: theme.palette.text.secondary,
+          backgroundColor: theme.palette.grey[500_16],
+        }),
+      }),
   };
 });
 
@@ -79,7 +79,7 @@ Label.propTypes = {
     'info',
     'success',
     'warning',
-    'error'
+    'error',
   ]),
-  variant: PropTypes.oneOf(['filled', 'outlined', 'ghost'])
+  variant: PropTypes.oneOf(['filled', 'outlined', 'ghost']),
 };

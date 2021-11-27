@@ -1,11 +1,12 @@
 import { Grid, Container, Typography } from '@mui/material';
-import Page from '../Page/Page';
-import LentaPostCard from './LentaPostCard';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import Page from '../Page/Page';
+import LentaPostCard from './LentaPostCard';
+
 //-----------------------------------------------------------------
 
-export default function CurrentTaskReportLenta(taskId) {
+export default function CurrentTaskReportLenta() {
   const reports = useSelector((state) => state.reports);
   const { t } = useTranslation();
 

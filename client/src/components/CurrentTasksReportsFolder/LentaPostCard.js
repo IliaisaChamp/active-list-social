@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
@@ -6,11 +5,11 @@ import Badge from '@mui/material/Badge';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { styled } from '@mui/material/styles';
 import { Link, Card, Grid, Avatar, Typography, CardContent, Stack, CardActionArea } from '@mui/material';
-import { fDateTime } from '../../utils/formatTime';
-import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
+import { fDateTime } from '../../utils/formatTime';
 
 // ----------------------------------------------------------------------
 
@@ -47,15 +46,10 @@ const CoverImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-LentaPostCard.propTypes = {
-  report: PropTypes.object.isRequired,
-  index: PropTypes.number,
-};
-
 const BASE_URL = 'http://localhost:3001/img/';
 const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
 
-export default function LentaPostCard({ report, index }) {
+export default function LentaPostCard({ report }) {
   const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -64,14 +58,10 @@ export default function LentaPostCard({ report, index }) {
   const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
 
   useEffect(() => {
-    const isLiked = findUserLike(user?.id);
-    setIsLiked(!!isLiked);
+    const like = findUserLike(user?.id);
+    setIsLiked(!!like);
     setLikesCount(Likes.length);
   }, [user, Likes.length, findUserLike]);
-
-  const handleSetLike = () => {
-    setLikeFetch();
-  };
 
   const setLikeFetch = useCallback(() => {
     axios
@@ -82,6 +72,10 @@ export default function LentaPostCard({ report, index }) {
       })
       .catch(() => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
   }, [id, isLiked]);
+
+  const handleSetLike = () => {
+    setLikeFetch();
+  };
 
   console.log('render');
   return (
@@ -104,8 +98,10 @@ export default function LentaPostCard({ report, index }) {
               variant="h6"
               component={RouterLink}
               to={`/profile/${User?.id}`}
-              sx={{ textDecoration: 'none', color: 'inherit', mb: '5px' }}>
-              @{User?.nickname}
+              sx={{ textDecoration: 'none', color: 'inherit', mb: '5px' }}
+            >
+              @
+              {User?.nickname}
             </Typography>
           </Stack>
 

@@ -1,13 +1,4 @@
-import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
-
-// "Белый полукруг вокруг аватара пользователя в блогах
-
-SvgIconStyle.propTypes = {
-  src: PropTypes.string.isRequired,
-  color: PropTypes.string,
-  sx: PropTypes.object
-};
 
 export default function SvgIconStyle({ src, color = 'inherit', sx }) {
   return (
@@ -23,7 +14,7 @@ export default function SvgIconStyle({ src, color = 'inherit', sx }) {
         ...(color === 'action' && { bgcolor: 'action.active' }),
         ...(color === 'disabled' && { bgcolor: 'action.disabled' }),
         ...(color === 'paper' && { bgcolor: 'background.paper' }),
-        ...sx
+        ...sx,
       }}
     />
   );

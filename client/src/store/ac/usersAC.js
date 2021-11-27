@@ -16,7 +16,7 @@ export const changeAvatar = (userId, formData) => (dispatch) => {
           setSuccessMessage({
             message: 'Аватар успешно загружен',
             type: 'success',
-          })
+          }),
         );
       }
     })
@@ -27,7 +27,7 @@ export const changeAvatar = (userId, formData) => (dispatch) => {
           setErrorMessage({
             message: e.response.data.message,
             type: 'error',
-          })
+          }),
         );
       }
     });

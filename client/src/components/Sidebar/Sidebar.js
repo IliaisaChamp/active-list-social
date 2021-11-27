@@ -1,18 +1,8 @@
-import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// material
 import { styled } from '@mui/material/styles';
 import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
-
-// components
-import Logo from '../Logo/Logo';
-import Scrollbar from '../Scrollbar/Scrollbar';
-import NavSection from '../NavSection/NavSection';
-import { MHidden } from '../../components/@material-extend';
-
-// //sidebar icons
 import logInFill from '@iconify/icons-eva/log-in-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import flashOutLine from '@iconify/icons-eva/flash-outline';
@@ -21,9 +11,13 @@ import rewindRightFill from '@iconify/icons-eva/rewind-right-fill';
 import checkMarkCircle2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
 import starFill from '@iconify/icons-eva/star-fill';
 import { Icon } from '@iconify/react';
-
-// ----------------------------------------------------------------------
 import { useTranslation } from 'react-i18next';
+import { MHidden } from '../@material-extend';
+import NavSection from '../NavSection/NavSection';
+import Scrollbar from '../Scrollbar/Scrollbar';
+import Logo from '../Logo/Logo';
+
+//-----------------------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
 
@@ -43,11 +37,6 @@ const AccountStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-DashboardSidebar.propTypes = {
-  isOpenSidebar: PropTypes.bool,
-  onCloseSidebar: PropTypes.func,
-};
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
@@ -117,7 +106,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           display: 'flex',
           flexDirection: 'column',
         },
-      }}>
+      }}
+    >
       <Box sx={{ px: 2.5, py: 3 }}>
         <Box component={RouterLink} to="/top" sx={{ display: 'inline-flex' }}>
           <Logo />
@@ -150,7 +140,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           onClose={onCloseSidebar}
           PaperProps={{
             sx: { width: DRAWER_WIDTH },
-          }}>
+          }}
+        >
           {renderContent}
         </Drawer>
       </MHidden>
@@ -164,7 +155,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
               width: DRAWER_WIDTH,
               bgcolor: 'background.default',
             },
-          }}>
+          }}
+        >
           {renderContent}
         </Drawer>
       </MHidden>

@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
-import Page from '../components/Page/Page';
 import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Page from '../components/Page/Page';
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 import { Fireworks, useFireworks } from 'fireworks-js/dist/react';
 
-const Salut = () => {
+function Salut() {
   const { enabled, options } = useFireworks({
     initialStart: true,
     initialOptions: {
@@ -70,11 +70,12 @@ const Salut = () => {
           height: 600,
           overflow: 'hidden',
           borderRadius: 30,
-        }}>
+        }}
+      >
         <img src="/static/elbrus.jpg" alt="" />
       </div>
     </Fireworks>
   );
-};
+}
 
 export default Salut;

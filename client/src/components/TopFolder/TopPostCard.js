@@ -1,14 +1,13 @@
-import PropTypes from 'prop-types';
 import { alpha, styled } from '@mui/material/styles';
 import { Link, Card, Grid, Avatar, Typography, CardContent, IconButton, Stack, Badge } from '@mui/material';
-import { fDate } from '../../utils/formatTime';
-import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
+import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
+import { fDate } from '../../utils/formatTime';
 import { BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
 
 // ----------------------------------------------------------------------
@@ -53,11 +52,6 @@ const CoverImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-TopPostCard.propTypes = {
-  post: PropTypes.object,
-  index: PropTypes.number,
-};
-
 export default function TopPostCard({ report, index }) {
   const { images, desc, User, createdAt, id, Likes, Comments } = report;
   const navigate = useNavigate();
@@ -68,17 +62,13 @@ export default function TopPostCard({ report, index }) {
   const findUserLike = useCallback((userID) => Likes?.find((like) => userID === like.user_id), [Likes]);
 
   useEffect(() => {
-    const isLiked = findUserLike(user?.id);
-    setIsLiked(!!isLiked);
+    const like = findUserLike(user?.id);
+    setIsLiked(!!like);
     setLikesCount(Likes.length);
     if (user) {
       setDisabled(false);
     }
   }, [user, Likes.length, findUserLike]);
-
-  const handleSetLike = () => {
-    setLikeFetch();
-  };
 
   const setLikeFetch = useCallback(() => {
     axios
@@ -89,6 +79,10 @@ export default function TopPostCard({ report, index }) {
       })
       .catch(() => setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1)));
   }, [id, isLiked]);
+
+  const handleSetLike = () => {
+    setLikeFetch();
+  };
 
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
@@ -115,7 +109,8 @@ export default function TopPostCard({ report, index }) {
                 sm: 'calc(100% * 3 / 4.66)',
               },
             }),
-          }}>
+          }}
+        >
           <SvgIconStyle
             color="paper"
             src="/static/icons/shape-avatar.svg"
@@ -155,7 +150,8 @@ export default function TopPostCard({ report, index }) {
               width: '100%',
               position: 'absolute',
             }),
-          }}>
+          }}
+        >
           <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
             {fDate(createdAt)}
           </Typography>
@@ -171,7 +167,8 @@ export default function TopPostCard({ report, index }) {
               ...((latestPostLarge || latestPost) && {
                 color: 'common.white',
               }),
-            }}>
+            }}
+          >
             {desc}
           </TitleStyle>
 
@@ -182,7 +179,8 @@ export default function TopPostCard({ report, index }) {
                 size="large"
                 sx={{ padding: '5px' }}
                 disabled={disabled}
-                onClick={handleSetLike}>
+                onClick={handleSetLike}
+              >
                 <Badge badgeContent={likesCount} color="primary">
                   <FavoriteIcon fontSize="inherit" />
                 </Badge>

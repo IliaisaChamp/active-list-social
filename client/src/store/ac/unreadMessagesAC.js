@@ -1,14 +1,9 @@
-import {ADD_UNREAD_MESSAGES, RESET_UNREAD_MESSAGES} from '../types/unreadMessages';
+import { ADD_UNREAD_MESSAGES, RESET_UNREAD_MESSAGES } from '../types/unreadMessages';
 
-export const addUnreadMessage = () => {
+export const addUnreadMessage = () => ({
+  type: ADD_UNREAD_MESSAGES,
+});
 
-    return {
-      type: ADD_UNREAD_MESSAGES,
-    }
-};
-
-export const resetUnreadMessages = () => {
-  return {
-    type: RESET_UNREAD_MESSAGES,
-  };
-};
+export const resetUnreadMessages = () => ({
+  type: RESET_UNREAD_MESSAGES,
+});

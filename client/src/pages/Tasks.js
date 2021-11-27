@@ -1,16 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState, useCallback } from 'react';
 import { Container, Typography } from '@mui/material';
+import axios from 'axios';
+import { Box } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import Page from '../components/Page/Page';
 import TasksList from '../components/TasksList/TasksList';
 import SearchBar from '../components/SearchBar/SearchBar';
-import { getAllTasks, setTasks, subscribeOnTask } from '../store/ac/tasksAC';
-import { getFilteredTasks } from '../store/ac/tasksAC';
+import { getAllTasks, setTasks, subscribeOnTask, getFilteredTasks } from '../store/ac/tasksAC';
 import TagsCloud from '../components/TagCloud/TagCloud';
-import axios from 'axios';
 import { BASE_URL_API } from '../config/constants';
-import { Box } from '@mui/system';
-import { useTranslation } from 'react-i18next';
 import Loader from '../components/Loader/Loader';
 // ----------------------------------------------------------------------
 
@@ -51,8 +50,8 @@ export default function Tasks() {
   const fetchTags = useCallback(async () => {
     try {
       const response = await axios(`${BASE_URL_API}/tasks/categories`);
-      const { tags } = await response.data;
-      setTags(tags);
+      const { tags: newTags } = await response.data;
+      setTags(newTags);
     } catch (e) {
       console.log(e);
     }
@@ -76,7 +75,7 @@ export default function Tasks() {
         {isLoading > 0 ? (
           <Loader />
         ) : tasks.length > 0 ? (
-          <TasksList tasks={tasks} subscribeOnTaskToggle={subscribeOnTaskToggle} buttonName={'Добавить'} />
+          <TasksList tasks={tasks} subscribeOnTaskToggle={subscribeOnTaskToggle} buttonName="Добавить" />
         ) : (
           <Container>
             <Typography align="center" variant="h6">

@@ -1,14 +1,15 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Card, Link, Container, Typography, Button } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { Box } from '@mui/system';
 import AuthLayout from '../layouts/AuthLayout';
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { LoginForm } from '../components/authentication/login';
 import AuthSocial from '../components/authentication/AuthSocial';
-import { useTranslation } from 'react-i18next';
 import LanguagePopover from '../components/Header/LanguagePopover';
-import { Box } from '@mui/system';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -17,7 +18,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
   },
 }));
 
-const SectionStyle = styled(Card)(({ theme }) => ({
+const SectionStyle = styled(Card)(() => ({
   width: '100%',
   maxWidth: 660,
   height: '100vh',
@@ -46,12 +47,14 @@ export default function Login() {
     <RootStyle title={t('pages.auth.head')}>
       <AuthLayout>
         <Box display="flex" justifyContent="space-between" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }} sx={{ mb: 1 }}>
-          <Button variant="outlined" onClick={() => navigate('/')} sx={{maxHeight: 30}}>
+          <Button variant="outlined" onClick={() => navigate('/')} sx={{ maxHeight: 30 }}>
             {t('pages.auth.button')}
           </Button>
           <LanguagePopover />
         </Box>
-        {t('pages.auth.q')} &nbsp;
+        {t('pages.auth.q')}
+        {' '}
+&nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
           {t('pages.auth.create')}
         </Link>
@@ -75,7 +78,9 @@ export default function Login() {
 
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              {t('pages.auth.q')} &nbsp;
+              {t('pages.auth.q')}
+              {' '}
+&nbsp;
               <Link variant="subtitle2" component={RouterLink} to="register">
                 {t('pages.auth.create')}
               </Link>

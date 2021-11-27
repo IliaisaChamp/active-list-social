@@ -5,17 +5,7 @@ import IconButton from '@mui/material/IconButton';
 
 //--------------------------------------------------------------
 
-const ButtonPopover = ({
-  text,
-  children,
-  handleOpen,
-  completeTaskHandler,
-  subscribeOnTaskToggle,
-  taskId,
-  component,
-  to,
-  setChecked,
-}) => {
+function ButtonPopover({ text, children, handleOpen, completeTaskHandler, subscribeOnTaskToggle, taskId, component, to, setChecked }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,6 +18,7 @@ const ButtonPopover = ({
   const clickHandler = useCallback(() => {
     setChecked(false);
     setTimeout(() => {
+      // eslint-disable-next-line
       completeTaskHandler ? completeTaskHandler(taskId) : subscribeOnTaskToggle(taskId);
       setChecked(true);
     }, 500);
@@ -44,7 +35,8 @@ const ButtonPopover = ({
         aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}>
+        onMouseLeave={handlePopoverClose}
+      >
         {children}
       </IconButton>
       <Popover
@@ -64,11 +56,12 @@ const ButtonPopover = ({
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
-        disableScrollLock>
+        disableScrollLock
+      >
         <Typography sx={{ p: 1 }}>{text}</Typography>
       </Popover>
     </>
   );
-};
+}
 
 export default ButtonPopover;

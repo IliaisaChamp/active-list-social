@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Pagination from '@mui/material/Pagination';
 import TasksItem from '../TasksItem/TasksItem';
-const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPage }) => {
+
+function TasksList({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPage }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [currentTasks, setCurrentTasks] = useState(null);
@@ -42,8 +43,9 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-      }}>
-      <List dense={true} sx={{ padding: 0, width: '100%' }}>
+      }}
+    >
+      <List dense sx={{ padding: 0, width: '100%' }}>
         {currentTasks?.map((task) => (
           <TasksItem
             key={task.id}
@@ -59,6 +61,6 @@ const TasksList = ({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPa
       </Box>
     </Box>
   );
-};
+}
 
 export default React.memo(TasksList);

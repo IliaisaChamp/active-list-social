@@ -11,7 +11,7 @@ import useChat from '../../hooks/useChat';
 
 //-------------------------------------------------------------------------------
 
-const RecommendationItem = ({ userInfo, subcsribeHandler, unsubcsribeHandler, isOnline, isSubscribed }) => {
+function RecommendationItem({ userInfo, subcsribeHandler, unsubcsribeHandler, isOnline, isSubscribed }) {
   const user = useSelector((state) => state.user);
   const { t } = useTranslation();
   const openChat = useChat();
@@ -22,14 +22,17 @@ const RecommendationItem = ({ userInfo, subcsribeHandler, unsubcsribeHandler, is
   return (
     <TableRow hover tabIndex={-1} role="checkbox">
       <TableCell sx={{ padding: 2 }} padding="checkbox">
-        <Avatar alt={userInfo.nickname} src={'http://localhost:3001/img/' + userInfo.avatar} />
+        <Avatar alt={userInfo.nickname} src={`http://localhost:3001/img/${ userInfo.avatar}`} />
       </TableCell>
       <TableCell align="left">
         <Button component={Link} to={`/profile/${userInfo?.id}`}>
           {userInfo?.nickname}
         </Button>
       </TableCell>
-      <TableCell align="left">{userInfo.percentCommonTasks}%</TableCell>
+      <TableCell align="left">
+        {userInfo.percentCommonTasks}
+        %
+      </TableCell>
       <TableCell align="left">{userInfo.reportsCount}</TableCell>
       <TableCell align="left">
         <Label variant="ghost" color={isOnline ? 'success' : 'error'}>
@@ -52,6 +55,6 @@ const RecommendationItem = ({ userInfo, subcsribeHandler, unsubcsribeHandler, is
       </TableCell>
     </TableRow>
   );
-};
+}
 
 export default RecommendationItem;

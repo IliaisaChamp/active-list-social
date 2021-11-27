@@ -5,12 +5,12 @@ const initState = 0;
 function unreadMessagesReducer(state = initState, action) {
   const { type } = action;
   switch (type) {
-    case ADD_UNREAD_MESSAGES:
-      return state + 1;
-    case RESET_UNREAD_MESSAGES:
-      return 0;
-    default:
-      return state;
+  case ADD_UNREAD_MESSAGES:
+    return state + 1;
+  case RESET_UNREAD_MESSAGES:
+    return 0;
+  default:
+    return state;
   }
 }
 

@@ -9,12 +9,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import TaskIcon from '@mui/icons-material/Task';
 import AddIcon from '@mui/icons-material/Add';
 import GroupIcon from '@mui/icons-material/Group';
-import ModalDeleteTask from '../ModalDeleteTask/ModalDeleteTask';
-import ButtonPopover from '../ButtonPopover/ButtonPopover';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
-import { currentTaskReports } from '../../store/ac/reportsAC';
 import { useDispatch } from 'react-redux';
+import ModalDeleteTask from '../ModalDeleteTask/ModalDeleteTask';
+import ButtonPopover from '../ButtonPopover/ButtonPopover';
+import { currentTaskReports } from '../../store/ac/reportsAC';
 
 //----------------------------------------------------------
 const completedItemStyle = {
@@ -34,7 +34,7 @@ const RootStyle = styled(ListItem)(({ theme }) => ({
   },
 }));
 
-const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandler }) => {
+function TasksItem({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandler }) {
   const location = useLocation();
   const [checked, setChecked] = useState(true);
   const [open, setOpen] = useState(false);
@@ -64,11 +64,13 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
           // disableTypography
           secondaryTypographyProps={{}}
           sx={{ display: 'block' }}
-          secondary={task?.Reports !== undefined ? `Количество отчетов ${task?.Reports} ` : false}>
+          secondary={task?.Reports !== undefined ? `Количество отчетов ${task?.Reports} ` : false}
+        >
           <Typography
             onClick={() => currentTaskIdBitch()}
             variant="subtitle2"
-            sx={{ '&:hover': { cursor: 'pointer' }, display: 'flex' }}>
+            sx={{ '&:hover': { cursor: 'pointer' }, display: 'flex' }}
+          >
             {task?.title}
           </Typography>
         </ListItemText>
@@ -86,7 +88,8 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
                 subscribeOnTaskToggle={subscribeOnTaskToggle}
                 aria-label="add-task"
                 setChecked={setChecked}
-                text={'Добавить цель'}>
+                text="Добавить цель"
+              >
                 <AddIcon />
               </ButtonPopover>
             </>
@@ -100,7 +103,8 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
                   completeTaskHandler={completeTaskHandler}
                   setChecked={setChecked}
                   aria-label="complete-task"
-                  text={'Отметить как выполненое'}>
+                  text="Отметить как выполненое"
+                >
                   <CheckCircleIcon />
                 </ButtonPopover>
               )}
@@ -110,12 +114,13 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
                 edge="end"
                 taskId={task.id}
                 aria-label="add-report"
-                text={'Добавить отчет'}>
+                text="Добавить отчет"
+              >
                 <TaskIcon />
               </ButtonPopover>
 
               {!task?.isDone && (
-                <ButtonPopover taskId={task?.id} edge="end" handleOpen={handleOpen} aria-label="delete" text={'Удалить'}>
+                <ButtonPopover taskId={task?.id} edge="end" handleOpen={handleOpen} aria-label="delete" text="Удалить">
                   <DeleteIcon />
                 </ButtonPopover>
               )}
@@ -125,6 +130,6 @@ const TasksItem = ({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
       </RootStyle>
     </Grow>
   );
-};
+}
 
 export default TasksItem;
