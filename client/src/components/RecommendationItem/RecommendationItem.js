@@ -22,7 +22,7 @@ function RecommendationItem({ userInfo, subcsribeHandler, unsubcsribeHandler, is
   return (
     <TableRow hover tabIndex={-1} role="checkbox">
       <TableCell sx={{ padding: 2 }} padding="checkbox">
-        <Avatar alt={userInfo.nickname} src={`${BASE_URL_AVATAR}}/${userInfo.avatar}`} />
+        <Avatar alt={userInfo.nickname} src={`${BASE_URL_AVATAR}/${userInfo.avatar}`} />
       </TableCell>
       <TableCell align="left">
         <Button component={Link} to={`/profile/${userInfo?.id}`}>

@@ -8,7 +8,7 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import axios from 'axios';
 import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
 import { fDate } from '../../utils/formatTime';
-import { BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
+import { BASE_URL_API, BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
 
 // ----------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ export default function TopPostCard({ report, index }) {
 
   const setLikeFetch = useCallback(() => {
     axios
-      .post(`${BASE_URL_REPORT_IMAGES}${id}/like`)
+      .post(`${BASE_URL_API}/reports/${id}/like`)
       .then(() => {
         setIsLiked(!isLiked);
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
