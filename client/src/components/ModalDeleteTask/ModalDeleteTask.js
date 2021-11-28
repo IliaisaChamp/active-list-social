@@ -42,6 +42,8 @@ const style = {
   p: 4,
 };
 
+//-------------------------------------------------------------------------------------
+
 function ModalDeleteTask({ open, handleClose, subscribeHandleClose }) {
   return (
     <div>

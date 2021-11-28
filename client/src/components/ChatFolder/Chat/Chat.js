@@ -20,6 +20,8 @@ import ListChatMessages from '../../ListChatMessages/ListChatMessages';
 import ListChatRooms from '../../ListChatRooms/ListChatRooms';
 import ChatMessageForm from '../../ChatMessageForm/ChatMessageForm';
 
+//-----------------------------------------------------------------------------
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -39,6 +41,8 @@ const useStyles = makeStyles({
     overflowY: 'auto',
   },
 });
+
+//------------------------------------------------------------------------
 
 function Chat() {
   const classes = useStyles();

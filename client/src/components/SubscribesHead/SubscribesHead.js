@@ -1,6 +1,4 @@
 import React from 'react';
-
-// mui
 import { TableRow, TableCell } from '@mui/material';
 
 function SubscribesHead({ isSelfPage }) {

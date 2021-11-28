@@ -8,6 +8,7 @@ import closeFill from '@iconify/icons-eva/close-fill';
 import { useTranslation } from 'react-i18next';
 import Label from '../Label/Label';
 import useChat from '../../hooks/useChat';
+import { BASE_URL_AVATAR } from '../../config/constants';
 
 //-------------------------------------------------------------------------------
 
@@ -18,11 +19,10 @@ function RecommendationItem({ userInfo, subcsribeHandler, unsubcsribeHandler, is
   const openChatHandler = () => {
     openChat(userInfo?.id);
   };
-
   return (
     <TableRow hover tabIndex={-1} role="checkbox">
       <TableCell sx={{ padding: 2 }} padding="checkbox">
-        <Avatar alt={userInfo.nickname} src={`http://localhost:3001/img/${ userInfo.avatar}`} />
+        <Avatar alt={userInfo.nickname} src={`${BASE_URL_AVATAR}}/${userInfo.avatar}`} />
       </TableCell>
       <TableCell align="left">
         <Button component={Link} to={`/profile/${userInfo?.id}`}>

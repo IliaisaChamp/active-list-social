@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react';
 import profileFilled from '@iconify/icons-ant-design/profile-filled';
-// material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import CountUp from 'react-countup';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({

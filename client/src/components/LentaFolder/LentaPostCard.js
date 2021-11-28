@@ -68,7 +68,7 @@ export default function LentaPostCard({ report }) {
 
   const setLikeFetch = useCallback(() => {
     axios
-      .post(`http://localhost:3001/api/reports/${id}/like`)
+      .post(`${BASE_URL_REPORT_IMAGES}${id}/like`)
       .then(() => {
         setIsLiked(!isLiked);
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));

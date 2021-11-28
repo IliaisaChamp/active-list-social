@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-// mui
 import { Container, Card, TableContainer, Table, TableHead, TableBody } from '@mui/material';
-
 import Scrollbar from '../Scrollbar/Scrollbar';
 import SubscribesItem from '../SubscribesItem/SubscribesItem';
 import SubscribesHead from '../SubscribesHead/SubscribesHead';
+
+//------------------------------------------------------------------------------------------
 
 function SubscribesList({ userSubscribes, unsubcsribeFromUser, isSelfPage }) {
   const onlineUsers = useSelector((state) => state.onlineUsers);

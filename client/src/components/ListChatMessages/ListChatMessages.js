@@ -31,14 +31,4 @@ function ListChatMessages({ messages, user }) {
   );
 }
 
-// <Typography
-//     ali
-//     gutterBottom
-//     variant="h6"
-//     component={Link}
-//     to={`/profile/${id}`}
-//     sx={{ textDecoration: 'none', color: 'inherit', mb: '5px' }}>
-//   {first_name + ' ' + last_name}
-// </Typography>
-
 export default React.memo(ListChatMessages);

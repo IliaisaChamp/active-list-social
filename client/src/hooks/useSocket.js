@@ -8,6 +8,7 @@ import { setOnline } from '../store/ac/onlineUsersAc';
 import { setSocket } from '../store/ac/socketAc';
 import { addChatMessage, loadRooms } from '../store/ac/chatAc';
 import { addUnreadMessage } from '../store/ac/unreadMessagesAC';
+import { BASE_URL } from '../config/constants';
 
 export default function useSocket(dispatch) {
   const socket = useRef();
@@ -18,7 +19,7 @@ export default function useSocket(dispatch) {
   useEffect(() => {
     try {
       if (user) {
-        socket.current = io('http://localhost:3001', {
+        socket.current = io(BASE_URL, {
           query: { id: user.id },
         });
 

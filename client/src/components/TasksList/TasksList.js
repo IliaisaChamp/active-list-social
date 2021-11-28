@@ -4,6 +4,8 @@ import List from '@mui/material/List';
 import Pagination from '@mui/material/Pagination';
 import TasksItem from '../TasksItem/TasksItem';
 
+//--------------------------------------------------------------
+
 function TasksList({ tasks, subscribeOnTaskToggle, completeTaskHandler, isSelfPage }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);

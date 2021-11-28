@@ -1,11 +1,10 @@
 import { Icon } from '@iconify/react';
 import userProfile from '@iconify/icons-carbon/user-profile';
-// material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
-// utils
 import CountUp from 'react-countup';
 import { useTranslation } from 'react-i18next';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({

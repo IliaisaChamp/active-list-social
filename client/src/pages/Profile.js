@@ -86,7 +86,6 @@ function Profile() {
   );
   return (
     <Page title={t('pages.profile.head')}>
-      {/* <Salut /> */}
       {isLoading > 0 ? (
         <Loader />
       ) : (

@@ -13,7 +13,6 @@ import ReportForm from './components/Report/ReportForm';
 import DetailReport from './components/Report/DetailReport';
 import CurrentTaskReportLenta from './components/CurrentTasksReportsFolder/CurrentTaskReportLenta';
 import Recommendations from './pages/Recommendations';
-import Salut from './components/Salut/Salut';
 
 // ----------------------------------------------------------------------
 
@@ -63,7 +62,6 @@ export default function Router() {
     },
     { path: '/login', element: user ? <Navigate to={`/profile/${ user.id}`} /> : <Login /> },
     { path: '/register', element: user ? <Navigate to={`/profile/${ user.id}`} /> : <Register /> },
-    { path: '/elbrus', element: <Salut /> },
     { path: '*', element: <Navigate to="/top" /> },
   ]);
 }

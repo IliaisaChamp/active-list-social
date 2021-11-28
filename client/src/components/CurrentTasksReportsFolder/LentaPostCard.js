@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import SvgIconStyle from '../SvgIconStyle/SvgIconStyle';
 import { fDateTime } from '../../utils/formatTime';
+import { BASE_URL_AVATAR, BASE_URL_REPORT_IMAGES } from '../../config/constants';
 
 // ----------------------------------------------------------------------
 
@@ -46,9 +47,6 @@ const CoverImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-const BASE_URL = 'http://localhost:3001/img/';
-const BASE_URL_REPORT_IMAGES = 'http://localhost:3001/img/reports/';
-
 export default function LentaPostCard({ report }) {
   const { images, desc, User, Task, createdAt, id, Likes, Comments } = report;
   const navigate = useNavigate();
@@ -65,7 +63,7 @@ export default function LentaPostCard({ report }) {
 
   const setLikeFetch = useCallback(() => {
     axios
-      .post(`http://localhost:3001/api/reports/${id}/like`)
+      .post(`${BASE_URL_REPORT_IMAGES}${id}/like`)
       .then(() => {
         setIsLiked(!isLiked);
         setLikesCount((prev) => (isLiked ? prev - 1 : prev + 1));
@@ -83,7 +81,7 @@ export default function LentaPostCard({ report }) {
         <CardActionArea onClick={() => navigate(`/reports/${id}`)}>
           <CardMediaStyle>
             <SvgIconStyle color="paper" src="/static/icons/shape-avatar.svg" />
-            <AvatarStyle alt={User?.nickname} src={`${BASE_URL}${User?.avatar}`} />
+            <AvatarStyle alt={User?.nickname} src={`${BASE_URL_AVATAR}/${User?.avatar}`} />
             <CoverImgStyle
               alt={User?.nickname}
               src={images?.length ? BASE_URL_REPORT_IMAGES + images[0] : '/static/defaultreport.jpeg'}

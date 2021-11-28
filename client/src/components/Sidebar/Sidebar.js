@@ -16,6 +16,7 @@ import { MHidden } from '../@material-extend';
 import NavSection from '../NavSection/NavSection';
 import Scrollbar from '../Scrollbar/Scrollbar';
 import Logo from '../Logo/Logo';
+import { BASE_URL_AVATAR } from '../../config/constants';
 
 //-----------------------------------------------------------------------------------
 
@@ -117,7 +118,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         <Box sx={{ mb: 5, mx: 2.5 }}>
           <Link underline="none" component={RouterLink} to={`/profile/${user.id}`}>
             <AccountStyle>
-              <Avatar src={user.avatar ? `http://localhost:3001/img/${user.avatar}` : user.first_name} alt="userAvatar" />
+              <Avatar src={user.avatar ? `${BASE_URL_AVATAR}/${user.avatar}` : user.first_name} alt="userAvatar" />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                   {user.nickname}

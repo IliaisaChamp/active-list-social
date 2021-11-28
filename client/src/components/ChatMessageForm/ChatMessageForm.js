@@ -39,7 +39,6 @@ function ChatMessageForm({ currentRoomId }) {
         </Grid>
         <Grid item xs={1} align="right">
           <Fab type="submit" color="primary" aria-label="add">
-            {/* <Icon /> */}
             <ChatSharpIcon />
           </Fab>
         </Grid>

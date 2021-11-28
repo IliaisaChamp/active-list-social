@@ -2,27 +2,24 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { checkUser, deleteUser } from './store/ac/authAC';
-// routes
 import Router from './routes';
-// theme
 import ThemeConfig from './theme';
 import GlobalStyles from './theme/globalStyles';
-
-// components
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
-
-// delete
 import { BaseOptionChartStyle } from './components/charts/BaseOptionChart';
 import FlashMessage from './components/FlashMessage/FlashMessage';
 import Notification from './components/Notification/Notification';
 import useSocket from './hooks/useSocket';
+import { BASE_URL } from './config/constants';
+
+//--------------------------------------------------------------------------------
 
 function App() {
   const dispatch = useDispatch();
   useSocket(dispatch);
 
   axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = 'http://localhost:3001';
+  axios.defaults.baseURL = BASE_URL;
   axios.interceptors.response.use(
     (res) => res,
     (err) => {

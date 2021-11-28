@@ -2,8 +2,7 @@ import axios from 'axios';
 import { COMPLETE_TASK, GET_TASKS_SAGA, REMOVE_TASK, SET_TASKS } from '../types/tasksTypes';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 import { startLoading, stopLoading } from './isLoadingAC';
-
-const BASE_URL = 'http://localhost:3001/api';
+import { BASE_URL_API } from '../../config/constants';
 
 export const setTasks = (tasks) => ({
   type: SET_TASKS,
@@ -17,7 +16,7 @@ export const removeTasks = (tasksId) => ({
 
 export const getAllTasks = () => async (dispatch) => {
   dispatch(startLoading());
-  axios(`${BASE_URL}/tasks`)
+  axios(`${BASE_URL_API}/tasks`)
     .then((response) => {
       const payload = [...response.data.tasks].map((task) => ({ ...task, Reports: task.Reports.length, Users: task.Users.length }));
       dispatch(setTasks(payload));
@@ -28,7 +27,7 @@ export const getAllTasks = () => async (dispatch) => {
 
 export const getUsersTasks = (userId) => async (dispatch) => {
   dispatch(startLoading());
-  axios(`${BASE_URL}/users/${userId}/tasks`)
+  axios(`${BASE_URL_API}/users/${userId}/tasks`)
     .then((response) => dispatch(setTasks(response.data.tasks)))
     .catch((e) => console.log(e))
     .finally(() => dispatch(stopLoading()));
@@ -40,13 +39,13 @@ export const getFilteredTasks = (filter) => (dispatch) => {
 
 export const subscribeOnTask = (taskId) => async (dispatch) => {
   axios
-    .post(`${BASE_URL}/tasks/${taskId}/subscribe`)
+    .post(`${BASE_URL_API}/tasks/${taskId}/subscribe`)
     .then(() => dispatch(removeTasks(taskId)))
     .catch((e) => console.log(e));
 };
 
 export const unsubscribeOnTask = (taskId) => async (dispatch) => {
-  const response = await axios.delete(`${BASE_URL}/tasks/${taskId}/subscribe`);
+  const response = await axios.delete(`${BASE_URL_API}/tasks/${taskId}/subscribe`);
   if (response.status < 400) {
     dispatch({
       type: REMOVE_TASK,
@@ -57,7 +56,7 @@ export const unsubscribeOnTask = (taskId) => async (dispatch) => {
 
 export const completeTask = (taskId) => async (dispatch) => {
   axios
-    .post(`${BASE_URL}/tasks/${taskId}/completed`)
+    .post(`${BASE_URL_API}/tasks/${taskId}/completed`)
     .then((response) => {
       dispatch(
         setSuccessMessage({

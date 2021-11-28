@@ -34,6 +34,8 @@ const RootStyle = styled(ListItem)(({ theme }) => ({
   },
 }));
 
+//-------------------------------------------------------------------
+
 function TasksItem({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandler }) {
   const location = useLocation();
   const [checked, setChecked] = useState(true);
@@ -61,7 +63,6 @@ function TasksItem({ task, subscribeOnTaskToggle, isSelfPage, completeTaskHandle
       <RootStyle sx={isPageTask ? {} : task?.isDone ? { ...completedItemStyle } : { ...incompletedItemStyle }}>
         <ModalDeleteTask open={open} handleOpen={handleOpen} handleClose={handleClose} subscribeHandleClose={subscribeHandleClose} />
         <ListItemText
-          // disableTypography
           secondaryTypographyProps={{}}
           sx={{ display: 'block' }}
           secondary={task?.Reports !== undefined ? `Количество отчетов ${task?.Reports} ` : false}

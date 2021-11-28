@@ -1,9 +1,7 @@
 import { Icon } from '@iconify/react';
 import fileDoneOutlined from '@iconify/icons-ant-design/file-done-outlined';
-// material
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
-// utils
 import CountUp from 'react-countup';
 import { useTranslation } from 'react-i18next';
 

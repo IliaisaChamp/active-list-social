@@ -10,8 +10,7 @@ import {
 } from '../types/reportsTypes';
 import { setErrorMessage, setSuccessMessage } from './flashAC';
 import { startLoading, stopLoading } from './isLoadingAC';
-
-const BASE_URL = 'http://localhost:3001/api';
+import { BASE_URL_API } from '../../config/constants';
 
 export const setReports = (reports) => ({
   type: SET_REPORTS,
@@ -19,7 +18,7 @@ export const setReports = (reports) => ({
 });
 
 export const currentTaskReports = (taskID) => async (dispatch) => {
-  const response = await axios(`${BASE_URL}/reports/tasks/${taskID}`);
+  const response = await axios(`${BASE_URL_API}/reports/tasks/${taskID}`);
   const { reports } = response.data;
 
   dispatch({
@@ -30,7 +29,7 @@ export const currentTaskReports = (taskID) => async (dispatch) => {
 
 export const setAllReportsForTop = () => async (dispatch) => {
   dispatch(startLoading());
-  const response = await axios(`${BASE_URL}/reports/top`);
+  const response = await axios(`${BASE_URL_API}/reports/top`);
   const { reports } = response.data;
   dispatch({
     type: ALL_REPORTS_FOR_TOP,
@@ -49,7 +48,7 @@ export const setAllReportsForTopSortedByLikes = () => ({
 
 export const setNewReport = (data, taskID, userID, navigate, socket) => async (dispatch) => {
   await axios
-    .post(`${BASE_URL}/tasks/${taskID}/report`, data, {
+    .post(`${BASE_URL_API}/tasks/${taskID}/report`, data, {
       headers: {
         'Content-type': 'multipart/form-data',
       },
@@ -76,7 +75,7 @@ export const setNewReport = (data, taskID, userID, navigate, socket) => async (d
 };
 export const getReports = () => (dispatch) => {
   dispatch(startLoading());
-  axios(`${BASE_URL}/reports`)
+  axios(`${BASE_URL_API}/reports`)
     .then((response) => dispatch(setReports(response.data.reports)))
     .catch((e) => console.log(e))
     .finally(() => dispatch(stopLoading()));
@@ -88,7 +87,7 @@ const setReportAction = (value) => ({
 
 export const getReportById = (id) => async (dispatch) => {
   dispatch(startLoading());
-  await axios(`${BASE_URL}/reports/${id}`)
+  await axios(`${BASE_URL_API}/reports/${id}`)
     .then((response) => dispatch(setReportAction(response.data)))
     .catch((e) => console.log(e))
     .finally(() => dispatch(stopLoading()));
@@ -96,7 +95,7 @@ export const getReportById = (id) => async (dispatch) => {
 
 export const getUserReports = (id) => (dispatch) => {
   dispatch(startLoading());
-  axios(`${BASE_URL}/users/${id}/reports`)
+  axios(`${BASE_URL_API}/users/${id}/reports`)
     .then((response) => {
       dispatch(setReports(response.data.reports));
     })
@@ -106,7 +105,7 @@ export const getUserReports = (id) => (dispatch) => {
 
 export const setComment = (text, id) => async (dispatch) => {
   await axios
-    .post(`${BASE_URL}/reports/${id}/comment`, {
+    .post(`${BASE_URL_API}/reports/${id}/comment`, {
       text,
     })
     .then(({ data }) => {
@@ -128,7 +127,7 @@ export const setComment = (text, id) => async (dispatch) => {
 
 export const getSubsReports = () => async (dispatch) => {
   dispatch(startLoading());
-  axios(`${BASE_URL}/reports/subs`)
+  axios(`${BASE_URL_API}/reports/subs`)
     .then((response) => dispatch(setReports(response.data.reports)))
     .catch((e) => console.log(e))
     .finally(() => dispatch(stopLoading()));
@@ -136,7 +135,7 @@ export const getSubsReports = () => async (dispatch) => {
 
 export const setAllReports = () => async (dispatch) => {
   dispatch(startLoading());
-  axios(`${BASE_URL}/reports/top`)
+  axios(`${BASE_URL_API}/reports/top`)
     .then((response) => dispatch(setReports(response.data.reports)))
     .catch((e) => console.log(e))
     .finally(() => dispatch(stopLoading()));

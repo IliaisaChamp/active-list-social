@@ -2,15 +2,14 @@ import axios from 'axios';
 import { SET_SUBSCRIBES } from '../types/subscribesTypes';
 import { setSuccessMessage } from './flashAC';
 import { startLoading, stopLoading } from './isLoadingAC';
-
-const BASE_URL = 'http://localhost:3001/api';
+import { BASE_URL_API } from '../../config/constants';
 
 export const setSubscribes = (subscribes) => ({
   type: SET_SUBSCRIBES,
   payload: subscribes,
 });
 
-export const fetchSubscribes = (userId) => axios(`${BASE_URL}/users/${userId}/followings`);
+export const fetchSubscribes = (userId) => axios(`${BASE_URL_API}/users/${userId}/followings`);
 
 export const getSubsribes = (userId) => (dispatch) => {
   dispatch(startLoading());
@@ -32,7 +31,7 @@ export const getCurrentUserSubsribes = (currentUserId) => (dispatch) => {
 
 export const subscribeOnUser = (userId, followingsId) => (dispatch) => {
   axios
-    .post(`${BASE_URL}/users/${followingsId}/follow`)
+    .post(`${BASE_URL_API}/users/${followingsId}/follow`)
     .then(() => fetchSubscribes(userId))
     .then((response) => {
       dispatch(setSubscribes(response.data.followings));
@@ -43,7 +42,7 @@ export const subscribeOnUser = (userId, followingsId) => (dispatch) => {
 
 export const unsubscribeFromUser = (userId, followingsId) => (dispatch) => {
   axios
-    .post(`${BASE_URL}/users/${followingsId}/unfollow`)
+    .post(`${BASE_URL_API}/users/${followingsId}/unfollow`)
     .then(() => fetchSubscribes(userId))
     .then((response) => dispatch(setSubscribes(response.data.followings)))
     .catch((err) => console.log(err));

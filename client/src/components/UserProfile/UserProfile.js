@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
   },
   actionGroup: {
     display: 'flex',
-    // width: '330px',
     justifyContent: 'flex-end',
     marginRight: 0,
   },

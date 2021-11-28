@@ -5,18 +5,8 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-// material
-import {
-  Link,
-  Stack,
-  Checkbox,
-  TextField,
-  IconButton,
-  InputAdornment,
-  FormControlLabel,
-} from '@mui/material';
+import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { loginUser } from '../../../store/ac/authAC';
@@ -30,9 +20,7 @@ export default function LoginForm() {
   const { t } = useTranslation();
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Электронная почта должна быть валидным адресом')
-      .required('Электронная почта обязательна'),
+    email: Yup.string().email('Электронная почта должна быть валидным адресом').required('Электронная почта обязательна'),
     password: Yup.string().required('Пароль обязательный'),
   });
 
@@ -108,13 +96,7 @@ export default function LoginForm() {
           </Link>
         </Stack>
 
-        <LoadingButton
-          fullWidth
-          size="large"
-          type="submit"
-          variant="contained"
-          loading={isSubmitting}
-        >
+        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
           {t('form.login_submit')}
         </LoadingButton>
       </Form>
