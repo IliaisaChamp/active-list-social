@@ -49,8 +49,8 @@ const resources = {
         profile: {
           head: 'Профиль',
           stat: {
-            usertasks: 'Ваши цели',
-            userreports: 'Ваши отчеты',
+            usertasks: 'Цели',
+            userreports: 'Отчеты',
             alltasks: 'Всего целей',
             allreports: 'Всего отчетов',
           },
