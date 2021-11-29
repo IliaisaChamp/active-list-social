@@ -1,7 +1,7 @@
 # Социальная сеть "CATCH THEM"
 Приложение для мотивации! Ставьте цели, делитесь ими с друзьями и вместе достигайте!
 
-![Profile](https://github.com/IliaisaChamp/active-list-social/profile.jpg?raw=true)
+![Profile](https://github.com/IliaisaChamp/active-list-social/main/profile.jpg?raw=true)
 
 ## Запуск сервера:
 
@@ -17,6 +17,6 @@
     npm start или yarn start
 
 
-![top](https://github.com/IliaisaChamp/active-list-social/top.jpg?raw=true)
+![top](https://github.com/IliaisaChamp/active-list-social/main/top.jpg?raw=true)
 
-![goals](https://github.com/IliaisaChamp/active-list-social/goals.jpg?raw=true)
+![goals](https://github.com/IliaisaChamp/active-list-social/main/goals.jpg?raw=true)
