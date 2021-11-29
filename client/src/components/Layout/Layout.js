@@ -31,6 +31,7 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function Layout() {
   const [open, setOpen] = useState(false);
+
   return (
     <RootStyle>
       <Header onOpenSidebar={() => setOpen(true)} />
