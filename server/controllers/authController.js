@@ -6,34 +6,35 @@ class CheckController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ message: 'Ошибка при регистрации', errors });
+        return res.status(400).json({ message: errors.errors[0].msg, errors });
       }
+      const { nickname, email, password } = req.body;
 
-      const { email, first_name, password, last_name } = req.body;
-
-      if (email && first_name && password && last_name) {
-        const candidate = await UserService.findByEmail(email);
-        console.log(candidate);
-        if (candidate) {
+      if (nickname && email && password) {
+        const emailCheck = await UserService.findByEmail(email);
+        const nickNameCheck = await UserService.findByNickname(nickname);
+        if (emailCheck) {
           return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
+        }
+
+        if (nickNameCheck) {
+          return res.status(400).json({ message: 'Пользователь с таким nickname уже существует' });
         }
 
         const createdUser = await UserService.createUser(req.body);
 
         if (createdUser) {
+          const { password: clear, ...other } = createdUser;
+
           req.session.user = {
-            id: createdUser.id,
-            first_name: createdUser.first_name,
-            last_name: createdUser.last_name,
+            ...other,
           };
           return res.json({ user: req.session.user });
-        } else {
-          console.log('error');
-          return res.sendStatus(500);
         }
-      } else {
-        return res.status(400).json({ message: 'Не все данные заполнены' });
+        console.log('error');
+        return res.sendStatus(501);
       }
+      return res.status(400).json({ message: 'Не все данные заполнены' });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: error.message });
@@ -47,36 +48,31 @@ class CheckController {
         const currentUser = await UserService.findAndCheck({ email, password });
 
         if (currentUser) {
+          const { password: clear, ...other } = currentUser;
+
           req.session.user = {
-            id: currentUser.id,
-            first_name: currentUser.first_name,
-            last_name: currentUser.last_name,
+            ...other,
           };
 
           return res.json({ user: req.session.user });
-        } else {
-          console.log(currentUser);
-          return res
-            .status(404)
-            .json({ message: `User '${email}' not found or Wrong password` });
         }
-      } else {
-        return res.status(401).json({ message: 'Данные не заполнены' });
+        return res.status(404).json({ message: 'Пользователь c таким email не найден или неверный пароль' });
       }
+      return res.status(401).json({ message: 'Данные не заполнены' });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: error.message });
     }
   }
 
-  static check(req, res) {
+  static async check(req, res) {
     if (req.session.user) {
-      return res.json({ user: req.session.user });
-    } else {
-      return res.sendStatus(401);
+      const { id } = req.session.user;
+      const { password, ...user } = await UserService.getUser(id);
+      return res.json({ user });
     }
+    return res.status(401).json({ message: 'Сессия истекла' });
   }
 }
-
 
 module.exports = CheckController;
